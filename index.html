@@ -1900,18 +1900,18 @@ Take final walkthrough photos`,
       if(!supabaseClient) return defaultContent[section] || '';
 
       try{
-        const { data, error } = await supabaseClient
-          .from('app_content')
-          .select('value')
-          .eq('section', section)
-          .maybeSingle();
+      const { data, error } = await supabaseClient
+  .from('app_content')
+  .select('content')
+  .eq('section_key', section)
+  .maybeSingle();  
 
         if(error){
           console.error(error);
           return defaultContent[section] || '';
         }
 
-        return data?.value ?? defaultContent[section] ?? '';
+   return data?.content ?? defaultContent[section] ?? '';    
       } catch(e){
         console.error(e);
         return defaultContent[section] || '';
@@ -1919,10 +1919,9 @@ Take final walkthrough photos`,
     }
 
     async function saveSectionContent(section, value){
-      const { error } = await supabaseClient
-        .from('app_content')
-        .upsert({ section, value }, { onConflict: 'section' });
-
+    const { error } = await supabaseClient
+  .from('app_content')
+  .upsert({ section_key: section, content: value }, { onConflict: 'section_key' });  
       if(error) throw error;
     }
 
