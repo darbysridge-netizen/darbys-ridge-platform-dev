@@ -1988,7 +1988,7 @@ Take final walkthrough photos`,
       document.getElementById('imgBannerTrail').src = values.banner_trail_image || defaultContent.banner_trail_image;
       document.getElementById('imgBannerCheckout').src = values.banner_checkout_image || defaultContent.banner_checkout_image;
 
-  const airbnbLink = document.getElementById('airbnbBookLink');
+ const airbnbLink = document.getElementById('airbnbBookLink');
 const bookingUrl = String(values.book_again_airbnb_link || '').trim();
 
 if (airbnbLink) {
@@ -1998,8 +1998,8 @@ if (airbnbLink) {
   } else {
     airbnbLink.href = '#';
     airbnbLink.classList.add('hidden');
-   }   
   }
+}
 
     async function renderEditablePages(){
       const info = await getSectionContent('info');
