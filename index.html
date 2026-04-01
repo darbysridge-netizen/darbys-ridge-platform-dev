@@ -3172,7 +3172,13 @@ const existingNote = savedNotes?.find(
 
     document.addEventListener('DOMContentLoaded', async function() {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const { data: propertiesTest, error: propertiesError } = await supabaseClient
+    .from('properties')
+    .select('*');
 
+  console.log('PROPERTIES TEST:', propertiesTest);
+  console.log('PROPERTIES ERROR:', propertiesError);
+      
       await seedDefaultContentIfNeeded();
       await renderEditablePages();
       await renderSupplyList();
