@@ -2045,25 +2045,41 @@ if (airbnbLink) {
       }
     }
 
-    async function loadOwnerImageEditor(){
-      const key = document.getElementById('ownerImageSelect').value;
-      document.getElementById('ownerImageEditor').value = await getSectionContent(key);
-      document.getElementById('ownerImageSaveMessage').style.display = 'none';
-    }
+   async function loadOwnerImageEditor(){
+  const imageSelect = document.getElementById('ownerImageSelect');
+  const imageEditor = document.getElementById('ownerImageEditor');
+  const saveMessage = document.getElementById('ownerImageSaveMessage');
 
-    async function saveOwnerImageSetting(){
-      const key = document.getElementById('ownerImageSelect').value;
-      const value = document.getElementById('ownerImageEditor').value.trim();
+  if (!imageSelect || !imageEditor || !saveMessage) {
+    return;
+  }
 
-      try{
-        await saveSectionContent(key, value);
-        await renderDynamicImages();
-        document.getElementById('ownerImageSaveMessage').style.display = 'block';
-      } catch(e){
-        console.error(e);
-        alert('Could not save photo or link.');
-      }
-    }
+  const key = imageSelect.value;
+  imageEditor.value = await getSectionContent(key);
+  saveMessage.style.display = 'none';
+} 
+
+async function saveOwnerImageSetting(){
+  const imageSelect = document.getElementById('ownerImageSelect');
+  const imageEditor = document.getElementById('ownerImageEditor');
+  const saveMessage = document.getElementById('ownerImageSaveMessage');
+
+  if (!imageSelect || !imageEditor || !saveMessage) {
+    return;
+  }
+
+  const key = imageSelect.value;
+  const value = imageEditor.value.trim();
+
+  try{
+    await saveSectionContent(key, value);
+    await renderDynamicImages();
+    saveMessage.style.display = 'block';
+  } catch(e){
+    console.error(e);
+    alert('Could not save photo or link.');
+  }
+}   
 
    function showPage(page){
   const pages = [
