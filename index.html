@@ -3163,11 +3163,11 @@ const existingNote = savedNotes?.find(
       ];
 
       for(const section of sections){
-        const { data, error } = await supabaseClient
-          .from('app_content')
-          .select('section')
-          .eq('section', section)
-          .maybeSingle();
+      const { data, error } = await supabaseClient
+  .from('app_content')
+  .select('section_key')
+  .eq('section_key', section)
+  .maybeSingle(); 
 
         if(error){
           console.error(error);
@@ -3177,7 +3177,7 @@ const existingNote = savedNotes?.find(
         if(!data){
           const { error: insertError } = await supabaseClient
             .from('app_content')
-            .insert([{ section, value: defaultContent[section] || '' }]);
+    .insert([{ section_key: section, content: defaultContent[section] || '' }]);
 
           if(insertError){
             console.error(insertError);
