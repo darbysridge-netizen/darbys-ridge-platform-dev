@@ -1,0 +1,229 @@
+export default async function handler(req, res) {
+  try {
+    const calendarUrl = process.env.AIRBNB_ICAL_URL;
+
+    if (!calendarUrl) {
+      return res.status(500).json({
+        success: false,
+        error: 'Missing AIRBNB_ICAL_URL environment variable.'
+      });
+    }
+
+    const response = await fetch(calendarUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0'
+      }
+    });
+
+    if (!response.ok) {
+      return res.status(500).json({
+        success: false,
+        error: `Could not fetch Airbnb calendar feed. Status: ${response.status}`
+      });
+    }
+
+    const icsText = await response.text();
+
+    if (!icsText || !icsText.includes('BEGIN:VCALENDAR')) {
+      return res.status(500).json({
+        success: false,
+        error: 'Calendar feed did not return valid ICS data.'
+      });
+    }
+
+    const events = parseICS(icsText);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const bookings = events
+      .filter(event => event.checkOutDate instanceof Date && !isNaN(event.checkOutDate) && event.checkOutDate >= today)
+      .sort((a, b) => a.checkInDate - b.checkInDate)
+      .map(event => ({
+        guestName: event.guestName || '',
+        name: event.guestName || '',
+        summary: event.summary || '',
+        checkIn: formatDate(event.checkInDate),
+        checkOut: formatDate(event.checkOutDate),
+        rawSummary: event.summary || '',
+        rawDescription: event.description || ''
+      }));
+
+    return res.status(200).json({
+      success: true,
+      bookings
+    });
+  } catch (error) {
+    console.error('Calendar API error:', error);
+    return res.status(500).json({
+      success: false,
+      error: error?.message || 'Unable to load calendar.'
+    });
+  }
+}
+
+function parseICS(icsText) {
+  const normalized = unfoldICSLines(icsText);
+  const chunks = normalized.split('BEGIN:VEVENT').slice(1);
+  const events = [];
+
+  for (const chunk of chunks) {
+    try {
+      const eventText = chunk.split('END:VEVENT')[0];
+
+      const summary = getICSField(eventText, 'SUMMARY');
+      const description = getICSField(eventText, 'DESCRIPTION');
+      const dtStartRaw = getICSField(eventText, 'DTSTART');
+      const dtEndRaw = getICSField(eventText, 'DTEND');
+
+      const checkInDate = parseICSDate(dtStartRaw);
+      const checkOutDate = parseICSDate(dtEndRaw);
+
+      if (!checkInDate || !checkOutDate || isNaN(checkInDate) || isNaN(checkOutDate)) {
+        continue;
+      }
+
+      const guestName = extractGuestName(summary, description);
+
+      events.push({
+        summary,
+        description,
+        guestName,
+        checkInDate,
+        checkOutDate
+      });
+    } catch (err) {
+      console.error('Error parsing VEVENT:', err);
+    }
+  }
+
+  return events;
+}
+
+function unfoldICSLines(text) {
+  return String(text || '').replace(/\r?\n[ \t]/g, '');
+}
+
+function getICSField(block, fieldName) {
+  const regex = new RegExp(`^${fieldName}(?:;[^:\\n]*)?:(.*)$`, 'mi');
+  const match = block.match(regex);
+  return match ? decodeICSText(match[1].trim()) : '';
+}
+
+function decodeICSText(value) {
+  return String(value || '')
+    .replace(/\\n/g, '\n')
+    .replace(/\\,/g, ',')
+    .replace(/\\;/g, ';')
+    .replace(/\\\\/g, '\\');
+}
+
+function parseICSDate(value) {
+  if (!value) return null;
+
+  const clean = String(value).trim();
+
+  // Handles YYYYMMDD
+  if (/^\d{8}$/.test(clean)) {
+    const year = Number(clean.slice(0, 4));
+    const month = Number(clean.slice(4, 6)) - 1;
+    const day = Number(clean.slice(6, 8));
+    return new Date(year, month, day);
+  }
+
+  // Handles YYYYMMDDTHHMMSSZ or YYYYMMDDTHHMMSS
+  const match = clean.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z?$/);
+
+  if (match) {
+    const y = Number(match[1]);
+    const m = Number(match[2]);
+    const d = Number(match[3]);
+    const hh = Number(match[4]);
+    const mm = Number(match[5]);
+    const ss = Number(match[6]);
+
+    if (clean.endsWith('Z')) {
+      return new Date(Date.UTC(y, m - 1, d, hh, mm, ss));
+    }
+
+    return new Date(y, m - 1, d, hh, mm, ss);
+  }
+
+  return null;
+}
+
+function extractGuestName(summary, description) {
+  const combined = `${summary || ''}\n${description || ''}`.trim();
+
+  if (!combined) return '';
+
+  const cleaned = combined
+    .replace(/\n+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const patterns = [
+    /guest[:\s-]+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})/i,
+    /reservation for[:\s-]+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})/i,
+    /booking for[:\s-]+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})/i,
+    /reserved for[:\s-]+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})/i,
+    /^([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})\s*-\s*/,
+    /^([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,2})$/
+  ];
+
+  for (const pattern of patterns) {
+    const match = cleaned.match(pattern);
+    if (match && match[1]) {
+      const candidate = match[1].trim();
+      if (isUsefulGuestName(candidate)) {
+        return candidate;
+      }
+    }
+  }
+
+  if (isUsefulGuestName(summary)) {
+    return summary.trim();
+  }
+
+  return '';
+}
+
+function isUsefulGuestName(value) {
+  if (!value) return false;
+
+  const text = value.trim();
+  const lower = text.toLowerCase();
+
+  const blockedWords = [
+    'airbnb',
+    'reserved',
+    'reservation',
+    'blocked',
+    'not available',
+    'unavailable',
+    'checkout',
+    'checkin',
+    'calendar',
+    'stay'
+  ];
+
+  if (blockedWords.some(word => lower === word || lower.includes(word))) {
+    return false;
+  }
+
+  if (text.length < 2 || text.length > 50) {
+    return false;
+  }
+
+  return true;
+}
+
+function formatDate(date) {
+  if (!(date instanceof Date) || isNaN(date)) return '';
+
+  return date.toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  });
+}

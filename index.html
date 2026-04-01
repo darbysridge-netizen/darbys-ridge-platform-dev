@@ -1,0 +1,3272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Darby's Ridge</title>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body{
+      margin:0;
+      background:#e2d2bd;
+      font-family:'Inter',sans-serif;
+      color:#3c2c1f;
+    }
+.phone{
+  max-width:430px;
+  margin:auto;
+  background:#efe4d3;
+  min-height:100vh;
+  padding-bottom:80px;
+}
+    
+  .page{
+  max-width:430px;
+  margin:0 auto;
+  min-height:100vh;
+  background:#efe4d3;
+  padding:22px;
+  padding-bottom:100px;
+  box-sizing:border-box;
+} 
+
+    .hero{
+      height:460px;
+      background:url(hero.jpg) center/cover no-repeat;
+      border-bottom-left-radius:30px;
+      border-bottom-right-radius:30px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(0,0,0,.14), rgba(0,0,0,.46));
+    }
+
+    .hero-text{
+      position:absolute;
+      bottom:42px;
+      left:26px;
+      right:26px;
+      color:white;
+      z-index:2;
+    }
+
+    .logo{
+      font-family:'Allura',cursive;
+      font-size:50px;
+      margin:0;
+      text-shadow:0 6px 14px rgba(0,0,0,.45);
+      line-height:1;
+      letter-spacing:1px;
+    }
+
+    .tagline{
+      font-family:'Playfair Display',serif;
+      font-size:20px;
+      margin-top:8px;
+      font-weight:500;
+      letter-spacing:.5px;
+    }
+
+    .description{
+      margin-top:10px;
+      font-size:12px;
+      line-height:1.4;
+      max-width:220px;
+      color:rgba(255,255,255,.94);
+    }
+
+    .content{
+      padding:22px;
+    }
+
+    .section-title{
+      font-family:'Playfair Display',serif;
+      font-size:24px;
+      margin-bottom:16px;
+    }
+
+    .card-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .menu-card{
+      aspect-ratio:1/1;
+      border-radius:18px;
+      overflow:hidden;
+      position:relative;
+      cursor:pointer;
+      box-shadow:0 8px 18px rgba(0,0,0,.15);
+      transition:transform .15s ease, box-shadow .15s ease;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .menu-card img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    .menu-card:after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to top, rgba(0,0,0,.68), rgba(0,0,0,.08));
+      transition:background .18s ease;
+    }
+
+.menu-card{
+  transition: all 0.25s ease;
+  cursor:pointer;
+}
+
+.menu-card:hover{
+  transform: scale(1.01);
+}
+
+.menu-card:hover img{
+  filter: brightness(0.85);
+  transform: scale(1.03);
+}
+
+.menu-card:hover:after{
+  background:linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.15));
+}
+
+.menu-card:active{
+  transform:scale(0.97);
+  box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+
+.menu-card:active img{
+  transform:scale(1.02);
+  filter:brightness(0.75);
+}
+
+.menu-card:active:after{
+  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.25));
+}    
+
+    .menu-label{
+      position:absolute;
+      bottom:12px;
+      left:14px;
+      right:14px;
+      color:white;
+      z-index:2;
+    }
+
+    .menu-label span{
+      font-size:11px;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+      opacity:.9;
+    }
+
+    .menu-label strong{
+      display:block;
+      font-family:'Playfair Display',serif;
+      font-size:18px;
+      line-height:1.2;
+    }
+
+    .wide-card{
+      grid-column:1 / -1;
+      aspect-ratio:auto;
+      height:108px;
+    }
+
+    .wide-card .menu-label{
+      bottom:14px;
+      left:16px;
+      right:16px;
+    }
+
+    .wide-card .menu-label strong{
+      font-size:20px;
+    }
+
+    .request-subtext{
+      font-size:12px;
+      margin-top:4px;
+      line-height:1.35;
+      color:rgba(255,255,255,.92);
+      font-family:'Inter',sans-serif;
+      font-weight:400;
+    }
+
+    .social{
+      margin-top:24px;
+      background:linear-gradient(145deg, #f7efe3, #f1e4d2);
+      padding:20px;
+      border-radius:20px;
+      box-shadow:0 8px 18px rgba(0,0,0,.06);
+      border:1px solid #eadbc8;
+      text-align:center;
+    }
+
+    .social-kicker{
+      font-size:11px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:#8f6a4c;
+      font-weight:700;
+      margin-bottom:8px;
+      text-align:center;
+    }
+
+    .social h3{
+      font-family:'Playfair Display',serif;
+      margin:0 0 8px;
+      font-size:24px;
+      color:#3c2c1f;
+      text-align:center;
+    }
+
+    .social p{
+      margin:0 0 16px;
+      line-height:1.55;
+      color:#5b4636;
+      font-size:14px;
+      text-align:center;
+    }
+
+    .social-links{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .social-link{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:14px 16px;
+      background:#d8c3aa;
+      border-radius:14px;
+      text-decoration:none;
+      color:#3c2c1f;
+      border:1px solid #c9b299;
+      box-shadow:0 4px 10px rgba(0,0,0,.04);
+      transition:transform .15s ease, box-shadow .15s ease, background .15s ease, filter .15s ease;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .social-link:hover{
+      transform:translateY(-1px);
+      box-shadow:0 8px 16px rgba(0,0,0,.08);
+      background:#ceb597;
+    }
+
+    .social-link:active{
+      background:#bfa282;
+      box-shadow:0 4px 10px rgba(0,0,0,.08);
+      transform:scale(.99);
+      filter:brightness(.95);
+    }
+
+    .social-icon{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:18px;
+      flex-shrink:0;
+      background:#5b4636;
+      color:#f7efe3;
+    }
+
+    .social-text{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      text-align:left;
+    }
+
+    .social-text strong{
+      font-size:15px;
+      color:#3c2c1f;
+    }
+
+    .social-text small{
+      color:#6f5846;
+      font-size:12px;
+      font-weight:600;
+    }
+
+    .bottom-nav{
+      position:fixed;
+      bottom:0;
+      left:50%;
+      transform:translateX(-50%);
+      max-width:430px;
+      width:100%;
+      background:#e2d2bd;
+      border-top:1px solid #d3c2aa;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 30px;
+      z-index:10;
+      box-sizing:border-box;
+    }
+
+    .bottom-nav button{
+      background:none;
+      border:none;
+      color:#5b4636;
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      transition:background .15s ease, color .15s ease, transform .15s ease;
+      border-radius:20px;
+      padding:8px 12px;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .bottom-nav button:active{
+      background:rgba(60,44,31,.12);
+      color:#2f241b;
+      transform:scale(.98);
+    }
+
+    .bottom-home{
+      background:#445b49 !important;
+      color:white !important;
+      border-radius:30px;
+      padding:10px 20px !important;
+      font-size:14px !important;
+    }
+
+    .bottom-home:active{
+      background:#314136 !important;
+      color:white !important;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
+   .panel{
+  background:#f2e5d4;
+  padding:18px;
+  border-radius:16px;
+  margin-top:14px;
+  box-shadow:0 6px 14px rgba(0,0,0,.05);
+  border:1px solid #e2cfb8;
+} 
+
+    .page h1{
+      font-family:'Playfair Display',serif;
+      font-size:30px;
+      margin-top:0;
+    }
+
+    .back{
+      display:inline-block;
+      margin-bottom:14px;
+      font-weight:600;
+      cursor:pointer;
+      background:none;
+      border:none;
+      color:#3c2c1f;
+      padding:0;
+      font-size:16px;
+    }
+
+    .panel{
+      background:#f7efe3;
+      padding:18px;
+      border-radius:16px;
+      margin-top:14px;
+    }
+
+    .panel h3{
+      margin-top:0;
+      font-family:'Inter',sans-serif;
+      font-size:17px;
+      font-weight:700;
+    }
+
+    .page-banner{
+      position:relative;
+      height:180px;
+      border-radius:18px;
+      overflow:hidden;
+      margin-bottom:16px;
+      box-shadow:0 8px 18px rgba(0,0,0,.10);
+      background:#d8c3aa;
+    }
+
+    .page-banner img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+   .page-banner:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top, rgba(0,0,0,.68), rgba(0,0,0,.18));
+}
+
+    .page-banner-text{
+      position:absolute;
+      left:16px;
+      right:16px;
+      bottom:14px;
+      color:white;
+      z-index:2;
+    }
+
+    .page-banner-text strong{
+      display:block;
+      font-family:'Playfair Display',serif;
+      font-size:24px;
+      line-height:1.15;
+      margin-bottom:4px;
+    }
+
+    .page-banner-text span{
+      font-size:13px;
+      color:rgba(255,255,255,.92);
+      line-height:1.4;
+      display:block;
+    }
+
+    button.action-btn{
+    display:flex;
+align-items:center;
+justify-content:center; 
+      width:100%;
+      padding:14px;
+      border:none;
+      border-radius:12px;
+      background:#445b49;
+      color:white;
+      font-size:15px;
+      font-weight:600;
+      cursor:pointer;
+      text-align:center;
+      box-sizing:border-box;
+      transition:background .15s ease, transform .15s ease, filter .15s ease;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    button.action-btn:active{
+      background:#314136;
+      transform:scale(.99);
+      filter:brightness(.95);
+    }
+
+    button.secondary-btn{
+      background:#e9d9c5;
+      color:#3c2c1f;
+    }
+
+    button.secondary-btn:active{
+      background:#d8c3aa;
+      color:#2f241b;
+    }
+
+    button.tertiary-btn{
+      background:#d8c3aa;
+      color:#3c2c1f;
+    }
+
+    button.tertiary-btn:active{
+      background:#c9b299;
+      color:#2f241b;
+    }
+
+    input, select, textarea{
+      width:100%;
+      padding:14px;
+      border-radius:12px;
+      border:1px solid #d3c2aa;
+      font-size:15px;
+      margin-top:8px;
+      box-sizing:border-box;
+      font-family:'Inter',sans-serif;
+      background:white;
+    }
+
+    label{
+      display:block;
+      margin-top:14px;
+      font-weight:600;
+      font-size:14px;
+    }
+
+    .form-message{
+      display:none;
+      margin-top:12px;
+      padding:12px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:600;
+      white-space:pre-wrap;
+    }
+
+    .form-success{
+      background:#e6f4ea;
+      color:#25613a;
+    }
+
+    .form-error{
+      background:#fdecea;
+      color:#9b3d2f;
+    }
+
+    .small-note{
+      font-size:13px;
+      color:#6d5a49;
+      line-height:1.5;
+    }
+
+    .status-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      padding:14px 0;
+      border-bottom:1px solid #e5d7c4;
+    }
+
+    .status-row:last-child{
+      border-bottom:none;
+    }
+
+    .status-pill{
+      background:#445b49;
+      color:white;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .status-pill.soft{
+      background:#c9b299;
+      color:#3c2c1f;
+    }
+
+    .check-list{
+      padding-left:18px;
+      line-height:1.7;
+      margin:0;
+    }
+
+    .list-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:12px 0;
+      border-bottom:1px solid #e5d7c4;
+    }
+
+    .list-row:last-child{
+      border-bottom:none;
+    }
+
+    .delete-btn{
+      background:none;
+      border:none;
+      color:#9b3d2f;
+      font-weight:600;
+      cursor:pointer;
+      font-size:14px;
+      padding:0;
+      width:auto;
+      flex-shrink:0;
+    }
+
+    .edit-box{
+      margin-top:12px;
+    }
+
+    .center-button{
+      margin-top:12px;
+    }
+
+    .owner-list-card{
+      background:white;
+      padding:12px 14px;
+      border-radius:12px;
+      margin-top:10px;
+      border:1px solid #eadbc8;
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .owner-subtitle{
+      font-weight:600;
+      margin:16px 0 8px;
+      font-size:15px;
+      color:#3c2c1f;
+    }
+
+    .owner-list-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+
+    .owner-list-row div:first-child{
+      flex:1;
+      min-width:0;
+    }
+
+    .pdf-wrap{
+      background:#f7efe3;
+      border-radius:16px;
+      overflow:hidden;
+      margin-top:14px;
+      box-shadow:0 6px 16px rgba(0,0,0,.08);
+    }
+
+    .pdf-frame{
+      width:100%;
+      height:78vh;
+      min-height:700px;
+      border:none;
+      display:block;
+      background:white;
+    }
+
+    .mobile-open{
+      display:none;
+      padding:16px;
+      text-align:center;
+    }
+
+    .open-guide-btn,
+    .link-btn{
+      display:inline-block;
+      padding:14px 22px;
+      background:#445b49;
+      color:white;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:600;
+      border:none;
+      text-align:center;
+      box-sizing:border-box;
+      transition:background .15s ease, transform .15s ease, filter .15s ease;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .open-guide-btn:active,
+    .link-btn:active{
+      background:#314136;
+      transform:scale(.99);
+      filter:brightness(.95);
+    }
+
+    .link-btn.secondary{
+      background:#d8c3aa;
+      color:#3c2c1f;
+      margin-top:12px;
+      width:100%;
+    }
+
+    .link-btn.secondary:active{
+      background:#c9b299;
+      color:#2f241b;
+    }
+
+    .essentials-panel{
+      background:#f7efe3;
+      padding:18px;
+      border-radius:16px;
+      margin-top:14px;
+    }
+
+    .essentials-block{
+      padding:14px 0;
+      border-bottom:1px solid #e5d7c4;
+    }
+
+    .essentials-block:first-child{
+      padding-top:0;
+    }
+
+    .essentials-block:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .essentials-block h3{
+      margin:0 0 8px;
+      font-family:'Inter',sans-serif;
+      font-size:16px;
+      font-weight:700;
+      color:#3c2c1f;
+      letter-spacing:0;
+    }
+
+    .essentials-block p{
+      margin:0;
+      line-height:1.65;
+      font-size:15px;
+      font-family:'Inter',sans-serif;
+      font-weight:400;
+      color:#4f3d2f;
+      white-space:pre-line;
+    }
+
+    .highlight{
+      font-weight:700;
+      color:#2f241b;
+    }
+
+    .checkout-panel{
+      background:#f7efe3;
+      padding:18px;
+      border-radius:16px;
+      margin-top:14px;
+    }
+
+    .checkout-title{
+      margin:0 0 12px;
+      font-family:'Inter',sans-serif;
+      font-size:17px;
+      font-weight:700;
+      color:#3c2c1f;
+    }
+
+    .checkmark-list{
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .checkmark-list li{
+      position:relative;
+      padding-left:24px;
+      margin-bottom:10px;
+      line-height:1.6;
+      font-size:15px;
+      color:#4f3d2f;
+    }
+
+    .checkmark-list li:last-child{
+      margin-bottom:0;
+    }
+
+    .checkmark-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#445b49;
+      font-weight:700;
+    }
+
+    .favorites-list{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .favorite-item{
+      padding-bottom:14px;
+      border-bottom:1px solid #e5d7c4;
+    }
+
+    .favorite-item:last-child{
+      border-bottom:none;
+      padding-bottom:0;
+    }
+
+    .favorite-item h3{
+      margin:0 0 8px;
+      font-family:'Inter',sans-serif;
+      font-size:16px;
+      font-weight:700;
+      color:#3c2c1f;
+    }
+
+    .favorite-item p{
+      margin:0 0 8px;
+      font-size:15px;
+      line-height:1.6;
+      color:#4f3d2f;
+    }
+
+    .favorite-item a{
+      color:#8b5e3c;
+      text-decoration:none;
+      font-weight:600;
+    }
+
+    .favorite-item a:hover{
+      text-decoration:underline;
+    }
+
+    .upload-actions{
+      display:flex;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .upload-actions button{
+      flex:1;
+    }
+
+    .gallery-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .gallery-card{
+      background:white;
+      border:1px solid #eadbc8;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 4px 10px rgba(0,0,0,.04);
+    }
+
+    .gallery-card img,
+    .gallery-card video{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      display:block;
+      background:#ddd;
+    }
+
+    .gallery-meta{
+      padding:10px;
+      font-size:12px;
+      line-height:1.45;
+      color:#6d5a49;
+    }
+
+    .gallery-meta strong{
+      display:block;
+      font-size:13px;
+      color:#3c2c1f;
+      margin-bottom:4px;
+    }
+
+    .preview-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:12px;
+    }
+
+    .preview-item{
+      background:white;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid #eadbc8;
+    }
+
+    .preview-item img,
+    .preview-item video{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      display:block;
+      background:#ddd;
+    }
+
+    .preview-item div{
+      padding:8px;
+      font-size:12px;
+      color:#6d5a49;
+    }
+
+    .submission-card{
+      background:white;
+      border-radius:14px;
+      border:1px solid #eadbc8;
+      padding:14px;
+      margin-top:10px;
+    }
+
+    .submission-card h4{
+      margin:0 0 6px;
+      font-size:15px;
+      color:#3c2c1f;
+    }
+
+    .submission-card p{
+      margin:4px 0;
+      font-size:14px;
+      color:#5f4d3d;
+      line-height:1.55;
+    }
+
+    .submission-photos{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+
+    .submission-photos img,
+    .submission-photos video{
+      width:100%;
+      aspect-ratio:1/1;
+      object-fit:cover;
+      border-radius:12px;
+      display:block;
+      background:#ddd;
+    }
+
+    .admin-actions{
+      margin-top:10px;
+      display:flex;
+      justify-content:flex-end;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .mini-delete{
+      background:#f6dfdb;
+      color:#8c2f21;
+      border:none;
+      border-radius:10px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+      width:auto;
+    }
+
+    .owner-media-thumb{
+      width:100%;
+      max-width:220px;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid #eadbc8;
+      background:#ddd;
+      margin-bottom:10px;
+    }
+
+    .owner-media-thumb img,
+    .owner-media-thumb video{
+      width:100%;
+      height:180px;
+      object-fit:cover;
+      display:block;
+      background:#ddd;
+    }
+
+    .owner-gallery-strip{
+      display:flex;
+      gap:12px;
+      overflow-x:auto;
+      padding-bottom:6px;
+      margin-top:8px;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .owner-gallery-strip .submission-card{
+      min-width:180px;
+      max-width:180px;
+      flex:0 0 180px;
+      padding:10px;
+      margin-top:0;
+    }
+
+    .owner-gallery-strip .owner-media-thumb{
+      max-width:none;
+      margin-bottom:8px;
+    }
+
+    .owner-gallery-strip .owner-media-thumb img,
+    .owner-gallery-strip .owner-media-thumb video{
+      height:120px;
+    }
+
+    .request-note{
+      margin-top:0;
+      margin-bottom:14px;
+    }
+
+    .map-note{
+      margin-top:10px;
+      font-size:12px;
+      color:#7a6553;
+    }
+
+    .button-stack button{
+      margin-top:12px;
+    }
+
+    .button-stack button:first-child{
+      margin-top:0;
+    }
+
+    @media (max-width: 768px){
+      .pdf-frame{
+        height:85vh;
+        min-height:560px;
+      }
+
+      .mobile-open{
+        display:block;
+      }
+    }
+  </style>
+
+ <link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3c2c1f"> 
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EL3GB1MQS5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EL3GB1MQS5');
+</script>  
+</head>
+
+<body>
+
+  <div id="home" class="phone">
+    <div class="hero" id="heroSection">
+      <div class="hero-text">
+        <h1 class="logo">Darby's Ridge</h1>
+        <div class="tagline">Your Blue Ridge Escape</div>
+        <div class="description">
+          Your guide to the cabin, local favorites, and everything you need for your stay in Blue Ridge.
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="section-title">Guest Guide</div>
+
+      <div class="card-grid">
+        <div class="menu-card" onclick="showPage('guidebook')">
+          <img id="imgHomeGuide" src="cabin-exterior.jpg" alt="">
+          <div class="menu-label">
+            <span>DARBY'S RIDGE</span>
+            <strong>Guest Guide</strong>
+          </div>
+        </div>
+<div class="menu-card" onclick="showPage('waysToTheRidge')">
+  <img src="waze.jpg" alt="">
+  <div class="menu-label">
+    <span>ADDRESS & DIRECTIONS</span>
+    <strong>Waze to the Ridge</strong>
+  </div>
+</div>
+        <div class="menu-card" onclick="showPage('info')">
+          <img id="imgHomeInfo" src="essentials.jpg" alt="">
+          <div class="menu-label">
+            <span>ESSENTIALS</span>
+            <strong>WiFi+Locks+Gate </strong>
+          </div>
+        </div>
+
+  <div class="menu-card" onclick="showPage('local')">
+  <img id="imgHomeLocal" src="local.jpg" alt="">
+  <div class="menu-label">
+    <span>BLUE RIDGE</span>
+    <strong>Ideas for perfect days</strong>
+  </div>
+</div>
+
+   <div class="menu-card" onclick="showPage('trail')">
+  <img id="imgHomeTrail" src="trail.jpg" alt="">
+  <div class="menu-label">
+    <span>GREEN MOUNTAIN TRAIL</span>
+    <strong>Come take a Hike</strong>
+  </div>
+</div>     
+
+        <div class="menu-card" onclick="showPage('guestMemories')">
+          <img id="imgHomeMemories" src="outdoor.jpg" alt="">
+          <div class="menu-label">
+            <span>GUEST MEMORIES</span>
+            <strong>Photo + Video Gallery</strong>
+          </div>
+        </div>
+<div class="menu-card" onclick="showPage('enhanceStay')">
+  <img src="enhance.jpg" alt="">
+  <div class="menu-label">
+    <span>EXTRAS</span>
+    <strong>Enhance Your Stay</strong>
+  </div>
+</div>
+        <div class="menu-card" onclick="showPage('checkout')">
+          <img id="imgHomeCheckout" src="interior.jpg" alt="">
+          <div class="menu-label">
+            <span>BEFORE YOU GO</span>
+            <strong>Checkout List</strong>
+          </div>
+        </div>
+
+   <div class="menu-card wide-card" onclick="showPage('requestToBook')">
+  <img id="imgHomeRequest" src="mountains.jpg" alt="">
+  <div class="menu-label">
+    <span>RETURNING GUESTS</span>
+    <strong>Unlock Your Discount</strong>
+  </div>
+</div>
+      </div>
+
+      <div class="social">
+        <div class="social-kicker">GET AND STAY CONNECTED</div>
+        <h3>Follow Darby's Ridge</h3>
+        <p>See cabin moments, Blue Ridge favorites, and updates from the ridge.</p>
+
+        <div class="social-links">
+          <a class="social-link" href="https://instagram.com/darbysridge" target="_blank">
+            <div class="social-icon">📸</div>
+            <div class="social-text">
+              <strong>Instagram</strong>
+              <small>@darbysridge</small>
+            </div>
+          </a>
+
+          <a class="social-link" href="https://www.facebook.com/darbysridge/" target="_blank">
+            <div class="social-icon">👍</div>
+            <div class="social-text">
+              <strong>Facebook</strong>
+              <small>Darby's Ridge</small>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="guidebook" class="hidden page">
+    <button class="back" type="button" onclick="showPage('home')">← Back to Home</button>
+    <h1>Guest Guide</h1>
+
+    <div class="pdf-wrap">
+      <div class="mobile-open">
+        <a href="darbys-guidebook.pdf" target="_blank" class="open-guide-btn">Open Guest Guide</a>
+      </div>
+
+      <iframe
+        class="pdf-frame"
+        src="darbys-guidebook.pdf#toolbar=0&navpanes=0&scrollbar=0"
+        title="Darby's Ridge Guest Guide">
+      </iframe>
+    </div>
+  </div>
+
+  <div id="info" class="hidden page">
+    <button class="back" type="button" onclick="showPage('home')">← Back</button>
+    <div class="page-banner">
+      <img id="imgBannerInfo" src="essentials.jpg" alt="">
+      <div class="page-banner-text">
+        <strong>WiFi & Cabin Essentials</strong>
+        <span>Everything you need for a smooth and cozy stay at Darby's Ridge.</span>
+      </div>
+    </div>
+    <div id="infoContent"></div>
+  </div>
+
+ <div id="local" class="hidden page">
+  <button class="back" type="button" onclick="showPage('home')">← Back</button>
+  <div class="page-banner">
+    <img id="imgBannerLocal" src="local.jpg" alt="">
+    <div class="page-banner-text">
+      <strong>Plan Your Perfect Blue Ridge Day</strong>
+      <span>Choose the kind of day you want and explore our favorite ideas for couples, families, and adventure lovers.</span>
+    </div>
+  </div>
+    <div class="panel">
+      <div id="localContent"></div>
+      <div class="map-note">Map links are set to open in the same window when possible for an easier in-app return.</div>
+    </div>
+  </div>
+
+ <div id="trail" class="hidden page">
+  <button class="back" type="button" onclick="showPage('home')">← Back</button>
+  <div class="page-banner">
+    <img id="imgBannerTrail" src="trail.jpg" alt="">
+    <div class="page-banner-text">
+      <strong>Green Mountain Trail Access</strong>
+      <span></span>
+    </div>
+  </div>
+    <div class="panel">
+      <div id="trailContent"></div>
+      <div class="map-note">Map links are set to open in the same window when possible for an easier in-app return.</div>
+    </div>
+  </div>
+<div id="waysToTheRidge" class="hidden page">
+  <button class="back" type="button" onclick="showPage('home')">← Back</button>
+
+  <div class="page-banner">
+    <img src="waze.jpg" alt="">
+    <div class="page-banner-text">
+      <strong>Way to the Ridge</strong>
+      <span>Use Waze for the most accurate route to the cabin.</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Best Route</h3>
+
+    <p class="small-note">
+      We strongly recommend using Waze for the most accurate route to Darby’s Ridge.
+      Some other navigation apps can occasionally route guests incorrectly near the property.
+    </p>
+
+    <div style="text-align:center;">
+      <a
+        class="link-btn"
+        href="https://waze.com/ul?q=66%20Forest%20Trail%2C%20Blue%20Ridge%2C%20Georgia&navigate=yes"
+        target="_self"
+      >
+        Open in Waze
+      </a>
+    </div>
+
+    <p class="map-note">
+      📍 66 Forest Trail, Blue Ridge, Georgia
+    </p>
+
+    <p class="map-note">
+      ⚠️ If you see a gate before Bear Lane, you’ve turned too early — please turn around and continue down Campbell Camp Circle.
+    </p>
+  </div>
+</div>
+
+<div id="enhanceStay" class="hidden page">
+  <button class="back" type="button" onclick="showPage('home')">← Back</button>
+
+  <div class="page-banner">
+    <img src="enhance.jpg" alt="">
+    <div class="page-banner-text">
+      <strong>Enhance Your Stay</strong>
+      <span>Add a little extra to make your time at the Ridge even more memorable.</span>
+    </div>
+  </div>
+
+  <div class="panel">
+<div style="background:#e8dfd3; border:1px solid #d6c6b4; padding:18px; border-radius:14px; text-align:center; margin-bottom:16px;">
+  
+  <div style="font-family:'Playfair Display', serif; font-size:19px; color:#3e2f22; font-weight:600; margin-bottom:6px;">
+    Something Special is on the Way
+  </div>
+  
+  <div style="font-family:'Inter', sans-serif; font-size:13.5px; color:#5f4e3d; font-weight:500; line-height:1.5;">
+    Thoughtfully crafted packages are coming soon to make your stay even more unforgettable.
+  </div>
+
+</div>
+   <div class="panel">
+  <h3>Choose a Package</h3>
+  <p class="small-note">Tap a package below to select it. Then complete the request form underneath.</p>
+
+  <div onclick="selectEnhancePackage('Bear Essentials ($59)')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <strong>Bear Essentials</strong>
+      <span style="font-weight:700;"></span>
+    </div>
+    <div class="small-note" style="margin-top:6px;">Walk in, settle in, and skip the grocery run.</div>
+    <div class="small-note" style="margin-top:8px;">
+      Includes: Milk, eggs, bread, butter, pack of bottled water, and fresh fruit.
+    </div>
+    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Bear Essentials ($59)')">Choose This Package</button>
+  </div>
+
+  <div onclick="selectEnhancePackage('Rise & Shine at the Ridge ()')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <strong>Rise & Shine at the Ridge</strong>
+      <span style="font-weight:700;"></span>
+    </div>
+    <div class="small-note" style="margin-top:6px;">Everything you need for a cozy breakfast at the cabin.</div>
+    <div class="small-note" style="margin-top:8px;">
+      Includes: Eggs, bacon, sausage, pancake mix, syrup, orange juice and bread.
+    </div>
+    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Rise & Shine at the Ridge ($75)')">Choose This Package</button>
+  </div>
+
+  <div onclick="selectEnhancePackage('Grill & Chill Pack ()')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <strong>Grill & Chill Pack</strong>
+      <span style="font-weight:700;"></span>
+    </div>
+    <div class="small-note" style="margin-top:6px;">A classic cabin cookout without the prep.</div>
+    <div class="small-note" style="margin-top:8px;">
+      Includes: Burger patties, hot dogs, buns, cheese, lettuce, tomato, ketchup, mustard and chips or simple sides.
+    </div>
+    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Grill & Chill Pack ($85)')">Choose This Package</button>
+  </div>
+
+  <div onclick="selectEnhancePackage('Mountain Birthday Bash ()')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <strong>Mountain Birthday Bash</strong>
+      <span style="font-weight:700;"></span>
+    </div>
+    <div class="small-note" style="margin-top:6px;">A ready-to-enjoy birthday setup at the Ridge.</div>
+    <div class="small-note" style="margin-top:8px;">
+      Includes: Balloon and banner setup, cake or dessert, and a personalized message.
+    </div>
+    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Mountain Birthday Bash ($125)')">Choose This Package</button>
+  </div>
+
+  <div onclick="selectEnhancePackage('Fireside Anniversary ()')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+      <strong>Fireside Anniversary</strong>
+      <span style="font-weight:700;"></span>
+    </div>
+    <div class="small-note" style="margin-top:6px;">A simple romantic touch to make your stay extra special.</div>
+    <div class="small-note" style="margin-top:8px;">
+      Includes: Wine or champagne, charcuterie board, and a light romantic setup.
+    </div>
+    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Fireside Anniversary ($145)')">Choose This Package</button>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Request Form</h3>
+
+  <label for="enhancePackage">Selected Package</label>
+  <input id="enhancePackage" type="text" placeholder="Tap a package above" readonly>
+
+  <label for="enhanceGuestName">Guest Name</label>
+  <input id="enhanceGuestName" type="text" placeholder="Your name">
+
+  <label for="enhanceGuestEmail">Email</label>
+  <input id="enhanceGuestEmail" type="email" placeholder="you@example.com">
+
+  <label for="enhanceGuestPhone">Phone</label>
+  <input id="enhanceGuestPhone" type="text" placeholder="Best phone number">
+
+  <label for="enhanceArrivalDate">Arrival Date</label>
+  <input id="enhanceArrivalDate" type="date">
+
+  <label for="enhanceNotes">Notes or Requests</label>
+  <textarea id="enhanceNotes" rows="4" placeholder="Add any details here, such as celebration wording, food preferences, or arrival timing."></textarea>
+
+  <button type="button" class="action-btn center-button" onclick="submitEnhanceStayRequest()">Submit Request</button>
+
+  <div id="enhanceStaySuccess" class="form-message form-success">Your request was sent successfully.</div>
+  <div id="enhanceStayError" class="form-message form-error">There was a problem sending your request.</div>
+
+  <p class="small-note">
+    Please allow at least 48 hours notice. Orders are based on availability and delivery timing and may not be fulfilled if timing does not allow.
+  </p>
+</div>
+  </div>
+</div>
+ 
+  <div id="guestMemories" class="hidden page">
+    <button class="back" type="button" onclick="showPage('home')">← Back</button>
+    <h1>Guest Memories</h1>
+
+    <div class="panel">
+      <div id="photosContent" class="small-note" style="margin-bottom:10px;"></div>
+
+      <label for="guestMemoryName">Your Name (Optional)</label>
+      <input id="guestMemoryName" type="text" placeholder="Add your name">
+
+      <label for="guestMediaFiles">Select Photos or Videos</label>
+      <input id="guestMediaFiles" type="file" multiple accept="image/*,video/*" onchange="previewGuestMedia()">
+
+      <div id="guestPreview" class="preview-grid"></div>
+
+      <div class="upload-actions">
+        <button class="action-btn" type="button" onclick="addGuestMedia()">Add to Guest Gallery</button>
+        <button class="action-btn secondary-btn" type="button" onclick="clearGuestPreview()">Clear</button>
+      </div>
+
+      <div id="guestPhotoMessage" class="form-message"></div>
+
+      <p class="small-note" style="margin-top:12px;">
+        Photos and videos uploaded here are saved to the shared guest gallery and can be viewed across devices.
+      </p>
+    </div>
+
+    <div class="panel">
+      <h3>Guest Gallery</h3>
+      <div id="guestGallery" class="small-note">No guest media yet.</div>
+    </div>
+  </div>
+
+  <div id="checkout" class="hidden page">
+    <button class="back" type="button" onclick="showPage('home')">← Back</button>
+    <div class="page-banner">
+      <img id="imgBannerCheckout" src="interior.jpg" alt="">
+      <div class="page-banner-text">
+        <strong>Before You Go</strong>
+        <span>A quick checkout checklist to help us get ready for the next guests.</span>
+      </div>
+    </div>
+    <div id="checkoutContent"></div>
+  </div>
+
+ <div id="requestToBook" class="hidden page">
+  <button class="back" type="button" onclick="showPage('home')">← Back</button>
+  <h1>Unlock Returning Guest Discounts</h1>
+
+  <div class="panel">
+    <p class="small-note request-note">
+    Submit your request below to receive your returning guest discount.
+
+Then click the Airbnb link to start your booking request. Once submitted, we’ll send you an updated discounted quote directly through Airbnb.  
+    </p>
+
+   <div style="margin-bottom:20px;">
+
+  <a href="https://www.airbnb.com/h/darbysridge" target="_blank" style="
+    display:block;
+    margin-top:10px;
+    padding:14px;
+    background:#3c2c1f;
+    color:white;
+    text-align:center;
+    border-radius:12px;
+    text-decoration:none;
+    font-weight:600;
+  ">
+    Open Darby’s Ridge on Airbnb
+  </a>
+</div>
+    <label for="requestName">Name</label>
+    <input id="requestName" type="text" placeholder="Your name">
+
+    <label for="requestPhone">Phone Number</label>
+    <input id="requestPhone" type="tel" placeholder="Best phone number">
+
+    <label for="requestPreviousStay">Previous Stay Dates</label>
+    <input id="requestPreviousStay" type="text" placeholder="Example: June 12–15, 2025">
+
+    <label for="requestArrival">Preferred Arrival Date</label>
+    <input id="requestArrival" type="text" placeholder="Enter date">
+
+    <label for="requestDeparture">Preferred Departure Date</label>
+    <input id="requestDeparture" type="text" placeholder="Enter date">
+
+    <label for="requestGuests">Number of Guests</label>
+    <input id="requestGuests" type="text" placeholder="How many guests?">
+
+    <label for="requestNotes">Notes</label>
+    <textarea id="requestNotes" rows="5" placeholder="Anything you'd like us to know"></textarea>
+
+    <div id="requestBookSuccess" class="form-message form-success">Discount request submitted.</div>
+    <div id="requestBookError" class="form-message form-error">There was a problem submitting your request.</div>
+    <button class="action-btn center-button" type="button" onclick="submitRequestToBook()">Submit Discount Request</button>
+  </div>
+</div> 
+
+  <div id="login" class="hidden page">
+    <button class="back" type="button" onclick="showPage('home')">← Back</button>
+    <h1>Team Access</h1>
+
+    <div class="panel">
+  <p style="margin-top:0;">Enter the team password to access the portal.</p>
+<input id="teamPassword" type="password" placeholder="Enter password">
+      <div id="loginError" class="form-message form-error">Incorrect password. Please try again.</div>
+      <button class="action-btn" type="button" onclick="checkLogin()">Enter Team Portal</button>
+    </div>
+  </div>
+
+  <div id="ownerLogin" class="hidden page">
+    <button class="back" type="button" onclick="showPage('home')">← Back</button>
+    <h1>Owner Portal</h1>
+
+    <div class="panel">
+   <p style="margin-top:0;">Enter your username and password.</p> 
+      <input id="ownerUsername" type="text" placeholder="Enter username">
+<input id="ownerPassword" type="password" placeholder="Enter password">
+      <div id="ownerLoginError" class="form-message form-error">Incorrect password. Please try again.</div>
+      <button class="action-btn" type="button" onclick="checkOwnerLogin()">Enter Owner Dashboard</button>
+    </div>
+  </div>
+
+  <div id="team" class="hidden page">
+    <button class="back" type="button" onclick="showPage('home')">← Back</button>
+    <h1>Team Portal</h1>
+
+    <div class="panel">
+      <h3>Operations</h3>
+      <div class="button-stack">
+        <button class="action-btn" type="button" onclick="showPage('cleanings'); loadCalendar();">Upcoming Cleanings</button>
+        <button class="action-btn tertiary-btn" type="button" onclick="showPage('supplies')">Supplies Needed</button>
+        <button class="action-btn" type="button" onclick="showPage('maintenance')">Maintenance Log</button>
+        <button class="action-btn secondary-btn" type="button" onclick="showPage('turnover')">Turnover Submission</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>Turnover Checklist</h3>
+      <ul class="check-list" id="teamChecklistDisplay"></ul>
+    </div>
+  </div>
+
+  <div id="cleanings" class="hidden page">
+    <button class="back" type="button" onclick="showPage('team')">← Back</button>
+    <h1>Upcoming Cleanings</h1>
+
+    <div class="panel">
+      <h3>Airbnb Calendar</h3>
+      <p class="small-note">Upcoming booking calendar.</p>
+      <div id="calendarStatus" class="small-note">Loading calendar...</div>
+      <button class="action-btn tertiary-btn" type="button" onclick="loadCalendar()" style="margin-top:12px;">Refresh Calendar</button>
+    </div>
+
+    <div class="panel">
+      <h3>Upcoming Bookings</h3>
+      <div id="calendarResults">
+        <div class="small-note">No calendar data yet.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="supplies" class="hidden page">
+    <button class="back" type="button" onclick="showPage('team')">← Back</button>
+    <h1>Supplies Needed</h1>
+
+    <div class="panel">
+      <label for="supplySimpleInput">Add Supply Item</label>
+      <input id="supplySimpleInput" type="text" placeholder="Paper towels, dish pods, coffee pods...">
+      <button class="action-btn center-button" type="button" onclick="addSupplyItem()">Add Item</button>
+    </div>
+
+    <div class="panel">
+      <h3>Current Supply List</h3>
+      <div id="supplyListContainer" class="small-note">No supplies listed.</div>
+    </div>
+  </div>
+
+  <div id="maintenance" class="hidden page">
+    <button class="back" type="button" onclick="showPage('team')">← Back</button>
+    <h1>Maintenance Log</h1>
+
+    <div class="panel">
+      <label for="maintenanceSimpleInput">Add Maintenance Item</label>
+      <input id="maintenanceSimpleInput" type="text" placeholder="Loose rail, lamp out, faucet drip...">
+      <button class="action-btn center-button" type="button" onclick="addMaintenanceItem()">Add Issue</button>
+    </div>
+
+    <div class="panel">
+      <h3>Current Maintenance List</h3>
+      <div id="maintenanceListContainer" class="small-note">No maintenance items listed.</div>
+    </div>
+  </div>
+
+  <div id="turnover" class="hidden page">
+    <button class="back" type="button" onclick="showPage('team')">← Back</button>
+    <h1>Turnover Submission</h1>
+
+    <div class="panel">
+      
+
+      <label for="turnoverDate">Turnover Date</label>
+      <input id="turnoverDate" type="text" placeholder="Enter date">
+
+      <label for="turnoverNotes">Turnover Notes</label>
+      <textarea id="turnoverNotes" rows="5" placeholder="Anything the owner should know before the next guest"></textarea>
+
+      <label for="turnoverFiles">Upload Turnover Photos or Videos</label>
+      <input id="turnoverFiles" type="file" multiple accept="image/*,video/*" onchange="previewTurnoverMedia()">
+
+      <div id="turnoverPreview" class="preview-grid"></div>
+
+      <div id="turnoverSuccess" class="form-message form-success">Turnover submission saved.</div>
+      <div id="turnoverError" class="form-message form-error">There was a problem saving the turnover submission.</div>
+
+      <button class="action-btn center-button" type="button" onclick="submitTurnoverComplete()">Submit Turnover</button>
+    </div>
+  </div>
+
+  <div id="owner" class="hidden page">
+    <button class="back" type="button" onclick="showPage('home')">← Back</button>
+    <h1>Owner Dashboard</h1>
+
+    <div class="panel">
+      <h3>Snapshot</h3>
+      <div id="ownerDashboardCounts"></div>
+    </div>
+
+    <div class="panel">
+      <h3>Recent Booking Requests</h3>
+      <div id="ownerRequestList" class="small-note">No requests yet.</div>
+    </div>
+
+    <div class="panel">
+      <h3>Supplies Needed</h3>
+      <div id="ownerSupplyList" class="small-note">No supplies listed.</div>
+
+      <div class="owner-subtitle">Maintenance Items</div>
+      <div id="ownerMaintenanceList" class="small-note">No maintenance items listed.</div>
+    </div>
+
+    <div class="panel">
+      <h3>Guest Gallery Manager</h3>
+      <div id="ownerGuestGalleryEntries" class="small-note">No guest media yet.</div>
+    </div>
+
+    <div class="panel">
+      <h3>Recent Turnover Submissions</h3>
+      <div id="ownerTurnoverEntries" class="small-note">No turnover submissions yet.</div>
+    </div>
+
+  
+    <div class="panel">
+      <h3>Edit Guest Guide Content</h3>
+
+      <label for="ownerSectionSelect">Choose Section</label>
+      <select id="ownerSectionSelect" onchange="loadOwnerEditor()">
+        <option value="info">WiFi & Cabin Essentials</option>
+        <option value="local">Blue Ridge Guest Favorites</option>
+        <option value="trail">Trail to Lake</option>
+        <option value="photos">Guest Memories Intro</option>
+        <option value="checkout">Checkout Instructions</option>
+        <option value="checklist">Turnover Checklist</option>
+      </select>
+
+      <textarea id="ownerSectionEditor" rows="10" class="edit-box"></textarea>
+
+      <button class="action-btn center-button" type="button" onclick="saveOwnerContent()">Save Changes</button>
+      <div id="ownerSaveMessage" class="form-message form-success">Changes saved.</div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button type="button" onclick="showPage('login')">Team Portal</button>
+    <button class="bottom-home" type="button" onclick="showPage('home')">Home</button>
+    <button type="button" onclick="showPage('ownerLogin')">Owner Portal</button>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://iweqytwgvmdwrnnphydl.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3ZXF5dHdndm1kd3JubnBoeWRsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2OTA0MjEsImV4cCI6MjA4OTI2NjQyMX0.-3sbHljAu_InHCLlQF6GwY0RS6qaZnWbrKCCsX94L7M';
+
+    let supabaseClient = null;
+
+   let currentUser = null; 
+
+    const GUEST_BUCKET = 'guest-bucket';
+    const TURNOVER_BUCKET = 'turnover-bucket';
+    const MAX_MEDIA_ITEMS = 6;
+
+    const defaultContent = {
+  info: `WiFi
+
+Network: NETGEAR56
+Password: elegantboat149
+
+Gate Code
+
+Gate Code: 1972
+
+Front Door Lock
+
+The front door lock code is the last four digits of the phone number used for your reservation.
+
+TV
+
+The TVs are smart TVs and ready for you to enjoy. Feel free to log into your favorite streaming apps during your stay, and please remember to log out before checkout.
+
+Fireplace
+
+The fireplace is available for guest use during cooler months. It is closed between Memorial Day and Labor Day. Please ensure the fire is always attended while burning and fully extinguished before leaving the cabin or going to bed. Never leave the fireplace unattended.
+
+Kitchen Basics
+
+The kitchen is stocked with the basics to help you settle in and enjoy your stay. You’ll find cookware, dishes, utensils, and a few starter items, along with coffee essentials for a cozy cabin morning.
+
+Dishwasher & Cleanup
+
+Dishwasher pods, trash bags, and paper towels are provided to get you started. We simply ask that you load and start the dishwasher before checkout.
+
+Outdoor Cooking
+
+If you use the Blackstone, please scrape the grill after use. No deep cleaning is necessary.
+
+Washer & Dryer
+
+A washer and dryer are available for your use during your stay, and laundry detergent is provided.
+
+Heat & Air
+
+Please keep doors and windows closed while the heat or air is running and avoid setting the thermostat to extreme temperatures.
+
+Cell Service
+
+Cell service can be limited in the mountains depending on your carrier, so WiFi calling may work best during your stay.
+
+Need More Info?
+
+Please refer to the guest guide for additional house information, tips for your stay, and local recommendations.`,
+
+  local: `<div class="favorites-list">
+
+    <div class="favorite-item">
+      <h3>Adventure Day</h3>
+      <p>Start with coffee at the cabin, spend the morning exploring the trail access from Darby’s Ridge, then head into Blue Ridge for lunch and an afternoon by the lake.</p>
+      <p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Lake+Blue+Ridge+GA">Lake Map</a>
+      </p>
+    </div>
+
+    <div class="favorite-item">
+      <h3>Romantic Day</h3>
+      <p>Sleep in, enjoy a slow morning on the deck, browse downtown Blue Ridge, and end the day with dinner at Harvest on Main or Black Sheep.</p>
+      <p>
+        <a href="https://harvestonmain.com/" target="_blank">Harvest on Main</a> |
+        <a href="https://blacksheepblueridge.com/" target="_blank">Black Sheep</a>
+      </p>
+    </div>
+
+    <div class="favorite-item">
+      <h3>Family Day</h3>
+      <p>Ride the Blue Ridge Scenic Railway, stop by Mercier Orchards, grab treats, and come back to the cabin for game room time and a fire outside.</p>
+      <p>
+        <a href="https://brscenic.com/" target="_blank">Scenic Railway</a> |
+        <a href="https://mercier-orchards.com/" target="_blank">Mercier Orchards</a>
+      </p>
+    </div>
+
+    <div class="favorite-item">
+      <h3>Relax Day</h3>
+      <p>Keep it easy with a slow cabin morning, coffee with a view, a short outing into town, and a cozy evening back at Darby’s Ridge.</p>
+    </div>
+
+  </div>`,
+
+  trail: `<div class="favorites-list">
+
+    <div class="favorite-item">
+      <h3>Access From the Property</h3>
+      <p>One of the best parts of staying at Darby’s Ridge is access to the Green Mountain Trail system from the property, so you can begin your hike right from the cabin area.</p>
+    </div>
+
+    <div class="favorite-item">
+      <h3>About the Trail System</h3>
+      <p>The trail system offers a scenic wooded mountain hike with natural terrain, changing elevation, and a route that leads toward Lake Blue Ridge. Conditions can vary depending on weather and recent rain.</p>
+    </div>
+
+    <div class="favorite-item">
+      <h3>Directions + Distance</h3>
+      <p>Follow the property trail access path and continue toward the Green Mountain trail route leading in the direction of the lake. Plan for a moderate outdoor walk and allow extra time for stops, photos, and changing trail conditions.</p>
+    </div>
+
+    <div class="favorite-item">
+      <h3>Before You Head Out</h3>
+      <p>Wear sturdy shoes, bring water, and take your phone. Cell service can be limited in the mountains, so it’s best to hike during daylight and use extra caution on uneven or slick sections.</p>
+    </div>
+
+    <div class="favorite-item">
+      <h3>Helpful Links</h3>
+      <p>
+        <a href="https://www.google.com/maps/search/?api=1&query=Green+Mountain+Trail+Blue+Ridge+GA">Trail Map</a> |
+        <a href="https://www.google.com/maps/search/?api=1&query=Lake+Blue+Ridge+GA">Lake Map</a>
+      </p>
+    </div>
+
+  </div>`,
+
+  photos: `We’d love to see your favorite moments from your stay. Add a few photos or videos below and they’ll appear in the shared guest gallery for future guests to enjoy.`,
+
+  checkout: `Checkout Checklist
+Please load any remaining dirty dishes and start the dishwasher.
+Remove all food items that you brought with you.
+Empty all trash cans and place bags in the bear-proof outdoor bin.
+Place used towels in the laundry area.
+Leave beds that were used unmade.
+Double-check drawers, outlets, and outdoor areas for personal belongings.
+If you moved any décor or items, please return them to their original spots.
+Lock all doors and windows before leaving.
+Turn thermostat to 72 in the summer and 68 in the winter.
+Text us when you depart so we can alert our cleaning team.
+Thank you for staying at Darby’s Ridge — we hope to host you again soon!`,
+
+  checklist: `Make all beds and fluff pillows
+Clean and reset bathrooms
+Wipe kitchen counters and appliances
+Check refrigerator and remove leftover items
+Restock paper goods, soaps, and coffee items
+Check hot tub cover and outdoor areas
+Sweep entry and check decks
+Take final walkthrough photos`,
+
+  hero_image: `hero.jpg`,
+  home_guide_image: `cabin-exterior.jpg`,
+  home_info_image: `essentials.jpg`,
+  home_local_image: `local.jpg`,
+  home_trail_image: `trail.jpg`,
+  home_memories_image: `outdoor.jpg`,
+  home_checkout_image: `interior.jpg`,
+  home_request_image: `mountains.jpg`,
+  banner_info_image: `essentials.jpg`,
+  banner_local_image: `local.jpg`,
+  banner_trail_image: `trail.jpg`,
+  banner_checkout_image: `interior.jpg`,
+  book_again_airbnb_link: ``
+};
+
+    function escapeHtml(text){
+      return String(text ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function highlightLabels(text){
+      return text.replace(/(Network:|Password:|Gate Code:)/g, '<span class="highlight">$1</span>');
+    }
+
+    function formatInfoContent(raw){
+      const sections = raw.split(/\n\s*\n/).map(item => item.trim()).filter(Boolean);
+      let html = '<div class="essentials-panel">';
+
+      for(let i = 0; i < sections.length; i += 2){
+        const title = sections[i] || '';
+        const body = sections[i + 1] || '';
+
+        html += `
+          <div class="essentials-block">
+            <h3>${escapeHtml(title)}</h3>
+            <p>${highlightLabels(escapeHtml(body))}</p>
+          </div>
+        `;
+      }
+
+      html += '</div>';
+      return html;
+    }
+
+    function formatCheckoutContent(raw){
+      const lines = raw.split('\n').map(line => line.trim()).filter(Boolean);
+      if(!lines.length) return '';
+
+      const title = lines[0];
+      const items = lines.slice(1);
+
+      return `
+        <div class="checkout-panel">
+          <h3 class="checkout-title">${escapeHtml(title)}</h3>
+          <ul class="checkmark-list">
+            ${items.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+    }
+
+    function getFileExtension(name){
+      const parts = String(name || '').split('.');
+      return parts.length > 1 ? parts.pop().toLowerCase() : '';
+    }
+
+    function isVideoType(type){
+      return String(type || '').startsWith('video/');
+    }
+
+    function renderMediaPreviewTag(url, mediaType, muted = false){
+      if(isVideoType(mediaType)){
+        return `
+          <video ${muted ? 'muted' : ''} controls playsinline preload="metadata">
+            <source src="${escapeHtml(url)}" type="${escapeHtml(mediaType || 'video/mp4')}">
+          </video>
+        `;
+      }
+
+      return `<img src="${escapeHtml(url)}" alt="Media">`;
+    }
+
+    async function getSectionContent(section){
+      if(!supabaseClient) return defaultContent[section] || '';
+
+      try{
+        const { data, error } = await supabaseClient
+          .from('app_content')
+          .select('value')
+          .eq('section', section)
+          .maybeSingle();
+
+        if(error){
+          console.error(error);
+          return defaultContent[section] || '';
+        }
+
+        return data?.value ?? defaultContent[section] ?? '';
+      } catch(e){
+        console.error(e);
+        return defaultContent[section] || '';
+      }
+    }
+
+    async function saveSectionContent(section, value){
+      const { error } = await supabaseClient
+        .from('app_content')
+        .upsert({ section, value }, { onConflict: 'section' });
+
+      if(error) throw error;
+    }
+
+    async function getChecklistItems(){
+      const raw = await getSectionContent('checklist');
+      return raw.split('\n').map(item => item.trim()).filter(Boolean);
+    }
+
+    function applyMapLinkBehavior(containerId){
+      const container = document.getElementById(containerId);
+      if(!container) return;
+
+      const links = container.querySelectorAll('a[href]');
+      links.forEach(link => {
+        const href = String(link.getAttribute('href') || '').toLowerCase();
+        const isMapLink =
+          href.includes('google.com/maps') ||
+          href.includes('google.com/maps/search') ||
+          href.includes('api=1&query') ||
+          href.includes('maps.apple.com');
+
+        if(isMapLink){
+          link.setAttribute('target', '_self');
+          link.removeAttribute('rel');
+        }
+      });
+    }
+
+    async function renderDynamicImages(){
+      const keys = [
+        'hero_image',
+        'home_guide_image',
+        'home_info_image',
+        'home_local_image',
+        'home_trail_image',
+        'home_memories_image',
+        'home_checkout_image',
+        'home_request_image',
+        'banner_info_image',
+        'banner_local_image',
+        'banner_trail_image',
+        'banner_checkout_image',
+        'book_again_airbnb_link'
+      ];
+
+      const values = {};
+      for(const key of keys){
+        values[key] = await getSectionContent(key);
+      }
+
+      document.getElementById('heroSection').style.backgroundImage = `url("${values.hero_image || defaultContent.hero_image}")`;
+
+      document.getElementById('imgHomeGuide').src = values.home_guide_image || defaultContent.home_guide_image;
+      document.getElementById('imgHomeInfo').src = values.home_info_image || defaultContent.home_info_image;
+      document.getElementById('imgHomeLocal').src = values.home_local_image || defaultContent.home_local_image;
+      document.getElementById('imgHomeTrail').src = values.home_trail_image || defaultContent.home_trail_image;
+      document.getElementById('imgHomeMemories').src = values.home_memories_image || defaultContent.home_memories_image;
+      document.getElementById('imgHomeCheckout').src = values.home_checkout_image || defaultContent.home_checkout_image;
+      document.getElementById('imgHomeRequest').src = values.home_request_image || defaultContent.home_request_image;
+
+      document.getElementById('imgBannerInfo').src = values.banner_info_image || defaultContent.banner_info_image;
+      document.getElementById('imgBannerLocal').src = values.banner_local_image || defaultContent.banner_local_image;
+      document.getElementById('imgBannerTrail').src = values.banner_trail_image || defaultContent.banner_trail_image;
+      document.getElementById('imgBannerCheckout').src = values.banner_checkout_image || defaultContent.banner_checkout_image;
+
+      const airbnbLink = document.getElementById('airbnbBookLink');
+      const bookingUrl = String(values.book_again_airbnb_link || '').trim();
+
+      if(bookingUrl){
+        airbnbLink.href = bookingUrl;
+        airbnbLink.classList.remove('hidden');
+      } else {
+        airbnbLink.href = '#';
+        airbnbLink.classList.add('hidden');
+      }
+    }
+
+    async function renderEditablePages(){
+      const info = await getSectionContent('info');
+      const local = await getSectionContent('local');
+      const trail = await getSectionContent('trail');
+      const photos = await getSectionContent('photos');
+      const checkout = await getSectionContent('checkout');
+
+      document.getElementById('infoContent').innerHTML = formatInfoContent(info);
+      document.getElementById('localContent').innerHTML = local;
+      document.getElementById('trailContent').innerHTML = trail;
+      document.getElementById('photosContent').innerText = photos;
+      document.getElementById('checkoutContent').innerHTML = formatCheckoutContent(checkout);
+
+      applyMapLinkBehavior('localContent');
+      applyMapLinkBehavior('trailContent');
+
+      const checklistEl = document.getElementById('teamChecklistDisplay');
+      if(checklistEl){
+        const items = await getChecklistItems();
+        checklistEl.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+      }
+
+      await renderDynamicImages();
+    }
+
+    async function loadOwnerEditor(){
+      const section = document.getElementById('ownerSectionSelect').value;
+      document.getElementById('ownerSectionEditor').value = await getSectionContent(section);
+      document.getElementById('ownerSaveMessage').style.display = 'none';
+    }
+
+    async function saveOwnerContent(){
+      const section = document.getElementById('ownerSectionSelect').value;
+      const value = document.getElementById('ownerSectionEditor').value;
+
+      try{
+        await saveSectionContent(section, value);
+        await renderEditablePages();
+        document.getElementById('ownerSaveMessage').style.display = 'block';
+      } catch(e){
+        console.error(e);
+        alert('Could not save changes.');
+      }
+    }
+
+    async function loadOwnerImageEditor(){
+      const key = document.getElementById('ownerImageSelect').value;
+      document.getElementById('ownerImageEditor').value = await getSectionContent(key);
+      document.getElementById('ownerImageSaveMessage').style.display = 'none';
+    }
+
+    async function saveOwnerImageSetting(){
+      const key = document.getElementById('ownerImageSelect').value;
+      const value = document.getElementById('ownerImageEditor').value.trim();
+
+      try{
+        await saveSectionContent(key, value);
+        await renderDynamicImages();
+        document.getElementById('ownerImageSaveMessage').style.display = 'block';
+      } catch(e){
+        console.error(e);
+        alert('Could not save photo or link.');
+      }
+    }
+
+   function showPage(page){
+  const pages = [
+    'home','guidebook','info','local','trail','waysToTheRidge','enhanceStay','guestMemories','checkout','requestToBook',
+    'login','ownerLogin','team','cleanings','supplies','maintenance','turnover','owner'
+  ];
+
+      pages.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      const target = document.getElementById(page);
+      if (target) {
+        target.classList.remove('hidden');
+        window.scrollTo(0,0);
+      }
+
+      if (page === 'supplies') renderSupplyList();
+      if (page === 'maintenance') renderMaintenanceList();
+      if (page === 'guestMemories') renderGuestGallery();
+      if (page === 'owner') {
+        renderOwnerDashboard();
+        loadOwnerEditor();
+        loadOwnerImageEditor();
+      }
+    }
+
+  async function checkLogin(){
+  const password = document.getElementById('teamPassword').value;
+  const error = document.getElementById('loginError');
+
+  error.style.display = 'none';
+
+  if(!password){
+    error.textContent = 'Enter the team password.';
+    error.style.display = 'block';
+    return;
+  }
+
+  const { data, error: dbError } = await supabaseClient
+    .from('app_users')
+    .select('*')
+    .eq('password', password)
+    .eq('role', 'team')
+    .eq('active', true)
+    .maybeSingle();
+
+  if(dbError){
+    console.error(dbError);
+    error.textContent = 'Unable to check login right now.';
+    error.style.display = 'block';
+    return;
+  }
+
+  if(!data){
+    error.textContent = 'Incorrect password. Please try again.';
+    error.style.display = 'block';
+    return;
+  }
+
+  currentUser = data;
+  document.getElementById('teamPassword').value = '';
+  showPage('team');
+} 
+
+async function checkOwnerLogin(){
+  const username = document.getElementById('ownerUsername').value.trim().toLowerCase();
+  const password = document.getElementById('ownerPassword').value;
+  const error = document.getElementById('ownerLoginError');
+
+  if(!username || !password){
+    error.textContent = 'Enter username and password.';
+    error.style.display = 'block';
+    return;
+  }
+
+  const { data, error: dbError } = await supabaseClient
+    .from('app_users')
+    .select('*')
+    .eq('username', username)
+    .eq('password', password)
+    .eq('role', 'owner')
+    .eq('active', true)
+    .maybeSingle();
+
+  if(dbError){
+    console.error(dbError);
+    error.textContent = 'Login failed.';
+    error.style.display = 'block';
+    return;
+  }
+
+  if(data){
+    currentUser = data;
+    error.style.display = 'none';
+    showPage('owner');
+  } else {
+    error.textContent = 'Incorrect username or password.';
+    error.style.display = 'block';
+  }
+}
+
+  
+    async function addSupplyItem(){
+      const input = document.getElementById('supplySimpleInput');
+      const value = input.value.trim();
+      if(!value) return;
+
+      const { error } = await supabaseClient
+        .from('supplies')
+        .insert([{ item: value }]);
+
+      if(error){
+        console.error(error);
+        alert('Could not add supply item.');
+        return;
+      }
+
+      input.value = '';
+      await renderSupplyList();
+      await renderOwnerDashboard();
+    }
+
+    async function removeSupplyItem(id){
+      const { error } = await supabaseClient
+        .from('supplies')
+        .delete()
+        .eq('id', id);
+
+      if(error){
+        console.error(error);
+        alert('Could not remove supply item.');
+        return;
+      }
+
+      await renderSupplyList();
+      await renderOwnerDashboard();
+    }
+
+    async function renderSupplyList(){
+      const container = document.getElementById('supplyListContainer');
+      if(!container) return;
+
+      const { data, error } = await supabaseClient
+        .from('supplies')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if(error || !data || !data.length){
+        container.innerHTML = '<div class="small-note">No supplies listed.</div>';
+        return;
+      }
+
+      container.innerHTML = data.map(item => `
+        <div class="list-row">
+          <div>${escapeHtml(item.item)}</div>
+          <button class="delete-btn" type="button" onclick="removeSupplyItem(${item.id})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    async function addMaintenanceItem(){
+      const input = document.getElementById('maintenanceSimpleInput');
+      const value = input.value.trim();
+      if(!value) return;
+
+      const { error } = await supabaseClient
+        .from('maintenance')
+        .insert([{ item: value }]);
+
+      if(error){
+        console.error(error);
+        alert('Could not add maintenance item.');
+        return;
+      }
+
+      input.value = '';
+      await renderMaintenanceList();
+      await renderOwnerDashboard();
+    }
+
+    async function removeMaintenanceItem(id){
+      const { error } = await supabaseClient
+        .from('maintenance')
+        .delete()
+        .eq('id', id);
+
+      if(error){
+        console.error(error);
+        alert('Could not remove maintenance item.');
+        return;
+      }
+
+      await renderMaintenanceList();
+      await renderOwnerDashboard();
+    }
+
+    async function renderMaintenanceList(){
+      const container = document.getElementById('maintenanceListContainer');
+      if(!container) return;
+
+      const { data, error } = await supabaseClient
+        .from('maintenance')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if(error || !data || !data.length){
+        container.innerHTML = '<div class="small-note">No maintenance items listed.</div>';
+        return;
+      }
+
+      container.innerHTML = data.map(item => `
+        <div class="list-row">
+          <div>${escapeHtml(item.item)}</div>
+          <button class="delete-btn" type="button" onclick="removeMaintenanceItem(${item.id})">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    function renderOwnerActionList(items, emptyText, type){
+      if(!items.length){
+        return `<div class="small-note">${emptyText}</div>`;
+      }
+
+      return items.map(item => `
+        <div class="owner-list-card">
+          <div class="owner-list-row">
+            <div>${escapeHtml(item.item)}</div>
+            <button class="mini-delete" type="button" onclick="${type === 'supply' ? `removeSupplyItem(${item.id})` : `removeMaintenanceItem(${item.id})`}">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function deleteBookingRequest(id){
+      const okay = confirm('Delete this booking request?');
+      if(!okay) return;
+
+      try{
+        const { error } = await supabaseClient
+          .from('booking_requests')
+          .delete()
+          .eq('id', id);
+
+        if(error){
+          console.error(error);
+          alert('Could not delete booking request.');
+          return;
+        }
+
+        await renderOwnerDashboard();
+      } catch(e){
+        console.error(e);
+        alert('Could not delete booking request.');
+      }
+    }
+
+    async function renderOwnerRequests(){
+      const container = document.getElementById('ownerRequestList');
+      if(!container) return;
+
+      try{
+        const { data, error } = await supabaseClient
+          .from('booking_requests')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if(error){
+          console.error(error);
+          container.innerHTML = '<div class="small-note">Could not load requests.</div>';
+          return;
+        }
+
+        if(!data || !data.length){
+          container.innerHTML = '<div class="small-note">No requests yet.</div>';
+          return;
+        }
+
+        container.innerHTML = data.map(item => `
+          <div class="submission-card">
+            <h4>${escapeHtml(item.name || 'Guest Request')}</h4>
+            <p><strong>Phone:</strong> ${escapeHtml(item.phone || 'Not provided')}</p>
+            <p><strong>Arrival:</strong> ${escapeHtml(item.arrival || '')}</p>
+            <p><strong>Departure:</strong> ${escapeHtml(item.departure || '')}</p>
+            <p><strong>Guests:</strong> ${escapeHtml(item.guests || '')}</p>
+            ${item.notes ? `<p><strong>Notes:</strong> ${escapeHtml(item.notes)}</p>` : ''}
+            <div class="admin-actions">
+              <button class="mini-delete" type="button" onclick="deleteBookingRequest(${item.id})">Delete</button>
+            </div>
+          </div>
+        `).join('');
+      } catch(e){
+        console.error(e);
+        container.innerHTML = '<div class="small-note">Could not load requests.</div>';
+      }
+    }
+
+    async function deleteGuestMedia(id, imagePath){
+      const okay = confirm('Delete this guest gallery item?');
+      if(!okay) return;
+
+      try{
+        if(imagePath){
+          const { error: storageError } = await supabaseClient
+            .storage
+            .from(GUEST_BUCKET)
+            .remove([imagePath]);
+
+          if(storageError){
+            console.error(storageError);
+          }
+        }
+
+        const { error } = await supabaseClient
+          .from('guest_gallery')
+          .delete()
+          .eq('id', id);
+
+        if(error) throw error;
+
+        await renderGuestGallery();
+        await renderOwnerDashboard();
+      } catch(e){
+        console.error(e);
+        alert('Could not delete guest media.');
+      }
+    }
+
+  async function deleteTurnoverSubmission(id){
+  const okay = confirm('Delete this entire turnover submission and all attached media?');
+  if(!okay) return;
+
+  try{
+    const { data: mediaItems, error: mediaLoadError } = await supabaseClient
+      .from('turnover_photos')
+      .select('*')
+      .eq('turnover_id', id);
+
+    if(mediaLoadError) throw mediaLoadError;
+
+    if(mediaItems && mediaItems.length){
+      const pathsToRemove = mediaItems
+        .map(item => item.image_path)
+        .filter(Boolean);
+
+      if(pathsToRemove.length){
+        const { error: storageError } = await supabaseClient
+          .storage
+          .from(TURNOVER_BUCKET)
+          .remove(pathsToRemove);
+
+        if(storageError){
+          console.error(storageError);
+        }
+      }
+
+      const { error: deletePhotosError } = await supabaseClient
+        .from('turnover_photos')
+        .delete()
+        .eq('turnover_id', id);
+
+      if(deletePhotosError) throw deletePhotosError;
+    }
+
+    const { error: deleteTurnoverError } = await supabaseClient
+      .from('turnovers')
+      .delete()
+      .eq('id', id);
+
+    if(deleteTurnoverError) throw deleteTurnoverError;
+
+    await renderOwnerDashboard();
+  } catch(e){
+    console.error(e);
+    alert('Could not delete turnover submission.');
+  }
+}
+
+async function deleteTurnoverMedia(id, imagePath){
+  const okay = confirm('Delete this turnover media item?');
+  if(!okay) return;
+
+  try{
+    if(imagePath){
+      const { error: storageError } = await supabaseClient
+        .storage
+        .from(TURNOVER_BUCKET)
+        .remove([imagePath]);
+
+      if(storageError){
+        console.error(storageError);
+      }
+    }
+
+    const { error } = await supabaseClient
+      .from('turnover_photos')
+      .delete()
+      .eq('id', id);
+
+    if(error) throw error;
+
+    await renderOwnerDashboard();
+  } catch(e){
+    console.error(e);
+    alert('Could not delete turnover media.');
+  }
+}  
+     
+    async function renderOwnerGuestGallery(){
+      const container = document.getElementById('ownerGuestGalleryEntries');
+      if(!container) return;
+
+      try{
+        const { data, error } = await supabaseClient
+          .from('guest_gallery')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if(error || !data || !data.length){
+          container.innerHTML = '<div class="small-note">No guest media yet.</div>';
+          return;
+        }
+
+        container.innerHTML = `
+          <div class="owner-gallery-strip">
+            ${data.map(item => `
+              <div class="submission-card">
+                <div class="owner-media-thumb">
+                  ${renderMediaPreviewTag(item.image_url, item.media_type || 'image/jpeg')}
+                </div>
+                <p><strong>Name:</strong> ${escapeHtml(item.guest_name || 'Guest Memory')}</p>
+                <p><strong>Type:</strong> ${escapeHtml(item.media_type || 'image/jpeg')}</p>
+                <div class="admin-actions">
+                  <button class="mini-delete" type="button" onclick="deleteGuestMedia(${item.id}, '${escapeHtml(item.image_path || '')}')">Delete</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } catch(e){
+        console.error(e);
+        container.innerHTML = '<div class="small-note">No guest media yet.</div>';
+      }
+    }
+
+    async function renderOwnerTurnovers(){
+      const container = document.getElementById('ownerTurnoverEntries');
+      if(!container) return;
+
+      const { data, error } = await supabaseClient
+        .from('turnovers')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if(error || !data || !data.length){
+        container.innerHTML = '<div class="small-note">No turnover submissions yet.</div>';
+        return;
+      }
+
+      let html = '';
+
+      for(const item of data){
+        let mediaHtml = '';
+
+        try{
+          const { data: mediaItems } = await supabaseClient
+            .from('turnover_photos')
+            .select('*')
+            .eq('turnover_id', item.id)
+            .order('created_at', { ascending: false });
+
+          if(mediaItems && mediaItems.length){
+         mediaHtml = `
+  <div class="owner-gallery-strip">
+    ${mediaItems.map(media => `
+      <div class="submission-card">
+        <div class="owner-media-thumb">
+          ${renderMediaPreviewTag(media.image_url, media.media_type || 'image/jpeg')}
+        </div>
+        <div class="admin-actions">
+          <button class="mini-delete" type="button" onclick="deleteTurnoverMedia(${media.id}, '${escapeHtml(media.image_path || '')}')">Delete</button>
+        </div>
+      </div>
+    `).join('')}
+  </div>
+`;  
+          }
+        } catch(e){
+          console.error(e);
+        }
+
+      html += `
+  <div class="submission-card">
+    <h4>${escapeHtml(item.cleaner || 'Turnover Submission')}</h4>
+    <p><strong>Date:</strong> ${escapeHtml(item.turnover_date || '')}</p>
+    ${item.notes ? `<p><strong>Notes:</strong> ${escapeHtml(item.notes)}</p>` : ''}
+    ${mediaHtml}
+    <div class="admin-actions">
+      <button class="mini-delete" type="button" onclick="deleteTurnoverSubmission(${item.id})">Delete Submission</button>
+    </div>
+  </div>
+`; 
+      }
+
+      container.innerHTML = html || '<div class="small-note">No turnover submissions yet.</div>';
+    }
+
+    async function renderOwnerDashboard(){
+      const [
+        requestsRes,
+        suppliesRes,
+        maintenanceRes,
+        turnoversRes,
+        guestGalleryRes
+      ] = await Promise.all([
+        supabaseClient.from('booking_requests').select('*', { count: 'exact', head: true }),
+        supabaseClient.from('supplies').select('*').order('created_at', { ascending: false }),
+        supabaseClient.from('maintenance').select('*').order('created_at', { ascending: false }),
+        supabaseClient.from('turnovers').select('*', { count: 'exact', head: true }),
+        supabaseClient.from('guest_gallery').select('*', { count: 'exact', head: true })
+      ]);
+
+      const requestCount = requestsRes.count || 0;
+      const turnoverCount = turnoversRes.count || 0;
+      const guestPhotoCount = guestGalleryRes.count || 0;
+      const supplyList = suppliesRes.data || [];
+      const maintenanceList = maintenanceRes.data || [];
+
+      const snapshot = document.getElementById('ownerDashboardCounts');
+      if(snapshot){
+        snapshot.innerHTML = `
+          <div class="status-row">
+            <div>
+              <strong>Return Booking Requests</strong><br>
+              <span class="small-note">Shared across devices</span>
+            </div>
+            <div class="status-pill soft">${requestCount}</div>
+          </div>
+
+          <div class="status-row">
+            <div>
+              <strong>Turnover Submissions</strong><br>
+              <span class="small-note">Shared across devices</span>
+            </div>
+            <div class="status-pill">${turnoverCount}</div>
+          </div>
+
+          <div class="status-row">
+            <div>
+              <strong>Guest Gallery Items</strong><br>
+              <span class="small-note">Photos + videos shared across devices</span>
+            </div>
+            <div class="status-pill soft">${guestPhotoCount}</div>
+          </div>
+        `;
+      }
+
+      const supplyEl = document.getElementById('ownerSupplyList');
+      if(supplyEl){
+        supplyEl.innerHTML = renderOwnerActionList(supplyList, 'No supplies listed.', 'supply');
+      }
+
+      const maintenanceEl = document.getElementById('ownerMaintenanceList');
+      if(maintenanceEl){
+        maintenanceEl.innerHTML = renderOwnerActionList(maintenanceList, 'No maintenance items listed.', 'maintenance');
+      }
+
+      await renderOwnerRequests();
+      await renderOwnerGuestGallery();
+      await renderOwnerTurnovers();
+    }
+
+    function getSelectedMedia(fileList, maxItems = MAX_MEDIA_ITEMS){
+      return Array.from(fileList || [])
+        .filter(file => file.type.startsWith('image/') || file.type.startsWith('video/'))
+        .slice(0, maxItems)
+        .map(file => ({
+          file,
+          name: file.name,
+          mediaType: file.type,
+          previewUrl: URL.createObjectURL(file)
+        }));
+    }
+
+    async function uploadFileToBucket(bucket, file, prefix = 'media'){
+      const ext = getFileExtension(file.name) || (isVideoType(file.type) ? 'mp4' : 'jpg');
+      const filePath = `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}.${ext}`;
+
+      const { error: uploadError } = await supabaseClient
+        .storage
+        .from(bucket)
+        .upload(filePath, file, {
+          contentType: file.type,
+          upsert: false
+        });
+
+      if(uploadError) throw uploadError;
+
+      const { data: publicData } = supabaseClient
+        .storage
+        .from(bucket)
+        .getPublicUrl(filePath);
+
+      return {
+        path: filePath,
+        url: publicData.publicUrl
+      };
+    }
+
+    async function previewGuestMedia(){
+      const container = document.getElementById('guestPreview');
+      const files = document.getElementById('guestMediaFiles').files;
+
+      if(!files.length){
+        container.innerHTML = '';
+        return;
+      }
+
+      const items = getSelectedMedia(files);
+      container.innerHTML = items.map(item => `
+        <div class="preview-item">
+          ${renderMediaPreviewTag(item.previewUrl, item.mediaType, true)}
+          <div>${escapeHtml(item.name)}</div>
+        </div>
+      `).join('');
+    }
+
+    function clearGuestPreview(){
+      document.getElementById('guestMediaFiles').value = '';
+      document.getElementById('guestMemoryName').value = '';
+      document.getElementById('guestPreview').innerHTML = '';
+      document.getElementById('guestPhotoMessage').style.display = 'none';
+    }
+
+    async function renderGuestGallery(){
+      const gallery = document.getElementById('guestGallery');
+      if(!gallery) return;
+
+      try{
+        const { data, error } = await supabaseClient
+          .from('guest_gallery')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if(error){
+          console.error(error);
+          gallery.innerHTML = '<div class="small-note">No guest media yet.</div>';
+          return;
+        }
+
+        if(!data || !data.length){
+          gallery.innerHTML = '<div class="small-note">No guest media yet.</div>';
+          return;
+        }
+
+        gallery.innerHTML = `<div class="gallery-grid">${
+          data.map(item => `
+            <div class="gallery-card">
+              ${renderMediaPreviewTag(item.image_url, item.media_type || 'image/jpeg')}
+              <div class="gallery-meta">
+                <strong>${escapeHtml(item.guest_name || 'Guest Memory')}</strong>
+              </div>
+            </div>
+          `).join('')
+        }</div>`;
+      } catch(e){
+        console.error(e);
+        gallery.innerHTML = '<div class="small-note">No guest media yet.</div>';
+      }
+    }
+
+    async function addGuestMedia(){
+      const files = document.getElementById('guestMediaFiles').files;
+      const guestName = document.getElementById('guestMemoryName').value.trim();
+      const message = document.getElementById('guestPhotoMessage');
+
+      message.style.display = 'none';
+
+      if(!files.length){
+        message.className = 'form-message form-error';
+        message.textContent = 'Please choose at least one photo or video first.';
+        message.style.display = 'block';
+        return;
+      }
+
+      try{
+        const items = getSelectedMedia(files);
+
+        for(const item of items){
+          const uploaded = await uploadFileToBucket(GUEST_BUCKET, item.file, 'guest');
+
+          const { error } = await supabaseClient
+            .from('guest_gallery')
+            .insert([{
+              guest_name: guestName || 'Guest Memory',
+              image_url: uploaded.url,
+              image_path: uploaded.path,
+              media_type: item.mediaType
+            }]);
+
+          if(error) throw error;
+        }
+
+        await renderGuestGallery();
+        await renderOwnerDashboard();
+
+        message.className = 'form-message form-success';
+        message.textContent = 'Media added to the shared guest gallery.';
+        message.style.display = 'block';
+
+        document.getElementById('guestMediaFiles').value = '';
+        document.getElementById('guestMemoryName').value = '';
+        document.getElementById('guestPreview').innerHTML = '';
+      } catch(e){
+        console.error(e);
+        message.className = 'form-message form-error';
+        message.textContent = 'Those files could not be uploaded. Check your Supabase guest gallery setup.';
+        message.style.display = 'block';
+      }
+    }
+
+    async function previewTurnoverMedia(){
+      const container = document.getElementById('turnoverPreview');
+      const files = document.getElementById('turnoverFiles').files;
+
+      if(!files.length){
+        container.innerHTML = '';
+        return;
+      }
+
+      const items = getSelectedMedia(files);
+      container.innerHTML = items.map(item => `
+        <div class="preview-item">
+          ${renderMediaPreviewTag(item.previewUrl, item.mediaType, true)}
+          <div>${escapeHtml(item.name)}</div>
+        </div>
+      `).join('');
+    }
+
+async function submitTurnoverComplete(){
+  const date = document.getElementById('turnoverDate').value.trim();
+  const notes = document.getElementById('turnoverNotes').value.trim();
+  const files = document.getElementById('turnoverFiles').files;
+
+  const success = document.getElementById('turnoverSuccess');
+  const error = document.getElementById('turnoverError');
+
+  success.style.display = 'none';
+  error.style.display = 'none';
+
+  if(!date){
+    error.textContent = 'Please enter the turnover date.';
+    error.style.display = 'block';
+    return;
+  }
+
+  try{
+    const { data: turnoverInsert, error: insertError } = await supabaseClient
+      .from('turnovers')
+      .insert([{ turnover_date: date, notes }])
+      .select()
+      .single();
+
+ if(insertError){
+  console.error('booking request insert error:', insertError);
+  error.textContent = 'Submit failed: ' + (insertError.message || JSON.stringify(insertError));
+  error.style.display = 'block';
+  return;
+}
+
+    if(files && files.length){
+      const items = getSelectedMedia(files);
+
+      for(const item of items){
+        const uploaded = await uploadFileToBucket(TURNOVER_BUCKET, item.file, 'turnover');
+
+        const { error: photoError } = await supabaseClient
+          .from('turnover_photos')
+          .insert([{
+            turnover_id: turnoverInsert.id,
+            image_url: uploaded.url,
+            image_path: uploaded.path,
+            media_type: item.mediaType
+          }]);
+
+        if(photoError) throw photoError;
+      }
+    }
+
+    success.style.display = 'block';
+    document.getElementById('turnoverDate').value = '';
+    document.getElementById('turnoverNotes').value = '';
+    document.getElementById('turnoverFiles').value = '';
+    document.getElementById('turnoverPreview').innerHTML = '';
+
+    await renderOwnerDashboard();
+} catch(e){
+  console.error('submitRequestToBook crashed:', e);
+  error.textContent = 'Unexpected error: ' + (e.message || JSON.stringify(e));
+  error.style.display = 'block';
+}
+}    
+
+function selectEnhancePackage(packageName){
+  const packageInput = document.getElementById('enhancePackage');
+  if(packageInput){
+    packageInput.value = packageName;
+  }
+
+  const formPanel = document.getElementById('enhanceGuestName');
+  if(formPanel){
+    formPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+async function submitEnhanceStayRequest(){
+  if(!supabaseClient){
+    alert('App not ready yet — refresh and try again.');
+    return;
+  }
+
+  const packageName = document.getElementById('enhancePackage').value.trim();
+  const guestName = document.getElementById('enhanceGuestName').value.trim();
+  const guestEmail = document.getElementById('enhanceGuestEmail').value.trim();
+  const guestPhone = document.getElementById('enhanceGuestPhone').value.trim();
+  const arrivalDate = document.getElementById('enhanceArrivalDate').value.trim();
+  const notes = document.getElementById('enhanceNotes').value.trim();
+
+  const success = document.getElementById('enhanceStaySuccess');
+  const errorBox = document.getElementById('enhanceStayError');
+
+  success.style.display = 'none';
+  errorBox.style.display = 'none';
+
+  if(!packageName){
+    errorBox.textContent = 'Please choose a package first.';
+    errorBox.style.display = 'block';
+    return;
+  }
+
+  if(!guestName || !guestEmail || !arrivalDate){
+    errorBox.textContent = 'Please fill in package, guest name, email, and arrival date.';
+    errorBox.style.display = 'block';
+    return;
+  }
+
+  try{
+    const { error } = await supabaseClient
+      .from('enhance_stay_requests')
+      .insert([{
+        package_name: packageName,
+        guest_name: guestName,
+        guest_email: guestEmail,
+        guest_phone: guestPhone,
+        arrival_date: arrivalDate,
+        notes: notes
+      }]);
+
+    if(error){
+      console.error(error);
+      errorBox.textContent = 'Something went wrong saving your request.';
+      errorBox.style.display = 'block';
+      return;
+    }
+
+    document.getElementById('enhancePackage').value = '';
+    document.getElementById('enhanceGuestName').value = '';
+    document.getElementById('enhanceGuestEmail').value = '';
+    document.getElementById('enhanceGuestPhone').value = '';
+    document.getElementById('enhanceArrivalDate').value = '';
+    document.getElementById('enhanceNotes').value = '';
+
+    success.style.display = 'block';
+  } catch(e){
+    console.error(e);
+    errorBox.textContent = 'Unexpected error occurred.';
+    errorBox.style.display = 'block';
+  }
+}
+    
+async function saveReservationNote(rowIndex, reservationKey, guestLabel, checkIn, checkOut){
+  const textarea = document.getElementById(`reservation-note-${rowIndex}`);
+  const status = document.getElementById(`reservation-status-${rowIndex}`);
+
+  if(!textarea){
+    alert('Could not find note field.');
+    return;
+  }
+
+  const note = textarea.value.trim();
+
+  if(status) status.textContent = 'Saving...';
+
+  try{
+    const { data: existingRows, error: findError } = await supabaseClient
+      .from('reservation_notes')
+      .select('reservation_key')
+      .eq('reservation_key', reservationKey)
+      .limit(1);
+
+    if(findError){
+      console.error(findError);
+      if(status) status.textContent = 'Could not save.';
+      return;
+    }
+
+    let saveError = null;
+
+    if(existingRows && existingRows.length > 0){
+      const { error } = await supabaseClient
+        .from('reservation_notes')
+        .update({
+          guest_label: guestLabel,
+          check_in: checkIn,
+          check_out: checkOut,
+          note,
+          updated_at: new Date().toISOString()
+        })
+        .eq('reservation_key', reservationKey);
+
+      saveError = error;
+    } else {
+      const { error } = await supabaseClient
+        .from('reservation_notes')
+        .insert([{
+          reservation_key: reservationKey,
+          guest_label: guestLabel,
+          check_in: checkIn,
+          check_out: checkOut,
+          note,
+          updated_at: new Date().toISOString()
+        }]);
+
+      saveError = error;
+    }
+
+   if(saveError){
+  console.error(saveError);
+  alert(JSON.stringify(saveError));   // 👈 ADD THIS LINE
+  if(status) status.textContent = 'Could not save.';
+  return;
+}
+
+    if(status) status.textContent = 'Saved';
+  } catch(e){
+    console.error(e);
+    if(status) status.textContent = 'Error';
+  }
+}
+async function loadCalendar(){
+  const status = document.getElementById('calendarStatus');
+  const results = document.getElementById('calendarResults');
+
+  status.textContent = 'Loading calendar.';
+  results.innerHTML = '<div class="small-note">Loading...</div>';
+
+  try{
+    const response = await fetch('/api/airbnb-calendar', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if(!response.ok){
+      status.textContent = `Calendar sync error (${response.status})`;
+      results.innerHTML = '<div class="small-note">The Airbnb calendar API route is not responding correctly right now.</div>';
+      return;
+    }
+
+    let data;
+    try{
+      data = await response.json();
+    } catch(jsonError){
+      console.error(jsonError);
+      status.textContent = 'Calendar sync error';
+      results.innerHTML = '<div class="small-note">The calendar endpoint did not return valid JSON.</div>';
+      return;
+    }
+
+    if(!data.success){
+      status.textContent = data.error || 'Unable to load calendar.';
+      results.innerHTML = '<div class="small-note">Calendar not available right now.</div>';
+      return;
+    }
+
+    status.textContent = 'Calendar connected.';
+
+    if(!data.bookings || !data.bookings.length){
+      results.innerHTML = '<div class="small-note">No upcoming bookings found.</div>';
+      return;
+    }
+const { data: savedNotes, error: notesError } = await supabaseClient
+  .from('reservation_notes')
+  .select('reservation_key, check_in, check_out, note');
+
+if(notesError){
+  console.error(notesError);
+}
+results.innerHTML = data.bookings.map((booking, index) => {
+  const guestLabel =
+    booking.guestName ||
+    booking.name ||
+    booking.summary ||
+    `Booking ${index + 1}`;
+
+ const reservationKey = [
+  booking.checkIn || '',
+  booking.checkOut || ''
+].join('|');
+
+const existingNote = savedNotes?.find(
+  item =>
+    item.reservation_key === reservationKey ||
+    (
+      (item.check_in || '') === (booking.checkIn || '') &&
+      (item.check_out || '') === (booking.checkOut || '')
+    )
+)?.note || ''; 
+  return `
+    <div class="panel" style="margin-bottom:16px;">
+      <div class="status-row" style="align-items:flex-start;">
+        <div style="width:100%;">
+          <strong>${escapeHtml(guestLabel)}</strong><br>
+          <span class="small-note">Check-in: ${escapeHtml(booking.checkIn || '')}</span><br>
+          <span class="small-note">Check-out: ${escapeHtml(booking.checkOut || '')}</span>
+
+          <div style="margin-top:12px;">
+            <label class="small-note" style="display:block; margin-bottom:6px;">
+              Team Note
+            </label>
+
+            <textarea
+              id="reservation-note-${index}"
+              rows="2"
+              style="width:100%; padding:10px; border-radius:10px; border:1px solid #cbb89d; font-family:inherit; box-sizing:border-box;"
+              placeholder="Birthday, blocked no cleaning, owner stay, anniversary, late checkout, etc."
+            >${escapeHtml(existingNote)}</textarea>
+
+            <div style="margin-top:8px;">
+              <button
+                type="button"
+                class="action-btn tertiary-btn"
+                onclick='saveReservationNote(${index}, ${JSON.stringify(reservationKey)}, ${JSON.stringify(guestLabel)}, ${JSON.stringify(booking.checkIn || "")}, ${JSON.stringify(booking.checkOut || "")})'
+              >
+                Save Note
+              </button>
+
+              <span id="reservation-status-${index}" class="small-note"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}).join('');
+  } catch(e){
+    console.error(e);
+    status.textContent = 'Unable to load calendar.';
+    results.innerHTML = '<div class="small-note">The Airbnb sync is failing. Most likely the Vercel /api/airbnb-calendar function is missing, broken, or not deployed.</div>';
+  }
+} 
+
+    async function seedDefaultContentIfNeeded(){
+      const sections = [
+        'info','local','trail','photos','checkout','checklist',
+        'hero_image',
+        'home_guide_image',
+        'home_info_image',
+        'home_local_image',
+        'home_trail_image',
+        'home_memories_image',
+        'home_checkout_image',
+        'home_request_image',
+        'banner_info_image',
+        'banner_local_image',
+        'banner_trail_image',
+        'banner_checkout_image',
+        'book_again_airbnb_link'
+      ];
+
+      for(const section of sections){
+        const { data, error } = await supabaseClient
+          .from('app_content')
+          .select('section')
+          .eq('section', section)
+          .maybeSingle();
+
+        if(error){
+          console.error(error);
+          continue;
+        }
+
+        if(!data){
+          const { error: insertError } = await supabaseClient
+            .from('app_content')
+            .insert([{ section, value: defaultContent[section] || '' }]);
+
+          if(insertError){
+            console.error(insertError);
+          }
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async function() {
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+      await seedDefaultContentIfNeeded();
+      await renderEditablePages();
+      await renderSupplyList();
+      await renderMaintenanceList();
+      await renderGuestGallery();
+      await renderOwnerDashboard();
+      await loadOwnerEditor();
+      await loadOwnerImageEditor();
+    });
+
+ async function submitRequestToBook(){
+  const name = document.getElementById('requestName').value.trim();
+  const phone = document.getElementById('requestPhone').value.trim();
+  const arrival = document.getElementById('requestArrival').value.trim();
+  const departure = document.getElementById('requestDeparture').value.trim();
+  const guests = document.getElementById('requestGuests').value.trim();
+
+  const success = document.getElementById('requestBookSuccess');
+  const error = document.getElementById('requestBookError');
+
+  success.style.display = 'none';
+  error.style.display = 'none';
+
+  if(!name || !phone || !arrival || !departure){
+    error.textContent = 'Please complete name, phone, arrival, and departure.';
+    error.style.display = 'block';
+    return;
+  }
+
+  try{
+    const { data, error: insertError } = await supabaseClient
+      .from('booking_requests')
+      .insert([{
+        property_key: 'darbys-ridge',
+        name,
+        phone,
+        arrival,
+        departure,
+        guests
+      }])
+      .select();
+
+    if(insertError){
+      console.error('BOOKING REQUEST ERROR:', insertError);
+      error.textContent = 'BOOKING ERROR: ' + (insertError.message || JSON.stringify(insertError));
+      error.style.display = 'block';
+      return;
+    }
+
+    success.style.display = 'block';
+
+    document.getElementById('requestName').value = '';
+    document.getElementById('requestPhone').value = '';
+    document.getElementById('requestArrival').value = '';
+    document.getElementById('requestDeparture').value = '';
+    document.getElementById('requestGuests').value = '';
+
+    const previousStayEl = document.getElementById('requestPreviousStay');
+    const notesEl = document.getElementById('requestNotes');
+    if(previousStayEl) previousStayEl.value = '';
+    if(notesEl) notesEl.value = '';
+
+    await renderOwnerDashboard();
+
+  } catch(e){
+    console.error('BOOKING REQUEST CRASH:', e);
+    error.textContent = 'CRASH: ' + (e.message || JSON.stringify(e));
+    error.style.display = 'block';
+  }
+}
+  
+   function submitConcierge() {
+  const checked = document.querySelectorAll('#enhanceStay input[type="checkbox"]:checked');
+  let selected = [];
+
+  checked.forEach(function(item) {
+    selected.push(item.value);
+  });
+
+  const notesEl = document.getElementById('conciergeNotes');
+  const notes = notesEl ? notesEl.value.trim() : '';
+
+  const body =
+    'Enhance Your Stay Request\n\n' +
+    'Selected Packages:\n' +
+    (selected.length ? selected.join('\n') : 'None selected') +
+    '\n\nNotes:\n' +
+    notes;
+
+  window.location.href =
+    'mailto:darbysridge@gmail.com' +
+    '?subject=' + encodeURIComponent('Enhance Your Stay Request') +
+    '&body=' + encodeURIComponent(body);
+} 
+  </script>
+</body>
+</html>
