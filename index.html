@@ -3243,9 +3243,10 @@ document.getElementById('infoBannerText').textContent =
  document.getElementById('wazeLabel').textContent =
   await getPropertyContent('waze_label', 'Waze to the Ridge');
 document.getElementById('localCardLabel').textContent =
- document.getElementById('trailCardLabel').textContent =
-  await getPropertyContent('trail_card_label', 'Come take a Hike'); 
   await getPropertyContent('local_card_label', 'Ideas for perfect days');
+
+document.getElementById('trailCardLabel').textContent =
+  await getPropertyContent('trail_card_label', 'Come take a Hike');
 document.getElementById('wazeAddress').textContent =
   '📍 ' + await getPropertyContent('waze_address', '66 Forest Trail, Blue Ridge, Georgia');   
  document.getElementById('guidebookTitle').textContent =
