@@ -1162,7 +1162,7 @@ justify-content:center;
 
   <div id="guidebook" class="hidden page">
     <button class="back" type="button" onclick="showPage('home')">← Back to Home</button>
-    <h1>Guest Guide</h1>
+ <h1 id="guidebookTitle">Guest Guide</h1>
 
     <div class="pdf-wrap">
       <div class="mobile-open">
@@ -3244,7 +3244,9 @@ document.getElementById('infoBannerText').textContent =
   await getPropertyContent('waze_label', 'Waze to the Ridge');
 
 document.getElementById('wazeAddress').textContent =
-  '📍 ' + await getPropertyContent('waze_address', '66 Forest Trail, Blue Ridge, Georgia');     
+  '📍 ' + await getPropertyContent('waze_address', '66 Forest Trail, Blue Ridge, Georgia');   
+ document.getElementById('guidebookTitle').textContent =
+  await getPropertyContent('guidebook_title', 'Guest Guide');     
   const { data: propertiesTest, error: propertiesError } = await supabaseClient
     .from('properties')
     .select('*');
