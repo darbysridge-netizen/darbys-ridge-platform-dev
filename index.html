@@ -1223,10 +1223,10 @@ justify-content:center;
 
   <div class="page-banner">
     <img src="waze.jpg" alt="">
-    <div class="page-banner-text">
-      <strong>Way to the Ridge</strong>
-      <span>Use Waze for the most accurate route to the cabin.</span>
-    </div>
+   <div class="page-banner-text">
+  <strong id="wazeBannerTitle">Way to the Ridge</strong>
+  <span id="wazeBannerText">Use Waze for the most accurate route to the cabin.</span>
+</div>
   </div>
 
   <div class="panel">
@@ -3246,7 +3246,15 @@ document.getElementById('infoBannerText').textContent =
 document.getElementById('wazeAddress').textContent =
   '📍 ' + await getPropertyContent('waze_address', '66 Forest Trail, Blue Ridge, Georgia');   
  document.getElementById('guidebookTitle').textContent =
-  await getPropertyContent('guidebook_title', 'Guest Guide');     
+  await getPropertyContent('guidebook_title', 'Guest Guide');   
+ document.getElementById('wazeBannerTitle').textContent =
+  await getPropertyContent('waze_banner_title', 'Way to the Ridge');
+
+document.getElementById('wazeBannerText').textContent =
+  await getPropertyContent(
+    'waze_banner_text',
+    'Use Waze for the most accurate route to the cabin.'
+  );     
   const { data: propertiesTest, error: propertiesError } = await supabaseClient
     .from('properties')
     .select('*');
