@@ -1136,8 +1136,8 @@ justify-content:center;
 
       <div class="social">
         <div class="social-kicker">GET AND STAY CONNECTED</div>
-        <h3>Follow Darby's Ridge</h3>
-        <p>See cabin moments, Blue Ridge favorites, and updates from the ridge.</p>
+   <h3 id="socialHeading">Follow Darby's Ridge</h3>
+<p id="socialText">See cabin moments, Blue Ridge favorites, and updates from the ridge.</p>    
 
         <div class="social-links">
           <a class="social-link" href="https://instagram.com/darbysridge" target="_blank">
@@ -3223,6 +3223,14 @@ document.getElementById('heroDescription').textContent =
   await getPropertyContent(
     'hero_description',
     'Your guide to the cabin, local favorites, and everything you need for your stay in Blue Ridge.'
+  );   
+  document.getElementById('socialHeading').textContent =
+  await getPropertyContent('social_heading', "Follow Darby's Ridge");
+
+document.getElementById('socialText').textContent =
+  await getPropertyContent(
+    'social_text',
+    'See cabin moments, Blue Ridge favorites, and updates from the ridge.'
   );   
   const { data: propertiesTest, error: propertiesError } = await supabaseClient
     .from('properties')
