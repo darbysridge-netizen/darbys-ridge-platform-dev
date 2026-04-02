@@ -1113,7 +1113,7 @@ justify-content:center;
   <img src="enhance.jpg" alt="">
   <div class="menu-label">
     <span>EXTRAS</span>
-    <strong>Enhance Your Stay</strong>
+ <strong id="enhanceCardLabel">Enhance Your Stay</strong> 
   </div>
 </div>
         <div class="menu-card" onclick="showPage('checkout')">
@@ -3247,6 +3247,8 @@ document.getElementById('localCardLabel').textContent =
 
 document.getElementById('trailCardLabel').textContent =
   await getPropertyContent('trail_card_label', 'Come take a Hike');
+ document.getElementById('enhanceCardLabel').textContent =
+  await getPropertyContent('enhance_card_label', 'Enhance Your Stay');     
 document.getElementById('wazeAddress').textContent =
   '📍 ' + await getPropertyContent('waze_address', '66 Forest Trail, Blue Ridge, Georgia');   
  document.getElementById('guidebookTitle').textContent =
