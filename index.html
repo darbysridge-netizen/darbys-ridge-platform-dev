@@ -1053,11 +1053,11 @@ justify-content:center;
   <div id="home" class="phone">
     <div class="hero" id="heroSection">
     <div class="hero-text">
-  <h1 class="logo" id="heroTitle">Darby's Ridge</h1>
-  <div class="tagline" id="heroTagline">Your Blue Ridge Escape</div>
-  <div class="description" id="heroDescription">
-    Your guide to the cabin, local favorites, and everything you need for your stay in Blue Ridge.
-  </div>
+<h1 class="logo" id="heroTitle">Darby's Ridge</h1>
+<div class="tagline" id="heroTagline">Your Blue Ridge Escape</div>
+<div class="description" id="heroDescription">
+  Your guide to the cabin, local favorites, and everything you need for your stay in Blue Ridge.
+</div> 
 </div>  
     </div>
 
@@ -3213,7 +3213,7 @@ const existingNote = savedNotes?.find(
 
     document.addEventListener('DOMContentLoaded', async function() {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-   document.getElementById('heroTitle').textContent =
+  document.getElementById('heroTitle').textContent =
   await getPropertyContent('hero_title', "Darby's Ridge");
 
 document.getElementById('heroTagline').textContent =
@@ -3223,7 +3223,8 @@ document.getElementById('heroDescription').textContent =
   await getPropertyContent(
     'hero_description',
     'Your guide to the cabin, local favorites, and everything you need for your stay in Blue Ridge.'
-  );   
+  );    
+ 
   document.getElementById('socialHeading').textContent =
   await getPropertyContent('social_heading', "Follow Darby's Ridge");
 
