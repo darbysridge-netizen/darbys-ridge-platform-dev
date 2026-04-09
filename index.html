@@ -1090,7 +1090,7 @@ justify-content:center;
 <div class="menu-card" onclick="showPage('local')">
   <img id="imgHomeLocal" src="local.jpg" alt="">
   <div class="menu-label">
-    <span>BLUE RIDGE</span>
+   <span id="homeLocalKicker">BLUE RIDGE</span>
     <strong id="localCardLabel">Ideas for perfect days</strong>
   </div>
 </div> 
@@ -3320,6 +3320,12 @@ const homeGuideKicker = document.getElementById('homeGuideKicker');
 if (homeGuideKicker) {
   const value = await getPropertyContent('home_guide_kicker');
   if (value) homeGuideKicker.textContent = value;
+}
+
+const homeLocalKicker = document.getElementById('homeLocalKicker');
+if (homeLocalKicker) {
+  const value = await getPropertyContent('home_local_kicker');
+  if (value) homeLocalKicker.textContent = value;
 }
       
     });
