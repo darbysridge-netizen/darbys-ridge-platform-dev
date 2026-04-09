@@ -1069,7 +1069,7 @@ justify-content:center;
           <img id="imgHomeGuide" src="cabin-exterior.jpg" alt="">
           <div class="menu-label">
             <span>DARBY'S RIDGE</span>
-            <strong>Guest Guide</strong>
+      <strong id="homeGuideLabel">Guest Guide</strong>      
           </div>
         </div>
 <div class="menu-card" onclick="showPage('waysToTheRidge')">
@@ -3285,6 +3285,13 @@ document.getElementById('localBannerText').textContent =
       await renderOwnerDashboard();
       await loadOwnerEditor();
       await loadOwnerImageEditor();
+
+const homeGuideLabel = document.getElementById('homeGuideLabel');
+if (homeGuideLabel) {
+  const value = await getPropertyContent('home_guide_label');
+  if (value) homeGuideLabel.textContent = value;
+}
+      
     });
 
  async function submitRequestToBook(){
