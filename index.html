@@ -3314,6 +3314,19 @@ if (homeDiscountLabel) {
   const value = await getPropertyContent('home_discount_label');
   if (value) homeDiscountLabel.textContent = value;
 }    
+
+const homeGuideLabel = document.getElementById('homeGuideLabel');
+if (homeGuideLabel) {
+  const value = await getPropertyContent('home_guide_label');
+  if (value) homeGuideLabel.textContent = value;
+}
+
+const homeGuideKicker = document.getElementById('homeGuideKicker');
+if (homeGuideKicker) {
+  const value = await getPropertyContent('home_guide_kicker');
+  if (value) homeGuideKicker.textContent = value;
+}
+      
     });
 
  async function submitRequestToBook(){
