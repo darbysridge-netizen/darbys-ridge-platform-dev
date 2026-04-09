@@ -1098,7 +1098,7 @@ justify-content:center;
 <div class="menu-card" onclick="showPage('trail')">
   <img id="imgHomeTrail" src="trail.jpg" alt="">
   <div class="menu-label">
-    <span>GREEN MOUNTAIN TRAIL</span>
+<span id="homeFeatureKicker">GREEN MOUNTAIN TRAIL</span>
     <strong id="trailCardLabel">Come take a Hike</strong>
   </div>
 </div> 
@@ -3326,6 +3326,12 @@ const homeLocalKicker = document.getElementById('homeLocalKicker');
 if (homeLocalKicker) {
   const value = await getPropertyContent('home_local_kicker');
   if (value) homeLocalKicker.textContent = value;
+}
+
+const homeFeatureKicker = document.getElementById('homeFeatureKicker');
+if (homeFeatureKicker) {
+  const value = await getPropertyContent('home_feature_kicker');
+  if (value) homeFeatureKicker.textContent = value;
 }
       
     });
