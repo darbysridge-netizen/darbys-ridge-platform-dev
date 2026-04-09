@@ -1083,7 +1083,7 @@ justify-content:center;
           <img id="imgHomeInfo" src="essentials.jpg" alt="">
           <div class="menu-label">
             <span>ESSENTIALS</span>
-            <strong>WiFi+Locks+Gate </strong>
+      <strong id="homeInfoLabel">WiFi+Locks+Gate </strong>      
           </div>
         </div>
 
@@ -1106,7 +1106,7 @@ justify-content:center;
           <img id="imgHomeMemories" src="outdoor.jpg" alt="">
           <div class="menu-label">
             <span>GUEST MEMORIES</span>
-            <strong>Photo + Video Gallery</strong>
+       <strong id="homeMemoriesLabel">Photo + Video Gallery</strong>    
           </div>
         </div>
 <div class="menu-card" onclick="showPage('enhanceStay')">
@@ -1120,7 +1120,7 @@ justify-content:center;
           <img id="imgHomeCheckout" src="interior.jpg" alt="">
           <div class="menu-label">
             <span>BEFORE YOU GO</span>
-            <strong>Checkout List</strong>
+          <strong id="homeCheckoutLabel">Checkout List</strong>
           </div>
         </div>
 
@@ -1128,7 +1128,7 @@ justify-content:center;
   <img id="imgHomeRequest" src="mountains.jpg" alt="">
   <div class="menu-label">
     <span>RETURNING GUESTS</span>
-    <strong>Unlock Your Discount</strong>
+<strong id="homeDiscountLabel">Unlock Your Discount</strong>    
   </div>
 </div>
       </div>
@@ -3291,7 +3291,29 @@ if (homeGuideLabel) {
   const value = await getPropertyContent('home_guide_label');
   if (value) homeGuideLabel.textContent = value;
 }
-      
+  const homeInfoLabel = document.getElementById('homeInfoLabel');
+if (homeInfoLabel) {
+  const value = await getPropertyContent('home_info_label');
+  if (value) homeInfoLabel.textContent = value;
+}
+
+const homeMemoriesLabel = document.getElementById('homeMemoriesLabel');
+if (homeMemoriesLabel) {
+  const value = await getPropertyContent('home_memories_label');
+  if (value) homeMemoriesLabel.textContent = value;
+}
+
+const homeCheckoutLabel = document.getElementById('homeCheckoutLabel');
+if (homeCheckoutLabel) {
+  const value = await getPropertyContent('home_checkout_label');
+  if (value) homeCheckoutLabel.textContent = value;
+}
+
+const homeDiscountLabel = document.getElementById('homeDiscountLabel');
+if (homeDiscountLabel) {
+  const value = await getPropertyContent('home_discount_label');
+  if (value) homeDiscountLabel.textContent = value;
+}    
     });
 
  async function submitRequestToBook(){
