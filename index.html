@@ -1222,10 +1222,10 @@ background:#ead8c7;
 
   <div class="page-banner">
  <img id="imgBannerWaze" src="ocean-waze.jpg" alt="">
-   <div class="page-banner-text">
-  <strong id="wazeBannerTitle">Way to the Ridge</strong>
-  <span id="wazeBannerText">Use Waze for the most accurate route to the cabin.</span>
-</div>
+  <div class="page-banner-text">
+  <strong id="wazeBannerTitle">Directions</strong>
+  <span id="wazeBannerText">Use Waze for the most accurate route to the property.</span>
+</div> 
   </div>
 
   <div class="panel">
@@ -2096,6 +2096,11 @@ document.getElementById('homeGuideKicker').textContent = homeGuideKicker;
   if (igHandle) igHandle.textContent = instagramHandle;
   if (fbLink) fbLink.href = facebookUrl || '#';
   if (fbName) fbName.textContent = facebookName;
+const wazeTitle = await getPropertyContent('waze_title', 'Directions');
+const wazeSubtitle = await getPropertyContent(
+  'waze_subtitle',
+  'Use Waze for the most accurate route to the property.'
+);
 const wazeAddress = await getPropertyContent('waze_address', '');
 const wazeLink = await getPropertyContent('waze_link', '');
 const wazeNote = await getPropertyContent('waze_note', '');
@@ -2103,7 +2108,15 @@ const wazeIntro = await getPropertyContent(
   'waze_intro',
   'Use Waze for the most accurate route to the property.'
 );
+const wazeTitleEl = document.getElementById('wazeBannerTitle');
+if (wazeTitleEl) {
+  wazeTitleEl.textContent = wazeTitle;
+}
 
+const wazeSubtitleEl = document.getElementById('wazeBannerText');
+if (wazeSubtitleEl) {
+  wazeSubtitleEl.textContent = wazeSubtitle;
+}
 const introEl = document.getElementById('wazeIntro');
 if (introEl) {
   introEl.textContent = wazeIntro;
