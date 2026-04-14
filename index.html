@@ -1236,14 +1236,15 @@ background:#ead8c7;
 </p>
 
 <div style="text-align:center;">
-  <a
-    id="wazeLink"
-    class="link-btn"
-    href="#"
-    target="_self"
-  >
-    Open in Waze
-  </a>
+<a
+  id="wazeLink"
+  class="link-btn"
+  href="#"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Open in Waze
+</a>  
 </div>
 
 <p class="map-note" id="wazeAddress"></p>
@@ -2116,6 +2117,8 @@ if (addressEl) {
 const wazeBtn = document.getElementById('wazeLink');
 if (wazeBtn) {
   wazeBtn.href = wazeLink || '#';
+  wazeBtn.target = '_blank';
+  wazeBtn.rel = 'noopener noreferrer';
 }
 
 const noteEl = document.getElementById('wazeNote');
