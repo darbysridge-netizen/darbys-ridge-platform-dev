@@ -1067,7 +1067,7 @@ background:#ead8c7;
         <div class="menu-card" onclick="showPage('guidebook')">
         <img id="imgHomeGuide" src="ocean-guide.jpg" alt="">
           <div class="menu-label">
-        <span id="homeGuideKicker">GUEST GUIDE</span> 
+    <span id="homeGuideKicker">OCEAN PEARL</span>    
       <strong id="homeGuideLabel">Guest Guide</strong>      
           </div>
         </div>
@@ -2062,7 +2062,7 @@ async function renderPropertyChrome(){
 
   const socialHeading = await getPropertyContent('social_heading', 'Follow Ocean Pearl');
   const socialText = await getPropertyContent('social_text', '');
-
+const homeGuideKicker = await getPropertyContent('home_guide_kicker', 'OCEAN PEARL');
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
   const guidebookPdf = await getPropertyContent('guidebook_pdf', '');
 
@@ -2079,7 +2079,7 @@ async function renderPropertyChrome(){
   document.getElementById('socialText').textContent = socialText;
 
   document.getElementById('guidebookTitle').textContent = guidebookTitle;
-
+document.getElementById('homeGuideKicker').textContent = homeGuideKicker;
   const openLink = document.getElementById('guidebookOpenLink');
   const frame = document.getElementById('guidebookFrame');
 
