@@ -3456,7 +3456,7 @@ if (homeFeatureKicker) {
     const { data, error: insertError } = await supabaseClient
       .from('booking_requests')
       .insert([{
-        property_key: 'darbys-ridge',
+     property_key: CURRENT_PROPERTY_SLUG,  
         name,
         phone,
         arrival,
