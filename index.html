@@ -7,35 +7,33 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-  body{
-  margin:0;
-  background:#d9ebee;
-  font-family:'Inter',sans-serif;
-  color:#2f4f57;
-}  
-    }
-.page{
-  width:100%;
-  max-width:430px;
-  margin:0 auto;
-  min-height:100vh;
-  background:#f4f8f9;
-  padding:18px;
-  padding-bottom:100px;
-  box-sizing:border-box;
-}
-    
-.page{
-  max-width:430px;
-  margin:0 auto;
-  min-height:100vh;
-  background:#f4f8f9;
-  padding:18px;
-  padding-bottom:100px;
-  box-sizing:border-box;
-} 
+    body{
+    margin:0;
+    background:#d9ebee;
+    font-family:'Inter',sans-serif;
+    color:#2f4f57;
+  }
 
-    .hero{
+  .phone,
+  .page{
+    width:100%;
+    max-width:430px;
+    margin:0 auto;
+    min-height:100vh;
+    background:#f4f8f9;
+    box-sizing:border-box;
+  }
+
+  .phone{
+    padding-bottom:100px;
+  }
+
+  .page{
+    padding:18px;
+    padding-bottom:100px;
+  }
+
+  .hero{
       height:460px;
      background:url(ocean-hero.jpeg) center/cover no-repeat;
       border-bottom-left-radius:30px;
@@ -1134,45 +1132,46 @@ background:#557d83;
 </div>
       </div>
 
-      <div class="social">
+          <div class="social">
         <div class="social-kicker">GET AND STAY CONNECTED</div>
-   <h3 id="socialHeading">Follow Darby's Ridge</h3>
-<p id="socialText">See cabin moments, Blue Ridge favorites, and updates from the ridge.</p>    
+        <h3 id="socialHeading">Follow This Property</h3>
+        <p id="socialText">See updates, favorites, and moments from your stay.</p>
 
         <div class="social-links">
-          <a class="social-link" href="https://instagram.com/darbysridge" target="_blank">
+          <a id="socialInstagramLink" class="social-link" href="#" target="_blank">
             <div class="social-icon">📸</div>
             <div class="social-text">
               <strong>Instagram</strong>
-              <small>@darbysridge</small>
+              <small id="socialInstagramHandle">@yourproperty</small>
             </div>
           </a>
 
-          <a class="social-link" href="https://www.facebook.com/darbysridge/" target="_blank">
+          <a id="socialFacebookLink" class="social-link" href="#" target="_blank">
             <div class="social-icon">👍</div>
             <div class="social-text">
               <strong>Facebook</strong>
-              <small>Darby's Ridge</small>
+              <small id="socialFacebookName">Your Property</small>
             </div>
           </a>
         </div>
-      </div>
+      </div> 
     </div>
   </div>
 
-  <div id="guidebook" class="hidden page">
+   <div id="guidebook" class="hidden page">
     <button class="back" type="button" onclick="showPage('home')">← Back to Home</button>
- <h1 id="guidebookTitle">Guest Guide</h1>
+    <h1 id="guidebookTitle">Guest Guide</h1>
 
     <div class="pdf-wrap">
       <div class="mobile-open">
-        <a href="darbys-guidebook.pdf" target="_blank" class="open-guide-btn">Open Guest Guide</a>
+        <a id="guidebookOpenLink" href="#" target="_blank" class="open-guide-btn">Open Guest Guide</a>
       </div>
 
       <iframe
+        id="guidebookFrame"
         class="pdf-frame"
-        src="darbys-guidebook.pdf#toolbar=0&navpanes=0&scrollbar=0"
-        title="Darby's Ridge Guest Guide">
+        src=""
+        title="Guest Guide">
       </iframe>
     </div>
   </div>
@@ -1434,22 +1433,21 @@ background:#557d83;
 Then click the Airbnb link to start your booking request. Once submitted, we’ll send you an updated discounted quote directly through Airbnb.  
     </p>
 
-   <div style="margin-bottom:20px;">
-
-  <a href="https://www.airbnb.com/h/darbysridge" target="_blank" style="
-    display:block;
-    margin-top:10px;
-    padding:14px;
-    background:#3c2c1f;
-    color:white;
-    text-align:center;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:600;
-  ">
-    Open Darby’s Ridge on Airbnb
-  </a>
-</div>
+    <div style="margin-bottom:20px;">
+    <a id="airbnbBookLink" href="#" target="_blank" class="hidden" style="
+      display:block;
+      margin-top:10px;
+      padding:14px;
+      background:#3c2c1f;
+      color:white;
+      text-align:center;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:600;
+    ">
+      Open on Airbnb
+    </a>
+   </div>
     <label for="requestName">Name</label>
     <input id="requestName" type="text" placeholder="Your name">
 
@@ -1942,7 +1940,20 @@ async function getPropertyContent(key, fallback = ''){
     return fallback;
   }
 }
-    
+  async function savePropertyContent(key, value){
+  const { error } = await supabaseClient
+    .from('property_content')
+    .upsert(
+      {
+        property_slug: CURRENT_PROPERTY_SLUG,
+        content_key: key,
+        content_value: value
+      },
+      { onConflict: 'property_slug,content_key' }
+    );
+
+  if(error) throw error;
+}  
     async function saveSectionContent(section, value){
     const { error } = await supabaseClient
   .from('app_content')
@@ -2042,52 +2053,79 @@ async function getPropertyContent(key, fallback = ''){
       airbnbLink.classList.add('hidden');
     }
   }
-} 
-    }
-    async function renderEditablePages(){
-      const info = await getSectionContent('info');
-      const local = await getSectionContent('local');
-      const trail = await getSectionContent('trail');
-      const photos = await getSectionContent('photos');
-      const checkout = await getSectionContent('checkout');
+}
 
-      document.getElementById('infoContent').innerHTML = formatInfoContent(info);
-      document.getElementById('localContent').innerHTML = local;
-      document.getElementById('trailContent').innerHTML = trail;
-      document.getElementById('photosContent').innerText = photos;
-      document.getElementById('checkoutContent').innerHTML = formatCheckoutContent(checkout);
+async function renderPropertyChrome(){
+  const heroTitle = await getPropertyContent('hero_title', 'Ocean Pearl');
+  const heroTagline = await getPropertyContent('hero_tagline', '');
+  const heroDescription = await getPropertyContent('hero_description', '');
 
-      applyMapLinkBehavior('localContent');
-      applyMapLinkBehavior('trailContent');
+  const socialHeading = await getPropertyContent('social_heading', 'Follow Ocean Pearl');
+  const socialText = await getPropertyContent('social_text', '');
 
-      const checklistEl = document.getElementById('teamChecklistDisplay');
-      if(checklistEl){
-        const items = await getChecklistItems();
-        checklistEl.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
-      }
+  const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
+  const guidebookPdf = await getPropertyContent('guidebook_pdf', '');
 
-      await renderDynamicImages();
-    }
+  const instagramUrl = await getPropertyContent('instagram_url', '#');
+  const instagramHandle = await getPropertyContent('instagram_handle', '@oceanpearl');
+  const facebookUrl = await getPropertyContent('facebook_url', '#');
+  const facebookName = await getPropertyContent('facebook_name', 'Ocean Pearl');
 
-    async function loadOwnerEditor(){
-      const section = document.getElementById('ownerSectionSelect').value;
-      document.getElementById('ownerSectionEditor').value = await getSectionContent(section);
-      document.getElementById('ownerSaveMessage').style.display = 'none';
-    }
+  document.getElementById('heroTitle').textContent = heroTitle;
+  document.getElementById('heroTagline').textContent = heroTagline;
+  document.getElementById('heroDescription').textContent = heroDescription;
 
-    async function saveOwnerContent(){
-      const section = document.getElementById('ownerSectionSelect').value;
-      const value = document.getElementById('ownerSectionEditor').value;
+  document.getElementById('socialHeading').textContent = socialHeading;
+  document.getElementById('socialText').textContent = socialText;
 
-      try{
-        await saveSectionContent(section, value);
-        await renderEditablePages();
-        document.getElementById('ownerSaveMessage').style.display = 'block';
-      } catch(e){
-        console.error(e);
-        alert('Could not save changes.');
-      }
-    }
+  document.getElementById('guidebookTitle').textContent = guidebookTitle;
+
+  const openLink = document.getElementById('guidebookOpenLink');
+  const frame = document.getElementById('guidebookFrame');
+
+  if (openLink) openLink.href = guidebookPdf || '#';
+  if (frame) {
+    frame.src = guidebookPdf ? `${guidebookPdf}#toolbar=0&navpanes=0&scrollbar=0` : '';
+    frame.title = `${guidebookTitle}`;
+  }
+
+  const igLink = document.getElementById('socialInstagramLink');
+  const igHandle = document.getElementById('socialInstagramHandle');
+  const fbLink = document.getElementById('socialFacebookLink');
+  const fbName = document.getElementById('socialFacebookName');
+
+  if (igLink) igLink.href = instagramUrl || '#';
+  if (igHandle) igHandle.textContent = instagramHandle;
+  if (fbLink) fbLink.href = facebookUrl || '#';
+  if (fbName) fbName.textContent = facebookName;
+}
+
+async function renderEditablePages(){
+  const info = await getPropertyContent('info', defaultContent.info);
+  const local = await getPropertyContent('local', defaultContent.local);
+  const trail = await getPropertyContent('trail', defaultContent.trail);
+  const photos = await getPropertyContent('photos', defaultContent.photos);
+  const checkout = await getPropertyContent('checkout', defaultContent.checkout);
+  const checklistRaw = await getPropertyContent('checklist', defaultContent.checklist);
+
+  document.getElementById('infoContent').innerHTML = formatInfoContent(info);
+  document.getElementById('localContent').innerHTML = local;
+  document.getElementById('trailContent').innerHTML = trail;
+  document.getElementById('photosContent').innerText = photos;
+  document.getElementById('checkoutContent').innerHTML = formatCheckoutContent(checkout);
+
+  applyMapLinkBehavior('localContent');
+  applyMapLinkBehavior('trailContent');
+
+  const checklistEl = document.getElementById('teamChecklistDisplay');
+  if(checklistEl){
+    const items = checklistRaw.split('\n').map(item => item.trim()).filter(Boolean);
+    checklistEl.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+  }
+
+  await renderDynamicImages();
+  await renderPropertyChrome();
+}
 
    async function loadOwnerImageEditor(){
   const imageSelect = document.getElementById('ownerImageSelect');
@@ -2099,9 +2137,9 @@ async function getPropertyContent(key, fallback = ''){
   }
 
   const key = imageSelect.value;
-  imageEditor.value = await getSectionContent(key);
+  imageEditor.value = await getPropertyContent(key, '');
   saveMessage.style.display = 'none';
-} 
+}
 
 async function saveOwnerImageSetting(){
   const imageSelect = document.getElementById('ownerImageSelect');
@@ -2116,15 +2154,14 @@ async function saveOwnerImageSetting(){
   const value = imageEditor.value.trim();
 
   try{
-    await saveSectionContent(key, value);
+    await savePropertyContent(key, value);
     await renderDynamicImages();
     saveMessage.style.display = 'block';
   } catch(e){
     console.error(e);
     alert('Could not save photo or link.');
   }
-}   
-
+} 
    function showPage(page){
   const pages = [
     'home','guidebook','info','local','trail','waysToTheRidge','enhanceStay','guestMemories','checkout','requestToBook',
