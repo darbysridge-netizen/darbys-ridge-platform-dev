@@ -1231,27 +1231,24 @@ background:#ead8c7;
   <div class="panel">
     <h3>Best Route</h3>
 
-    <p class="small-note">
-      We strongly recommend using Waze for the most accurate route to Darby’s Ridge.
-      Some other navigation apps can occasionally route guests incorrectly near the property.
-    </p>
+ <p class="small-note" id="wazeIntro">
+  Use Waze for the most accurate route to the property.
+</p>
 
-    <div style="text-align:center;">
-      <a
-  id="wazeLink"
-  class="link-btn"
-  href="#"
-  target="_self"
->
-        Open in Waze
-      </a>
-    </div>
+<div style="text-align:center;">
+  <a
+    id="wazeLink"
+    class="link-btn"
+    href="#"
+    target="_self"
+  >
+    Open in Waze
+  </a>
+</div>
 
-  <p class="map-note" id="wazeAddress">
-  📍 411 Adams Ave, Cape Canaveral 
-</p> 
+<p class="map-note" id="wazeAddress"></p>
 
- <p class="map-note" id="wazeNote"></p>   
+<p class="map-note" id="wazeNote"></p>   
   </div>
 </div>
 
@@ -2098,8 +2095,18 @@ document.getElementById('homeGuideKicker').textContent = homeGuideKicker;
   if (igHandle) igHandle.textContent = instagramHandle;
   if (fbLink) fbLink.href = facebookUrl || '#';
   if (fbName) fbName.textContent = facebookName;
-  const wazeAddress = await getPropertyContent('waze_address', '');
+const wazeAddress = await getPropertyContent('waze_address', '');
 const wazeLink = await getPropertyContent('waze_link', '');
+const wazeNote = await getPropertyContent('waze_note', '');
+const wazeIntro = await getPropertyContent(
+  'waze_intro',
+  'Use Waze for the most accurate route to the property.'
+);
+
+const introEl = document.getElementById('wazeIntro');
+if (introEl) {
+  introEl.textContent = wazeIntro;
+}
 
 const addressEl = document.getElementById('wazeAddress');
 if (addressEl) {
@@ -2107,9 +2114,14 @@ if (addressEl) {
 }
 
 const wazeBtn = document.getElementById('wazeLink');
-if (wazeBtn && wazeLink) {
-  wazeBtn.href = wazeLink;
+if (wazeBtn) {
+  wazeBtn.href = wazeLink || '#';
 }
+
+const noteEl = document.getElementById('wazeNote');
+if (noteEl) {
+  noteEl.textContent = wazeNote;
+} 
 }
 
 async function renderEditablePages(){
