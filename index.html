@@ -1221,7 +1221,7 @@ background:#ead8c7;
   <button class="back" type="button" onclick="showPage('home')">← Back</button>
 
   <div class="page-banner">
-    <img src="waze.jpg" alt="">
+ <img id="imgBannerWaze" src="ocean-waze.jpg" alt="">
    <div class="page-banner-text">
   <strong id="wazeBannerTitle">Way to the Ridge</strong>
   <span id="wazeBannerText">Use Waze for the most accurate route to the cabin.</span>
@@ -1238,10 +1238,11 @@ background:#ead8c7;
 
     <div style="text-align:center;">
       <a
-        class="link-btn"
-        href="https://waze.com/ul?q=66%20Forest%20Trail%2C%20Blue%20Ridge%2C%20Georgia&navigate=yes"
-        target="_self"
-      >
+  id="wazeLink"
+  class="link-btn"
+  href="#"
+  target="_self"
+>
         Open in Waze
       </a>
     </div>
@@ -2040,7 +2041,8 @@ async function getPropertyContent(key, fallback = ''){
 
   const imgBannerCheckout = document.getElementById('imgBannerCheckout');
   if (imgBannerCheckout) imgBannerCheckout.src = values.banner_checkout_image;
-
+const imgBannerWaze = document.getElementById('imgBannerWaze');
+if (imgBannerWaze) imgBannerWaze.src = await getPropertyContent('banner_waze_image', 'ocean-waze.jpg');
   const airbnbLink = document.getElementById('airbnbBookLink');
   const bookingUrl = String(values.book_again_airbnb_link || '').trim();
 
@@ -2098,6 +2100,18 @@ document.getElementById('homeGuideKicker').textContent = homeGuideKicker;
   if (igHandle) igHandle.textContent = instagramHandle;
   if (fbLink) fbLink.href = facebookUrl || '#';
   if (fbName) fbName.textContent = facebookName;
+  const wazeAddress = await getPropertyContent('waze_address', '');
+const wazeLink = await getPropertyContent('waze_link', '');
+
+const addressEl = document.getElementById('wazeAddress');
+if (addressEl) {
+  addressEl.textContent = wazeAddress ? `📍 ${wazeAddress}` : '';
+}
+
+const wazeBtn = document.getElementById('wazeLink');
+if (wazeBtn && wazeLink) {
+  wazeBtn.href = wazeLink;
+}
 }
 
 async function renderEditablePages(){
