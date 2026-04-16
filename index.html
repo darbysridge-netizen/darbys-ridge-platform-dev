@@ -1280,67 +1280,8 @@ background:#ead8c7;
   <h3>Choose a Package</h3>
   <p class="small-note">Tap a package below to select it. Then complete the request form underneath.</p>
 
-  <div onclick="selectEnhancePackage('Bear Essentials ($59)')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-      <strong>Bear Essentials</strong>
-      <span style="font-weight:700;"></span>
-    </div>
-    <div class="small-note" style="margin-top:6px;">Walk in, settle in, and skip the grocery run.</div>
-    <div class="small-note" style="margin-top:8px;">
-      Includes: Milk, eggs, bread, butter, pack of bottled water, and fresh fruit.
-    </div>
-    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Bear Essentials ($59)')">Choose This Package</button>
-  </div>
-
-  <div onclick="selectEnhancePackage('Rise & Shine at the Ridge ()')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-     <strong>Rise & Shine Breakfast</strong> 
-      <span style="font-weight:700;"></span>
-    </div>
-   <div class="small-note" style="margin-top:6px;">Everything you need for an easy breakfast during your stay.</div>
-    <div class="small-note" style="margin-top:8px;">
-      Includes: Eggs, bacon, sausage, pancake mix, syrup, orange juice and bread.
-    </div>
-    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Rise & Shine at the Ridge ($75)')">Choose This Package</button>
-  </div>
-
-  <div onclick="selectEnhancePackage('Grill & Chill Pack ()')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-      <strong>Grill & Chill Pack</strong>
-      <span style="font-weight:700;"></span>
-    </div>
-    <div class="small-note" style="margin-top:6px;">A classic cabin cookout without the prep.</div>
-    <div class="small-note" style="margin-top:8px;">
-      Includes: Burger patties, hot dogs, buns, cheese, lettuce, tomato, ketchup, mustard and chips or simple sides.
-    </div>
-    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Grill & Chill Pack ($85)')">Choose This Package</button>
-  </div>
-
-  <div onclick="selectEnhancePackage('Mountain Birthday Bash ()')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-      <strong>Mountain Birthday Bash</strong>
-      <span style="font-weight:700;"></span>
-    </div>
-  <div class="small-note" style="margin-top:6px;">A ready-to-enjoy birthday setup for your stay.</div>
-    <div class="small-note" style="margin-top:8px;">
-      Includes: Balloon and banner setup, cake or dessert, and a personalized message.
-    </div>
-    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Mountain Birthday Bash ($125)')">Choose This Package</button>
-  </div>
-
-  <div onclick="selectEnhancePackage('Fireside Anniversary ()')" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
-    <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
-      <strong>Fireside Anniversary</strong>
-      <span style="font-weight:700;"></span>
-    </div>
-    <div class="small-note" style="margin-top:6px;">A simple romantic touch to make your stay extra special.</div>
-    <div class="small-note" style="margin-top:8px;">
-      Includes: Wine or champagne, charcuterie board, and a light romantic setup.
-    </div>
-    <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage('Fireside Anniversary ($145)')">Choose This Package</button>
-  </div>
-</div>
-
+ <div id="enhancePackagesList"></div>
+   </div>
 <div class="panel">
   <h3>Request Form</h3>
 
@@ -1645,6 +1586,28 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
       <button class="action-btn center-button" type="button" onclick="saveOwnerContent()">Save Changes</button>
       <div id="ownerSaveMessage" class="form-message form-success">Changes saved.</div>
     </div>
+    <div class="panel">
+  <h3>Enhance Your Stay Packages</h3>
+
+  <label for="packageTitle">Package Title</label>
+  <input id="packageTitle" type="text" placeholder="Beach Essentials">
+
+  <label for="packagePrice">Price</label>
+  <input id="packagePrice" type="text" placeholder="$59">
+
+  <label for="packageShortDescription">Short Description</label>
+  <textarea id="packageShortDescription" rows="3" placeholder="Walk in, settle in, and skip the grocery run."></textarea>
+
+  <label for="packageIncludes">Includes</label>
+  <textarea id="packageIncludes" rows="4" placeholder="Milk, eggs, bread, butter..."></textarea>
+
+  <button class="action-btn center-button" type="button" onclick="addOwnerPackage()">Add Package</button>
+
+  <div id="ownerPackageSaveMessage" class="form-message form-success">Package saved.</div>
+
+  <div class="owner-subtitle">Current Packages</div>
+  <div id="ownerPackagesList" class="small-note">No packages yet.</div>
+</div>
   </div>
 
   <div class="bottom-nav">
@@ -3004,7 +2967,172 @@ async function submitTurnoverComplete(){
   error.style.display = 'block';
 }
 }    
+async function loadPackagesForProperty(){
+  const { data, error } = await supabaseClient
+    .from('property_packages')
+    .select('*')
+    .eq('property_slug', CURRENT_PROPERTY_SLUG)
+    .eq('is_active', true)
+    .order('sort_order', { ascending: true })
+    .order('id', { ascending: true });
 
+  if(error){
+    console.error(error);
+    return [];
+  }
+
+  return data || [];
+}
+
+function renderGuestPackageCard(item){
+  const selectedValue = `${item.title}${item.price ? ` (${item.price})` : ''}`;
+
+  return `
+    <div onclick="selectEnhancePackage(${JSON.stringify(selectedValue)})" style="background:white; border:1px solid #e2cfb8; border-radius:14px; padding:14px; margin-top:12px; cursor:pointer;">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+        <strong>${escapeHtml(item.title || '')}</strong>
+        <span style="font-weight:700;">${escapeHtml(item.price || '')}</span>
+      </div>
+      <div class="small-note" style="margin-top:6px;">${escapeHtml(item.short_description || '')}</div>
+      <div class="small-note" style="margin-top:8px;">
+        Includes: ${escapeHtml(item.includes_text || '')}
+      </div>
+      <button type="button" class="action-btn secondary-btn" style="margin-top:12px;" onclick="event.stopPropagation(); selectEnhancePackage(${JSON.stringify(selectedValue)})">Choose This Package</button>
+    </div>
+  `;
+}
+
+async function renderEnhancePackages(){
+  const container = document.getElementById('enhancePackagesList');
+  if(!container) return;
+
+  const packages = await loadPackagesForProperty();
+
+  if(!packages.length){
+    container.innerHTML = '<div class="small-note">No packages available right now.</div>';
+    return;
+  }
+
+  container.innerHTML = packages.map(renderGuestPackageCard).join('');
+}
+
+async function addOwnerPackage(){
+  const titleEl = document.getElementById('packageTitle');
+  const priceEl = document.getElementById('packagePrice');
+  const shortEl = document.getElementById('packageShortDescription');
+  const includesEl = document.getElementById('packageIncludes');
+  const messageEl = document.getElementById('ownerPackageSaveMessage');
+
+  const title = titleEl.value.trim();
+  const price = priceEl.value.trim();
+  const shortDescription = shortEl.value.trim();
+  const includesText = includesEl.value.trim();
+
+  messageEl.style.display = 'none';
+
+  if(!title){
+    alert('Please enter a package title.');
+    return;
+  }
+
+  const { data: existingRows, error: loadError } = await supabaseClient
+    .from('property_packages')
+    .select('sort_order')
+    .eq('property_slug', CURRENT_PROPERTY_SLUG)
+    .order('sort_order', { ascending: false })
+    .limit(1);
+
+  if(loadError){
+    console.error(loadError);
+    alert('Could not save package.');
+    return;
+  }
+
+  const nextSortOrder = existingRows && existingRows.length
+    ? (existingRows[0].sort_order || 0) + 1
+    : 1;
+
+  const { error } = await supabaseClient
+    .from('property_packages')
+    .insert([{
+      property_slug: CURRENT_PROPERTY_SLUG,
+      title,
+      price,
+      short_description: shortDescription,
+      includes_text: includesText,
+      sort_order: nextSortOrder,
+      is_active: true
+    }]);
+
+  if(error){
+    console.error(error);
+    alert('Could not save package.');
+    return;
+  }
+
+  titleEl.value = '';
+  priceEl.value = '';
+  shortEl.value = '';
+  includesEl.value = '';
+
+  messageEl.style.display = 'block';
+
+  await renderEnhancePackages();
+  await renderOwnerPackages();
+}
+
+async function deleteOwnerPackage(id){
+  const okay = confirm('Delete this package?');
+  if(!okay) return;
+
+  const { error } = await supabaseClient
+    .from('property_packages')
+    .delete()
+    .eq('id', id);
+
+  if(error){
+    console.error(error);
+    alert('Could not delete package.');
+    return;
+  }
+
+  await renderEnhancePackages();
+  await renderOwnerPackages();
+}
+
+async function renderOwnerPackages(){
+  const container = document.getElementById('ownerPackagesList');
+  if(!container) return;
+
+  const { data, error } = await supabaseClient
+    .from('property_packages')
+    .select('*')
+    .eq('property_slug', CURRENT_PROPERTY_SLUG)
+    .order('sort_order', { ascending: true })
+    .order('id', { ascending: true });
+
+  if(error){
+    console.error(error);
+    container.innerHTML = '<div class="small-note">Could not load packages.</div>';
+    return;
+  }
+
+  if(!data || !data.length){
+    container.innerHTML = '<div class="small-note">No packages yet.</div>';
+    return;
+  }
+
+  container.innerHTML = data.map(item => `
+    <div class="owner-list-card">
+      <div><strong>${escapeHtml(item.title || '')}</strong>${item.price ? ` — ${escapeHtml(item.price)}` : ''}</div>
+      ${item.short_description ? `<div class="small-note" style="margin-top:6px;">${escapeHtml(item.short_description)}</div>` : ''}
+      ${item.includes_text ? `<div class="small-note" style="margin-top:6px;">Includes: ${escapeHtml(item.includes_text)}</div>` : ''}
+      <div class="admin-actions">
+        <button class="mini-delete" type="button" onclick="deleteOwnerPackage(${item.id})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
 function selectEnhancePackage(packageName){
   const packageInput = document.getElementById('enhancePackage');
   if(packageInput){
@@ -3382,6 +3510,8 @@ document.getElementById('localBannerText').textContent =
       await renderOwnerDashboard();
       await loadOwnerEditor();
       await loadOwnerImageEditor();
+      await renderEnhancePackages();
+await renderOwnerPackages();
 
 const homeGuideLabel = document.getElementById('homeGuideLabel');
 if (homeGuideLabel) {
