@@ -1139,6 +1139,31 @@ background:#ead8c7;
       flex-direction:column;
       gap:14px;
     }
+    .badge-wrap{
+  margin-top:6px;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.badge{
+  font-size:9px;
+  font-weight:700;
+  padding:2px 4px;
+  border-radius:6px;
+  text-align:center;
+  width:fit-content;
+}
+
+.badge.in{
+  background:#d6e8f7;
+  color:#2f5e87;
+}
+
+.badge.out{
+  background:#cfe7d3;
+  color:#2f6b3f;
+}
     @media (max-width: 768px){
       .pdf-frame{
         height:85vh;
@@ -3399,6 +3424,127 @@ async function saveReservationNote(rowIndex, reservationKey, guestLabel, checkIn
     if(status) status.textContent = 'Error';
   }
 }
+function buildCalendarMarkup(bookings){
+  const today = new Date();
+  const startMonth = new Date(today.getFullYear(), today.getMonth(), 1, 12, 0, 0, 0);
+
+  const dayMap = new Map();
+
+  bookings.forEach((booking, index) => {
+    const guestLabel =
+      booking.guestName ||
+      booking.name ||
+      booking.summary ||
+      `Booking ${index + 1}`;
+
+    const checkInDate = parseLocalDate(booking.checkIn);
+    const checkOutDate = parseLocalDate(booking.checkOut);
+
+    if(!checkInDate || !checkOutDate) return;
+
+    let cursor = new Date(checkInDate);
+
+    while(cursor < checkOutDate){
+      const key = dateKey(cursor);
+
+      if(!dayMap.has(key)){
+        dayMap.set(key, {
+          booked: true,
+          checkins: [],
+          checkouts: []
+        });
+      }
+
+      cursor = addDays(cursor, 1);
+    }
+
+    const checkInKey = dateKey(checkInDate);
+
+    if(!dayMap.has(checkInKey)){
+      dayMap.set(checkInKey, {
+        booked: false,
+        checkins: [],
+        checkouts: []
+      });
+    }
+
+    dayMap.get(checkInKey).checkins.push(guestLabel);
+
+    const checkoutKey = dateKey(checkOutDate);
+
+    if(!dayMap.has(checkoutKey)){
+      dayMap.set(checkoutKey, {
+        booked: false,
+        checkins: [],
+        checkouts: []
+      });
+    }
+
+    dayMap.get(checkoutKey).checkouts.push(guestLabel);
+  });
+
+  const weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let monthsHtml = '';
+
+  for(let monthOffset = 0; monthOffset < 6; monthOffset++){
+    const monthStart = new Date(
+      startMonth.getFullYear(),
+      startMonth.getMonth() + monthOffset,
+      1,
+      12,0,0,0
+    );
+
+    const firstGridDay = new Date(monthStart);
+    firstGridDay.setDate(monthStart.getDate() - firstGridDay.getDay());
+
+    let cells = '';
+
+    for(let i = 0; i < 42; i++){
+      const current = addDays(firstGridDay, i);
+      const key = dateKey(current);
+      const entry = dayMap.get(key);
+      const inMonth = current.getMonth() === monthStart.getMonth();
+
+      const classes = ['calendar-day'];
+      if(!inMonth) classes.push('empty');
+      if(entry?.booked) classes.push('booked');
+
+      const inBadge = entry?.checkins?.length
+        ? `<div class="badge in">IN</div>`
+        : '';
+
+      const outBadge = entry?.checkouts?.length
+        ? `<div class="badge out">OUT</div>`
+        : '';
+
+      cells += `
+        <div class="${classes.join(' ')}">
+          <div class="calendar-day-number">${current.getDate()}</div>
+          <div class="badge-wrap">
+            ${outBadge}
+            ${inBadge}
+          </div>
+        </div>
+      `;
+    }
+
+    monthsHtml += `
+      <div class="calendar-wrap">
+        <div class="calendar-title">${escapeHtml(formatMonthYear(monthStart))}</div>
+
+        <div class="calendar-weekdays">
+          ${weekdays.map(d => `<div class="calendar-weekday">${d}</div>`).join('')}
+        </div>
+
+        <div class="calendar-grid">
+          ${cells}
+        </div>
+      </div>
+    `;
+  }
+
+  return `<div class="calendar-months-scroll">${monthsHtml}</div>`;
+}    
 async function loadCalendar(){
   const status = document.getElementById('calendarStatus');
   const results = document.getElementById('calendarResults');
