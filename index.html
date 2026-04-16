@@ -1105,10 +1105,10 @@ background:#ead8c7;
       border-color:#bdbdbd;
     }
 
-    .calendar-day.checkin{
-      background:#cfe7d3;
-      border-color:#9fbea5;
-    }
+   .calendar-day.checkout{
+  background:#cfe7d3;
+  border-color:#9fbea5;
+}
 
     .calendar-legend{
       display:flex;
@@ -3507,6 +3507,12 @@ async function loadCalendar(){
       } else {
         dayMap.get(checkInKey).checkin = true;
       }
+    const lastNight = addDays(checkOutDate, -1);
+const checkoutKey = dateKey(lastNight);
+
+if(dayMap.has(checkoutKey)){
+  dayMap.get(checkoutKey).checkout = true;
+}  
     });
 
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -3533,8 +3539,8 @@ async function loadCalendar(){
 
         const classes = ['calendar-day'];
         if(!inCurrentMonth) classes.push('empty');
-        if(entry?.booked) classes.push('booked');
-        if(entry?.checkin) classes.push('checkin');
+       if(entry?.booked) classes.push('booked');
+if(entry?.checkout) classes.push('checkout');
 
         const labels = entry?.labels?.length && inCurrentMonth
           ? `<div class="calendar-day-label">${escapeHtml(entry.labels.join(', '))}</div>`
@@ -3571,7 +3577,7 @@ async function loadCalendar(){
       <div class="calendar-legend">
         <div class="calendar-legend-item">
           <span class="calendar-legend-swatch" style="background:#cfe7d3;"></span>
-          <span>Check-in day</span>
+        <span>Checkout / Cleaning Day</span>
         </div>
         <div class="calendar-legend-item">
           <span class="calendar-legend-swatch" style="background:#d9d9d9;"></span>
