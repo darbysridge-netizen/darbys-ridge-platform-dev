@@ -1018,7 +1018,116 @@ background:#ead8c7;
     .button-stack button:first-child{
       margin-top:0;
     }
+    .calendar-wrap{
+      background:white;
+      border:1px solid #eadbc8;
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:16px;
+      box-shadow:0 4px 10px rgba(0,0,0,.04);
+    }
 
+    .calendar-title{
+      font-family:'Playfair Display',serif;
+      font-size:20px;
+      margin:0 0 12px;
+      color:#3c2c1f;
+    }
+
+    .calendar-weekdays,
+    .calendar-grid{
+      display:grid;
+      grid-template-columns:repeat(7, 1fr);
+      gap:6px;
+    }
+
+    .calendar-weekday{
+      text-align:center;
+      font-size:11px;
+      font-weight:700;
+      color:#7a6553;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      padding-bottom:4px;
+    }
+
+    .calendar-day{
+      min-height:54px;
+      border-radius:12px;
+      border:1px solid #eadbc8;
+      background:#f8f1e7;
+      padding:6px;
+      box-sizing:border-box;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:flex-start;
+    }
+
+    .calendar-day.empty{
+      background:transparent;
+      border:1px dashed #eadbc8;
+      opacity:.45;
+    }
+
+    .calendar-day-number{
+      font-size:12px;
+      font-weight:700;
+      color:#3c2c1f;
+      line-height:1;
+    }
+
+    .calendar-day-label{
+      margin-top:6px;
+      font-size:10px;
+      line-height:1.2;
+      color:#5f4d3d;
+      word-break:break-word;
+    }
+
+    .calendar-day.booked{
+      background:#d8c3aa;
+      border-color:#c9b299;
+    }
+
+    .calendar-day.checkin{
+      background:#cfe7d3;
+      border-color:#a9c9af;
+    }
+
+    .calendar-day.checkout{
+      background:#f2ddd6;
+      border-color:#ddbeb5;
+    }
+
+    .calendar-legend{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .calendar-legend-item{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      font-size:12px;
+      color:#5f4d3d;
+    }
+
+    .calendar-legend-swatch{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.08);
+      flex-shrink:0;
+    }
+
+    .calendar-booking-list{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
     @media (max-width: 768px){
       .pdf-frame{
         height:85vh;
@@ -1470,12 +1579,12 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
 <button class="action-btn tertiary-btn" type="button" disabled style="margin-top:12px; opacity:0.5;">Calendar Disabled</button>   
     </div>
 
-    <div class="panel">
-      <h3>Upcoming Bookings</h3>
-      <div id="calendarResults">
-        <div class="small-note">No calendar data yet.</div>
-      </div>
-    </div>
+  <div class="panel">
+  <h3>Calendar + Upcoming Bookings</h3>
+  <div id="calendarResults">
+    <div class="small-note">No calendar data yet.</div>
+  </div>
+</div>
   </div>
 
   <div id="supplies" class="hidden page">
@@ -3284,7 +3393,176 @@ async function loadCalendar(){
   const results = document.getElementById('calendarResults');
 
   status.textContent = 'Loading calendar.';
-  results.innerHTML = '<div class="small-note">Loading...</div>';
+  results.innerHTML = '<div class="small-note">Loading.</div>';
+
+  function parseLocalDate(value){
+    if(!value) return null;
+    const text = String(value).trim();
+
+    if(/^\d{4}-\d{2}-\d{2}$/.test(text)){
+      const [year, month, day] = text.split('-').map(Number);
+      return new Date(year, month - 1, day, 12, 0, 0, 0);
+    }
+
+    const parsed = new Date(text);
+    if(Number.isNaN(parsed.getTime())) return null;
+
+    return new Date(
+      parsed.getFullYear(),
+      parsed.getMonth(),
+      parsed.getDate(),
+      12, 0, 0, 0
+    );
+  }
+
+  function formatMonthYear(date){
+    return date.toLocaleDateString([], {
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+
+  function formatShortDate(value){
+    const date = parseLocalDate(value);
+    if(!date) return value || '';
+    return date.toLocaleDateString([], {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    });
+  }
+
+  function dateKey(date){
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
+  function addDays(date, days){
+    const next = new Date(date);
+    next.setDate(next.getDate() + days);
+    return next;
+  }
+
+  function buildCalendarMarkup(bookings){
+    const today = new Date();
+    const monthStart = new Date(today.getFullYear(), today.getMonth(), 1, 12, 0, 0, 0);
+    const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 12, 0, 0, 0);
+
+    const firstGridDay = new Date(monthStart);
+    firstGridDay.setDate(monthStart.getDate() - monthStart.getDay());
+
+    const dayMap = new Map();
+
+    bookings.forEach((booking, index) => {
+      const guestLabel =
+        booking.guestName ||
+        booking.name ||
+        booking.summary ||
+        `Booking ${index + 1}`;
+
+      const checkInDate = parseLocalDate(booking.checkIn);
+      const checkOutDate = parseLocalDate(booking.checkOut);
+
+      if(!checkInDate || !checkOutDate) return;
+
+      let cursor = new Date(checkInDate);
+
+      while(cursor < checkOutDate){
+        const key = dateKey(cursor);
+        if(!dayMap.has(key)){
+          dayMap.set(key, {
+            booked: true,
+            checkin: false,
+            checkout: false,
+            labels: []
+          });
+        }
+
+        const entry = dayMap.get(key);
+        if(entry.labels.length < 2){
+          entry.labels.push(guestLabel);
+        }
+
+        cursor = addDays(cursor, 1);
+      }
+
+      const checkInKey = dateKey(checkInDate);
+      if(!dayMap.has(checkInKey)){
+        dayMap.set(checkInKey, {
+          booked: true,
+          checkin: true,
+          checkout: false,
+          labels: [guestLabel]
+        });
+      } else {
+        dayMap.get(checkInKey).checkin = true;
+      }
+
+      const lastNight = addDays(checkOutDate, -1);
+      const checkoutKey = dateKey(lastNight);
+      if(dayMap.has(checkoutKey)){
+        dayMap.get(checkoutKey).checkout = true;
+      }
+    });
+
+    const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    let cells = '';
+    for(let i = 0; i < 42; i++){
+      const current = addDays(firstGridDay, i);
+      const key = dateKey(current);
+      const entry = dayMap.get(key);
+      const inCurrentMonth = current.getMonth() === monthStart.getMonth();
+
+      const classes = ['calendar-day'];
+      if(!inCurrentMonth) classes.push('empty');
+      if(entry?.booked) classes.push('booked');
+      if(entry?.checkin) classes.push('checkin');
+      if(entry?.checkout) classes.push('checkout');
+
+      const labels = entry?.labels?.length
+        ? `<div class="calendar-day-label">${escapeHtml(entry.labels.join(', '))}</div>`
+        : '';
+
+      cells += `
+        <div class="${classes.join(' ')}">
+          <div class="calendar-day-number">${current.getDate()}</div>
+          ${inCurrentMonth ? labels : ''}
+        </div>
+      `;
+    }
+
+    return `
+      <div class="calendar-wrap">
+        <div class="calendar-title">${escapeHtml(formatMonthYear(monthStart))}</div>
+
+        <div class="calendar-weekdays">
+          ${weekdays.map(day => `<div class="calendar-weekday">${day}</div>`).join('')}
+        </div>
+
+        <div class="calendar-grid">
+          ${cells}
+        </div>
+
+        <div class="calendar-legend">
+          <div class="calendar-legend-item">
+            <span class="calendar-legend-swatch" style="background:#d8c3aa;"></span>
+            <span>Booked</span>
+          </div>
+          <div class="calendar-legend-item">
+            <span class="calendar-legend-swatch" style="background:#cfe7d3;"></span>
+            <span>Check-in</span>
+          </div>
+          <div class="calendar-legend-item">
+            <span class="calendar-legend-swatch" style="background:#f2ddd6;"></span>
+            <span>Check-out day</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }
 
   try{
     const response = await fetch('/api/airbnb-calendar', {
@@ -3322,77 +3600,92 @@ async function loadCalendar(){
       results.innerHTML = '<div class="small-note">No upcoming bookings found.</div>';
       return;
     }
-const { data: savedNotes, error: notesError } = await supabaseClient
-  .from('reservation_notes')
-  .select('reservation_key, check_in, check_out, note');
 
-if(notesError){
-  console.error(notesError);
-}
-results.innerHTML = data.bookings.map((booking, index) => {
-  const guestLabel =
-    booking.guestName ||
-    booking.name ||
-    booking.summary ||
-    `Booking ${index + 1}`;
+    let savedNotes = [];
+    if(supabaseClient){
+      const { data: noteRows, error: notesError } = await supabaseClient
+        .from('reservation_notes')
+        .select('reservation_key, check_in, check_out, note');
 
- const reservationKey = [
-  booking.checkIn || '',
-  booking.checkOut || ''
-].join('|');
+      if(notesError){
+        console.error(notesError);
+      } else {
+        savedNotes = noteRows || [];
+      }
+    }
 
-const existingNote = savedNotes?.find(
-  item =>
-    item.reservation_key === reservationKey ||
-    (
-      (item.check_in || '') === (booking.checkIn || '') &&
-      (item.check_out || '') === (booking.checkOut || '')
-    )
-)?.note || ''; 
-  return `
-    <div class="panel" style="margin-bottom:16px;">
-      <div class="status-row" style="align-items:flex-start;">
-        <div style="width:100%;">
-          <strong>${escapeHtml(guestLabel)}</strong><br>
-          <span class="small-note">Check-in: ${escapeHtml(booking.checkIn || '')}</span><br>
-          <span class="small-note">Check-out: ${escapeHtml(booking.checkOut || '')}</span>
+    const calendarHtml = buildCalendarMarkup(data.bookings);
 
-          <div style="margin-top:12px;">
-            <label class="small-note" style="display:block; margin-bottom:6px;">
-              Team Note
-            </label>
+    const bookingCardsHtml = `
+      <div class="calendar-booking-list">
+        ${data.bookings.map((booking, index) => {
+          const guestLabel =
+            booking.guestName ||
+            booking.name ||
+            booking.summary ||
+            `Booking ${index + 1}`;
 
-            <textarea
-              id="reservation-note-${index}"
-              rows="2"
-              style="width:100%; padding:10px; border-radius:10px; border:1px solid #cbb89d; font-family:inherit; box-sizing:border-box;"
-              placeholder="Birthday, blocked no cleaning, owner stay, anniversary, late checkout, etc."
-            >${escapeHtml(existingNote)}</textarea>
+          const reservationKey = [
+            booking.checkIn || '',
+            booking.checkOut || ''
+          ].join('|');
 
-            <div style="margin-top:8px;">
-              <button
-                type="button"
-                class="action-btn tertiary-btn"
-                onclick='saveReservationNote(${index}, ${JSON.stringify(reservationKey)}, ${JSON.stringify(guestLabel)}, ${JSON.stringify(booking.checkIn || "")}, ${JSON.stringify(booking.checkOut || "")})'
-              >
-                Save Note
-              </button>
+          const existingNote = savedNotes.find(
+            item =>
+              item.reservation_key === reservationKey ||
+              (
+                (item.check_in || '') === (booking.checkIn || '') &&
+                (item.check_out || '') === (booking.checkOut || '')
+              )
+          )?.note || '';
 
-              <span id="reservation-status-${index}" class="small-note"></span>
+          return `
+            <div class="panel">
+              <div class="status-row" style="align-items:flex-start;">
+                <div style="width:100%;">
+                  <strong>${escapeHtml(guestLabel)}</strong><br>
+                  <span class="small-note">Check-in: ${escapeHtml(formatShortDate(booking.checkIn || ''))}</span><br>
+                  <span class="small-note">Check-out: ${escapeHtml(formatShortDate(booking.checkOut || ''))}</span>
+
+                  <div style="margin-top:12px;">
+                    <label class="small-note" style="display:block; margin-bottom:6px;">
+                      Team Note
+                    </label>
+
+                    <textarea
+                      id="reservation-note-${index}"
+                      rows="2"
+                      style="width:100%; padding:10px; border-radius:10px; border:1px solid #cbb89d; font-family:inherit; box-sizing:border-box;"
+                      placeholder="Birthday, blocked no cleaning, owner stay, anniversary, late checkout, etc."
+                    >${escapeHtml(existingNote)}</textarea>
+
+                    <div style="margin-top:8px;">
+                      <button
+                        type="button"
+                        class="action-btn tertiary-btn"
+                        onclick='saveReservationNote(${index}, ${JSON.stringify(reservationKey)}, ${JSON.stringify(guestLabel)}, ${JSON.stringify(booking.checkIn || "")}, ${JSON.stringify(booking.checkOut || "")})'
+                      >
+                        Save Note
+                      </button>
+
+                      <span id="reservation-status-${index}" class="small-note"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          `;
+        }).join('')}
       </div>
-    </div>
-  `;
-}).join('');
+    `;
+
+    results.innerHTML = calendarHtml + bookingCardsHtml;
   } catch(e){
     console.error(e);
     status.textContent = 'Unable to load calendar.';
     results.innerHTML = '<div class="small-note">The Airbnb sync is failing. Most likely the Vercel /api/airbnb-calendar function is missing, broken, or not deployed.</div>';
   }
-} 
-
+}
     async function seedDefaultContentIfNeeded(){
       const sections = [
         'info','local','trail','photos','checkout','checklist',
