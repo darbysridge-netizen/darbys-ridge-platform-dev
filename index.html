@@ -3419,6 +3419,45 @@ async function saveReservationNote(rowIndex, reservationKey, guestLabel, checkIn
     if(status) status.textContent = 'Error';
   }
 }
+function parseLocalDate(value){
+  if(!value) return null;
+  const text = String(value).trim();
+
+  if(/^\d{4}-\d{2}-\d{2}$/.test(text)){
+    const [year, month, day] = text.split('-').map(Number);
+    return new Date(year, month - 1, day, 12, 0, 0, 0);
+  }
+
+  const parsed = new Date(text);
+  if(Number.isNaN(parsed.getTime())) return null;
+
+  return new Date(
+    parsed.getFullYear(),
+    parsed.getMonth(),
+    parsed.getDate(),
+    12, 0, 0, 0
+  );
+}
+
+function formatMonthYear(date){
+  return date.toLocaleDateString([], {
+    month: 'long',
+    year: 'numeric'
+  });
+}
+
+function dateKey(date){
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function addDays(date, days){
+  const next = new Date(date);
+  next.setDate(next.getDate() + days);
+  return next;
+}    
 function buildCalendarMarkup(bookings){
   const today = new Date();
   const startMonth = new Date(today.getFullYear(), today.getMonth(), 1, 12, 0, 0, 0);
