@@ -1079,11 +1079,11 @@ background:#ead8c7;
       align-items:flex-start;
     }
 
-    .calendar-day.empty{
-      background:transparent;
-      border:1px dashed #eadbc8;
-      opacity:.35;
-    }
+   .calendar-day.empty{
+  background:transparent;
+  border:none;
+  opacity:0;
+}
 
     .calendar-day-number{
       font-size:12px;
@@ -3539,27 +3539,31 @@ function buildCalendarMarkup(bookings){
       const entry = dayMap.get(key);
       const inMonth = current.getMonth() === monthStart.getMonth();
 
-      const classes = ['calendar-day'];
-      if(!inMonth) classes.push('empty');
-      if(entry?.booked) classes.push('booked');
+  const classes = ['calendar-day'];
+if(!inMonth) classes.push('empty');
+if(entry?.booked && inMonth) classes.push('booked');
 
-     const inBadge = entry?.checkins?.length
+const inBadge = entry?.checkins?.length && inMonth
   ? `<div class="dot in"></div>`
   : '';
 
-const outBadge = entry?.checkouts?.length
+const outBadge = entry?.checkouts?.length && inMonth
   ? `<div class="dot out"></div>`
   : '';
 
-      cells += `
-        <div class="${classes.join(' ')}">
-          <div class="calendar-day-number">${current.getDate()}</div>
-         <div class="dot-wrap"> 
-            ${outBadge}
-            ${inBadge}
-          </div>
-        </div>
-      `;
+cells += inMonth
+  ? `
+    <div class="${classes.join(' ')}">
+      <div class="calendar-day-number">${current.getDate()}</div>
+      <div class="dot-wrap">
+        ${outBadge}
+        ${inBadge}
+      </div>
+    </div>
+  `
+  : `
+    <div class="calendar-day empty"></div>
+  `;    
     }
 
     monthsHtml += `
