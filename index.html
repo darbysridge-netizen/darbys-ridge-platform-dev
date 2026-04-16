@@ -3504,17 +3504,19 @@ function buildCalendarMarkup(bookings){
 
     dayMap.get(checkInKey).checkins.push(guestLabel);
 
-    const checkoutKey = dateKey(checkOutDate);
+ const checkoutKey = dateKey(checkOutDate);
 
-    if(!dayMap.has(checkoutKey)){
-      dayMap.set(checkoutKey, {
-        booked: false,
-        checkins: [],
-        checkouts: []
-      });
-    }
+if(!dayMap.has(checkoutKey)){
+  dayMap.set(checkoutKey, {
+    booked: true,
+    checkins: [],
+    checkouts: []
+  });
+} else {
+  dayMap.get(checkoutKey).booked = true;
+}
 
-    dayMap.get(checkoutKey).checkouts.push(guestLabel);
+dayMap.get(checkoutKey).checkouts.push(guestLabel);  
   });
 
   const weekdays = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
