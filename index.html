@@ -1018,13 +1018,27 @@ background:#ead8c7;
     .button-stack button:first-child{
       margin-top:0;
     }
+    .calendar-months-scroll{
+      display:flex;
+      gap:14px;
+      overflow-x:auto;
+      padding-bottom:8px;
+      margin-bottom:16px;
+      -webkit-overflow-scrolling:touch;
+      scroll-snap-type:x proximity;
+    }
+
     .calendar-wrap{
       background:white;
       border:1px solid #eadbc8;
       border-radius:16px;
       padding:14px;
-      margin-bottom:16px;
+      min-width:320px;
+      max-width:320px;
+      flex:0 0 320px;
+      box-sizing:border-box;
       box-shadow:0 4px 10px rgba(0,0,0,.04);
+      scroll-snap-align:start;
     }
 
     .calendar-title{
@@ -1032,6 +1046,7 @@ background:#ead8c7;
       font-size:20px;
       margin:0 0 12px;
       color:#3c2c1f;
+      text-align:center;
     }
 
     .calendar-weekdays,
@@ -1067,7 +1082,7 @@ background:#ead8c7;
     .calendar-day.empty{
       background:transparent;
       border:1px dashed #eadbc8;
-      opacity:.45;
+      opacity:.35;
     }
 
     .calendar-day-number{
@@ -1081,30 +1096,26 @@ background:#ead8c7;
       margin-top:6px;
       font-size:10px;
       line-height:1.2;
-      color:#5f4d3d;
+      color:#4f3d2f;
       word-break:break-word;
     }
 
     .calendar-day.booked{
-      background:#d8c3aa;
-      border-color:#c9b299;
+      background:#d9d9d9;
+      border-color:#bdbdbd;
     }
 
     .calendar-day.checkin{
       background:#cfe7d3;
-      border-color:#a9c9af;
-    }
-
-    .calendar-day.checkout{
-      background:#f2ddd6;
-      border-color:#ddbeb5;
+      border-color:#9fbea5;
     }
 
     .calendar-legend{
       display:flex;
-      gap:8px;
+      gap:10px;
       flex-wrap:wrap;
       margin-top:12px;
+      justify-content:center;
     }
 
     .calendar-legend-item{
@@ -3445,13 +3456,9 @@ async function loadCalendar(){
     return next;
   }
 
-  function buildCalendarMarkup(bookings){
+   function buildCalendarMarkup(bookings){
     const today = new Date();
-    const monthStart = new Date(today.getFullYear(), today.getMonth(), 1, 12, 0, 0, 0);
-    const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0, 12, 0, 0, 0);
-
-    const firstGridDay = new Date(monthStart);
-    firstGridDay.setDate(monthStart.getDate() - monthStart.getDay());
+    const startMonth = new Date(today.getFullYear(), today.getMonth(), 1, 12, 0, 0, 0);
 
     const dayMap = new Map();
 
@@ -3471,16 +3478,17 @@ async function loadCalendar(){
 
       while(cursor < checkOutDate){
         const key = dateKey(cursor);
+
         if(!dayMap.has(key)){
           dayMap.set(key, {
             booked: true,
             checkin: false,
-            checkout: false,
             labels: []
           });
         }
 
         const entry = dayMap.get(key);
+
         if(entry.labels.length < 2){
           entry.labels.push(guestLabel);
         }
@@ -3489,76 +3497,85 @@ async function loadCalendar(){
       }
 
       const checkInKey = dateKey(checkInDate);
+
       if(!dayMap.has(checkInKey)){
         dayMap.set(checkInKey, {
           booked: true,
           checkin: true,
-          checkout: false,
           labels: [guestLabel]
         });
       } else {
         dayMap.get(checkInKey).checkin = true;
       }
-
-      const lastNight = addDays(checkOutDate, -1);
-      const checkoutKey = dateKey(lastNight);
-      if(dayMap.has(checkoutKey)){
-        dayMap.get(checkoutKey).checkout = true;
-      }
     });
 
     const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    let monthsHtml = '';
 
-    let cells = '';
-    for(let i = 0; i < 42; i++){
-      const current = addDays(firstGridDay, i);
-      const key = dateKey(current);
-      const entry = dayMap.get(key);
-      const inCurrentMonth = current.getMonth() === monthStart.getMonth();
+    for(let monthOffset = 0; monthOffset < 6; monthOffset++){
+      const monthStart = new Date(
+        startMonth.getFullYear(),
+        startMonth.getMonth() + monthOffset,
+        1,
+        12, 0, 0, 0
+      );
 
-      const classes = ['calendar-day'];
-      if(!inCurrentMonth) classes.push('empty');
-      if(entry?.booked) classes.push('booked');
-      if(entry?.checkin) classes.push('checkin');
-      if(entry?.checkout) classes.push('checkout');
+      const firstGridDay = new Date(monthStart);
+      firstGridDay.setDate(monthStart.getDate() - monthStart.getDay());
 
-      const labels = entry?.labels?.length
-        ? `<div class="calendar-day-label">${escapeHtml(entry.labels.join(', '))}</div>`
-        : '';
+      let cells = '';
 
-      cells += `
-        <div class="${classes.join(' ')}">
-          <div class="calendar-day-number">${current.getDate()}</div>
-          ${inCurrentMonth ? labels : ''}
+      for(let i = 0; i < 42; i++){
+        const current = addDays(firstGridDay, i);
+        const key = dateKey(current);
+        const entry = dayMap.get(key);
+        const inCurrentMonth = current.getMonth() === monthStart.getMonth();
+
+        const classes = ['calendar-day'];
+        if(!inCurrentMonth) classes.push('empty');
+        if(entry?.booked) classes.push('booked');
+        if(entry?.checkin) classes.push('checkin');
+
+        const labels = entry?.labels?.length && inCurrentMonth
+          ? `<div class="calendar-day-label">${escapeHtml(entry.labels.join(', '))}</div>`
+          : '';
+
+        cells += `
+          <div class="${classes.join(' ')}">
+            <div class="calendar-day-number">${current.getDate()}</div>
+            ${labels}
+          </div>
+        `;
+      }
+
+      monthsHtml += `
+        <div class="calendar-wrap">
+          <div class="calendar-title">${escapeHtml(formatMonthYear(monthStart))}</div>
+
+          <div class="calendar-weekdays">
+            ${weekdays.map(day => `<div class="calendar-weekday">${day}</div>`).join('')}
+          </div>
+
+          <div class="calendar-grid">
+            ${cells}
+          </div>
         </div>
       `;
     }
 
     return `
-      <div class="calendar-wrap">
-        <div class="calendar-title">${escapeHtml(formatMonthYear(monthStart))}</div>
+      <div class="calendar-months-scroll">
+        ${monthsHtml}
+      </div>
 
-        <div class="calendar-weekdays">
-          ${weekdays.map(day => `<div class="calendar-weekday">${day}</div>`).join('')}
+      <div class="calendar-legend">
+        <div class="calendar-legend-item">
+          <span class="calendar-legend-swatch" style="background:#cfe7d3;"></span>
+          <span>Check-in day</span>
         </div>
-
-        <div class="calendar-grid">
-          ${cells}
-        </div>
-
-        <div class="calendar-legend">
-          <div class="calendar-legend-item">
-            <span class="calendar-legend-swatch" style="background:#d8c3aa;"></span>
-            <span>Booked</span>
-          </div>
-          <div class="calendar-legend-item">
-            <span class="calendar-legend-swatch" style="background:#cfe7d3;"></span>
-            <span>Check-in</span>
-          </div>
-          <div class="calendar-legend-item">
-            <span class="calendar-legend-swatch" style="background:#f2ddd6;"></span>
-            <span>Check-out day</span>
-          </div>
+        <div class="calendar-legend-item">
+          <span class="calendar-legend-swatch" style="background:#d9d9d9;"></span>
+          <span>Reserved nights</span>
         </div>
       </div>
     `;
