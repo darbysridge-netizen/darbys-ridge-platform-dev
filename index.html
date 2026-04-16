@@ -1139,30 +1139,25 @@ background:#ead8c7;
       flex-direction:column;
       gap:14px;
     }
-    .badge-wrap{
+.dot-wrap{
   margin-top:6px;
   display:flex;
-  flex-direction:column;
-  gap:2px;
+  gap:4px;
+  align-items:center;
 }
 
-.badge{
-  font-size:9px;
-  font-weight:700;
-  padding:2px 4px;
-  border-radius:6px;
-  text-align:center;
-  width:fit-content;
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
 }
 
-.badge.in{
-  background:#d6e8f7;
-  color:#2f5e87;
+.dot.in{
+  background:#5fa8d3;
 }
 
-.badge.out{
-  background:#cfe7d3;
-  color:#2f6b3f;
+.dot.out{
+  background:#6fcf97;
 }
     @media (max-width: 768px){
       .pdf-frame{
@@ -3509,18 +3504,18 @@ function buildCalendarMarkup(bookings){
       if(!inMonth) classes.push('empty');
       if(entry?.booked) classes.push('booked');
 
-      const inBadge = entry?.checkins?.length
-        ? `<div class="badge in">IN</div>`
-        : '';
+     const inBadge = entry?.checkins?.length
+  ? `<div class="dot in"></div>`
+  : '';
 
-      const outBadge = entry?.checkouts?.length
-        ? `<div class="badge out">OUT</div>`
-        : '';
+const outBadge = entry?.checkouts?.length
+  ? `<div class="dot out"></div>`
+  : '';
 
       cells += `
         <div class="${classes.join(' ')}">
           <div class="calendar-day-number">${current.getDate()}</div>
-          <div class="badge-wrap">
+         <div class="dot-wrap"> 
             ${outBadge}
             ${inBadge}
           </div>
