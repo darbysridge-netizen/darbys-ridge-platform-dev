@@ -3504,16 +3504,16 @@ function buildCalendarMarkup(bookings){
 
     dayMap.get(checkInKey).checkins.push(guestLabel);
 
- const checkoutKey = dateKey(checkOutDate);
+const checkoutKey = dateKey(checkOutDate);
 
 if(!dayMap.has(checkoutKey)){
   dayMap.set(checkoutKey, {
-    booked: true,
+    booked: false,
     checkins: [],
     checkouts: []
   });
-} else {
-  dayMap.get(checkoutKey).booked = true;
+}
+
 }
 
 dayMap.get(checkoutKey).checkouts.push(guestLabel);  
@@ -3543,7 +3543,9 @@ dayMap.get(checkoutKey).checkouts.push(guestLabel);
 
   const classes = ['calendar-day'];
 if(!inMonth) classes.push('empty');
-if(entry?.booked && inMonth) classes.push('booked');
+if(entry?.booked || (entry?.checkins?.length && entry?.checkouts?.length)){
+  classes.push('booked');
+}
 
 const inBadge = entry?.checkins?.length && inMonth
   ? `<div class="dot in"></div>`
