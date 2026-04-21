@@ -7,12 +7,23 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
-    body{
-    margin:0;
-background:#dceff2;
-    font-family:'Inter',sans-serif;
-   color:#315c63; 
-  }
+  :root{
+  --bg-main:#dceff2;
+  --bg-card:#f8fcfc;
+  --text-main:#315c63;
+  --accent:#2f8f9d;
+  --accent-soft:#6eaeb8;
+  --border-soft:#d3c2aa;
+  --panel-bg:#f7fbfc;
+  --highlight:#d8896b;
+}
+
+body{
+  margin:0;
+  background:var(--bg-main);
+  font-family:'Inter',sans-serif;
+  color:var(--text-main);
+}  
 
   .phone,
   .page{
@@ -20,7 +31,7 @@ background:#dceff2;
     max-width:430px;
     margin:0 auto;
     min-height:100vh;
-   background:#f8fcfc;
+ background:var(--bg-card);
     box-sizing:border-box;
   }
 
@@ -91,7 +102,7 @@ background:#dceff2;
   font-family:'Playfair Display',serif;
   font-size:22px;
   margin-bottom:16px;
-color:#d8896b;
+color:var(--highlight);
 }
 
     .card-grid{
@@ -285,7 +296,7 @@ color:#d8896b;
   justify-content:center;
   font-size:18px;
   flex-shrink:0;
- background:#6eaeb8; 
+background:var(--accent-soft);
   color:#ffffff;
 }  
 
@@ -386,7 +397,7 @@ color:#d8896b;
     }
 
     .panel{
-    background:#f7fbfc;
+   background:var(--panel-bg);
       padding:18px;
       border-radius:16px;
       margin-top:14px;
@@ -454,7 +465,7 @@ color:#d8896b;
   padding:11px;
   border:none;
   border-radius:12px;
-  background:#2f8f9d;
+ background:var(--accent);
   color:white;
   font-size:14px;
   font-weight:600;
@@ -466,7 +477,7 @@ color:#d8896b;
 }  
 
    button.action-btn:active{
- background:#6eaeb8;
+ background:var(--accent-soft);
   transform:scale(.99);
   filter:brightness(.95);
 } 
@@ -495,7 +506,7 @@ color:#d8896b;
       width:100%;
       padding:14px;
       border-radius:12px;
-      border:1px solid #d3c2aa;
+     border:1px solid var(--border-soft); 
       font-size:15px;
       margin-top:8px;
       box-sizing:border-box;
@@ -550,7 +561,7 @@ color:#d8896b;
     }
 
    .status-pill{
-  background:#2f8f9d;
+ background:var(--accent);
   color:white;
   padding:6px 10px;
   border-radius:999px;
@@ -659,7 +670,7 @@ color:#d8896b;
 .link-btn{
   display:inline-block;
   padding:14px 22px;
-  background:#2f8f9d;
+ background:var(--accent);
   color:white;
   border-radius:12px;
   text-decoration:none;
