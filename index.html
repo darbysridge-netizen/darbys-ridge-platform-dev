@@ -1737,33 +1737,28 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
       <button class="action-btn center-button" type="button" onclick="saveOwnerContent()">Save Changes</button>
       <div id="ownerSaveMessage" class="form-message form-success">Changes saved.</div>
     </div>
-    <div class="panel">
-  <h3>Enhance Your Stay Packages</h3>
+      <div class="panel">
+      <h3>Enhance Your Stay Packages</h3>
 
-   
+      <label for="packageTitle">Package Title</label>
+      <input id="packageTitle" type="text" placeholder="Beach Essentials">
 
-    <div class="panel">
-  <h3>Enhance Your Stay Packages</h3>
+      <label for="packagePrice">Price</label>
+      <input id="packagePrice" type="text" placeholder="$59">
 
-  <label for="packageTitle">Package Title</label>
-  <input id="packageTitle" type="text" placeholder="Beach Essentials">
+      <label for="packageShortDescription">Short Description</label>
+      <textarea id="packageShortDescription" rows="3" placeholder="Walk in, settle in, and skip the grocery run."></textarea>
 
-  <label for="packagePrice">Price</label>
-  <input id="packagePrice" type="text" placeholder="$59">
+      <label for="packageIncludes">Includes</label>
+      <textarea id="packageIncludes" rows="4" placeholder="Milk, eggs, bread, butter..."></textarea>
 
-  <label for="packageShortDescription">Short Description</label>
-  <textarea id="packageShortDescription" rows="3" placeholder="Walk in, settle in, and skip the grocery run."></textarea>
+      <button class="action-btn center-button" type="button" onclick="addOwnerPackage()">Add Package</button>
 
-  <label for="packageIncludes">Includes</label>
-  <textarea id="packageIncludes" rows="4" placeholder="Milk, eggs, bread, butter..."></textarea>
+      <div id="ownerPackageSaveMessage" class="form-message form-success">Package saved.</div>
 
-  <button class="action-btn center-button" type="button" onclick="addOwnerPackage()">Add Package</button>
-
-  <div id="ownerPackageSaveMessage" class="form-message form-success">Package saved.</div>
-
-  <div class="owner-subtitle">Current Packages</div>
-    <div id="ownerPackagesList" class="small-note">No packages yet.</div>
-</div>
+      <div class="owner-subtitle">Current Packages</div>
+      <div id="ownerPackagesList" class="small-note">No packages yet.</div>
+    </div>
   </div>
 
   <div class="bottom-nav">
