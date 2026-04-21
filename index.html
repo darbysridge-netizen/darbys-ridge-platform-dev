@@ -1740,36 +1740,7 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
     <div class="panel">
   <h3>Enhance Your Stay Packages</h3>
 
-     <div class="panel">
-      <h3>Theme Colors</h3>
-
-      <label for="themeBgMain">Main Background</label>
-      <input id="themeBgMain" type="text" placeholder="#dceff2">
-
-      <label for="themeBgCard">Card Background</label>
-      <input id="themeBgCard" type="text" placeholder="#f8fcfc">
-
-      <label for="themeTextMain">Main Text</label>
-      <input id="themeTextMain" type="text" placeholder="#315c63">
-
-      <label for="themeAccent">Accent</label>
-      <input id="themeAccent" type="text" placeholder="#2f8f9d">
-
-      <label for="themeAccentSoft">Accent Soft</label>
-      <input id="themeAccentSoft" type="text" placeholder="#6eaeb8">
-
-      <label for="themeBorderSoft">Soft Border</label>
-      <input id="themeBorderSoft" type="text" placeholder="#d3c2aa">
-
-      <label for="themePanelBg">Panel Background</label>
-      <input id="themePanelBg" type="text" placeholder="#f7fbfc">
-
-      <label for="themeHighlight">Highlight</label>
-      <input id="themeHighlight" type="text" placeholder="#d8896b">
-
-      <button class="action-btn center-button" type="button" onclick="saveOwnerTheme()">Save Theme Colors</button>
-      <div id="ownerThemeSaveMessage" class="form-message form-success">Theme saved.</div>
-    </div>
+   
 
     <div class="panel">
   <h3>Enhance Your Stay Packages</h3>
@@ -2470,12 +2441,11 @@ async function saveOwnerTheme(){
       if (page === 'supplies') renderSupplyList();
       if (page === 'maintenance') renderMaintenanceList();
       if (page === 'guestMemories') renderGuestGallery();
-         if (page === 'owner') {
-        renderOwnerDashboard();
-        loadOwnerEditor();
-        loadOwnerImageEditor();
-        loadOwnerThemeEditor();
-      } 
+    if (page === 'owner') {
+  renderOwnerDashboard();
+  loadOwnerEditor();
+  loadOwnerImageEditor();
+}  
     }
 
   async function checkLogin(){
