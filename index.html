@@ -1740,6 +1740,40 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
     <div class="panel">
   <h3>Enhance Your Stay Packages</h3>
 
+     <div class="panel">
+      <h3>Theme Colors</h3>
+
+      <label for="themeBgMain">Main Background</label>
+      <input id="themeBgMain" type="text" placeholder="#dceff2">
+
+      <label for="themeBgCard">Card Background</label>
+      <input id="themeBgCard" type="text" placeholder="#f8fcfc">
+
+      <label for="themeTextMain">Main Text</label>
+      <input id="themeTextMain" type="text" placeholder="#315c63">
+
+      <label for="themeAccent">Accent</label>
+      <input id="themeAccent" type="text" placeholder="#2f8f9d">
+
+      <label for="themeAccentSoft">Accent Soft</label>
+      <input id="themeAccentSoft" type="text" placeholder="#6eaeb8">
+
+      <label for="themeBorderSoft">Soft Border</label>
+      <input id="themeBorderSoft" type="text" placeholder="#d3c2aa">
+
+      <label for="themePanelBg">Panel Background</label>
+      <input id="themePanelBg" type="text" placeholder="#f7fbfc">
+
+      <label for="themeHighlight">Highlight</label>
+      <input id="themeHighlight" type="text" placeholder="#d8896b">
+
+      <button class="action-btn center-button" type="button" onclick="saveOwnerTheme()">Save Theme Colors</button>
+      <div id="ownerThemeSaveMessage" class="form-message form-success">Theme saved.</div>
+    </div>
+
+    <div class="panel">
+  <h3>Enhance Your Stay Packages</h3>
+
   <label for="packageTitle">Package Title</label>
   <input id="packageTitle" type="text" placeholder="Beach Essentials">
 
@@ -2346,6 +2380,75 @@ async function saveOwnerImageSetting(){
     alert('Could not save photo or link.');
   }
 }
+  async function loadOwnerThemeEditor(){
+  const values = {
+    theme_bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
+    theme_bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
+    theme_text_main: await getPropertyContent('theme_text_main', '#315c63'),
+    theme_accent: await getPropertyContent('theme_accent', '#2f8f9d'),
+    theme_accent_soft: await getPropertyContent('theme_accent_soft', '#6eaeb8'),
+    theme_border_soft: await getPropertyContent('theme_border_soft', '#d3c2aa'),
+    theme_panel_bg: await getPropertyContent('theme_panel_bg', '#f7fbfc'),
+    theme_highlight: await getPropertyContent('theme_highlight', '#d8896b')
+  };
+
+  const bgMain = document.getElementById('themeBgMain');
+  const bgCard = document.getElementById('themeBgCard');
+  const textMain = document.getElementById('themeTextMain');
+  const accent = document.getElementById('themeAccent');
+  const accentSoft = document.getElementById('themeAccentSoft');
+  const borderSoft = document.getElementById('themeBorderSoft');
+  const panelBg = document.getElementById('themePanelBg');
+  const highlight = document.getElementById('themeHighlight');
+  const saveMessage = document.getElementById('ownerThemeSaveMessage');
+
+  if(!bgMain || !bgCard || !textMain || !accent || !accentSoft || !borderSoft || !panelBg || !highlight){
+    return;
+  }
+
+  bgMain.value = values.theme_bg_main;
+  bgCard.value = values.theme_bg_card;
+  textMain.value = values.theme_text_main;
+  accent.value = values.theme_accent;
+  accentSoft.value = values.theme_accent_soft;
+  borderSoft.value = values.theme_border_soft;
+  panelBg.value = values.theme_panel_bg;
+  highlight.value = values.theme_highlight;
+
+  if(saveMessage){
+    saveMessage.style.display = 'none';
+  }
+}
+
+async function saveOwnerTheme(){
+  const saveMessage = document.getElementById('ownerThemeSaveMessage');
+
+  const themeValues = {
+    theme_bg_main: document.getElementById('themeBgMain')?.value.trim() || '#dceff2',
+    theme_bg_card: document.getElementById('themeBgCard')?.value.trim() || '#f8fcfc',
+    theme_text_main: document.getElementById('themeTextMain')?.value.trim() || '#315c63',
+    theme_accent: document.getElementById('themeAccent')?.value.trim() || '#2f8f9d',
+    theme_accent_soft: document.getElementById('themeAccentSoft')?.value.trim() || '#6eaeb8',
+    theme_border_soft: document.getElementById('themeBorderSoft')?.value.trim() || '#d3c2aa',
+    theme_panel_bg: document.getElementById('themePanelBg')?.value.trim() || '#f7fbfc',
+    theme_highlight: document.getElementById('themeHighlight')?.value.trim() || '#d8896b'
+  };
+
+  try{
+    for(const [key, value] of Object.entries(themeValues)){
+      await savePropertyContent(key, value);
+    }
+
+    await renderEditablePages();
+
+    if(saveMessage){
+      saveMessage.style.display = 'block';
+    }
+  } catch(e){
+    console.error(e);
+    alert('Could not save theme colors.');
+  }
+}  
    function showPage(page){
   const pages = [
     'home','guidebook','info','local','trail','waysToTheRidge','enhanceStay','guestMemories','checkout','requestToBook',
@@ -2366,11 +2469,12 @@ async function saveOwnerImageSetting(){
       if (page === 'supplies') renderSupplyList();
       if (page === 'maintenance') renderMaintenanceList();
       if (page === 'guestMemories') renderGuestGallery();
-      if (page === 'owner') {
+         if (page === 'owner') {
         renderOwnerDashboard();
         loadOwnerEditor();
         loadOwnerImageEditor();
-      }
+        loadOwnerThemeEditor();
+      } 
     }
 
   async function checkLogin(){
