@@ -1186,7 +1186,7 @@ background:#ead8c7;
 <link rel="apple-touch-icon" href="icon-192.png">
 
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#3c2c1f"> 
+<meta id="browserThemeColor" name="theme-color" content="#dceff2"> 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL3GB1MQS5"></script>
 <script>
@@ -2051,7 +2051,7 @@ async function getPropertyContent(key, fallback = ''){
     return fallback;
   }
 }
-  async function savePropertyContent(key, value){
+async function savePropertyContent(key, value){
   const { error } = await supabaseClient
     .from('property_content')
     .upsert(
@@ -2064,6 +2064,35 @@ async function getPropertyContent(key, fallback = ''){
     );
 
   if(error) throw error;
+}
+
+async function renderPropertyTheme(){
+  const theme = {
+    bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
+    bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
+    text_main: await getPropertyContent('theme_text_main', '#315c63'),
+    accent: await getPropertyContent('theme_accent', '#2f8f9d'),
+    accent_soft: await getPropertyContent('theme_accent_soft', '#6eaeb8'),
+    border_soft: await getPropertyContent('theme_border_soft', '#d3c2aa'),
+    panel_bg: await getPropertyContent('theme_panel_bg', '#f7fbfc'),
+    highlight: await getPropertyContent('theme_highlight', '#d8896b')
+  };
+
+  const root = document.documentElement;
+
+  root.style.setProperty('--bg-main', theme.bg_main);
+  root.style.setProperty('--bg-card', theme.bg_card);
+  root.style.setProperty('--text-main', theme.text_main);
+  root.style.setProperty('--accent', theme.accent);
+  root.style.setProperty('--accent-soft', theme.accent_soft);
+  root.style.setProperty('--border-soft', theme.border_soft);
+  root.style.setProperty('--panel-bg', theme.panel_bg);
+  root.style.setProperty('--highlight', theme.highlight);
+
+  const browserThemeColor = document.getElementById('browserThemeColor');
+  if(browserThemeColor){
+    browserThemeColor.setAttribute('content', theme.bg_main);
+  }
 }  
     async function saveSectionContent(section, value){
     const { error } = await supabaseClient
@@ -2268,7 +2297,7 @@ async function renderEditablePages(){
   document.getElementById('photosContent').innerText = photos;
   document.getElementById('checkoutContent').innerHTML = formatCheckoutContent(checkout);
 
-  applyMapLinkBehavior('localContent');
+   applyMapLinkBehavior('localContent');
   applyMapLinkBehavior('trailContent');
 
   const checklistEl = document.getElementById('teamChecklistDisplay');
@@ -2277,9 +2306,10 @@ async function renderEditablePages(){
     checklistEl.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
   }
 
+  await renderPropertyTheme();
   await renderDynamicImages();
   await renderPropertyChrome();
-}
+} 
 
    async function loadOwnerImageEditor(){
   const imageSelect = document.getElementById('ownerImageSelect');
@@ -2307,15 +2337,15 @@ async function saveOwnerImageSetting(){
   const key = imageSelect.value;
   const value = imageEditor.value.trim();
 
-  try{
+    try{
     await savePropertyContent(key, value);
-    await renderDynamicImages();
+    await renderEditablePages();
     saveMessage.style.display = 'block';
   } catch(e){
     console.error(e);
     alert('Could not save photo or link.');
   }
-} 
+}
    function showPage(page){
   const pages = [
     'home','guidebook','info','local','trail','waysToTheRidge','enhanceStay','guestMemories','checkout','requestToBook',
