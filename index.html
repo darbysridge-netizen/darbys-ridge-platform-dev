@@ -1765,7 +1765,7 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
       <label for="themeHighlight">Highlight</label>
       <input id="themeHighlight" type="text" placeholder="#d8896b">
 
-      <button class="action-btn center-button" type="button">Save Theme Colors</button>
+    <button class="action-btn center-button" type="button" onclick="saveOwnerTheme()">Save Theme Colors</button>  
     </div> 
       <h3>Enhance Your Stay Packages</h3>
 
@@ -2376,6 +2376,30 @@ async function saveOwnerImageSetting(){
     alert('Could not save photo or link.');
   }
 }
+async function saveOwnerTheme(){
+  const themeValues = {
+    theme_bg_main: document.getElementById('themeBgMain')?.value.trim() || '#dceff2',
+    theme_bg_card: document.getElementById('themeBgCard')?.value.trim() || '#f8fcfc',
+    theme_text_main: document.getElementById('themeTextMain')?.value.trim() || '#315c63',
+    theme_accent: document.getElementById('themeAccent')?.value.trim() || '#2f8f9d',
+    theme_accent_soft: document.getElementById('themeAccentSoft')?.value.trim() || '#6eaeb8',
+    theme_border_soft: document.getElementById('themeBorderSoft')?.value.trim() || '#d3c2aa',
+    theme_panel_bg: document.getElementById('themePanelBg')?.value.trim() || '#f7fbfc',
+    theme_highlight: document.getElementById('themeHighlight')?.value.trim() || '#d8896b'
+  };
+
+  try{
+    for(const [key, value] of Object.entries(themeValues)){
+      await savePropertyContent(key, value);
+    }
+
+    await renderEditablePages();
+    alert('Theme colors saved.');
+  } catch(e){
+    console.error(e);
+    alert('Could not save theme colors.');
+  }
+}    
   async function loadOwnerThemeEditor(){
   const values = {
     theme_bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
