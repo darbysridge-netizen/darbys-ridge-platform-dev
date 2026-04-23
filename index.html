@@ -2440,9 +2440,7 @@ async function saveOwnerTheme(){
   }
 }
 
-async function saveOwnerTheme(){
-  const saveMessage = document.getElementById('ownerThemeSaveMessage');
-
+ async function saveOwnerTheme(){
   const themeValues = {
     theme_bg_main: document.getElementById('themeBgMain')?.value.trim() || '#dceff2',
     theme_bg_card: document.getElementById('themeBgCard')?.value.trim() || '#f8fcfc',
@@ -2460,15 +2458,12 @@ async function saveOwnerTheme(){
     }
 
     await renderEditablePages();
-
-    if(saveMessage){
-      saveMessage.style.display = 'block';
-    }
+    alert('Theme colors saved.');
   } catch(e){
-    console.error(e);
-    alert('Could not save theme colors.');
+    console.error('saveOwnerTheme error:', e);
+    alert(`Theme save failed: ${e?.message || JSON.stringify(e) || 'Unknown error'}`);
   }
-}  
+}
    function showPage(page){
   const pages = [
     'home','guidebook','info','local','trail','waysToTheRidge','enhanceStay','guestMemories','checkout','requestToBook',
