@@ -2097,6 +2097,28 @@ async function savePropertyContent(key, value){
 }
 
 async function renderPropertyTheme(){
+
+ async function loadOwnerThemeEditor(){
+  const values = {
+    theme_bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
+    theme_bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
+    theme_text_main: await getPropertyContent('theme_text_main', '#315c63'),
+    theme_accent: await getPropertyContent('theme_accent', '#2f8f9d'),
+    theme_accent_soft: await getPropertyContent('theme_accent_soft', '#6eaeb8'),
+    theme_border_soft: await getPropertyContent('theme_border_soft', '#d3c2aa'),
+    theme_panel_bg: await getPropertyContent('theme_panel_bg', '#f7fbfc'),
+    theme_highlight: await getPropertyContent('theme_highlight', '#d8896b')
+  };
+
+  document.getElementById('themeBgMain').value = values.theme_bg_main;
+  document.getElementById('themeBgCard').value = values.theme_bg_card;
+  document.getElementById('themeTextMain').value = values.theme_text_main;
+  document.getElementById('themeAccent').value = values.theme_accent;
+  document.getElementById('themeAccentSoft').value = values.theme_accent_soft;
+  document.getElementById('themeBorderSoft').value = values.theme_border_soft;
+  document.getElementById('themePanelBg').value = values.theme_panel_bg;
+  document.getElementById('themeHighlight').value = values.theme_highlight;
+} 
   const theme = {
     bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
     bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
@@ -2484,10 +2506,11 @@ async function saveOwnerTheme(){
       if (page === 'supplies') renderSupplyList();
       if (page === 'maintenance') renderMaintenanceList();
       if (page === 'guestMemories') renderGuestGallery();
-    if (page === 'owner') {
+ if (page === 'owner') {
   renderOwnerDashboard();
   loadOwnerEditor();
   loadOwnerImageEditor();
+  loadOwnerThemeEditor();
 }  
     }
 
