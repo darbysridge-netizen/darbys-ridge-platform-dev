@@ -2416,12 +2416,13 @@ async function saveOwnerTheme(){
     }
 
     await renderEditablePages();
+    await loadOwnerThemeEditor();
     alert('Theme colors saved.');
   } catch(e){
-    console.error(e);
-    alert('Could not save theme colors.');
+    console.error('saveOwnerTheme error:', e);
+    alert(`Theme save failed: ${e?.message || JSON.stringify(e) || 'Unknown error'}`);
   }
-}    
+}
   async function loadOwnerThemeEditor(){
   const values = {
     theme_bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
