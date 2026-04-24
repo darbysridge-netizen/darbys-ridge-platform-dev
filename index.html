@@ -701,11 +701,11 @@ button.tertiary-btn:active{
       background:white;
     }
 
-    .mobile-open{
-      display:none;
-      padding:16px;
-      text-align:center;
-    }
+   .mobile-open{
+  display:block;
+  padding:16px;
+  text-align:center;
+}
 
    .open-guide-btn,
 .link-btn{
@@ -1356,7 +1356,9 @@ background:#ead8c7;
 
     <div class="pdf-wrap">
       <div class="mobile-open">
-        <a id="guidebookOpenLink" href="#" target="_blank" class="open-guide-btn">Open Guest Guide</a>
+    <a id="guidebookOpenLink" href="#" target="_blank" rel="noopener noreferrer" class="open-guide-btn">
+  Open Guest Guide
+</a>
       </div>
 
       <iframe
