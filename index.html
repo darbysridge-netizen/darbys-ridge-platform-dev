@@ -2349,8 +2349,9 @@ async function renderDynamicImages(){
 
 async function renderPropertyChrome(){
   const heroTitle = await getPropertyContent('hero_title', 'Ocean Pearl');
-  const propertyNameForLabels = heroTitle || 'The Property';
-const propertyNameUpper = propertyNameForLabels.toUpperCase();
+const propertyNameForLabels = heroTitle || 'Ocean Pearl';
+const cleanPropertyName = String(propertyNameForLabels).replace(/^the\s+/i, '').trim();
+const propertyNameUpper = cleanPropertyName.toUpperCase();
   const heroTagline = await getPropertyContent('hero_tagline', '');
   const heroDescription = await getPropertyContent('hero_description', '');
 
