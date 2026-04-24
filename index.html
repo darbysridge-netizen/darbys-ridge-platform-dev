@@ -1730,6 +1730,17 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
   <div id="owner" class="hidden page">
     <button class="back" type="button" onclick="showPage('home')">← Back</button>
     <h1>Owner Dashboard</h1>
+    <details class="panel">
+  <summary><h3>Property Preview Links</h3></summary>
+
+  <button class="action-btn secondary-btn" type="button" onclick="openProperty('darbys-ridge')">
+    Open Darby’s Ridge
+  </button>
+
+  <button class="action-btn secondary-btn center-button" type="button" onclick="openProperty('ocean-pearl')">
+    Open Ocean Pearl
+  </button>
+</details>
 
    <details class="panel">
   <summary><h3>Snapshot</h3></summary>
@@ -2740,7 +2751,10 @@ if (page === 'owner') {
   loadOwnerSocialEditor();
 }
     }
-
+function openProperty(slug){
+  const base = window.location.origin + window.location.pathname;
+  window.open(`${base}?property=${slug}`, '_blank');
+}
   async function checkLogin(){
   const password = document.getElementById('teamPassword').value;
   const error = document.getElementById('loginError');
