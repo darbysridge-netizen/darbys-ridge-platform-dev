@@ -2445,6 +2445,35 @@ async function saveOwnerImageSetting(){
   }
 }
 async function saveOwnerTheme(){
+ async function saveOwnerHeroSection(){
+  try{
+    await savePropertyContent('hero_title', document.getElementById('ownerHeroTitle')?.value.trim() || '');
+    await savePropertyContent('hero_tagline', document.getElementById('ownerHeroTagline')?.value.trim() || '');
+    await savePropertyContent('hero_description', document.getElementById('ownerHeroDescription')?.value.trim() || '');
+
+    await renderEditablePages();
+    await loadOwnerHeroEditor();
+
+    alert('Hero section saved.');
+  } catch(e){
+    console.error(e);
+    alert('Could not save hero section.');
+  }
+}
+
+async function loadOwnerHeroEditor(){
+  const title = document.getElementById('ownerHeroTitle');
+  const tagline = document.getElementById('ownerHeroTagline');
+  const description = document.getElementById('ownerHeroDescription');
+
+  if(!title || !tagline || !description){
+    return;
+  }
+
+  title.value = await getPropertyContent('hero_title', '');
+  tagline.value = await getPropertyContent('hero_tagline', '');
+  description.value = await getPropertyContent('hero_description', '');
+} 
   async function saveOwnerSocialSection(){
   try{
     await savePropertyContent('social_heading', document.getElementById('ownerSocialHeading')?.value.trim() || '');
@@ -2609,11 +2638,12 @@ async function loadOwnerSocialEditor(){
       if (page === 'supplies') renderSupplyList();
       if (page === 'maintenance') renderMaintenanceList();
       if (page === 'guestMemories') renderGuestGallery();
- if (page === 'owner') {
+if (page === 'owner') {
   renderOwnerDashboard();
   loadOwnerEditor();
   loadOwnerImageEditor();
   loadOwnerThemeEditor();
+  loadOwnerHeroEditor();
   loadOwnerSocialEditor();
 }
     }
