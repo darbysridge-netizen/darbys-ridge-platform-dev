@@ -2373,56 +2373,6 @@ async function renderDynamicImages(){
   }
 }
 
-  const imgHomeGuide = document.getElementById('imgHomeGuide');
-  if (imgHomeGuide) imgHomeGuide.src = values.home_guide_image;
-
-  const imgHomeInfo = document.getElementById('imgHomeInfo');
-  if (imgHomeInfo) imgHomeInfo.src = values.home_info_image;
-
-  const imgHomeLocal = document.getElementById('imgHomeLocal');
-  if (imgHomeLocal) imgHomeLocal.src = values.home_local_image;
-
-  const imgHomeTrail = document.getElementById('imgHomeTrail');
-  if (imgHomeTrail) imgHomeTrail.src = values.home_trail_image;
-
-  const imgHomeMemories = document.getElementById('imgHomeMemories');
-  if (imgHomeMemories) imgHomeMemories.src = values.home_memories_image;
-
-  const imgHomeCheckout = document.getElementById('imgHomeCheckout');
-  if (imgHomeCheckout) imgHomeCheckout.src = values.home_checkout_image;
-
-  const imgHomeRequest = document.getElementById('imgHomeRequest');
-  if (imgHomeRequest) imgHomeRequest.src = values.home_request_image;
-
-  const imgBannerInfo = document.getElementById('imgBannerInfo');
-  if (imgBannerInfo) imgBannerInfo.src = values.banner_info_image;
-
-  const imgBannerLocal = document.getElementById('imgBannerLocal');
-  if (imgBannerLocal) imgBannerLocal.src = values.banner_local_image;
-
-  const imgBannerTrail = document.getElementById('imgBannerTrail');
-  if (imgBannerTrail) imgBannerTrail.src = values.banner_trail_image;
-
-  const imgBannerCheckout = document.getElementById('imgBannerCheckout');
-  if (imgBannerCheckout) imgBannerCheckout.src = values.banner_checkout_image;
-
-  const imgBannerWaze = document.getElementById('imgBannerWaze');
-  if (imgBannerWaze) imgBannerWaze.src = await getPropertyContent('banner_waze_image', 'ocean-waze.jpg');
-
-  const airbnbLink = document.getElementById('airbnbBookLink');
-  const bookingUrl = String(values.book_again_airbnb_link || '').trim();
-
-  if (airbnbLink) {
-    if (bookingUrl) {
-      airbnbLink.href = bookingUrl;
-      airbnbLink.classList.remove('hidden');
-    } else {
-      airbnbLink.href = '#';
-      airbnbLink.classList.add('hidden');
-    }
-  }
-}
-
 async function renderPropertyChrome(){
   const heroTitle = await getPropertyContent('hero_title', 'Ocean Pearl');
 const propertyNameForLabels = heroTitle || 'Ocean Pearl';
