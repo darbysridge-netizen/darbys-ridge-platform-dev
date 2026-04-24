@@ -1818,6 +1818,7 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
       <button class="action-btn center-button" type="button" onclick="saveOwnerSocialSection()">Save Follow Section</button>
     </details>
 <details class="panel">
+ <details class="panel">
   <summary><h3>Home Card Photos</h3></summary>
 
   <label for="ownerImageSelect">Choose Photo</label>
@@ -1839,10 +1840,17 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
     <option value="banner_checkout_image">Checkout Page Banner</option>
   </select>
 
-  <label for="ownerImageEditor">Image File Name or Image URL</label>
+  <label for="ownerImageUpload">Upload New Photo</label>
+  <input id="ownerImageUpload" type="file" accept="image/*">
+
+  <button class="action-btn center-button" type="button" onclick="uploadOwnerImageSetting()">Upload + Save Photo</button>
+
+  <label for="ownerImageEditor">Current Image URL or File Name</label>
   <input id="ownerImageEditor" type="text" placeholder="example: ocean-guide.jpg">
 
-  <button class="action-btn center-button" type="button" onclick="saveOwnerImageSetting()">Save Photo</button>
+  <button class="action-btn secondary-btn center-button" type="button" onclick="saveOwnerImageSetting()">Save Typed Link Instead</button>
+
+  <div id="ownerImagePreview" style="margin-top:14px;"></div>
 
   <div id="ownerImageSaveMessage" class="form-message form-success">Photo saved.</div>
 </details>
@@ -2509,6 +2517,8 @@ async function renderEditablePages(){
 async function loadOwnerImageEditor(){
   const imageSelect = document.getElementById('ownerImageSelect');
   const imageEditor = document.getElementById('ownerImageEditor');
+  const imageUpload = document.getElementById('ownerImageUpload');
+  const imagePreview = document.getElementById('ownerImagePreview');
   const saveMessage = document.getElementById('ownerImageSaveMessage');
 
   if (!imageSelect || !imageEditor || !saveMessage) {
@@ -2516,8 +2526,25 @@ async function loadOwnerImageEditor(){
   }
 
   const key = imageSelect.value;
-  imageEditor.value = await getPropertyContent(key, '');
+  const currentValue = await getPropertyContent(key, '');
+
+  imageEditor.value = currentValue;
   saveMessage.style.display = 'none';
+
+  if(imageUpload){
+    imageUpload.value = '';
+  }
+
+  if(imagePreview){
+    if(currentValue){
+      imagePreview.innerHTML = `
+        <div style="font-size:13px; font-weight:600; margin-bottom:8px;">Current Preview</div>
+        <img src="${escapeHtml(currentValue)}" alt="Current image" style="width:100%; max-height:180px; object-fit:cover; border-radius:14px; border:1px solid #eadbc8;">
+      `;
+    } else {
+      imagePreview.innerHTML = `<div class="small-note">No image saved yet.</div>`;
+    }
+  }
 }
 
 async function saveOwnerImageSetting(){
@@ -2536,6 +2563,50 @@ async function saveOwnerImageSetting(){
     await savePropertyContent(key, value);
     await renderEditablePages();
     saveMessage.style.display = 'block';
+  async function uploadOwnerImageSetting(){
+  const imageSelect = document.getElementById('ownerImageSelect');
+  const imageEditor = document.getElementById('ownerImageEditor');
+  const imageUpload = document.getElementById('ownerImageUpload');
+  const saveMessage = document.getElementById('ownerImageSaveMessage');
+
+  if (!imageSelect || !imageEditor || !imageUpload || !saveMessage) {
+    return;
+  }
+
+  const file = imageUpload.files && imageUpload.files[0];
+
+  if(!file){
+    alert('Please choose a photo first.');
+    return;
+  }
+
+  if(!file.type.startsWith('image/')){
+    alert('Please choose an image file.');
+    return;
+  }
+
+  const key = imageSelect.value;
+  const prefix = `property-${CURRENT_PROPERTY_SLUG}-${key}`;
+
+  try{
+    saveMessage.style.display = 'none';
+
+    const uploaded = await uploadFileToBucket(GUEST_BUCKET, file, prefix);
+
+    await savePropertyContent(key, uploaded.url);
+
+    imageEditor.value = uploaded.url;
+
+    await renderEditablePages();
+    await loadOwnerImageEditor();
+
+    saveMessage.textContent = 'Photo uploaded and saved.';
+    saveMessage.style.display = 'block';
+  } catch(e){
+    console.error(e);
+    alert(`Photo upload failed: ${e?.message || 'Unknown error'}`);
+  }
+}  
   } catch(e){
     console.error(e);
     alert('Could not save photo or link.');
