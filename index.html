@@ -1227,7 +1227,7 @@ background:#ead8c7;
         <div class="menu-card" onclick="showPage('guidebook')">
         <img id="imgHomeGuide" src="ocean-guide.jpg" alt="">
           <div class="menu-label">
-   <span id="homeGuideKicker"></span> 
+ <span id="wazeKicker">WAZE TO THE PROPERTY</span>
       <strong id="homeGuideLabel">Guest Guide</strong>      
           </div>
         </div>
@@ -2316,12 +2316,15 @@ async function renderDynamicImages(){
 
 async function renderPropertyChrome(){
   const heroTitle = await getPropertyContent('hero_title', 'Ocean Pearl');
+  const propertyNameForLabels = heroTitle || 'The Property';
+const propertyNameUpper = propertyNameForLabels.toUpperCase();
   const heroTagline = await getPropertyContent('hero_tagline', '');
   const heroDescription = await getPropertyContent('hero_description', '');
 
   const socialHeading = await getPropertyContent('social_heading', 'Follow Ocean Pearl');
   const socialText = await getPropertyContent('social_text', '');
-  const homeGuideKicker = await getPropertyContent('home_guide_kicker', 'OCEAN PEARL');
+const homeGuideKicker = propertyNameUpper;
+const wazeKicker = `WAYS TO ${propertyNameUpper}`;
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
   const guidebookPdf = await getPropertyContent('guidebook_pdf', '');
 
@@ -2348,8 +2351,11 @@ async function renderPropertyChrome(){
   const guidebookTitleEl = document.getElementById('guidebookTitle');
   if(guidebookTitleEl) guidebookTitleEl.textContent = guidebookTitle;
 
-  const homeGuideKickerEl = document.getElementById('homeGuideKicker');
-  if(homeGuideKickerEl) homeGuideKickerEl.textContent = homeGuideKicker;
+const homeGuideKickerEl = document.getElementById('homeGuideKicker');
+if(homeGuideKickerEl) homeGuideKickerEl.textContent = homeGuideKicker;
+
+const wazeKickerEl = document.getElementById('wazeKicker');
+if(wazeKickerEl) wazeKickerEl.textContent = wazeKicker;  
 
   const openLink = document.getElementById('guidebookOpenLink');
   const frame = document.getElementById('guidebookFrame');
