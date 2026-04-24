@@ -2533,7 +2533,14 @@ async function renderEditablePages(){
 
   const infoContent = document.getElementById('infoContent');
   if(infoContent) infoContent.innerHTML = formatInfoContent(info);
+  
+const infoContent = document.getElementById('infoContent');
+if(infoContent) infoContent.innerHTML = formatInfoContent(info);
 
+const wazeKicker = await getPropertyContent('waze_kicker', '');
+const wazeKickerEl = document.getElementById('wazeKicker');
+if(wazeKickerEl) wazeKickerEl.textContent = wazeKicker;
+  
   const localContent = document.getElementById('localContent');
   if(localContent) localContent.innerHTML = local;
 
@@ -2545,6 +2552,7 @@ async function renderEditablePages(){
 
   const checkoutContent = document.getElementById('checkoutContent');
   if(checkoutContent) checkoutContent.innerHTML = formatCheckoutContent(checkout);
+  
 
   applyMapLinkBehavior('localContent');
   applyMapLinkBehavior('trailContent');
