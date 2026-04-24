@@ -2600,8 +2600,17 @@ async function saveOwnerImageSetting(){
   try{
     await savePropertyContent(key, value);
     await renderEditablePages();
+    await loadOwnerImageEditor();
+
+    saveMessage.textContent = 'Photo saved.';
     saveMessage.style.display = 'block';
-  async function uploadOwnerImageSetting(){
+  } catch(e){
+    console.error(e);
+    alert('Could not save photo or link.');
+  }
+}
+
+async function uploadOwnerImageSetting(){
   const imageSelect = document.getElementById('ownerImageSelect');
   const imageEditor = document.getElementById('ownerImageEditor');
   const imageUpload = document.getElementById('ownerImageUpload');
@@ -2644,13 +2653,7 @@ async function saveOwnerImageSetting(){
     console.error(e);
     alert(`Photo upload failed: ${e?.message || 'Unknown error'}`);
   }
-}  
-  } catch(e){
-    console.error(e);
-    alert('Could not save photo or link.');
-  }
 }
-
 async function saveOwnerHeroSection(){
   try{
     await savePropertyContent('hero_title', document.getElementById('ownerHeroTitle')?.value.trim() || '');
