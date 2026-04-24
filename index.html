@@ -386,7 +386,37 @@ color:var(--highlight);
   border-radius:16px;
   margin-top:14px;
 }
+/* Accordion (Owner Portal Panels) */
 
+details.panel summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+details.panel summary h3 {
+  margin: 0;
+}
+
+details.panel[open] {
+  padding-bottom: 18px;
+}
+
+/* remove default triangle */
+details.panel summary::-webkit-details-marker {
+  display: none;
+}
+
+/* custom arrow */
+details.panel summary::after {
+  content: "▸";
+  float: right;
+  font-size: 14px;
+  transition: transform 0.2s ease;
+}
+
+details.panel[open] summary::after {
+  transform: rotate(90deg);
+}
     .page h1{
       font-family:'Playfair Display',serif;
       font-size:30px;
