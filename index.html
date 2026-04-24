@@ -1365,6 +1365,9 @@ background:#ead8c7;
         src=""
         title="Guest Guide">
       </iframe>
+    <a id="guidebookOpenLink" target="_blank" class="action-btn" style="display:none; margin-top:12px;">
+  Open Guest Guide
+</a>  
     </div>
   </div>
 
@@ -2462,12 +2465,18 @@ if(homeGuideKickerEl) homeGuideKickerEl.textContent = homeGuideKicker;
 const wazeKickerEl = document.getElementById('wazeKicker');
 if(wazeKickerEl) wazeKickerEl.textContent = wazeKicker;  
 
-  const openLink = document.getElementById('guidebookOpenLink');
-  const frame = document.getElementById('guidebookFrame');
+const openLink = document.getElementById('guidebookOpenLink');
+const frame = document.getElementById('guidebookFrame');
 
-  if(openLink){
-    openLink.href = guidebookPdf || '#';
-  }
+if(frame){
+  frame.style.display = 'none';
+  frame.src = '';
+}
+
+if(openLink){
+  openLink.href = guidebookPdf || '#';
+  openLink.style.display = guidebookPdf ? 'inline-block' : 'none';
+} 
 
   if(frame){
     frame.src = guidebookPdf ? `${guidebookPdf}#toolbar=0&navpanes=0&scrollbar=0` : '';
