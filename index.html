@@ -2431,6 +2431,24 @@ async function saveOwnerImageSetting(){
   }
 }
 async function saveOwnerTheme(){
+  async function saveOwnerSocialSection(){
+  try{
+    await savePropertyContent('social_heading', document.getElementById('ownerSocialHeading')?.value.trim() || '');
+    await savePropertyContent('social_text', document.getElementById('ownerSocialText')?.value.trim() || '');
+    await savePropertyContent('social_instagram_url', document.getElementById('ownerInstagramUrl')?.value.trim() || '');
+    await savePropertyContent('social_instagram_handle', document.getElementById('ownerInstagramHandle')?.value.trim() || '');
+    await savePropertyContent('social_facebook_url', document.getElementById('ownerFacebookUrl')?.value.trim() || '');
+    await savePropertyContent('social_facebook_name', document.getElementById('ownerFacebookName')?.value.trim() || '');
+
+    await renderEditablePages();
+    await loadOwnerSocialEditor();
+
+    alert('Follow section saved.');
+  } catch(e){
+    console.error(e);
+    alert('Could not save follow section.');
+  }
+}
   const themeValues = {
     theme_bg_main: document.getElementById('themeBgMain')?.value.trim() || '#dceff2',
     theme_bg_card: document.getElementById('themeBgCard')?.value.trim() || '#f8fcfc',
@@ -2455,6 +2473,44 @@ async function saveOwnerTheme(){
     alert(`Theme save failed: ${e?.message || JSON.stringify(e) || 'Unknown error'}`);
   }
 }
+ async function saveOwnerSocialSection(){
+  try{
+    await savePropertyContent('social_heading', document.getElementById('ownerSocialHeading')?.value.trim() || '');
+    await savePropertyContent('social_text', document.getElementById('ownerSocialText')?.value.trim() || '');
+    await savePropertyContent('social_instagram_url', document.getElementById('ownerInstagramUrl')?.value.trim() || '');
+    await savePropertyContent('social_instagram_handle', document.getElementById('ownerInstagramHandle')?.value.trim() || '');
+    await savePropertyContent('social_facebook_url', document.getElementById('ownerFacebookUrl')?.value.trim() || '');
+    await savePropertyContent('social_facebook_name', document.getElementById('ownerFacebookName')?.value.trim() || '');
+
+    await renderEditablePages();
+    await loadOwnerSocialEditor();
+
+    alert('Follow section saved.');
+  } catch(e){
+    console.error(e);
+    alert('Could not save follow section.');
+  }
+}
+
+async function loadOwnerSocialEditor(){
+  const heading = document.getElementById('ownerSocialHeading');
+  const text = document.getElementById('ownerSocialText');
+  const instagramUrl = document.getElementById('ownerInstagramUrl');
+  const instagramHandle = document.getElementById('ownerInstagramHandle');
+  const facebookUrl = document.getElementById('ownerFacebookUrl');
+  const facebookName = document.getElementById('ownerFacebookName');
+
+  if(!heading || !text || !instagramUrl || !instagramHandle || !facebookUrl || !facebookName){
+    return;
+  }
+
+  heading.value = await getPropertyContent('social_heading', '');
+  text.value = await getPropertyContent('social_text', '');
+  instagramUrl.value = await getPropertyContent('social_instagram_url', '');
+  instagramHandle.value = await getPropertyContent('social_instagram_handle', '');
+  facebookUrl.value = await getPropertyContent('social_facebook_url', '');
+  facebookName.value = await getPropertyContent('social_facebook_name', '');
+}   
   async function loadOwnerThemeEditor(){
   const values = {
     theme_bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
