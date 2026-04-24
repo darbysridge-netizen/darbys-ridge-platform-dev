@@ -4227,8 +4227,9 @@ if (homeDiscountLabel) {
 
 const homeGuideKicker = document.getElementById('homeGuideKicker');
 if (homeGuideKicker) {
-  const value = await getPropertyContent('home_guide_kicker');
-  if (value) homeGuideKicker.textContent = value;
+  const heroTitle = await getPropertyContent('hero_title', 'Ocean Pearl');
+  const cleanPropertyName = String(heroTitle || 'Ocean Pearl').replace(/^the\s+/i, '');
+  homeGuideKicker.textContent = `THE ${cleanPropertyName.toUpperCase()}`;
 }
 
 const homeLocalKicker = document.getElementById('homeLocalKicker');
