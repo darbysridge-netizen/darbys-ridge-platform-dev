@@ -1262,7 +1262,7 @@ background:#ead8c7;
           </div>
         </div>
 <div class="menu-card" onclick="showPage('waysToTheRidge')">
- <img src="ocean-waze.jpg" alt="">
+<img id="imgHomeWaze" src="ocean-waze.jpg" alt="">
   <div class="menu-label">
 <span id="wazeKicker">WAYS TO THE OCEAN PEARL</span>
 <strong id="wazeLabel">Open in Waze</strong>
@@ -1299,7 +1299,7 @@ background:#ead8c7;
           </div>
         </div>
 <div class="menu-card" onclick="showPage('enhanceStay')">
-<img src="ocean-feature.jpg" alt=""> 
+<img id="imgHomeEnhance" src="ocean-feature.jpg" alt=""> 
   <div class="menu-label">
     <span>EXTRAS</span>
  <strong id="enhanceCardLabel">Enhance Your Stay</strong> 
@@ -1817,7 +1817,35 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
 
       <button class="action-btn center-button" type="button" onclick="saveOwnerSocialSection()">Save Follow Section</button>
     </details>
+<details class="panel">
+  <summary><h3>Home Card Photos</h3></summary>
 
+  <label for="ownerImageSelect">Choose Photo</label>
+  <select id="ownerImageSelect" onchange="loadOwnerImageEditor()">
+    <option value="hero_image">Hero Background</option>
+    <option value="home_guide_image">Guest Guide Card</option>
+    <option value="home_waze_image">Waze Card</option>
+    <option value="home_info_image">Essentials Card</option>
+    <option value="home_local_image">Local / Area Guide Card</option>
+    <option value="home_trail_image">Feature / Explore More Card</option>
+    <option value="home_memories_image">Guest Memories Card</option>
+    <option value="home_enhance_image">Enhance Your Stay Card</option>
+    <option value="home_checkout_image">Checkout Card</option>
+    <option value="home_request_image">Returning Guests Card</option>
+    <option value="banner_waze_image">Waze Page Banner</option>
+    <option value="banner_info_image">Essentials Page Banner</option>
+    <option value="banner_local_image">Local Page Banner</option>
+    <option value="banner_trail_image">Feature Page Banner</option>
+    <option value="banner_checkout_image">Checkout Page Banner</option>
+  </select>
+
+  <label for="ownerImageEditor">Image File Name or Image URL</label>
+  <input id="ownerImageEditor" type="text" placeholder="example: ocean-guide.jpg">
+
+  <button class="action-btn center-button" type="button" onclick="saveOwnerImageSetting()">Save Photo</button>
+
+  <div id="ownerImageSaveMessage" class="form-message form-success">Photo saved.</div>
+</details>
     <details class="panel">
   <summary><h3>Theme Colors</h3></summary>
 
@@ -2041,6 +2069,9 @@ home_trail_image: `ocean-feature.jpg`,
 home_memories_image: `ocean-memories.jpeg`,
 home_checkout_image: `ocean-checkout.jpeg`,
 home_request_image: `ocean-return.jpg`,
+home_waze_image: `ocean-waze.jpg`,
+home_enhance_image: `ocean-feature.jpg`,
+banner_waze_image: `ocean-waze.jpg`,      
 banner_info_image: `ocean-info.jpg`,
 banner_local_image: `ocean-local.jpg`,
 banner_trail_image: `ocean-feature.jpg`,
@@ -2277,25 +2308,70 @@ function applyMapLinkBehavior(containerId){
 
 async function renderDynamicImages(){
   const values = {
-    hero_image: await getPropertyContent('hero_image', 'hero.jpg'),
-    home_guide_image: await getPropertyContent('home_guide_image', 'cabin-exterior.jpg'),
-    home_info_image: await getPropertyContent('home_info_image', 'essentials.jpg'),
-    home_local_image: await getPropertyContent('home_local_image', 'local.jpg'),
-    home_trail_image: await getPropertyContent('home_trail_image', 'trail.jpg'),
-    home_memories_image: await getPropertyContent('home_memories_image', 'outdoor.jpg'),
-    home_checkout_image: await getPropertyContent('home_checkout_image', 'interior.jpg'),
-    home_request_image: await getPropertyContent('home_request_image', 'mountains.jpg'),
-    banner_info_image: await getPropertyContent('banner_info_image', 'essentials.jpg'),
-    banner_local_image: await getPropertyContent('banner_local_image', 'local.jpg'),
-    banner_trail_image: await getPropertyContent('banner_trail_image', 'trail.jpg'),
-    banner_checkout_image: await getPropertyContent('banner_checkout_image', 'interior.jpg'),
+    hero_image: await getPropertyContent('hero_image', defaultContent.hero_image || 'ocean-hero.jpeg'),
+
+    home_guide_image: await getPropertyContent('home_guide_image', defaultContent.home_guide_image || 'ocean-guide.jpg'),
+    home_waze_image: await getPropertyContent('home_waze_image', defaultContent.home_waze_image || 'ocean-waze.jpg'),
+    home_info_image: await getPropertyContent('home_info_image', defaultContent.home_info_image || 'ocean-info.jpg'),
+    home_local_image: await getPropertyContent('home_local_image', defaultContent.home_local_image || 'ocean-local.jpg'),
+    home_trail_image: await getPropertyContent('home_trail_image', defaultContent.home_trail_image || 'ocean-feature.jpg'),
+    home_memories_image: await getPropertyContent('home_memories_image', defaultContent.home_memories_image || 'ocean-memories.jpeg'),
+    home_enhance_image: await getPropertyContent('home_enhance_image', defaultContent.home_enhance_image || 'ocean-feature.jpg'),
+    home_checkout_image: await getPropertyContent('home_checkout_image', defaultContent.home_checkout_image || 'ocean-checkout.jpeg'),
+    home_request_image: await getPropertyContent('home_request_image', defaultContent.home_request_image || 'ocean-return.jpg'),
+
+    banner_info_image: await getPropertyContent('banner_info_image', defaultContent.banner_info_image || 'ocean-info.jpg'),
+    banner_local_image: await getPropertyContent('banner_local_image', defaultContent.banner_local_image || 'ocean-local.jpg'),
+    banner_trail_image: await getPropertyContent('banner_trail_image', defaultContent.banner_trail_image || 'ocean-feature.jpg'),
+    banner_checkout_image: await getPropertyContent('banner_checkout_image', defaultContent.banner_checkout_image || 'ocean-checkout.jpg'),
+    banner_waze_image: await getPropertyContent('banner_waze_image', 'ocean-waze.jpg'),
+
     book_again_airbnb_link: await getPropertyContent('book_again_airbnb_link', '')
   };
 
   const heroSection = document.getElementById('heroSection');
-  if (heroSection) {
+  if(heroSection){
     heroSection.style.backgroundImage = `url("${values.hero_image}")`;
   }
+
+  const imageMap = {
+    imgHomeGuide: values.home_guide_image,
+    imgHomeWaze: values.home_waze_image,
+    imgHomeInfo: values.home_info_image,
+    imgHomeLocal: values.home_local_image,
+    imgHomeTrail: values.home_trail_image,
+    imgHomeMemories: values.home_memories_image,
+    imgHomeEnhance: values.home_enhance_image,
+    imgHomeCheckout: values.home_checkout_image,
+    imgHomeRequest: values.home_request_image,
+
+    imgBannerInfo: values.banner_info_image,
+    imgBannerLocal: values.banner_local_image,
+    imgBannerTrail: values.banner_trail_image,
+    imgBannerCheckout: values.banner_checkout_image,
+    imgBannerWaze: values.banner_waze_image
+  };
+
+  for(const [id, src] of Object.entries(imageMap)){
+    const img = document.getElementById(id);
+    if(img && src){
+      img.src = src;
+    }
+  }
+
+  const airbnbLink = document.getElementById('airbnbBookLink');
+  const bookingUrl = String(values.book_again_airbnb_link || '').trim();
+
+  if(airbnbLink){
+    if(bookingUrl){
+      airbnbLink.href = bookingUrl;
+      airbnbLink.classList.remove('hidden');
+    } else {
+      airbnbLink.href = '#';
+      airbnbLink.classList.add('hidden');
+    }
+  }
+}
 
   const imgHomeGuide = document.getElementById('imgHomeGuide');
   if (imgHomeGuide) imgHomeGuide.src = values.home_guide_image;
