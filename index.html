@@ -2146,28 +2146,6 @@ async function savePropertyContent(key, value){
 }
 
 async function renderPropertyTheme(){
-
- async function loadOwnerThemeEditor(){
-  const values = {
-    theme_bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
-    theme_bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
-    theme_text_main: await getPropertyContent('theme_text_main', '#315c63'),
-    theme_accent: await getPropertyContent('theme_accent', '#2f8f9d'),
-    theme_accent_soft: await getPropertyContent('theme_accent_soft', '#6eaeb8'),
-    theme_border_soft: await getPropertyContent('theme_border_soft', '#d3c2aa'),
-    theme_panel_bg: await getPropertyContent('theme_panel_bg', '#f7fbfc'),
-    theme_highlight: await getPropertyContent('theme_highlight', '#d8896b')
-  };
-
-  document.getElementById('themeBgMain').value = values.theme_bg_main;
-  document.getElementById('themeBgCard').value = values.theme_bg_card;
-  document.getElementById('themeTextMain').value = values.theme_text_main;
-  document.getElementById('themeAccent').value = values.theme_accent;
-  document.getElementById('themeAccentSoft').value = values.theme_accent_soft;
-  document.getElementById('themeBorderSoft').value = values.theme_border_soft;
-  document.getElementById('themePanelBg').value = values.theme_panel_bg;
-  document.getElementById('themeHighlight').value = values.theme_highlight;
-} 
   const theme = {
     bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
     bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
@@ -2194,40 +2172,77 @@ async function renderPropertyTheme(){
   if(browserThemeColor){
     browserThemeColor.setAttribute('content', theme.bg_main);
   }
-}  
-    async function saveSectionContent(section, value){
-    const { error } = await supabaseClient
-  .from('app_content')
-  .upsert({ section_key: section, content: value }, { onConflict: 'section_key' });  
-      if(error) throw error;
+}
+
+async function loadOwnerThemeEditor(){
+  const values = {
+    theme_bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
+    theme_bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
+    theme_text_main: await getPropertyContent('theme_text_main', '#315c63'),
+    theme_accent: await getPropertyContent('theme_accent', '#2f8f9d'),
+    theme_accent_soft: await getPropertyContent('theme_accent_soft', '#6eaeb8'),
+    theme_border_soft: await getPropertyContent('theme_border_soft', '#d3c2aa'),
+    theme_panel_bg: await getPropertyContent('theme_panel_bg', '#f7fbfc'),
+    theme_highlight: await getPropertyContent('theme_highlight', '#d8896b')
+  };
+
+  const bgMain = document.getElementById('themeBgMain');
+  const bgCard = document.getElementById('themeBgCard');
+  const textMain = document.getElementById('themeTextMain');
+  const accent = document.getElementById('themeAccent');
+  const accentSoft = document.getElementById('themeAccentSoft');
+  const borderSoft = document.getElementById('themeBorderSoft');
+  const panelBg = document.getElementById('themePanelBg');
+  const highlight = document.getElementById('themeHighlight');
+
+  if(!bgMain || !bgCard || !textMain || !accent || !accentSoft || !borderSoft || !panelBg || !highlight){
+    return;
+  }
+
+  bgMain.value = values.theme_bg_main;
+  bgCard.value = values.theme_bg_card;
+  textMain.value = values.theme_text_main;
+  accent.value = values.theme_accent;
+  accentSoft.value = values.theme_accent_soft;
+  borderSoft.value = values.theme_border_soft;
+  panelBg.value = values.theme_panel_bg;
+  highlight.value = values.theme_highlight;
+}
+
+async function saveSectionContent(section, value){
+  const { error } = await supabaseClient
+    .from('app_content')
+    .upsert({ section_key: section, content: value }, { onConflict: 'section_key' });
+
+  if(error) throw error;
+}
+
+async function getChecklistItems(){
+  const raw = await getSectionContent('checklist');
+  return raw.split('\n').map(item => item.trim()).filter(Boolean);
+}
+
+function applyMapLinkBehavior(containerId){
+  const container = document.getElementById(containerId);
+  if(!container) return;
+
+  const links = container.querySelectorAll('a[href]');
+  links.forEach(link => {
+    const href = String(link.getAttribute('href') || '').toLowerCase();
+    const isMapLink =
+      href.includes('google.com/maps') ||
+      href.includes('google.com/maps/search') ||
+      href.includes('api=1&query') ||
+      href.includes('maps.apple.com');
+
+    if(isMapLink){
+      link.setAttribute('target', '_self');
+      link.removeAttribute('rel');
     }
+  });
+}
 
-    async function getChecklistItems(){
-      const raw = await getSectionContent('checklist');
-      return raw.split('\n').map(item => item.trim()).filter(Boolean);
-    }
-
-    function applyMapLinkBehavior(containerId){
-      const container = document.getElementById(containerId);
-      if(!container) return;
-
-      const links = container.querySelectorAll('a[href]');
-      links.forEach(link => {
-        const href = String(link.getAttribute('href') || '').toLowerCase();
-        const isMapLink =
-          href.includes('google.com/maps') ||
-          href.includes('google.com/maps/search') ||
-          href.includes('api=1&query') ||
-          href.includes('maps.apple.com');
-
-        if(isMapLink){
-          link.setAttribute('target', '_self');
-          link.removeAttribute('rel');
-        }
-      });
-    }
-
-   async function renderDynamicImages(){
+async function renderDynamicImages(){
   const values = {
     hero_image: await getPropertyContent('hero_image', 'hero.jpg'),
     home_guide_image: await getPropertyContent('home_guide_image', 'cabin-exterior.jpg'),
@@ -2281,8 +2296,10 @@ async function renderPropertyTheme(){
 
   const imgBannerCheckout = document.getElementById('imgBannerCheckout');
   if (imgBannerCheckout) imgBannerCheckout.src = values.banner_checkout_image;
-const imgBannerWaze = document.getElementById('imgBannerWaze');
-if (imgBannerWaze) imgBannerWaze.src = await getPropertyContent('banner_waze_image', 'ocean-waze.jpg');
+
+  const imgBannerWaze = document.getElementById('imgBannerWaze');
+  if (imgBannerWaze) imgBannerWaze.src = await getPropertyContent('banner_waze_image', 'ocean-waze.jpg');
+
   const airbnbLink = document.getElementById('airbnbBookLink');
   const bookingUrl = String(values.book_again_airbnb_link || '').trim();
 
@@ -2304,29 +2321,44 @@ async function renderPropertyChrome(){
 
   const socialHeading = await getPropertyContent('social_heading', 'Follow Ocean Pearl');
   const socialText = await getPropertyContent('social_text', '');
-const homeGuideKicker = await getPropertyContent('home_guide_kicker', 'OCEAN PEARL');
+  const homeGuideKicker = await getPropertyContent('home_guide_kicker', 'OCEAN PEARL');
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
   const guidebookPdf = await getPropertyContent('guidebook_pdf', '');
 
-  const instagramUrl = await getPropertyContent('instagram_url', '#');
-  const instagramHandle = await getPropertyContent('instagram_handle', '@oceanpearl');
-  const facebookUrl = await getPropertyContent('facebook_url', '#');
-  const facebookName = await getPropertyContent('facebook_name', 'Ocean Pearl');
+  const instagramUrl = await getPropertyContent('social_instagram_url', '#');
+  const instagramHandle = await getPropertyContent('social_instagram_handle', '@oceanpearl');
+  const facebookUrl = await getPropertyContent('social_facebook_url', '#');
+  const facebookName = await getPropertyContent('social_facebook_name', 'Ocean Pearl');
 
-  document.getElementById('heroTitle').textContent = heroTitle;
-  document.getElementById('heroTagline').textContent = heroTagline;
-  document.getElementById('heroDescription').textContent = heroDescription;
+  const heroTitleEl = document.getElementById('heroTitle');
+  if(heroTitleEl) heroTitleEl.textContent = heroTitle;
 
-  document.getElementById('socialHeading').textContent = socialHeading;
-  document.getElementById('socialText').textContent = socialText;
+  const heroTaglineEl = document.getElementById('heroTagline');
+  if(heroTaglineEl) heroTaglineEl.textContent = heroTagline;
 
-  document.getElementById('guidebookTitle').textContent = guidebookTitle;
-document.getElementById('homeGuideKicker').textContent = homeGuideKicker;
+  const heroDescriptionEl = document.getElementById('heroDescription');
+  if(heroDescriptionEl) heroDescriptionEl.textContent = heroDescription;
+
+  const socialHeadingEl = document.getElementById('socialHeading');
+  if(socialHeadingEl) socialHeadingEl.textContent = socialHeading;
+
+  const socialTextEl = document.getElementById('socialText');
+  if(socialTextEl) socialTextEl.textContent = socialText;
+
+  const guidebookTitleEl = document.getElementById('guidebookTitle');
+  if(guidebookTitleEl) guidebookTitleEl.textContent = guidebookTitle;
+
+  const homeGuideKickerEl = document.getElementById('homeGuideKicker');
+  if(homeGuideKickerEl) homeGuideKickerEl.textContent = homeGuideKicker;
+
   const openLink = document.getElementById('guidebookOpenLink');
   const frame = document.getElementById('guidebookFrame');
 
-  if (openLink) openLink.href = guidebookPdf || '#';
-  if (frame) {
+  if(openLink){
+    openLink.href = guidebookPdf || '#';
+  }
+
+  if(frame){
     frame.src = guidebookPdf ? `${guidebookPdf}#toolbar=0&navpanes=0&scrollbar=0` : '';
     frame.title = `${guidebookTitle}`;
   }
@@ -2340,48 +2372,35 @@ document.getElementById('homeGuideKicker').textContent = homeGuideKicker;
   if (igHandle) igHandle.textContent = instagramHandle;
   if (fbLink) fbLink.href = facebookUrl || '#';
   if (fbName) fbName.textContent = facebookName;
-const wazeTitle = await getPropertyContent('waze_title', 'Directions');
-const wazeSubtitle = await getPropertyContent(
-  'waze_subtitle',
-  'Use Waze for the most accurate route to the property.'
-);
-const wazeAddress = await getPropertyContent('waze_address', '');
-const wazeLink = await getPropertyContent('waze_link', '');
-const wazeNote = await getPropertyContent('waze_note', '');
-const wazeIntro = await getPropertyContent(
-  'waze_intro',
-  'Use Waze for the most accurate route to the property.'
-);
-const wazeTitleEl = document.getElementById('wazeBannerTitle');
-if (wazeTitleEl) {
-  wazeTitleEl.textContent = wazeTitle;
-}
 
-const wazeSubtitleEl = document.getElementById('wazeBannerText');
-if (wazeSubtitleEl) {
-  wazeSubtitleEl.textContent = wazeSubtitle;
-}
-const introEl = document.getElementById('wazeIntro');
-if (introEl) {
-  introEl.textContent = wazeIntro;
-}
+  const wazeTitle = await getPropertyContent('waze_title', 'Directions');
+  const wazeSubtitle = await getPropertyContent('waze_subtitle', 'Use Waze for the most accurate route to the property.');
+  const wazeAddress = await getPropertyContent('waze_address', '');
+  const wazeLink = await getPropertyContent('waze_link', '');
+  const wazeNote = await getPropertyContent('waze_note', '');
+  const wazeIntro = await getPropertyContent('waze_intro', 'Use Waze for the most accurate route to the property.');
 
-const addressEl = document.getElementById('wazeAddress');
-if (addressEl) {
-  addressEl.textContent = wazeAddress ? `📍 ${wazeAddress}` : '';
-}
+  const wazeTitleEl = document.getElementById('wazeBannerTitle');
+  if (wazeTitleEl) wazeTitleEl.textContent = wazeTitle;
 
-const wazeBtn = document.getElementById('wazeLink');
-if (wazeBtn) {
-  wazeBtn.href = wazeLink || '#';
-  wazeBtn.target = '_blank';
-  wazeBtn.rel = 'noopener noreferrer';
-}
+  const wazeSubtitleEl = document.getElementById('wazeBannerText');
+  if (wazeSubtitleEl) wazeSubtitleEl.textContent = wazeSubtitle;
 
-const noteEl = document.getElementById('wazeNote');
-if (noteEl) {
-  noteEl.textContent = wazeNote;
-} 
+  const introEl = document.getElementById('wazeIntro');
+  if (introEl) introEl.textContent = wazeIntro;
+
+  const addressEl = document.getElementById('wazeAddress');
+  if (addressEl) addressEl.textContent = wazeAddress ? `📍 ${wazeAddress}` : '';
+
+  const wazeBtn = document.getElementById('wazeLink');
+  if (wazeBtn) {
+    wazeBtn.href = wazeLink || '#';
+    wazeBtn.target = '_blank';
+    wazeBtn.rel = 'noopener noreferrer';
+  }
+
+  const noteEl = document.getElementById('wazeNote');
+  if (noteEl) noteEl.textContent = wazeNote;
 }
 
 async function renderEditablePages(){
@@ -2392,13 +2411,22 @@ async function renderEditablePages(){
   const checkout = await getPropertyContent('checkout', defaultContent.checkout);
   const checklistRaw = await getPropertyContent('checklist', defaultContent.checklist);
 
-  document.getElementById('infoContent').innerHTML = formatInfoContent(info);
-  document.getElementById('localContent').innerHTML = local;
-  document.getElementById('trailContent').innerHTML = trail;
-  document.getElementById('photosContent').innerText = photos;
-  document.getElementById('checkoutContent').innerHTML = formatCheckoutContent(checkout);
+  const infoContent = document.getElementById('infoContent');
+  if(infoContent) infoContent.innerHTML = formatInfoContent(info);
 
-   applyMapLinkBehavior('localContent');
+  const localContent = document.getElementById('localContent');
+  if(localContent) localContent.innerHTML = local;
+
+  const trailContent = document.getElementById('trailContent');
+  if(trailContent) trailContent.innerHTML = trail;
+
+  const photosContent = document.getElementById('photosContent');
+  if(photosContent) photosContent.innerText = photos;
+
+  const checkoutContent = document.getElementById('checkoutContent');
+  if(checkoutContent) checkoutContent.innerHTML = formatCheckoutContent(checkout);
+
+  applyMapLinkBehavior('localContent');
   applyMapLinkBehavior('trailContent');
 
   const checklistEl = document.getElementById('teamChecklistDisplay');
@@ -2410,9 +2438,9 @@ async function renderEditablePages(){
   await renderPropertyTheme();
   await renderDynamicImages();
   await renderPropertyChrome();
-} 
+}
 
-   async function loadOwnerImageEditor(){
+async function loadOwnerImageEditor(){
   const imageSelect = document.getElementById('ownerImageSelect');
   const imageEditor = document.getElementById('ownerImageEditor');
   const saveMessage = document.getElementById('ownerImageSaveMessage');
@@ -2438,7 +2466,7 @@ async function saveOwnerImageSetting(){
   const key = imageSelect.value;
   const value = imageEditor.value.trim();
 
-    try{
+  try{
     await savePropertyContent(key, value);
     await renderEditablePages();
     saveMessage.style.display = 'block';
@@ -2447,8 +2475,8 @@ async function saveOwnerImageSetting(){
     alert('Could not save photo or link.');
   }
 }
-async function saveOwnerTheme(){
- async function saveOwnerHeroSection(){
+
+async function saveOwnerHeroSection(){
   try{
     await savePropertyContent('hero_title', document.getElementById('ownerHeroTitle')?.value.trim() || '');
     await savePropertyContent('hero_tagline', document.getElementById('ownerHeroTagline')?.value.trim() || '');
@@ -2476,50 +2504,9 @@ async function loadOwnerHeroEditor(){
   title.value = await getPropertyContent('hero_title', '');
   tagline.value = await getPropertyContent('hero_tagline', '');
   description.value = await getPropertyContent('hero_description', '');
-} 
-  async function saveOwnerSocialSection(){
-  try{
-    await savePropertyContent('social_heading', document.getElementById('ownerSocialHeading')?.value.trim() || '');
-    await savePropertyContent('social_text', document.getElementById('ownerSocialText')?.value.trim() || '');
-    await savePropertyContent('social_instagram_url', document.getElementById('ownerInstagramUrl')?.value.trim() || '');
-    await savePropertyContent('social_instagram_handle', document.getElementById('ownerInstagramHandle')?.value.trim() || '');
-    await savePropertyContent('social_facebook_url', document.getElementById('ownerFacebookUrl')?.value.trim() || '');
-    await savePropertyContent('social_facebook_name', document.getElementById('ownerFacebookName')?.value.trim() || '');
-
-    await renderEditablePages();
-    await loadOwnerSocialEditor();
-
-    alert('Follow section saved.');
-  } catch(e){
-    console.error(e);
-    alert('Could not save follow section.');
-  }
 }
-  const themeValues = {
-    theme_bg_main: document.getElementById('themeBgMain')?.value.trim() || '#dceff2',
-    theme_bg_card: document.getElementById('themeBgCard')?.value.trim() || '#f8fcfc',
-    theme_text_main: document.getElementById('themeTextMain')?.value.trim() || '#315c63',
-    theme_accent: document.getElementById('themeAccent')?.value.trim() || '#2f8f9d',
-    theme_accent_soft: document.getElementById('themeAccentSoft')?.value.trim() || '#6eaeb8',
-    theme_border_soft: document.getElementById('themeBorderSoft')?.value.trim() || '#d3c2aa',
-    theme_panel_bg: document.getElementById('themePanelBg')?.value.trim() || '#f7fbfc',
-    theme_highlight: document.getElementById('themeHighlight')?.value.trim() || '#d8896b'
-  };
 
-  try{
-    for(const [key, value] of Object.entries(themeValues)){
-      await savePropertyContent(key, value);
-    }
-
-    await renderEditablePages();
-    await loadOwnerThemeEditor();
-    alert('Theme colors saved.');
-  } catch(e){
-    console.error('saveOwnerTheme error:', e);
-    alert(`Theme save failed: ${e?.message || JSON.stringify(e) || 'Unknown error'}`);
-  }
-}
- async function saveOwnerSocialSection(){
+async function saveOwnerSocialSection(){
   try{
     await savePropertyContent('social_heading', document.getElementById('ownerSocialHeading')?.value.trim() || '');
     await savePropertyContent('social_text', document.getElementById('ownerSocialText')?.value.trim() || '');
@@ -2556,48 +2543,9 @@ async function loadOwnerSocialEditor(){
   instagramHandle.value = await getPropertyContent('social_instagram_handle', '');
   facebookUrl.value = await getPropertyContent('social_facebook_url', '');
   facebookName.value = await getPropertyContent('social_facebook_name', '');
-}   
-  async function loadOwnerThemeEditor(){
-  const values = {
-    theme_bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
-    theme_bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
-    theme_text_main: await getPropertyContent('theme_text_main', '#315c63'),
-    theme_accent: await getPropertyContent('theme_accent', '#2f8f9d'),
-    theme_accent_soft: await getPropertyContent('theme_accent_soft', '#6eaeb8'),
-    theme_border_soft: await getPropertyContent('theme_border_soft', '#d3c2aa'),
-    theme_panel_bg: await getPropertyContent('theme_panel_bg', '#f7fbfc'),
-    theme_highlight: await getPropertyContent('theme_highlight', '#d8896b')
-  };
-
-  const bgMain = document.getElementById('themeBgMain');
-  const bgCard = document.getElementById('themeBgCard');
-  const textMain = document.getElementById('themeTextMain');
-  const accent = document.getElementById('themeAccent');
-  const accentSoft = document.getElementById('themeAccentSoft');
-  const borderSoft = document.getElementById('themeBorderSoft');
-  const panelBg = document.getElementById('themePanelBg');
-  const highlight = document.getElementById('themeHighlight');
-  const saveMessage = document.getElementById('ownerThemeSaveMessage');
-
-  if(!bgMain || !bgCard || !textMain || !accent || !accentSoft || !borderSoft || !panelBg || !highlight){
-    return;
-  }
-
-  bgMain.value = values.theme_bg_main;
-  bgCard.value = values.theme_bg_card;
-  textMain.value = values.theme_text_main;
-  accent.value = values.theme_accent;
-  accentSoft.value = values.theme_accent_soft;
-  borderSoft.value = values.theme_border_soft;
-  panelBg.value = values.theme_panel_bg;
-  highlight.value = values.theme_highlight;
-
-  if(saveMessage){
-    saveMessage.style.display = 'none';
-  }
 }
 
- async function saveOwnerTheme(){
+async function saveOwnerTheme(){
   const themeValues = {
     theme_bg_main: document.getElementById('themeBgMain')?.value.trim() || '#dceff2',
     theme_bg_card: document.getElementById('themeBgCard')?.value.trim() || '#f8fcfc',
@@ -2615,11 +2563,13 @@ async function loadOwnerSocialEditor(){
     }
 
     await renderEditablePages();
+    await loadOwnerThemeEditor();
     alert('Theme colors saved.');
   } catch(e){
     console.error('saveOwnerTheme error:', e);
     alert(`Theme save failed: ${e?.message || JSON.stringify(e) || 'Unknown error'}`);
   }
+}
 }
    function showPage(page){
   const pages = [
