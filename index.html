@@ -2125,15 +2125,14 @@ banner_checkout_image: `ocean-checkout.jpg`,
   book_again_airbnb_link: ``
 };
 
-    function escapeHtml(text){
-      return String(text ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
+  function escapeHtml(text){
+  return String(text ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
     function highlightLabels(text){
       return text.replace(/(Network:|Password:|Gate Code:)/g, '<span class="highlight">$1</span>');
     }
