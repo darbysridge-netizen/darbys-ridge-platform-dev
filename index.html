@@ -220,29 +220,29 @@ color:var(--highlight);
 
 .social{
   margin-top:24px;
-  background:#F3EADF;
+  background:var(--panel-bg);
   padding:20px;
   border-radius:20px;
   box-shadow:0 8px 18px rgba(0,0,0,.05);
-  border:1px solid #D9CBB8;
+  border:1px solid var(--border-soft);
   text-align:center;
 }
 
-  .social-kicker{
+.social-kicker{
   font-size:11px;
   letter-spacing:.14em;
   text-transform:uppercase;
-  color:#B06F45;
+  color:var(--highlight);
   font-weight:700;
   margin-bottom:8px;
   text-align:center;
 } 
 
- .social h3{
+.social h3{
   font-family:'Playfair Display',serif;
   margin:0 0 10px;
   font-size:24px;
-  color:#243E4A;
+  color:var(--text-main);
   text-align:center;
 }
 
@@ -251,51 +251,54 @@ color:var(--highlight);
   display:block;
   width:58px;
   height:2px;
-  background:#DE8356;
+  background:var(--highlight);
   margin:10px auto 0;
   border-radius:999px;
 }  
-  .social p{
+
+.social p{
   margin:0 0 16px;
   line-height:1.55;
-  color:#5A4A3E;
+  color:var(--text-main);
   font-size:14px;
   text-align:center;
 }
 
-    .social-links{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
+.social-links{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
 
 .social-link{
   display:flex;
   align-items:center;
   gap:12px;
   padding:14px 16px;
-  background:#FFFDF9;
+  background:var(--bg-card);
   border-radius:14px;
   text-decoration:none;
-  color:#243E4A;
-  border:1px solid #E3D6C6;
+  color:var(--text-main);
+  border:1px solid var(--border-soft);
   box-shadow:0 4px 10px rgba(0,0,0,.03);
   transition:transform .15s ease, box-shadow .15s ease, background .15s ease, filter .15s ease;
   -webkit-tap-highlight-color:transparent;
 }
+
 .social-link:hover{
   transform:translateY(-1px);
   box-shadow:0 8px 16px rgba(0,0,0,.06);
-  background:#F8F2EA;
+  background:var(--panel-bg);
 }  
 
-  .social-link:active{
-  background:#F1E7DB;
+.social-link:active{
+  background:var(--accent-soft);
   box-shadow:0 4px 10px rgba(0,0,0,.06);
   transform:scale(.99);
   filter:brightness(.98);
 }
- .social-icon{
+
+.social-icon{
   width:42px;
   height:42px;
   border-radius:50%;
@@ -304,25 +307,25 @@ color:var(--highlight);
   justify-content:center;
   font-size:17px;
   flex-shrink:0;
-  background:#EAF3F4;
-  color:#243E4A;
-  border:1px solid #D6E7EA;
+  background:var(--accent);
+  color:white;
+  border:1px solid var(--border-soft);
 }
 
-    .social-text{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      text-align:left;
-    }
+.social-text{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  text-align:left;
+}
 
-  .social-text strong{
+.social-text strong{
   font-size:15px;
-  color:#243E4A;
+  color:var(--text-main);
 }
 
 .social-text small{
-  color:#7A6758;
+  color:var(--highlight);
   font-size:12px;
   font-weight:600;
 }   
@@ -344,37 +347,37 @@ color:var(--highlight);
   box-sizing:border-box;
 }
 
-    .bottom-nav button{
-      background:none;
-      border:none;
-      color:#5b4636;
-      font-size:13px;
-      font-weight:600;
-      cursor:pointer;
-      transition:background .15s ease, color .15s ease, transform .15s ease;
-      border-radius:20px;
-      padding:8px 12px;
-      -webkit-tap-highlight-color:transparent;
-    }
+.bottom-nav button{
+  background:none;
+  border:none;
+  color:var(--text-main);
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .15s ease, color .15s ease, transform .15s ease;
+  border-radius:20px;
+  padding:8px 12px;
+  -webkit-tap-highlight-color:transparent;
+}
 
-    .bottom-nav button:active{
-      background:rgba(60,44,31,.12);
-      color:#2f241b;
-      transform:scale(.98);
-    }
+.bottom-nav button:active{
+  background:rgba(0,0,0,.08);
+  color:var(--text-main);
+  transform:scale(.98);
+}
 
-   .bottom-home{
-  background:#2f8f9d !important;
+.bottom-home{
+  background:var(--accent) !important;
   color:white !important;
   border-radius:30px;
   padding:8px 16px !important;
   font-size:14px !important;
 }
 
-    .bottom-home:active{
-  background:#267985 !important;
+.bottom-home:active{
+  background:var(--highlight) !important;
   color:white !important;
-}
+}   
 
     .hidden{
       display:none !important;
