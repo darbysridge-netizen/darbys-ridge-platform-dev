@@ -499,7 +499,7 @@ details.panel[open] summary::after {
       display:block;
     }
 
-  button.action-btn{
+ button.action-btn{
   display:flex;
   align-items:center;
   justify-content:center;
@@ -507,7 +507,7 @@ details.panel[open] summary::after {
   padding:11px;
   border:none;
   border-radius:12px;
- background:var(--accent);
+  background:var(--accent);
   color:white;
   font-size:14px;
   font-weight:600;
@@ -518,32 +518,31 @@ details.panel[open] summary::after {
   -webkit-tap-highlight-color:transparent;
 }  
 
-   button.action-btn:active{
- background:var(--accent-soft);
+button.action-btn:active{
+  background:var(--highlight);
   transform:scale(.99);
   filter:brightness(.95);
 } 
 
-    button.secondary-btn{
-      background:#f1e4d7;
-      color:#2f4a52;
-    }
+button.secondary-btn{
+  background:var(--accent-soft);
+  color:var(--text-main);
+}
 
-    button.secondary-btn:active{
-     background:#ead8c7; 
-      color:#2f241b;
-    }
+button.secondary-btn:active{
+  background:var(--border-soft); 
+  color:var(--text-main);
+}
 
-    button.tertiary-btn{
-   background:#ead8c7;
-     color:#2f4a52;
-    }
+button.tertiary-btn{
+  background:var(--border-soft);
+  color:var(--text-main);
+}
 
-    button.tertiary-btn:active{
-      background:#c9b299;
-      color:#2f241b;
-    }
-
+button.tertiary-btn:active{
+  background:var(--accent-soft);
+  color:var(--text-main);
+}
     input, select, textarea{
       width:100%;
       padding:14px;
