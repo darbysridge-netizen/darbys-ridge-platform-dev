@@ -2258,7 +2258,52 @@ async function savePropertyContent(key, value){
 
   if(error) throw error;
 }
+async function loadOwnerEditor(){
+  const sectionSelect = document.getElementById('ownerSectionSelect');
+  const editor = document.getElementById('ownerSectionEditor');
+  const message = document.getElementById('ownerSaveMessage');
 
+  if(!sectionSelect || !editor){
+    return;
+  }
+
+  const key = sectionSelect.value;
+  editor.value = await getPropertyContent(key, defaultContent[key] || '');
+
+  if(message){
+    message.style.display = 'none';
+  }
+}
+
+async function saveOwnerContent(){
+  const sectionSelect = document.getElementById('ownerSectionSelect');
+  const editor = document.getElementById('ownerSectionEditor');
+  const message = document.getElementById('ownerSaveMessage');
+
+  if(!sectionSelect || !editor){
+    alert('Editor not found.');
+    return;
+  }
+
+  const key = sectionSelect.value;
+  const value = editor.value;
+
+  try{
+    await savePropertyContent(key, value);
+    await renderEditablePages();
+    await loadOwnerEditor();
+
+    if(message){
+      message.textContent = 'Changes saved.';
+      message.style.display = 'block';
+    }
+
+    alert('Changes saved.');
+  } catch(e){
+    console.error('saveOwnerContent error:', e);
+    alert(`Could not save changes: ${e?.message || 'Unknown error'}`);
+  }
+}
 async function renderPropertyTheme(){
   const theme = {
     bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
