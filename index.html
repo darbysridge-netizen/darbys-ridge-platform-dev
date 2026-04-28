@@ -1400,7 +1400,7 @@ background:#ead8c7;
     </div>
   </div>
 
-<div id="trail" class="hidden page" onclick="loadNextLaunch()">
+<div id="trail" class="hidden page">
   <button class="back" type="button" onclick="showPage('home')">← Back</button>
   <div class="page-banner">
     <img id="imgBannerTrail" src="trail.jpg" alt="">
@@ -1411,6 +1411,7 @@ background:#ead8c7;
   </div>
     <div class="panel">
       <div id="trailContent"></div>
+      <div id="nextLaunchCard"></div>
       <div class="map-note">Map links are set to open in the same window when possible for an easier in-app return.</div>
     </div>
   </div>
@@ -2129,6 +2130,7 @@ banner_trail_image: `ocean-feature.jpg`,
 banner_checkout_image: `ocean-checkout.jpg`, 
   book_again_airbnb_link: ``
 };
+
 async function loadNextLaunch(){
   const card = document.getElementById('nextLaunchCard');
   if(!card) return;
@@ -2139,7 +2141,11 @@ async function loadNextLaunch(){
   `;
 
   try{
-    const response = await fetch('https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=20&mode=detailed');
+    const response = await fetch('https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=25&mode=detailed');
+
+    if(!response.ok){
+      throw new Error('Launch API failed');
+    }
 
     const data = await response.json();
     const launches = data.results || [];
@@ -2158,72 +2164,32 @@ async function loadNextLaunch(){
     }
 
     const launchDate = floridaLaunch.net
-      ? new Date(floridaLaunch.net).toLocaleString()
+      ? new Date(floridaLaunch.net).toLocaleString([], {
+          month:'long',
+          day:'numeric',
+          year:'numeric',
+          hour:'numeric',
+          minute:'2-digit'
+        })
       : 'Time TBD';
 
     card.innerHTML = `
       <h3>Next Launch to Watch</h3>
-      <p><strong>${floridaLaunch.name}</strong></p>
+      <p><strong>${floridaLaunch.name || 'Upcoming Launch'}</strong></p>
       <p><strong>Scheduled:</strong> ${launchDate}</p>
       <p><strong>Status:</strong> ${floridaLaunch.status?.name || 'Unknown'}</p>
-      <p>Launch schedules can change, so always double-check before heading out.</p>
+      <p>Launch schedules can change quickly, so check again the day of launch.</p>
     `;
 
   } catch(error){
-    console.error(error);
+    console.error('Launch load error:', error);
+
     card.innerHTML = `
       <h3>Next Launch to Watch</h3>
       <p>Unable to load launch info right now.</p>
     `;
   }
 }
-async function loadNextLaunch(){
-  const card = document.getElementById('nextLaunchCard');
-  if(!card) return;
-
-  card.innerHTML = `
-    <h3>Next Launch to Watch</h3>
-    <p>Loading the latest launch information...</p>
-  `;
-
-  try{
-    const response = await fetch('https://ll.thespacedevs.com/2.0.0/launch/upcoming/?limit=20&mode=detailed');
-    const data = await response.json();
-    const launches = data.results || [];
-
-    const floridaLaunch = launches.find(l => {
-      const name = l?.pad?.location?.name || '';
-      return /Florida|Kennedy Space Center|Cape Canaveral/i.test(name);
-    });
-
-    if(!floridaLaunch){
-      card.innerHTML = `
-        <h3>Next Launch to Watch</h3>
-        <p>No Florida launch found right now.</p>
-      `;
-      return;
-    }
-
-    const launchDate = floridaLaunch.net
-      ? new Date(floridaLaunch.net).toLocaleString()
-      : 'Time TBD';
-
-    card.innerHTML = `
-      <h3>Next Launch to Watch</h3>
-      <p><strong>${floridaLaunch.name}</strong></p>
-      <p><strong>Scheduled:</strong> ${launchDate}</p>
-      <p><strong>Status:</strong> ${floridaLaunch.status?.name || 'Unknown'}</p>
-      <p>Launch schedules can change, so always double-check before heading out.</p>
-    `;
-
-  } catch(e){
-    console.error(e);
-    card.innerHTML = `
-      <h3>Next Launch to Watch</h3>
-      <p>Unable to load launch info right now.</p>
-    `;
-  }
-} 
     function escapeHtml(text){
   return String(text ?? '')
     .replace(/&/g, '&amp;')
@@ -2910,11 +2876,15 @@ async function saveOwnerTheme(){
         if (el) el.classList.add('hidden');
       });
 
-      const target = document.getElementById(page);
-      if (target) {
-        target.classList.remove('hidden');
-        window.scrollTo(0,0);
-      }
+    const target = document.getElementById(page);
+if (target) {
+  target.classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+
+if (page === 'trail') {
+  loadNextLaunch();
+} 
 
       if (page === 'supplies') renderSupplyList();
       if (page === 'maintenance') renderMaintenanceList();
