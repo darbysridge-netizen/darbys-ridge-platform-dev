@@ -2141,7 +2141,14 @@ async function loadNextLaunch(){
   `;
 
   try{
-    const response = await fetch('https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=25&mode=detailed');
+const controller = new AbortController();
+const timeoutId = setTimeout(() => controller.abort(), 3500);
+
+const response = await fetch('https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=25&mode=detailed', {
+  signal: controller.signal
+});
+
+clearTimeout(timeoutId);
 
     if(!response.ok){
       throw new Error('Launch API failed');
@@ -2184,10 +2191,11 @@ async function loadNextLaunch(){
   } catch(error){
     console.error('Launch load error:', error);
 
-    card.innerHTML = `
-      <h3>Next Launch to Watch</h3>
-      <p>Unable to load launch info right now.</p>
-    `;
+ card.innerHTML = `
+  <h3>Next Launch to Watch</h3>
+  <p>Launch schedules change often, so check Space Coast launch updates before your stay.</p>
+  <p><a href="https://www.visitspacecoast.com/launches/" target="_blank" rel="noopener noreferrer">View Space Coast Launch Schedule</a></p>
+`;   
   }
 }
     function escapeHtml(text){
