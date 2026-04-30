@@ -2268,39 +2268,17 @@ const floridaLaunch = launches
       return String(type || '').startsWith('video/');
     }
 
-    function renderMediaPreviewTag(url, mediaType, muted = false){
-      if(isVideoType(mediaType)){
-        return `
-          <video ${muted ? 'muted' : ''} controls playsinline preload="metadata">
-            <source src="${escapeHtml(url)}" type="${escapeHtml(mediaType || 'video/mp4')}">
-          </video>
-        `;
-      }
+function renderMediaPreviewTag(url, mediaType, muted = false){
+  if(isVideoType(mediaType)){
+    return `
+      <video ${muted ? 'muted' : ''} controls playsinline preload="metadata">
+        <source src="${escapeHtml(url)}" type="${escapeHtml(mediaType || 'video/mp4')}">
+      </video>
+    `;
+  }
 
-      return `<img src="${escapeHtml(url)}" alt="Media">`;
-    }
-
-    async function getSectionContent(section){
-      if(!supabaseClient) return defaultContent[section] || '';
-
-      try{
-      const { data, error } = await supabaseClient
-  .from('app_content')
-  .select('content')
-  .eq('section_key', section)
-  .maybeSingle();  
-
-        if(error){
-          console.error(error);
-          return defaultContent[section] || '';
-        }
-
-   return data?.content ?? defaultContent[section] ?? '';    
-      } catch(e){
-        console.error(e);
-        return defaultContent[section] || '';
-      }
-    }
+  return `<img src="${escapeHtml(url)}" alt="Media">`;
+}    
 
 async function getPropertyContent(key, fallback = ''){
   if(!supabaseClient) return fallback;
@@ -2448,19 +2426,10 @@ async function loadOwnerThemeEditor(){
   highlight.value = values.theme_highlight;
 }
 
-async function saveSectionContent(section, value){
-  const { error } = await supabaseClient
-    .from('app_content')
-    .upsert({ section_key: section, content: value }, { onConflict: 'section_key' });
-
-  if(error) throw error;
-}
-
 async function getChecklistItems(){
-  const raw = await getSectionContent('checklist');
+  const raw = await getPropertyContent('checklist', defaultContent.checklist || '');
   return raw.split('\n').map(item => item.trim()).filter(Boolean);
 }
-
 function applyMapLinkBehavior(containerId){
   const container = document.getElementById(containerId);
   if(!container) return;
