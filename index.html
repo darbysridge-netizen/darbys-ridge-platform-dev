@@ -3151,22 +3151,51 @@ async function checkOwnerLogin(){
       }
     }
 
-    async function renderOwnerRequests(){
-      const container = document.getElementById('ownerRequestList');
-      if(!container) return;
+   async function renderOwnerRequests(){
+  const container = document.getElementById('ownerRequestList');
+  if(!container) return;
 
-      try{
-        const { data, error } = await supabaseClient
-          .from('booking_requests')
-          .select('*')
-          .order('created_at', { ascending: false });
+  const { data, error } = await supabaseClient
+    .from('booking_requests')
+    .select('*')
+    .eq('property_key', CURRENT_PROPERTY_SLUG)
+    .order('created_at', { ascending: false });
 
-        if(error){
-          console.error(error);
-          container.innerHTML = '<div class="small-note">Could not load requests.</div>';
-          return;
-        }
+  if(error || !data || !data.length){
+    container.innerHTML = '<div class="small-note">No requests yet.</div>';
+    return;
+  }
 
+  container.innerHTML = data.map(item => `
+    <div class="owner-list-card">
+      <p><strong>Name:</strong> ${escapeHtml(item.name || '')}</p>
+      <p><strong>Phone:</strong> ${escapeHtml(item.phone || '')}</p>
+      <p><strong>Arrival:</strong> ${escapeHtml(item.arrival || '')}</p>
+      <p><strong>Departure:</strong> ${escapeHtml(item.departure || '')}</p>
+      <p><strong>Guests:</strong> ${escapeHtml(item.guests || '')}</p>
+      <div class="admin-actions">
+        <button class="mini-delete" type="button" onclick="deleteBookingRequest(${item.id})">Delete Request</button>
+      </div>
+    </div>
+  `).join('');
+}
+    async function deleteBookingRequest(id){
+  const okay = confirm('Delete this booking request?');
+  if(!okay) return;
+
+  const { error } = await supabaseClient
+    .from('booking_requests')
+    .delete()
+    .eq('id', id);
+
+  if(error){
+    console.error(error);
+    alert('Could not delete booking request.');
+    return;
+  }
+
+  await renderOwnerDashboard();
+}
         if(!data || !data.length){
           container.innerHTML = '<div class="small-note">No requests yet.</div>';
           return;
