@@ -4422,7 +4422,11 @@ await renderOwnerPackages();
       if(!urlParams.get('property')){
   showPage('propertySelect');
 } else {
+ if(CURRENT_PROPERTY_SLUG){
   showPage('home');
+} else {
+  showPage('propertySelect');
+} 
 }
 
 const homeGuideLabel = document.getElementById('homeGuideLabel');
