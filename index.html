@@ -1240,7 +1240,24 @@ background:#ead8c7;
 </head>
 
 <body>
+  <div id="propertySelect" class="hidden page">
+    <h1>Sunshine Property Hub</h1>
 
+    <div class="panel">
+      <h3>Choose a Property</h3>
+      <p class="small-note">
+        Select a property below to open its guest app, owner dashboard, and team tools.
+      </p>
+
+      <button class="action-btn center-button" type="button" onclick="openProperty('darbys-ridge')">
+        Darby’s Ridge
+      </button>
+
+      <button class="action-btn secondary-btn center-button" type="button" onclick="openProperty('ocean-pearl')">
+        The Ocean Pearl
+      </button>
+    </div>
+  </div>
   <div id="home" class="phone">
     <div class="hero" id="heroSection">
     <div class="hero-text">
@@ -2856,7 +2873,7 @@ async function saveOwnerTheme(){
 
    function showPage(page){
   const pages = [
-    'home','guidebook','info','local','trail','waysToTheRidge','enhanceStay','guestMemories','checkout','requestToBook',
+    'propertySelect','home','guidebook','info','local','trail','waysToTheRidge','enhanceStay','guestMemories','checkout','requestToBook', 
     'login','ownerLogin','team','cleanings','supplies','maintenance','turnover','owner'
   ];
 
@@ -4393,6 +4410,11 @@ document.getElementById('localBannerText').textContent =
       await loadOwnerImageEditor();
       await renderEnhancePackages();
 await renderOwnerPackages();
+      if(!urlParams.get('property')){
+  showPage('propertySelect');
+} else {
+  showPage('home');
+}
 
 const homeGuideLabel = document.getElementById('homeGuideLabel');
 if (homeGuideLabel) {
