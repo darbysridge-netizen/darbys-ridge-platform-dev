@@ -4354,47 +4354,7 @@ async function loadCalendar(){
     results.innerHTML = '<div class="small-note">The Airbnb sync is failing. Most likely the Vercel /api/airbnb-calendar function is missing, broken, or not deployed.</div>';
   }
 }
-    async function seedDefaultContentIfNeeded(){
-      const sections = [
-        'info','local','trail','photos','checkout','checklist',
-        'hero_image',
-        'home_guide_image',
-        'home_info_image',
-        'home_local_image',
-        'home_trail_image',
-        'home_memories_image',
-        'home_checkout_image',
-        'home_request_image',
-        'banner_info_image',
-        'banner_local_image',
-        'banner_trail_image',
-        'banner_checkout_image',
-        'book_again_airbnb_link'
-      ];
-
-      for(const section of sections){
-      const { data, error } = await supabaseClient
-  .from('app_content')
-  .select('section_key')
-  .eq('section_key', section)
-  .maybeSingle(); 
-
-        if(error){
-          console.error(error);
-          continue;
-        }
-
-        if(!data){
-          const { error: insertError } = await supabaseClient
-            .from('app_content')
-    .insert([{ section_key: section, content: defaultContent[section] || '' }]);
-
-          if(insertError){
-            console.error(insertError);
-          }
-        }
-      }
-    }
+   
 
     document.addEventListener('DOMContentLoaded', async function() {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
