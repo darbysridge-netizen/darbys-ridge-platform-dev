@@ -3114,7 +3114,7 @@ async function checkOwnerLogin(){
       `).join('');
     }
 
-   function renderOwnerActionList(items, emptyText, type){
+ function renderOwnerActionList(items, emptyText, type){
   if(!items || !items.length){
     return `<div class="small-note">${emptyText}</div>`;
   }
@@ -3127,7 +3127,7 @@ async function checkOwnerLogin(){
       </div>
     </div>
   `).join('');
-}
+} 
     async function deleteBookingRequest(id){
       const okay = confirm('Delete this booking request?');
       if(!okay) return;
