@@ -3148,47 +3148,7 @@ async function checkOwnerLogin(){
     </div>
   `).join('');
 }
-    async function deleteBookingRequest(id){
-  const okay = confirm('Delete this booking request?');
-  if(!okay) return;
-
-  const { error } = await supabaseClient
-    .from('booking_requests')
-    .delete()
-    .eq('id', id);
-
-  if(error){
-    console.error(error);
-    alert('Could not delete booking request.');
-    return;
-  }
-
-  await renderOwnerDashboard();
-}
-        if(!data || !data.length){
-          container.innerHTML = '<div class="small-note">No requests yet.</div>';
-          return;
-        }
-
-        container.innerHTML = data.map(item => `
-          <div class="submission-card">
-            <h4>${escapeHtml(item.name || 'Guest Request')}</h4>
-            <p><strong>Phone:</strong> ${escapeHtml(item.phone || 'Not provided')}</p>
-            <p><strong>Arrival:</strong> ${escapeHtml(item.arrival || '')}</p>
-            <p><strong>Departure:</strong> ${escapeHtml(item.departure || '')}</p>
-            <p><strong>Guests:</strong> ${escapeHtml(item.guests || '')}</p>
-            ${item.notes ? `<p><strong>Notes:</strong> ${escapeHtml(item.notes)}</p>` : ''}
-            <div class="admin-actions">
-              <button class="mini-delete" type="button" onclick="deleteBookingRequest(${item.id})">Delete</button>
-            </div>
-          </div>
-        `).join('');
-      } catch(e){
-        console.error(e);
-        container.innerHTML = '<div class="small-note">Could not load requests.</div>';
-      }
-    }
-
+  
     async function deleteGuestMedia(id, imagePath){
       const okay = confirm('Delete this guest gallery item?');
       if(!okay) return;
