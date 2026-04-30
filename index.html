@@ -3783,7 +3783,12 @@ async function addOwnerPackage(){
 
   await renderEnhancePackages();
   await renderOwnerPackages();
-}
+ if(!urlParams.get('property')){
+  showPage('propertySelect');
+  return;
+} 
+
+}  
 
 async function deleteOwnerPackage(id){
   const okay = confirm('Delete this package?');
