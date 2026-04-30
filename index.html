@@ -3114,22 +3114,20 @@ async function checkOwnerLogin(){
       `).join('');
     }
 
-    function renderOwnerActionList(items, emptyText, type){
-     if(!items.length){
-  gallery.innerHTML = '<div class="small-note">No guest media yet.</div>';
-  return;
+   function renderOwnerActionList(items, emptyText, type){
+  if(!items || !items.length){
+    return `<div class="small-note">${emptyText}</div>`;
+  }
+
+  return items.map(item => `
+    <div class="owner-list-card">
+      <div class="owner-list-row">
+        <div>${escapeHtml(item.item)}</div>
+        <button class="mini-delete" type="button" onclick="${type === 'supply' ? `removeSupplyItem(${item.id})` : `removeMaintenanceItem(${item.id})`}">Delete</button>
+      </div>
+    </div>
+  `).join('');
 }
-
-      return items.map(item => `
-        <div class="owner-list-card">
-          <div class="owner-list-row">
-            <div>${escapeHtml(item.item)}</div>
-            <button class="mini-delete" type="button" onclick="${type === 'supply' ? `removeSupplyItem(${item.id})` : `removeMaintenanceItem(${item.id})`}">Delete</button>
-          </div>
-        </div>
-      `).join('');
-    }
-
     async function deleteBookingRequest(id){
       const okay = confirm('Delete this booking request?');
       if(!okay) return;
