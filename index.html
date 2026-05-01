@@ -1968,7 +1968,7 @@ const CURRENT_PROPERTY_SLUG =
   urlParams.get('property') ||
   PROPERTY_HOST_MAP[hostname] ||
   null;
-
+console.log('CURRENT PROPERTY:', CURRENT_PROPERTY_SLUG);
 // Show selector only if we truly don't know the property
 if(!CURRENT_PROPERTY_SLUG){
   showPage('propertySelect');
