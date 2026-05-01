@@ -1959,6 +1959,11 @@ const PROPERTY_HOST_MAP = {
   'oceanpearl.sunshinepropertymanagement.com': 'ocean-pearl'
 };
 
+const PROPERTY_HOST_MAP = {
+  'darbysridge.sunshinepropmgmt.net': 'darbys-ridge',
+  'oceanpearl.sunshinepropmgmt.net': 'ocean-pearl'
+};
+
 const urlParams = new URLSearchParams(window.location.search);
 const hostname = window.location.hostname.toLowerCase();
 
@@ -1967,7 +1972,7 @@ const CURRENT_PROPERTY_SLUG =
   PROPERTY_HOST_MAP[hostname] ||
   null;
 
-// If no property found → show selector
+// Show selector only if we truly don't know the property
 if(!CURRENT_PROPERTY_SLUG){
   showPage('propertySelect');
 }
