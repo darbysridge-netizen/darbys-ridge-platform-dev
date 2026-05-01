@@ -3799,10 +3799,6 @@ async function addOwnerPackage(){
 
   await renderEnhancePackages();
   await renderOwnerPackages();
- if(CURRENT_PROPERTY_SLUG){
-  showPage('home');
-} else {
-  showPage('propertySelect');
 }
 
 async function deleteOwnerPackage(id){
