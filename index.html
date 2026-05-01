@@ -4445,12 +4445,19 @@ document.getElementById('wazeAddress').textContent =
  document.getElementById('guidebookTitle').textContent =
   await getPropertyContent('guidebook_title', 'Guest Guide');   
  document.getElementById('wazeBannerTitle').textContent =
-  await getPropertyContent('waze_banner_title', 'Way to the Ridge');
+  await getPropertyContent(
+    'waze_banner_title',
+    CURRENT_PROPERTY_SLUG === 'ocean-pearl'
+      ? 'Address & Directions'
+      : 'Way to the Ridge'
+  );
 
 document.getElementById('wazeBannerText').textContent =
   await getPropertyContent(
     'waze_banner_text',
-    'Use Waze for the most accurate route to the cabin.'
+    CURRENT_PROPERTY_SLUG === 'ocean-pearl'
+      ? 'Use Waze for the most accurate route to The Ocean Pearl.'
+      : 'Use Waze for the most accurate route to the cabin.'
   );
 
 document.getElementById('localBannerTitle').textContent =
