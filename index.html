@@ -1954,9 +1954,20 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
 
     const SUPABASE_URL = 'https://mulzvuvbpzoylkciqgse.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11bHp2dXZicHpveWxrY2lxZ3NlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUwNjUzNzAsImV4cCI6MjA5MDY0MTM3MH0.IMth3h_-vkQg4OYE0KWFNiAVRdPALVzk9R43kq-KW3I';
-const urlParams = new URLSearchParams(window.location.search);
-const CURRENT_PROPERTY_SLUG = urlParams.get('property');
+const PROPERTY_HOST_MAP = {
+  'darbysridge.sunshinepropertymanagement.com': 'darbys-ridge',
+  'oceanpearl.sunshinepropertymanagement.com': 'ocean-pearl'
+};
 
+const urlParams = new URLSearchParams(window.location.search);
+const hostname = window.location.hostname.toLowerCase();
+
+const CURRENT_PROPERTY_SLUG =
+  urlParams.get('property') ||
+  PROPERTY_HOST_MAP[hostname] ||
+  null;
+
+// If no property found → show selector
 if(!CURRENT_PROPERTY_SLUG){
   showPage('propertySelect');
 }
