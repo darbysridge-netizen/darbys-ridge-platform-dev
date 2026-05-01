@@ -1968,14 +1968,15 @@ const urlParams = new URLSearchParams(window.location.search);
 const hostname = window.location.hostname.toLowerCase();
 
 const CURRENT_PROPERTY_SLUG =
-  const manifestEl = document.getElementById('appManifest');
-
-if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
-  manifestEl.setAttribute('href', 'manifest-ocean.json');
-}
   urlParams.get('property') ||
   PROPERTY_HOST_MAP[hostname] ||
   null;
+
+const manifestEl = document.getElementById('appManifest');
+
+if(manifestEl && CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+  manifestEl.setAttribute('href', 'manifest-ocean.json');
+}
 console.log('CURRENT PROPERTY:', CURRENT_PROPERTY_SLUG);
 // Show selector only if we truly don't know the property
 if(!CURRENT_PROPERTY_SLUG){
