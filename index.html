@@ -1972,27 +1972,47 @@ const CURRENT_PROPERTY_SLUG =
 if(!CURRENT_PROPERTY_SLUG){
   showPage('propertySelect');
 }
-  const EARLY_THEME = CURRENT_PROPERTY_SLUG === 'darbys-ridge'
-  ? {
-      '--bg-main':'#f7efe3',
-      '--bg-card':'#f2e5d4',
-      '--text-main':'#3c2c1f',
-      '--accent':'#445b49',
-      '--accent-soft':'#d8c3aa',
-      '--border-soft':'#eadbc8',
-      '--panel-bg':'#f7efe3',
-      '--highlight':'#8b5e3c'
-    }
-  : {
-      '--bg-main':'#F7F5F2',
-      '--bg-card':'#EDE6DD',
-      '--text-main':'#2F3A44',
-      '--accent':'#2F7C85',
-      '--accent-soft':'#6C8A96',
-      '--border-soft':'#EDE6DD',
-      '--panel-bg':'#F7F5F2',
-      '--highlight':'#E58A4E'
-    };
+let EARLY_THEME;
+
+if(!CURRENT_PROPERTY_SLUG){
+  // SUNSHINE (NEUTRAL SELECTOR LOOK)
+  EARLY_THEME = {
+    '--bg-main':'#F4F6F7',
+    '--bg-card':'#FFFFFF',
+    '--text-main':'#2F3A44',
+    '--accent':'#2F7C85',
+    '--accent-soft':'#A7C4C9',
+    '--border-soft':'#E5E7EB',
+    '--panel-bg':'#F9FAFB',
+    '--highlight':'#E58A4E'
+  };
+
+} else if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
+  // CABIN
+  EARLY_THEME = {
+    '--bg-main':'#f7efe3',
+    '--bg-card':'#f2e5d4',
+    '--text-main':'#3c2c1f',
+    '--accent':'#445b49',
+    '--accent-soft':'#d8c3aa',
+    '--border-soft':'#eadbc8',
+    '--panel-bg':'#f7efe3',
+    '--highlight':'#8b5e3c'
+  };
+
+} else {
+  // OCEAN PEARL
+  EARLY_THEME = {
+    '--bg-main':'#F7F5F2',
+    '--bg-card':'#EDE6DD',
+    '--text-main':'#2F3A44',
+    '--accent':'#2F7C85',
+    '--accent-soft':'#6C8A96',
+    '--border-soft':'#EDE6DD',
+    '--panel-bg':'#F7F5F2',
+    '--highlight':'#E58A4E'
+  };
+} 
 
 Object.entries(EARLY_THEME).forEach(([k,v])=>{
   document.documentElement.style.setProperty(k,v);
