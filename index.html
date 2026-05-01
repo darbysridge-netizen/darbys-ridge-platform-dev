@@ -2416,6 +2416,11 @@ async function saveOwnerContent(){
   }
 }
 async function renderPropertyTheme(){
+  // Do not override the neutral Sunshine selector theme.
+  if(!CURRENT_PROPERTY_SLUG){
+    return;
+  }
+
   const theme = {
     bg_main: await getPropertyContent('theme_bg_main', '#dceff2'),
     bg_card: await getPropertyContent('theme_bg_card', '#f8fcfc'),
