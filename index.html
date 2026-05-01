@@ -4355,41 +4355,52 @@ async function loadCalendar(){
 
     document.addEventListener('DOMContentLoaded', async function() {
       supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  document.getElementById('heroTitle').textContent =
-  await getPropertyContent('hero_title', "Darby's Ridge");
+const isOcean = CURRENT_PROPERTY_SLUG === 'ocean-pearl';
+
+document.getElementById('heroTitle').textContent =
+  await getPropertyContent('hero_title', isOcean ? 'The Ocean Pearl' : "Darby's Ridge");
 
 document.getElementById('heroTagline').textContent =
-  await getPropertyContent('hero_tagline', 'Your Blue Ridge Escape');
+  await getPropertyContent('hero_tagline', isOcean ? 'Your Space Coast Escape' : 'Your Blue Ridge Escape');
 
 document.getElementById('heroDescription').textContent =
   await getPropertyContent(
     'hero_description',
-    'Your guide to the cabin, local favorites, and everything you need for your stay in Blue Ridge.'
-  );    
- 
-  document.getElementById('socialHeading').textContent =
-  await getPropertyContent('social_heading', "Follow Darby's Ridge");
+    isOcean
+      ? 'Your guide to the beach house, local favorites, rocket launches, and everything you need for your stay on the Space Coast.'
+      : 'Your guide to the cabin, local favorites, and everything you need for your stay in Blue Ridge.'
+  );
+
+document.getElementById('socialHeading').textContent =
+  await getPropertyContent('social_heading', isOcean ? 'Follow The Ocean Pearl' : "Follow Darby's Ridge");
 
 document.getElementById('socialText').textContent =
   await getPropertyContent(
     'social_text',
-    'See cabin moments, Blue Ridge favorites, and updates from the ridge.'
-  );  
- document.getElementById('infoBannerTitle').textContent =
-  await getPropertyContent('info_banner_title', 'WiFi & Cabin Essentials');
+    isOcean
+      ? 'See beach moments, Space Coast favorites, and updates from The Ocean Pearl.'
+      : 'See cabin moments, Blue Ridge favorites, and updates from the ridge.'
+  );
+
+document.getElementById('infoBannerTitle').textContent =
+  await getPropertyContent('info_banner_title', isOcean ? 'WiFi & Home Essentials' : 'WiFi & Cabin Essentials');
 
 document.getElementById('infoBannerText').textContent =
   await getPropertyContent(
     'info_banner_text',
-    "Everything you need for a smooth and cozy stay at Darby's Ridge."
-  );   
- document.getElementById('wazeLabel').textContent =
-  await getPropertyContent('waze_label', 'Waze to the Ridge');
+    isOcean
+      ? 'Everything you need for a smooth and easy stay at The Ocean Pearl.'
+      : "Everything you need for a smooth and cozy stay at Darby's Ridge."
+  );
+
+document.getElementById('wazeLabel').textContent =
+  await getPropertyContent('waze_label', isOcean ? 'Address & Directions' : 'Waze to the Ridge');
+
 document.getElementById('localCardLabel').textContent =
   await getPropertyContent('local_card_label', 'Ideas for perfect days');
 
 document.getElementById('trailCardLabel').textContent =
-  await getPropertyContent('trail_card_label', 'Come take a Hike');
+  await getPropertyContent('trail_card_label', isOcean ? 'Launches + What’s Happening' : 'Come take a Hike');  
  document.getElementById('enhanceCardLabel').textContent =
   await getPropertyContent('enhance_card_label', 'Enhance Your Stay');     
 document.getElementById('wazeAddress').textContent =
@@ -4430,15 +4441,11 @@ document.getElementById('localBannerText').textContent =
       await loadOwnerImageEditor();
       await renderEnhancePackages();
 await renderOwnerPackages();
-      if(!urlParams.get('property')){
-  showPage('propertySelect');
-} else {
  if(CURRENT_PROPERTY_SLUG){
   showPage('home');
 } else {
   showPage('propertySelect');
-} 
-}
+}     
 
 const homeGuideLabel = document.getElementById('homeGuideLabel');
 if (homeGuideLabel) {
