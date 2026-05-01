@@ -4436,7 +4436,12 @@ document.getElementById('trailCardLabel').textContent =
  document.getElementById('enhanceCardLabel').textContent =
   await getPropertyContent('enhance_card_label', 'Enhance Your Stay');     
 document.getElementById('wazeAddress').textContent =
-  '📍 ' + await getPropertyContent('waze_address', '66 Forest Trail, Blue Ridge, Georgia');   
+   '📍 ' + await getPropertyContent(
+    'waze_address',
+    CURRENT_PROPERTY_SLUG === 'ocean-pearl'
+      ? 'The Ocean Pearl, Cape Canaveral, Florida'
+      : '66 Forest Trail, Blue Ridge, Georgia'
+  );
  document.getElementById('guidebookTitle').textContent =
   await getPropertyContent('guidebook_title', 'Guest Guide');   
  document.getElementById('wazeBannerTitle').textContent =
