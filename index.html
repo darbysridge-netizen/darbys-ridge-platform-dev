@@ -1230,7 +1230,7 @@ background:#ead8c7;
  <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
 
-<link rel="manifest" href="manifest.json">
+<link id="appManifest" rel="manifest" href="manifest.json">
 <meta id="browserThemeColor" name="theme-color" content="#dceff2"> 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL3GB1MQS5"></script>
@@ -1968,6 +1968,11 @@ const urlParams = new URLSearchParams(window.location.search);
 const hostname = window.location.hostname.toLowerCase();
 
 const CURRENT_PROPERTY_SLUG =
+  const manifestEl = document.getElementById('appManifest');
+
+if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+  manifestEl.setAttribute('href', 'manifest-ocean.json');
+}
   urlParams.get('property') ||
   PROPERTY_HOST_MAP[hostname] ||
   null;
