@@ -1968,14 +1968,15 @@ const urlParams = new URLSearchParams(window.location.search);
 const hostname = window.location.hostname.toLowerCase();
 
 const CURRENT_PROPERTY_SLUG =
- const iconEl = document.getElementById('appIcon');
-
-if(iconEl && CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
-  iconEl.setAttribute('href', 'op-icon-192.png');
-} 
   urlParams.get('property') ||
   PROPERTY_HOST_MAP[hostname] ||
   null;
+
+const iconEl = document.getElementById('appIcon');
+
+if(iconEl && CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+  iconEl.setAttribute('href', 'op-icon-192.png');
+}
 
 const manifestEl = document.getElementById('appManifest');
 
