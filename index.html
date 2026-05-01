@@ -2948,8 +2948,17 @@ if (page === 'owner') {
 }
     }
 function openProperty(slug){
-  const base = window.location.origin + window.location.pathname;
-  window.open(`${base}?property=${slug}`, '_blank');
+  if(slug === 'ocean-pearl'){
+    window.location.href = 'https://oceanpearl.sunshinepropmgmt.net';
+    return;
+  }
+
+  if(slug === 'darbys-ridge'){
+    window.location.href = 'https://darbysridge.sunshinepropmgmt.net';
+    return;
+  }
+
+  window.location.href = `?property=${slug}`;
 }
   async function checkLogin(){
   const password = document.getElementById('teamPassword').value;
