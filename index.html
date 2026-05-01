@@ -23,8 +23,11 @@ body{
   background:var(--bg-main);
   font-family:'Inter',sans-serif;
   color:var(--text-main);
-}  
+}
 
+body.loading{
+  visibility:hidden;
+}
   .phone,
   .page{
     width:100%;
@@ -1240,7 +1243,7 @@ background:#ead8c7;
 </script>  
 </head>
 
-<body>
+<body class="loading">
   <div id="propertySelect" class="hidden page">
     <h1>Sunshine Property Hub</h1>
 
@@ -2715,6 +2718,7 @@ if(infoContent) infoContent.innerHTML = formatInfoContent(info);
   await renderPropertyTheme();
   await renderDynamicImages();
   await renderPropertyChrome();
+  document.body.classList.remove('loading');
 }
 
 async function loadOwnerImageEditor(){
