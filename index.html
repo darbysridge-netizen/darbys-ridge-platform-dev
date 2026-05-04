@@ -2782,7 +2782,7 @@ if(frame){
 
 if(openLink){
   openLink.href = guidebookPdf || '#';
-  openLink.style.display = 'none';
+  openLink.style.display = guidebookPdf ? 'inline-block' : 'none';
 }
 
 if(openLinkSecondary){
