@@ -2367,27 +2367,46 @@ function renderMediaPreviewTag(url, mediaType, muted = false){
   return `<img src="${escapeHtml(url)}" alt="Media">`;
 }    
 
-async function getPropertyContent(key, fallback = ''){
-  if(!supabaseClient) return fallback;
+let propertyContentCache = null;
+
+async function loadPropertyContentCache(){
+  if(propertyContentCache) return propertyContentCache;
+
+  if(!supabaseClient || !CURRENT_PROPERTY_SLUG){
+    propertyContentCache = {};
+    return propertyContentCache;
+  }
 
   try{
     const { data, error } = await supabaseClient
       .from('property_content')
-      .select('content_value')
-      .eq('property_slug', CURRENT_PROPERTY_SLUG)
-      .eq('content_key', key)
-      .maybeSingle();
+      .select('content_key, content_value')
+      .eq('property_slug', CURRENT_PROPERTY_SLUG);
 
     if(error){
       console.error(error);
-      return fallback;
+      propertyContentCache = {};
+      return propertyContentCache;
     }
 
-    return data?.content_value ?? fallback;
+    propertyContentCache = {};
+
+    (data || []).forEach(row => {
+      propertyContentCache[row.content_key] = row.content_value;
+    });
+
+    return propertyContentCache;
+
   } catch(e){
     console.error(e);
-    return fallback;
+    propertyContentCache = {};
+    return propertyContentCache;
   }
+}
+
+async function getPropertyContent(key, fallback = ''){
+  const cache = await loadPropertyContentCache();
+  return cache[key] ?? fallback;
 }
 async function savePropertyContent(key, value){
   const { error } = await supabaseClient
