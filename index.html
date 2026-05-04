@@ -2771,23 +2771,24 @@ const wazeKickerEl = document.getElementById('wazeKicker');
 if(wazeKickerEl) wazeKickerEl.textContent = wazeKicker;  
 
 const openLink = document.getElementById('guidebookOpenLink');
+const openLinkSecondary = document.getElementById('guidebookOpenLinkSecondary');
 const frame = document.getElementById('guidebookFrame');
 
 if(frame){
-  frame.style.display = 'none';
-  frame.src = '';
+  frame.style.display = 'block';
+  frame.src = guidebookPdf ? `${guidebookPdf}#toolbar=0&navpanes=0&scrollbar=0` : '';
+  frame.title = `${guidebookTitle}`;
 }
 
 if(openLink){
   openLink.href = guidebookPdf || '#';
-  openLink.style.display = guidebookPdf ? 'inline-block' : 'none';
-} 
+  openLink.style.display = 'none';
+}
 
-  if(frame){
-    frame.src = guidebookPdf ? `${guidebookPdf}#toolbar=0&navpanes=0&scrollbar=0` : '';
-    frame.title = `${guidebookTitle}`;
-  }
-
+if(openLinkSecondary){
+  openLinkSecondary.href = guidebookPdf || '#';
+  openLinkSecondary.style.display = 'none';
+}
   const igLink = document.getElementById('socialInstagramLink');
   const igHandle = document.getElementById('socialInstagramHandle');
   const fbLink = document.getElementById('socialFacebookLink');
