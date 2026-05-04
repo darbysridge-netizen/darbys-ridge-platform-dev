@@ -2830,48 +2830,50 @@ if(openLinkSecondary){
 }
 
 async function renderEditablePages(){
-  const info = await getPropertyContent('info', defaultContent.info);
-  const local = await getPropertyContent('local', defaultContent.local);
-  const trail = await getPropertyContent('trail', defaultContent.trail);
-  const photos = await getPropertyContent('photos', defaultContent.photos);
-  const checkout = await getPropertyContent('checkout', defaultContent.checkout);
-  const checklistRaw = await getPropertyContent('checklist', defaultContent.checklist);
+  await loadPropertyContentCache();
 
-const infoContent = document.getElementById('infoContent');
-if(infoContent) infoContent.innerHTML = formatInfoContent(info);
-  
-  const localContent = document.getElementById('localContent');
-  if(localContent) localContent.innerHTML = local;
+  renderPropertyTheme();
+  renderDynamicImages();
+  renderPropertyChrome();
 
-  const trailContent = document.getElementById('trailContent');
-  if(trailContent) trailContent.innerHTML = trail;
-
-  const photosContent = document.getElementById('photosContent');
-  if(photosContent) photosContent.innerText = photos;
-
-  const checkoutContent = document.getElementById('checkoutContent');
-  if(checkoutContent) checkoutContent.innerHTML = formatCheckoutContent(checkout);
-  
-
-  applyMapLinkBehavior('localContent');
-  applyMapLinkBehavior('trailContent');
-
-  const checklistEl = document.getElementById('teamChecklistDisplay');
-  if(checklistEl){
-    const items = checklistRaw.split('\n').map(item => item.trim()).filter(Boolean);
-    checklistEl.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+  if(document.body){
+    document.body.classList.remove('loading');
+    document.body.classList.add('app-ready');
   }
 
-await renderPropertyTheme();
-await renderDynamicImages();
-await renderPropertyChrome();
+  setTimeout(async () => {
+    const info = await getPropertyContent('info', defaultContent.info);
+    const local = await getPropertyContent('local', defaultContent.local);
+    const trail = await getPropertyContent('trail', defaultContent.trail);
+    const photos = await getPropertyContent('photos', defaultContent.photos);
+    const checkout = await getPropertyContent('checkout', defaultContent.checkout);
+    const checklistRaw = await getPropertyContent('checklist', defaultContent.checklist);
 
-if(document.body){
-  document.body.classList.remove('loading');
-  document.body.classList.add('app-ready');
-}
-}
+    const infoContent = document.getElementById('infoContent');
+    if(infoContent) infoContent.innerHTML = formatInfoContent(info);
 
+    const localContent = document.getElementById('localContent');
+    if(localContent) localContent.innerHTML = local;
+
+    const trailContent = document.getElementById('trailContent');
+    if(trailContent) trailContent.innerHTML = trail;
+
+    const photosContent = document.getElementById('photosContent');
+    if(photosContent) photosContent.innerText = photos;
+
+    const checkoutContent = document.getElementById('checkoutContent');
+    if(checkoutContent) checkoutContent.innerHTML = formatCheckoutContent(checkout);
+
+    applyMapLinkBehavior('localContent');
+    applyMapLinkBehavior('trailContent');
+
+    const checklistEl = document.getElementById('teamChecklistDisplay');
+    if(checklistEl){
+      const items = checklistRaw.split('\n').map(item => item.trim()).filter(Boolean);
+      checklistEl.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+    }
+  }, 50);
+}
 async function loadOwnerImageEditor(){
   const imageSelect = document.getElementById('ownerImageSelect');
   const imageEditor = document.getElementById('ownerImageEditor');
