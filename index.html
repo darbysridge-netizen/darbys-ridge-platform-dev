@@ -1237,7 +1237,7 @@ background:#ead8c7;
 }  
   </style>
 
- <link rel="icon" href="icon-192.png">
+<link id="browserIcon" rel="icon" href="icon-192.png">
 <link id="appIcon" rel="apple-touch-icon" href="icon-192.png">
 
 <link id="appManifest" rel="manifest" href="manifest.json">
@@ -1983,16 +1983,19 @@ const CURRENT_PROPERTY_SLUG =
   null;
 
 function setupPropertyAppFiles(){
-  const iconEl = document.getElementById('appIcon');
+const iconEl = document.getElementById('appIcon');
+const browserIconEl = document.getElementById('browserIcon'); 
   const manifestEl = document.getElementById('appManifest');
   const themeColorEl = document.getElementById('browserThemeColor');
 
   if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
     if(iconEl) iconEl.setAttribute('href', 'op-icon-192.png');
+    if(browserIconEl) browserIconEl.setAttribute('href', 'op-icon-192.png');
     if(manifestEl) manifestEl.setAttribute('href', 'manifest-ocean.json');
     if(themeColorEl) themeColorEl.setAttribute('content', '#F7F5F2');
   } else {
     if(iconEl) iconEl.setAttribute('href', 'icon-192.png');
+    if(browserIconEl) browserIconEl.setAttribute('href', 'icon-192.png');
     if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
     if(themeColorEl) themeColorEl.setAttribute('content', '#f7efe3');
   }
