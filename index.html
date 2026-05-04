@@ -4540,163 +4540,19 @@ async function loadCalendar(){
 }
    
 
-    document.addEventListener('DOMContentLoaded', async function() {
-      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const isOcean = CURRENT_PROPERTY_SLUG === 'ocean-pearl';
+document.addEventListener('DOMContentLoaded', async function() {
+  supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-document.getElementById('heroTitle').textContent =
-  await getPropertyContent('hero_title', isOcean ? 'The Ocean Pearl' : "Darby's Ridge");
+  await renderEditablePages();
 
-document.getElementById('heroTagline').textContent =
-  await getPropertyContent('hero_tagline', isOcean ? 'Your Space Coast Escape' : 'Your Blue Ridge Escape');
+  if(CURRENT_PROPERTY_SLUG){
+    showPage('home');
+  } else {
+    showPage('propertySelect');
+  }
 
-document.getElementById('heroDescription').textContent =
-  await getPropertyContent(
-    'hero_description',
-    isOcean
-      ? 'Your guide to the beach house, local favorites, rocket launches, and everything you need for your stay on the Space Coast.'
-      : 'Your guide to the cabin, local favorites, and everything you need for your stay in Blue Ridge.'
-  );
-
-document.getElementById('socialHeading').textContent =
-  await getPropertyContent('social_heading', isOcean ? 'Follow The Ocean Pearl' : "Follow Darby's Ridge");
-
-document.getElementById('socialText').textContent =
-  await getPropertyContent(
-    'social_text',
-    isOcean
-      ? 'See beach moments, Space Coast favorites, and updates from The Ocean Pearl.'
-      : 'See cabin moments, Blue Ridge favorites, and updates from the ridge.'
-  );
-
-document.getElementById('infoBannerTitle').textContent =
-  await getPropertyContent('info_banner_title', isOcean ? 'WiFi & Home Essentials' : 'WiFi & Cabin Essentials');
-
-document.getElementById('infoBannerText').textContent =
-  await getPropertyContent(
-    'info_banner_text',
-    isOcean
-      ? 'Everything you need for a smooth and easy stay at The Ocean Pearl.'
-      : "Everything you need for a smooth and cozy stay at Darby's Ridge."
-  );
-
-document.getElementById('wazeLabel').textContent =
-  await getPropertyContent('waze_label', isOcean ? 'Address & Directions' : 'Waze to the Ridge');
-
-document.getElementById('localCardLabel').textContent =
-  await getPropertyContent('local_card_label', 'Ideas for perfect days');
-
-document.getElementById('trailCardLabel').textContent =
-  await getPropertyContent('trail_card_label', isOcean ? 'Launches + What’s Happening' : 'Come take a Hike');  
- document.getElementById('enhanceCardLabel').textContent =
-  await getPropertyContent('enhance_card_label', 'Enhance Your Stay');     
-document.getElementById('wazeAddress').textContent =
-   '📍 ' + await getPropertyContent(
-    'waze_address',
-    CURRENT_PROPERTY_SLUG === 'ocean-pearl'
-      ? 'The Ocean Pearl, Cape Canaveral, Florida'
-      : '66 Forest Trail, Blue Ridge, Georgia'
-  );
- document.getElementById('guidebookTitle').textContent =
-  await getPropertyContent('guidebook_title', 'Guest Guide');   
- document.getElementById('wazeBannerTitle').textContent =
-  await getPropertyContent(
-    'waze_banner_title',
-    CURRENT_PROPERTY_SLUG === 'ocean-pearl'
-      ? 'Address & Directions'
-      : 'Way to the Ridge'
-  );
-
-document.getElementById('wazeBannerText').textContent =
-  await getPropertyContent(
-    'waze_banner_text',
-    CURRENT_PROPERTY_SLUG === 'ocean-pearl'
-      ? 'Use Waze for the most accurate route to The Ocean Pearl.'
-      : 'Use Waze for the most accurate route to the cabin.'
-  );
-
-document.getElementById('localBannerTitle').textContent =
-  await getPropertyContent('local_banner_title', 'Plan Your Perfect Blue Ridge Day');
-
-document.getElementById('localBannerText').textContent =
-  await getPropertyContent(
-    'local_banner_text',
-    'Choose the kind of day you want and explore our favorite ideas for couples, families, and adventure lovers.'
-  );
-  const { data: propertiesTest, error: propertiesError } = await supabaseClient
-    .from('properties')
-    .select('*');
-
-  console.log('PROPERTIES TEST:', propertiesTest);
-  console.log('PROPERTIES ERROR:', propertiesError);
-      
-
-      await renderEditablePages();
-      await renderSupplyList();
-      await renderMaintenanceList();
-      await renderGuestGallery();
-      await renderOwnerDashboard();
-      await loadOwnerEditor();
-      await loadOwnerImageEditor();
-      await renderEnhancePackages();
-await renderOwnerPackages();
- if(CURRENT_PROPERTY_SLUG){
-  showPage('home');
-} else {
-  showPage('propertySelect');
-}     
-
-const homeGuideLabel = document.getElementById('homeGuideLabel');
-if (homeGuideLabel) {
-  const value = await getPropertyContent('home_guide_label');
-  if (value) homeGuideLabel.textContent = value;
-}
-  const homeInfoLabel = document.getElementById('homeInfoLabel');
-if (homeInfoLabel) {
-  const value = await getPropertyContent('home_info_label');
-  if (value) homeInfoLabel.textContent = value;
-}
-
-const homeMemoriesLabel = document.getElementById('homeMemoriesLabel');
-if (homeMemoriesLabel) {
-  const value = await getPropertyContent('home_memories_label');
-  if (value) homeMemoriesLabel.textContent = value;
-}
-
-const homeCheckoutLabel = document.getElementById('homeCheckoutLabel');
-if (homeCheckoutLabel) {
-  const value = await getPropertyContent('home_checkout_label');
-  if (value) homeCheckoutLabel.textContent = value;
-}
-
-const homeDiscountLabel = document.getElementById('homeDiscountLabel');
-if (homeDiscountLabel) {
-  const value = await getPropertyContent('home_discount_label');
-  if (value) homeDiscountLabel.textContent = value;
-}    
-
-
-const homeGuideKicker = document.getElementById('homeGuideKicker');
-if (homeGuideKicker) {
-  const heroTitle = await getPropertyContent('hero_title', 'Ocean Pearl');
-  const cleanPropertyName = String(heroTitle || 'Ocean Pearl').replace(/^the\s+/i, '');
-  homeGuideKicker.textContent = `THE ${cleanPropertyName.toUpperCase()}`;
-}
-
-const homeLocalKicker = document.getElementById('homeLocalKicker');
-if (homeLocalKicker) {
-  const value = await getPropertyContent('home_local_kicker');
-  if (value) homeLocalKicker.textContent = value;
-}
-
-const homeFeatureKicker = document.getElementById('homeFeatureKicker');
-if (homeFeatureKicker) {
-  const value = await getPropertyContent('home_feature_kicker');
-  if (value) homeFeatureKicker.textContent = value;
-}
-
-    });
-
+  renderEnhancePackages();
+});   
  async function submitRequestToBook(){
   const name = document.getElementById('requestName').value.trim();
   const phone = document.getElementById('requestPhone').value.trim();
