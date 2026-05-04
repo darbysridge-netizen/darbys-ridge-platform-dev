@@ -2734,13 +2734,13 @@ if(infoContent) infoContent.innerHTML = formatInfoContent(info);
     checklistEl.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
   }
 
-  await renderPropertyTheme();
-  await renderDynamicImages();
-  await renderPropertyChrome();
+renderPropertyTheme();
+renderDynamicImages();
+renderPropertyChrome();
 
-  if(document.body){
-    document.body.classList.remove('loading');
-  }
+if(document.body){
+  document.body.classList.remove('loading');
+} 
 }
 
 async function loadOwnerImageEditor(){
