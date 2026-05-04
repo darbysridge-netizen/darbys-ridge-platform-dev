@@ -2645,17 +2645,47 @@ const propertyNameUpper = cleanPropertyName.toUpperCase();
   const heroTagline = await getPropertyContent('hero_tagline', '');
   const heroDescription = await getPropertyContent('hero_description', '');
 
-  const socialHeading = await getPropertyContent('social_heading', 'Follow Ocean Pearl');
-  const socialText = await getPropertyContent('social_text', '');
+const defaultSocialHeading =
+  CURRENT_PROPERTY_SLUG === 'darbys-ridge'
+    ? 'Follow Darby’s Ridge'
+    : 'Follow The Ocean Pearl';
+
+const defaultSocialText =
+  CURRENT_PROPERTY_SLUG === 'darbys-ridge'
+    ? 'See cabin moments, Blue Ridge favorites, and updates from the ridge.'
+    : 'See beach moments, local favorites, and updates from the coast.';
+
+const socialHeading = await getPropertyContent('social_heading', defaultSocialHeading);
+const socialText = await getPropertyContent('social_text', defaultSocialText); 
 const homeGuideKicker = `THE ${propertyNameUpper}`;
 const wazeKicker = await getPropertyContent('waze_kicker', `WAZE TO ${propertyNameUpper}`);
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
   const guidebookPdf = await getPropertyContent('guidebook_pdf', '');
 
-  const instagramUrl = await getPropertyContent('social_instagram_url', '#');
-  const instagramHandle = await getPropertyContent('social_instagram_handle', '@oceanpearl');
-  const facebookUrl = await getPropertyContent('social_facebook_url', '#');
-  const facebookName = await getPropertyContent('social_facebook_name', 'Ocean Pearl');
+const defaultInstagramUrl =
+  CURRENT_PROPERTY_SLUG === 'darbys-ridge'
+    ? 'https://www.instagram.com/DarbysRidge'
+    : '#';
+
+const defaultInstagramHandle =
+  CURRENT_PROPERTY_SLUG === 'darbys-ridge'
+    ? '@DarbysRidge'
+    : '@oceanpearl';
+
+const defaultFacebookUrl =
+  CURRENT_PROPERTY_SLUG === 'darbys-ridge'
+    ? 'https://www.facebook.com/DarbysRidge'
+    : '#';
+
+const defaultFacebookName =
+  CURRENT_PROPERTY_SLUG === 'darbys-ridge'
+    ? 'Darby’s Ridge'
+    : 'Ocean Pearl';
+
+const instagramUrl = await getPropertyContent('social_instagram_url', defaultInstagramUrl);
+const instagramHandle = await getPropertyContent('social_instagram_handle', defaultInstagramHandle);
+const facebookUrl = await getPropertyContent('social_facebook_url', defaultFacebookUrl);
+const facebookName = await getPropertyContent('social_facebook_name', defaultFacebookName);  
 
   const heroTitleEl = document.getElementById('heroTitle');
   if(heroTitleEl) heroTitleEl.textContent = heroTitle;
