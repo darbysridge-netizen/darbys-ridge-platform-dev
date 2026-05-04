@@ -2696,7 +2696,12 @@ const socialText = await getPropertyContent('social_text', defaultSocialText);
 const homeGuideKicker = `THE ${propertyNameUpper}`;
 const wazeKicker = await getPropertyContent('waze_kicker', `WAZE TO ${propertyNameUpper}`);
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
-  const guidebookPdf = await getPropertyContent('guidebook_pdf', '');
+const defaultGuidebookPdf =
+  CURRENT_PROPERTY_SLUG === 'darbys-ridge'
+    ? 'darbys-guidebook.pdf'
+    : 'ocean-guide.pdf';
+
+const guidebookPdf = await getPropertyContent('guidebook_pdf', defaultGuidebookPdf); 
 
 const defaultInstagramUrl =
   CURRENT_PROPERTY_SLUG === 'darbys-ridge'
