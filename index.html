@@ -2702,7 +2702,21 @@ const defaultGuidebookPdf =
     : 'ocean-guide.pdf';
 
 const guidebookPdf = await getPropertyContent('guidebook_pdf', defaultGuidebookPdf); 
+const guidebookFrame = document.getElementById('guidebookFrame');
+const guidebookOpenLink = document.getElementById('guidebookOpenLink');
+const guidebookOpenLinkSecondary = document.getElementById('guidebookOpenLinkSecondary');
 
+if(guidebookFrame){
+  guidebookFrame.src = guidebookPdf + '#toolbar=0&navpanes=0&scrollbar=0';
+}
+
+if(guidebookOpenLink){
+  guidebookOpenLink.href = guidebookPdf;
+}
+
+if(guidebookOpenLinkSecondary){
+  guidebookOpenLinkSecondary.href = guidebookPdf;
+}
 const defaultInstagramUrl =
   CURRENT_PROPERTY_SLUG === 'darbys-ridge'
     ? 'https://www.instagram.com/DarbysRidge'
