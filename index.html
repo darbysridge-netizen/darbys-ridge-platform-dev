@@ -2571,27 +2571,63 @@ function applyMapLinkBehavior(containerId){
 }
 
 async function renderDynamicImages(){
-  const values = {
-    hero_image: await getPropertyContent('hero_image', defaultContent.hero_image || 'ocean-hero.jpeg'),
+   const defaultImages =
+    CURRENT_PROPERTY_SLUG === 'darbys-ridge'
+      ? {
+          hero_image: 'hero.jpg',
+          home_guide_image: 'guest-guide.jpg',
+          home_waze_image: 'directions.jpg',
+          home_info_image: 'essentials.jpg',
+          home_local_image: 'local.jpg',
+          home_trail_image: 'trail.jpg',
+          home_memories_image: 'memories.jpg',
+          home_enhance_image: 'enhance.jpg',
+          home_checkout_image: 'checkout.jpg',
+          home_request_image: 'return.jpg',
+          banner_info_image: 'essentials.jpg',
+          banner_local_image: 'local.jpg',
+          banner_trail_image: 'trail.jpg',
+          banner_checkout_image: 'checkout.jpg',
+          banner_waze_image: 'directions.jpg'
+        }
+      : {
+          hero_image: 'ocean-hero.jpeg',
+          home_guide_image: 'ocean-guide.jpg',
+          home_waze_image: 'ocean-waze.jpg',
+          home_info_image: 'ocean-info.jpg',
+          home_local_image: 'ocean-local.jpg',
+          home_trail_image: 'ocean-feature.jpg',
+          home_memories_image: 'ocean-memories.jpeg',
+          home_enhance_image: 'ocean-feature.jpg',
+          home_checkout_image: 'ocean-checkout.jpeg',
+          home_request_image: 'ocean-return.jpg',
+          banner_info_image: 'ocean-info.jpg',
+          banner_local_image: 'ocean-local.jpg',
+          banner_trail_image: 'ocean-feature.jpg',
+          banner_checkout_image: 'ocean-checkout.jpg',
+          banner_waze_image: 'ocean-waze.jpg'
+        }; 
+ const values = {
+  hero_image: await getPropertyContent('hero_image', defaultImages.hero_image),
 
-    home_guide_image: await getPropertyContent('home_guide_image', defaultContent.home_guide_image || 'ocean-guide.jpg'),
-    home_waze_image: await getPropertyContent('home_waze_image', defaultContent.home_waze_image || 'ocean-waze.jpg'),
-    home_info_image: await getPropertyContent('home_info_image', defaultContent.home_info_image || 'ocean-info.jpg'),
-    home_local_image: await getPropertyContent('home_local_image', defaultContent.home_local_image || 'ocean-local.jpg'),
-    home_trail_image: await getPropertyContent('home_trail_image', defaultContent.home_trail_image || 'ocean-feature.jpg'),
-    home_memories_image: await getPropertyContent('home_memories_image', defaultContent.home_memories_image || 'ocean-memories.jpeg'),
-    home_enhance_image: await getPropertyContent('home_enhance_image', defaultContent.home_enhance_image || 'ocean-feature.jpg'),
-    home_checkout_image: await getPropertyContent('home_checkout_image', defaultContent.home_checkout_image || 'ocean-checkout.jpeg'),
-    home_request_image: await getPropertyContent('home_request_image', defaultContent.home_request_image || 'ocean-return.jpg'),
+  home_guide_image: await getPropertyContent('home_guide_image', defaultImages.home_guide_image),
+  home_waze_image: await getPropertyContent('home_waze_image', defaultImages.home_waze_image),
+  home_info_image: await getPropertyContent('home_info_image', defaultImages.home_info_image),
+  home_local_image: await getPropertyContent('home_local_image', defaultImages.home_local_image),
+  home_trail_image: await getPropertyContent('home_trail_image', defaultImages.home_trail_image),
+  home_memories_image: await getPropertyContent('home_memories_image', defaultImages.home_memories_image),
+  home_enhance_image: await getPropertyContent('home_enhance_image', defaultImages.home_enhance_image),
+  home_checkout_image: await getPropertyContent('home_checkout_image', defaultImages.home_checkout_image),
+  home_request_image: await getPropertyContent('home_request_image', defaultImages.home_request_image),
 
-    banner_info_image: await getPropertyContent('banner_info_image', defaultContent.banner_info_image || 'ocean-info.jpg'),
-    banner_local_image: await getPropertyContent('banner_local_image', defaultContent.banner_local_image || 'ocean-local.jpg'),
-    banner_trail_image: await getPropertyContent('banner_trail_image', defaultContent.banner_trail_image || 'ocean-feature.jpg'),
-    banner_checkout_image: await getPropertyContent('banner_checkout_image', defaultContent.banner_checkout_image || 'ocean-checkout.jpg'),
-    banner_waze_image: await getPropertyContent('banner_waze_image', 'ocean-waze.jpg'),
+  banner_info_image: await getPropertyContent('banner_info_image', defaultImages.banner_info_image),
+  banner_local_image: await getPropertyContent('banner_local_image', defaultImages.banner_local_image),
+  banner_trail_image: await getPropertyContent('banner_trail_image', defaultImages.banner_trail_image),
+  banner_checkout_image: await getPropertyContent('banner_checkout_image', defaultImages.banner_checkout_image),
+  banner_waze_image: await getPropertyContent('banner_waze_image', defaultImages.banner_waze_image),
 
-    book_again_airbnb_link: await getPropertyContent('book_again_airbnb_link', '')
-  };
+  book_again_airbnb_link: await getPropertyContent('book_again_airbnb_link', '')
+};
 
   const heroSection = document.getElementById('heroSection');
   if(heroSection){
