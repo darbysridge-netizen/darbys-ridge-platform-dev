@@ -1972,23 +1972,24 @@ const CURRENT_PROPERTY_SLUG =
   PROPERTY_HOST_MAP[hostname] ||
   null;
 
-window.addEventListener('DOMContentLoaded', () => {
+function setupPropertyAppFiles(){
   const iconEl = document.getElementById('appIcon');
+  const manifestEl = document.getElementById('appManifest');
+  const themeColorEl = document.getElementById('browserThemeColor');
 
-  if(iconEl && CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
-    iconEl.setAttribute('href', 'op-icon-192.png');
+  if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+    if(iconEl) iconEl.setAttribute('href', 'op-icon-192.png');
+    if(manifestEl) manifestEl.setAttribute('href', 'manifest-ocean.json');
+    if(themeColorEl) themeColorEl.setAttribute('content', '#F7F5F2');
+  } else {
+    if(iconEl) iconEl.setAttribute('href', 'icon-192.png');
+    if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
+    if(themeColorEl) themeColorEl.setAttribute('content', '#f7efe3');
   }
-});
-
-if(iconEl && CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
-  iconEl.setAttribute('href', 'op-icon-192.png');
 }
 
-const manifestEl = document.getElementById('appManifest');
+setupPropertyAppFiles();
 
-if(manifestEl && CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
-  manifestEl.setAttribute('href', 'manifest-ocean.json');
-}
 console.log('CURRENT PROPERTY:', CURRENT_PROPERTY_SLUG);
 // Show selector only if we truly don't know the property
 if(!CURRENT_PROPERTY_SLUG){
@@ -2736,7 +2737,10 @@ if(infoContent) infoContent.innerHTML = formatInfoContent(info);
   await renderPropertyTheme();
   await renderDynamicImages();
   await renderPropertyChrome();
-  document.body.classList.remove('loading');
+
+  if(document.body){
+    document.body.classList.remove('loading');
+  }
 }
 
 async function loadOwnerImageEditor(){
