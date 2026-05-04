@@ -1972,7 +1972,13 @@ const CURRENT_PROPERTY_SLUG =
   PROPERTY_HOST_MAP[hostname] ||
   null;
 
-const iconEl = document.getElementById('appIcon');
+window.addEventListener('DOMContentLoaded', () => {
+  const iconEl = document.getElementById('appIcon');
+
+  if(iconEl && CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+    iconEl.setAttribute('href', 'op-icon-192.png');
+  }
+});
 
 if(iconEl && CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
   iconEl.setAttribute('href', 'op-icon-192.png');
