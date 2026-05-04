@@ -2832,14 +2832,14 @@ if(openLinkSecondary){
 async function renderEditablePages(){
   await loadPropertyContentCache();
 
-  renderPropertyTheme();
-  renderDynamicImages();
-  renderPropertyChrome();
+ await renderPropertyTheme();
+await renderDynamicImages();
+await renderPropertyChrome();
 
-  if(document.body){
-    document.body.classList.remove('loading');
-    document.body.classList.add('app-ready');
-  }
+if(document.body){
+  document.body.classList.remove('loading');
+  document.body.classList.add('app-ready');
+} 
 
   setTimeout(async () => {
     const info = await getPropertyContent('info', defaultContent.info);
