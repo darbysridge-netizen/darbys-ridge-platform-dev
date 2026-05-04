@@ -2750,7 +2750,8 @@ renderPropertyChrome();
 
 if(document.body){
   document.body.classList.remove('loading');
-} 
+  document.body.classList.add('app-ready');
+}
 }
 
 async function loadOwnerImageEditor(){
