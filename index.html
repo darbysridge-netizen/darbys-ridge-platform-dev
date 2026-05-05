@@ -2467,11 +2467,13 @@ if(propertyContentCache && cachedPropertySlug === CURRENT_PROPERTY_SLUG){
 
     propertyContentCache = {};
 
-    (data || []).forEach(row => {
-      propertyContentCache[row.content_key] = row.content_value;
-    });
+  (data || []).forEach(row => {
+  propertyContentCache[row.content_key] = row.content_value;
+});
 
-    return propertyContentCache;
+cachedPropertySlug = CURRENT_PROPERTY_SLUG;
+
+return propertyContentCache; 
 
   } catch(e){
     console.error(e);
