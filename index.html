@@ -2877,12 +2877,10 @@ if(openLinkSecondary){
 
 async function renderEditablePages(){
   try{
-  // 🔥 DO NOT BLOCK UI
-loadPropertyContentCache().then(async () => {
-  await renderPropertyTheme();
-  await renderDynamicImages();
-  await renderPropertyChrome();
-}); 
+await loadPropertyContentCache();
+await renderPropertyTheme();
+await renderDynamicImages();
+await renderPropertyChrome();
   } catch(e){
     console.error('Startup render error:', e);
    } finally {
