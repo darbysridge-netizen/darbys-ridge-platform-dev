@@ -1525,7 +1525,7 @@ background:#ead8c7;
   <button class="back" type="button" onclick="showPage('home')">← Back</button>
 
   <div class="page-banner">
- <img id="imgBannerWaze" src="ocean-waze.jpg" alt="">
+<img id="imgBannerWaze" src="directions.jpg" alt="">
   <div class="page-banner-text">
   <strong id="wazeBannerTitle">Directions</strong>
   <span id="wazeBannerText">Use Waze for the most accurate route to the property.</span>
@@ -1547,7 +1547,7 @@ background:#ead8c7;
   target="_blank"
   rel="noopener noreferrer"
 >
-  Open in Waze
+  Waze to Property  
 </a>  
 </div>
 
@@ -2064,6 +2064,8 @@ function applyBasePropertyContent(){
     document.getElementById('socialHeading').textContent = 'Follow The Ocean Pearl';
     document.getElementById('socialInstagramHandle').textContent = '@oceanpearl';
     document.getElementById('socialFacebookName').textContent = 'The Ocean Pearl';
+    document.getElementById('wazeLabel').textContent = 'Waze to The Ocean Pearl';
+    document.getElementById('wazeLink').textContent = 'Waze to The Ocean Pearl';
   }
 
   if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
@@ -2072,6 +2074,8 @@ function applyBasePropertyContent(){
     document.getElementById('socialHeading').textContent = 'Follow Darby’s Ridge';
     document.getElementById('socialInstagramHandle').textContent = '@darbysridge';
     document.getElementById('socialFacebookName').textContent = 'Darby’s Ridge';
+   document.getElementById('wazeLabel').textContent = 'Waze to Darby’s Ridge'; 
+    document.getElementById('wazeLink').textContent = 'Waze to Darby’s Ridge';
   }
 }
 applyBasePropertyContent();    
