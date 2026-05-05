@@ -2834,7 +2834,7 @@ async function renderEditablePages(){
   try{
     await loadPropertyContentCache();
     await renderPropertyTheme();
- 
+     await renderDynamicImages();
     await renderPropertyChrome();
   } catch(e){
     console.error('Startup render error:', e);
@@ -2844,9 +2844,7 @@ async function renderEditablePages(){
       document.body.classList.add('app-ready');
     }
 
-    setTimeout(() => {
-      renderDynamicImages();
-    }, 100);
+    
   }
 
   setTimeout(async () => {
