@@ -1239,7 +1239,46 @@ background:#ead8c7;
     display:block !important;
   }
 }   
- 
+#appLoader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:var(--bg-main);
+}
+
+body.loading #appLoader{
+  display:flex;
+}
+
+body.app-ready #appLoader{
+  display:none;
+}
+
+.loader-card{
+  text-align:center;
+  padding:24px 28px;
+  border-radius:22px;
+  background:var(--panel-bg);
+  border:1px solid var(--border-soft);
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+}
+
+.loader-title{
+  font-family:'Allura',cursive;
+  font-size:42px;
+  color:var(--highlight);
+  line-height:1;
+}
+
+.loader-subtitle{
+  margin-top:8px;
+  font-size:13px;
+  color:var(--text-main);
+  font-weight:600;
+} 
   </style>
 
 <link id="browserIcon" rel="icon" href="icon-192.png">
@@ -1259,6 +1298,12 @@ background:#ead8c7;
 </head>
 
 <body class="loading">
+<div id="appLoader">
+  <div class="loader-card">
+    <div class="loader-title">The Ocean Pearl</div>
+    <div class="loader-subtitle">Loading your guest guide...</div>
+  </div>
+</div>  
   <div id="propertySelect" class="hidden page">
     <h1>Sunshine Property Hub</h1>
 
