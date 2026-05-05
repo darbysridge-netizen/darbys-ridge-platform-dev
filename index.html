@@ -703,17 +703,16 @@ button.tertiary-btn:active{
       overflow:hidden;
       margin-top:14px;
       box-shadow:0 6px 16px rgba(0,0,0,.08);
+        padding-bottom:10px;
     }
 
-    .pdf-frame{
-      width:100%;
-      height:78vh;
-      min-height:700px;
-      border:none;
-      display:block;
-      background:white;
-    }
-
+  .pdf-frame{
+  width:100%;
+  height:calc(100vh - 120px);
+  border:none;
+  display:block;
+  background:white;
+} 
    .mobile-open{
   display:block;
   padding:16px;
@@ -1225,14 +1224,12 @@ background:#ead8c7;
   background:#6fcf97;
 }
 @media (max-width: 768px){
-  .pdf-frame{
-    display:block !important;
-    width:100%;
-    height:85vh;
-    min-height:560px;
-    border:none;
-    background:white;
-  }
+.pdf-frame{
+  width:100%;
+  height:calc(100vh - 110px);
+  border:none;
+  background:white;
+}
 
   .mobile-open{
     display:block !important;
@@ -1436,7 +1433,7 @@ background:#ead8c7;
     <h1 id="guidebookTitle">Guest Guide</h1>
 
     <div class="pdf-wrap">
-   <div class="mobile-open" style="display:none;">   
+   <div class="mobile-open">
     <a id="guidebookOpenLink" href="#" target="_blank" rel="noopener noreferrer" class="open-guide-btn">
   Open Guest Guide
 </a>
