@@ -1300,8 +1300,8 @@ body.app-ready #appLoader{
 <body class="loading">
 <div id="appLoader">
   <div class="loader-card">
-    <div class="loader-title">The Ocean Pearl</div>
-    <div class="loader-subtitle">Loading your guest guide...</div>
+ <div class="loader-title">Guest Guide</div>
+<div class="loader-subtitle">Getting things ready...</div>   
   </div>
 </div>  
   <div id="propertySelect" class="hidden page">
@@ -2031,7 +2031,25 @@ const CURRENT_PROPERTY_SLUG =
   urlParams.get('property') ||
   PROPERTY_HOST_MAP[hostname] ||
   null;
+// 🔥 SET BASE CONTENT BEFORE APP LOADS
+function applyBasePropertyContent(){
+  if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+    document.getElementById('heroTitle').textContent = 'The Ocean Pearl';
+    document.getElementById('heroTagline').textContent = 'Your Coastal Escape';
+    document.getElementById('socialHeading').textContent = 'Follow The Ocean Pearl';
+    document.getElementById('socialInstagramHandle').textContent = '@oceanpearl';
+    document.getElementById('socialFacebookName').textContent = 'The Ocean Pearl';
+  }
 
+  if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
+    document.getElementById('heroTitle').textContent = 'Darby’s Ridge';
+    document.getElementById('heroTagline').textContent = 'Your Blue Ridge Escape';
+    document.getElementById('socialHeading').textContent = 'Follow Darby’s Ridge';
+    document.getElementById('socialInstagramHandle').textContent = '@darbysridge';
+    document.getElementById('socialFacebookName').textContent = 'Darby’s Ridge';
+  }
+}
+applyBasePropertyContent();    
 function setupPropertyAppFiles(){
 const iconEl = document.getElementById('appIcon');
 const browserIconEl = document.getElementById('browserIcon'); 
