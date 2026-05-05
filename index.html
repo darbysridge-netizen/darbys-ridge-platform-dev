@@ -25,18 +25,17 @@ body{
   color:var(--text-main);
 }
 
-body.loading .phone,
-body.loading .page,
-body.loading .bottom-nav{
+.phone,
+.page,
+.bottom-nav{
   opacity:0;
-  pointer-events:none;
 }
 
-body.app-ready .phone,
-body.app-ready .page,
-body.app-ready .bottom-nav{
+.app-ready .phone,
+.app-ready .page,
+.app-ready .bottom-nav{
   opacity:1;
-  transition:opacity .18s ease;
+  transition:opacity .12s ease;
 }
   .phone,
   .page{
@@ -1249,12 +1248,8 @@ background:#ead8c7;
   background:var(--bg-main);
 }
 
-body.loading #appLoader{
-  display:flex;
-}
-
-body.app-ready #appLoader{
-  display:none;
+#appLoader{
+  display:none !important;
 }
 
 .loader-card{
