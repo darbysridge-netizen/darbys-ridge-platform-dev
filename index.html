@@ -1281,6 +1281,11 @@ background:#ead8c7;
 
 <link id="appManifest" rel="manifest" href="manifest.json">
 <meta id="browserThemeColor" name="theme-color" content="#dceff2"> 
+<meta property="og:title" content="Guest Guide">
+<meta property="og:description" content="Your guide to the property, local favorites, and everything you need for your stay.">
+<meta property="og:image" content="icon-512.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">  
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EL3GB1MQS5"></script>
 <script>
@@ -2062,6 +2067,21 @@ const browserIconEl = document.getElementById('browserIcon');
     if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
     if(themeColorEl) themeColorEl.setAttribute('content', '#f7efe3');
   }
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  const ogDesc = document.querySelector('meta[property="og:description"]');
+  const ogImage = document.querySelector('meta[property="og:image"]');
+
+  if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+    if(ogTitle) ogTitle.setAttribute('content', 'The Ocean Pearl');
+    if(ogDesc) ogDesc.setAttribute('content', 'A relaxed coastal stay just steps from the beach.');
+    if(ogImage) ogImage.setAttribute('content', 'op-icon-512.png');
+  }
+
+  if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
+    if(ogTitle) ogTitle.setAttribute('content', 'Darby’s Ridge');
+    if(ogDesc) ogDesc.setAttribute('content', 'Your Blue Ridge mountain escape.');
+    if(ogImage) ogImage.setAttribute('content', 'icon-512.png');
+  }  
 }
 
 setupPropertyAppFiles();
