@@ -25,8 +25,18 @@ body{
   color:var(--text-main);
 }
 
-body.loading{
-  visibility:visible;
+body.loading .phone,
+body.loading .page,
+body.loading .bottom-nav{
+  opacity:0;
+  pointer-events:none;
+}
+
+body.app-ready .phone,
+body.app-ready .page,
+body.app-ready .bottom-nav{
+  opacity:1;
+  transition:opacity .18s ease;
 }
   .phone,
   .page{
@@ -1229,16 +1239,7 @@ background:#ead8c7;
     display:block !important;
   }
 }   
-  .hero,
-.card-grid {
-  opacity: 0;
-  transition: opacity 0.25s ease;
-}
-
-.app-ready .hero,
-.app-ready .card-grid {
-  opacity: 1;
-}  
+ 
   </style>
 
 <link id="browserIcon" rel="icon" href="icon-192.png">
@@ -2830,16 +2831,19 @@ if(openLinkSecondary){
 }
 
 async function renderEditablePages(){
-  await loadPropertyContentCache();
-
- await renderPropertyTheme();
-await renderDynamicImages();
-await renderPropertyChrome();
-
-if(document.body){
-  document.body.classList.remove('loading');
-  document.body.classList.add('app-ready');
-} 
+  try{
+    await loadPropertyContentCache();
+    await renderPropertyTheme();
+    await renderDynamicImages();
+    await renderPropertyChrome();
+  } catch(e){
+    console.error('Startup render error:', e);
+  } finally {
+    if(document.body){
+      document.body.classList.remove('loading');
+      document.body.classList.add('app-ready');
+    }
+  }
 
   setTimeout(async () => {
     const info = await getPropertyContent('info', defaultContent.info);
