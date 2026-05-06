@@ -847,7 +847,21 @@ background:#ead8c7;
       flex-direction:column;
       gap:16px;
     }
+.launch-highlight{
+  background:var(--panel-bg);
+  border:2px solid var(--highlight);
+  border-radius:16px;
+  padding:16px;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
 
+.launch-highlight h3{
+  color:var(--highlight);
+}
+#trail .link-btn,
+#trail .action-btn{
+  color:white !important;
+}    
     .favorite-item{
       padding-bottom:14px;
       border-bottom:1px solid #e5d7c4;
@@ -2180,10 +2194,12 @@ async function loadNextLaunch(){
   const card = document.getElementById('nextLaunchCard');
   if(!card) return;
 
-  card.innerHTML = `
+card.innerHTML = `
+  <div class="launch-highlight">
     <h3>Next Launch to Watch</h3>
     <p>Loading the latest launch information...</p>
-  `;
+  </div>
+`;
 
   try{
 const controller = new AbortController();
