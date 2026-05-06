@@ -2830,7 +2830,8 @@ const defaultSocialText =
 const socialHeading = await getPropertyContent('social_heading', defaultSocialHeading);
 const socialText = await getPropertyContent('social_text', defaultSocialText); 
 const homeGuideKicker = `THE ${propertyNameUpper}`;
-const wazeKicker = await getPropertyContent('waze_kicker', `WAZE TO ${propertyNameUpper}`);
+const wazeKicker = await getPropertyContent('waze_kicker', 'ADDRESS & DIRECTIONS');
+const wazeCardLabel = await getPropertyContent('waze_card_label', 'Address & Directions');
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
 const defaultGuidebookPdf =
   CURRENT_PROPERTY_SLUG === 'darbys-ridge'
@@ -2901,6 +2902,8 @@ if(homeGuideKickerEl) homeGuideKickerEl.textContent = homeGuideKicker;
 
 const wazeKickerEl = document.getElementById('wazeKicker');
 if(wazeKickerEl) wazeKickerEl.textContent = wazeKicker;  
+const wazeLabelEl = document.getElementById('wazeLabel');
+if(wazeLabelEl) wazeLabelEl.textContent = wazeCardLabel;  
 
 const openLink = document.getElementById('guidebookOpenLink');
 const openLinkSecondary = document.getElementById('guidebookOpenLinkSecondary');
