@@ -1898,6 +1898,7 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
         <option value="checklist">Turnover Checklist</option>
         <option value="waze_kicker">Waze Kicker</option>
 <option value="waze_card_label">Waze Card Label</option>
+ <option value="home_info_label">Home Info Card Label</option>       
 <option value="waze_intro">Waze Intro</option>
 <option value="waze_button_text">Waze Button Text</option>
 <option value="waze_address">Waze Address</option>
@@ -2684,6 +2685,7 @@ const socialText = await getPropertyContent('social_text', defaultSocialText);
 const homeGuideKicker = `THE ${propertyNameUpper}`;
 const wazeKicker = await getPropertyContent('waze_kicker', 'ADDRESS & DIRECTIONS');
 const wazeCardLabel = await getPropertyContent('waze_card_label', 'Address & Directions');
+const homeInfoLabel = await getPropertyContent('home_info_label', 'WiFi + Home Essentials');  
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
 const defaultGuidebookPdf =
   CURRENT_PROPERTY_SLUG === 'darbys-ridge'
@@ -2756,6 +2758,8 @@ const wazeKickerEl = document.getElementById('wazeKicker');
 if(wazeKickerEl) wazeKickerEl.textContent = wazeKicker;  
 const wazeLabelEl = document.getElementById('wazeLabel');
 if(wazeLabelEl) wazeLabelEl.textContent = wazeCardLabel;  
+const homeInfoLabelEl = document.getElementById('homeInfoLabel');
+if(homeInfoLabelEl) homeInfoLabelEl.textContent = homeInfoLabel;  
 
 const openLink = document.getElementById('guidebookOpenLink');
 const openLinkSecondary = document.getElementById('guidebookOpenLinkSecondary');
