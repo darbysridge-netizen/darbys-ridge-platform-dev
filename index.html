@@ -2531,6 +2531,10 @@ async function savePropertyContent(key, value){
     );
 
   if(error) throw error;
+
+  propertyContentCache = null;
+  cachedPropertySlug = null;
+} 
 }
 async function loadOwnerEditor(){
   const sectionSelect = document.getElementById('ownerSectionSelect');
