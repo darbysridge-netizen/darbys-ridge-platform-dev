@@ -2254,13 +2254,15 @@ const floridaLaunch = launches
       : 'Time TBD';
 
     card.innerHTML = `
-      <h3>Next Launch to Watch</h3>
-      <p><strong>${floridaLaunch.name || 'Upcoming Launch'}</strong></p>
-      <p><strong>Scheduled:</strong> ${launchDate}</p>
-      <p><strong>Status:</strong> ${floridaLaunch.status?.name || 'Unknown'}</p>
-      <p>Launch schedules can change quickly, so check again the day of launch.</p>
-    `;
-
+  card.innerHTML = `
+  <div class="launch-highlight">
+    <h3>Next Launch to Watch</h3>
+    <p><strong>${floridaLaunch.name || 'Upcoming Launch'}</strong></p>
+    <p><strong>Scheduled:</strong> ${launchDate}</p>
+    <p><strong>Status:</strong> ${floridaLaunch.status?.name || 'Unknown'}</p>
+    <p>Launch schedules can change quickly, so check again the day of launch.</p>
+  </div>
+`;  
   } catch(error){
     console.error('Launch load error:', error);
 
