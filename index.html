@@ -1868,7 +1868,9 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
         <option value="checklist">Turnover Checklist</option>
         <option value="waze_kicker">Waze Kicker</option>
 <option value="waze_card_label">Waze Card Label</option>
- <option value="home_info_label">Home Info Card Label</option>       
+ <option value="home_info_label">Home Info Card Label</option>    
+<option value="home_feature_kicker">Home Feature Kicker</option>
+<option value="home_feature_label">Home Feature Label</option>        
 <option value="waze_intro">Waze Intro</option>
 <option value="waze_button_text">Waze Button Text</option>
 <option value="waze_address">Waze Address</option>
@@ -2656,6 +2658,8 @@ const homeGuideKicker = `THE ${propertyNameUpper}`;
 const wazeKicker = await getPropertyContent('waze_kicker', 'ADDRESS & DIRECTIONS');
 const wazeCardLabel = await getPropertyContent('waze_card_label', 'Address & Directions');
 const homeInfoLabel = await getPropertyContent('home_info_label', 'WiFi + Home Essentials');  
+const homeFeatureKicker = await getPropertyContent('home_feature_kicker', 'FEATURE');
+const homeFeatureLabel = await getPropertyContent('home_feature_label', 'Explore More');  
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
 const defaultGuidebookPdf =
   CURRENT_PROPERTY_SLUG === 'darbys-ridge'
@@ -2729,7 +2733,12 @@ if(wazeKickerEl) wazeKickerEl.textContent = wazeKicker;
 const wazeLabelEl = document.getElementById('wazeLabel');
 if(wazeLabelEl) wazeLabelEl.textContent = wazeCardLabel;  
 const homeInfoLabelEl = document.getElementById('homeInfoLabel');
-if(homeInfoLabelEl) homeInfoLabelEl.textContent = homeInfoLabel;  
+if(homeInfoLabelEl) homeInfoLabelEl.textContent = homeInfoLabel; 
+const homeFeatureKickerEl = document.getElementById('homeFeatureKicker');
+if(homeFeatureKickerEl) homeFeatureKickerEl.textContent = homeFeatureKicker;
+
+const homeFeatureLabelEl = document.getElementById('trailCardLabel');
+if(homeFeatureLabelEl) homeFeatureLabelEl.textContent = homeFeatureLabel;  
 
 const openLink = document.getElementById('guidebookOpenLink');
 const openLinkSecondary = document.getElementById('guidebookOpenLinkSecondary');
