@@ -2277,13 +2277,15 @@ async function loadNextLaunch(){
   } catch(error){
     console.error('Launch load error:', error);
 
-    card.innerHTML = `
-      <div class="launch-highlight">
-        <h3>Next Launch to Watch</h3>
-        <p>Launch schedules change often, so check Space Coast launch updates before your stay.</p>
-        <p><a href="https://www.visitspacecoast.com/launches/" target="_blank" rel="noopener noreferrer">View Space Coast Launch Schedule</a></p>
-      </div>
-    `;
+ card.innerHTML = `
+  <div class="launch-highlight">
+    <h3>Next Launch to Watch</h3>
+    <p>Launch information is temporarily unavailable.</p>
+    <a href="https://www.visitspacecoast.com/launches/" target="_blank" class="link-btn">
+      View Upcoming Rocket Launches
+    </a>
+  </div>
+`; 
   }
 }
     function escapeHtml(text){
