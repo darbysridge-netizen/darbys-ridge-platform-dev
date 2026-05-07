@@ -3735,9 +3735,10 @@ async function deleteTurnoverMedia(id, imagePath){
 
       try{
         const { data, error } = await supabaseClient
-          .from('guest_gallery')
-          .select('*')
-          .order('created_at', { ascending: false });
+       .from('guest_gallery')
+.select('*')
+.eq('property_slug', CURRENT_PROPERTY_SLUG)
+.order('created_at', { ascending: false });   
 
         if(error){
           console.error(error);
@@ -3790,6 +3791,7 @@ async function deleteTurnoverMedia(id, imagePath){
             .from('guest_gallery')
             .insert([{
               guest_name: guestName || 'Guest Memory',
+              property_slug: CURRENT_PROPERTY_SLUG,
               image_url: uploaded.url,
               image_path: uploaded.path,
               media_type: item.mediaType
