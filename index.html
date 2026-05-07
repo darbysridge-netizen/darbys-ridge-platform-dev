@@ -3119,7 +3119,7 @@ if (target) {
 if (page === 'trail') {
   const launchCard = document.getElementById('nextLaunchCard');
 
-if (String(showLaunches).trim().toLowerCase() === 'yes') {
+if (CURRENT_PROPERTY_SLUG === 'ocean-pearl') {
     loadNextLaunch();
   } else if (launchCard) {
     launchCard.innerHTML = '';
