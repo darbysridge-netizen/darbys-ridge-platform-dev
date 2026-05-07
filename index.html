@@ -1414,8 +1414,8 @@ background:#ead8c7;
 </div>
       </div>
 
-          <div class="social">
-        <div class="social-kicker">GET AND STAY CONNECTED</div>
+      <div id="socialSection" class="social"> 
+    <div id="socialKicker" class="social-kicker">GET AND STAY CONNECTED</div>
        <h3 id="socialHeading">Follow The Ocean Pearl</h3>
 <p id="socialText">See beach moments, local favorites, and updates from the coast.</p>
 
@@ -1890,7 +1890,8 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
 <option value="waze_address">Waze Address</option>
 <option value="waze_note">Waze Note</option>
 <option value="waze_title">Waze Page Title</option>
-<option value="waze_subtitle">Waze Page Subtitle</option>        
+<option value="waze_subtitle">Waze Page Subtitle</option>     
+<option value="social_kicker">Social Section Kicker</option>        
       </select>
 
       <textarea id="ownerSectionEditor" rows="10" class="edit-box"></textarea>
@@ -2191,6 +2192,7 @@ const defaultContent = {
     banner_enhance_image: `default-banner.jpg`,
 
   book_again_airbnb_link: ``
+  social_kicker: `GET AND STAY CONNECTED`
 };
 async function loadNextLaunch(){
   const card = document.getElementById('nextLaunchCard');
@@ -2679,6 +2681,7 @@ const defaultSocialText =
 
 const socialHeading = await getPropertyContent('social_heading', defaultSocialHeading);
 const socialText = await getPropertyContent('social_text', defaultSocialText); 
+ const socialKicker = await getPropertyContent('social_kicker', 'GET AND STAY CONNECTED'); 
 const homeGuideKicker = `THE ${propertyNameUpper}`;
 const wazeKicker = await getPropertyContent('waze_kicker', 'ADDRESS & DIRECTIONS');
 const wazeCardLabel = await getPropertyContent('waze_card_label', 'Address & Directions');
@@ -2746,6 +2749,8 @@ const facebookName = await getPropertyContent('social_facebook_name', defaultFac
 
   const socialTextEl = document.getElementById('socialText');
   if(socialTextEl) socialTextEl.textContent = socialText;
+  const socialKickerEl = document.getElementById('socialKicker');
+if(socialKickerEl) socialKickerEl.textContent = socialKicker;
 
   const guidebookTitleEl = document.getElementById('guidebookTitle');
   if(guidebookTitleEl) guidebookTitleEl.textContent = guidebookTitle;
