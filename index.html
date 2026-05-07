@@ -3117,7 +3117,7 @@ if (target) {
 if (page === 'trail') {
   const launchCard = document.getElementById('nextLaunchCard');
 
-  if (showLaunches === 'yes') {
+if (String(showLaunches).trim().toLowerCase() === 'yes') {
     loadNextLaunch();
   } else if (launchCard) {
     launchCard.innerHTML = '';
