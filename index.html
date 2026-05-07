@@ -1885,7 +1885,8 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
  <option value="home_info_label">Home Info Card Label</option>    
 <option value="home_feature_kicker">Home Feature Kicker</option>
 <option value="home_feature_label">Home Feature Label</option>      
- <option value="trail_banner_title">Trail Banner Title</option>       
+ <option value="trail_banner_title">Trail Banner Title</option> 
+<option value="show_launches">Show Launches yes/no</option>        
 <option value="waze_intro">Waze Intro</option>
 <option value="waze_button_text">Waze Button Text</option>
 <option value="waze_address">Waze Address</option>
@@ -2196,6 +2197,7 @@ const defaultContent = {
   book_again_airbnb_link: ``,
   social_kicker: `GET AND STAY CONNECTED`,
   trail_banner_title: `Property Feature`,
+  show_launches: `no`,
 };
 async function loadNextLaunch(){
   const card = document.getElementById('nextLaunchCard');
@@ -2691,7 +2693,8 @@ const wazeCardLabel = await getPropertyContent('waze_card_label', 'Address & Dir
 const homeInfoLabel = await getPropertyContent('home_info_label', 'WiFi + Home Essentials');  
 const homeFeatureKicker = await getPropertyContent('home_feature_kicker', 'FEATURE');
 const homeFeatureLabel = await getPropertyContent('home_feature_label', 'Explore More'); 
-const trailBannerTitle = await getPropertyContent('trail_banner_title', 'Property Feature');  
+const trailBannerTitle = await getPropertyContent('trail_banner_title', 'Property Feature'); 
+const showLaunches = await getPropertyContent('show_launches', 'no');  
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
 const defaultGuidebookPdf =
   CURRENT_PROPERTY_SLUG === 'darbys-ridge'
@@ -3110,13 +3113,14 @@ if (target) {
   window.scrollTo(0,0);
 }
 
-if (page === 'trail' && CURRENT_PROPERTY_SLUG === 'ocean-pearl') {
-  loadNextLaunch();
-}
-
-if (page === 'trail' && CURRENT_PROPERTY_SLUG !== 'ocean-pearl') {
+if (page === 'trail') {
   const launchCard = document.getElementById('nextLaunchCard');
-  if (launchCard) launchCard.innerHTML = '';
+
+  if (showLaunches === 'yes') {
+    loadNextLaunch();
+  } else if (launchCard) {
+    launchCard.innerHTML = '';
+  }
 }
 
       if (page === 'supplies') renderSupplyList();
