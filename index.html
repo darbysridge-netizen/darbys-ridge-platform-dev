@@ -2193,7 +2193,8 @@ const defaultContent = {
     banner_enhance_image: `default-banner.jpg`,
 
   book_again_airbnb_link: ``,
-  social_kicker: `GET AND STAY CONNECTED`
+  social_kicker: `GET AND STAY CONNECTED`,
+  trail_banner_title: `Property Feature`,
 };
 async function loadNextLaunch(){
   const card = document.getElementById('nextLaunchCard');
@@ -3105,9 +3106,14 @@ if (target) {
   window.scrollTo(0,0);
 }
 
-if (page === 'trail') {
+if (page === 'trail' && CURRENT_PROPERTY_SLUG === 'ocean-pearl') {
   loadNextLaunch();
-} 
+}
+
+if (page === 'trail' && CURRENT_PROPERTY_SLUG !== 'ocean-pearl') {
+  const launchCard = document.getElementById('nextLaunchCard');
+  if (launchCard) launchCard.innerHTML = '';
+}
 
       if (page === 'supplies') renderSupplyList();
       if (page === 'maintenance') renderMaintenanceList();
