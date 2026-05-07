@@ -1545,7 +1545,7 @@ background:#ead8c7;
   <button class="back" type="button" onclick="showPage('home')">← Back</button>
 
   <div class="page-banner">
-    <img src="enhance.jpg" alt="">
+       <img id="imgBannerEnhance" src="default-banner.jpg" alt="">
     <div class="page-banner-text">
       <strong>Enhance Your Stay</strong>
     <span>Add a little extra to make your stay even more memorable.</span>  
@@ -1958,6 +1958,7 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
     <option value="banner_local_image">Local Page Banner</option>
     <option value="banner_trail_image">Feature Page Banner</option>
     <option value="banner_checkout_image">Checkout Page Banner</option>
+   <option value="banner_enhance_image">Enhance Your Stay Page Banner</option> 
   </select>
 
   <label for="ownerImageUpload">Upload New Photo</label>
@@ -2187,6 +2188,7 @@ const defaultContent = {
   banner_local_image: `default-banner.jpg`,
   banner_trail_image: `default-banner.jpg`,
   banner_checkout_image: `default-banner.jpg`,
+    banner_enhance_image: `default-banner.jpg`,
 
   book_again_airbnb_link: ``
 };
@@ -2601,11 +2603,12 @@ async function renderDynamicImages(){
   home_enhance_image: await getPropertyContent('home_enhance_image', defaultImages.home_enhance_image),
   home_checkout_image: await getPropertyContent('home_checkout_image', defaultImages.home_checkout_image),
   home_request_image: await getPropertyContent('home_request_image', defaultImages.home_request_image),
-
+banner_enhance_image: await getPropertyContent('banner_enhance_image', defaultImages.banner_enhance_image),
   banner_info_image: await getPropertyContent('banner_info_image', defaultImages.banner_info_image),
   banner_local_image: await getPropertyContent('banner_local_image', defaultImages.banner_local_image),
   banner_trail_image: await getPropertyContent('banner_trail_image', defaultImages.banner_trail_image),
   banner_checkout_image: await getPropertyContent('banner_checkout_image', defaultImages.banner_checkout_image),
+   
   banner_waze_image: await getPropertyContent('banner_waze_image', defaultImages.banner_waze_image),
 
   book_again_airbnb_link: await getPropertyContent('book_again_airbnb_link', '')
