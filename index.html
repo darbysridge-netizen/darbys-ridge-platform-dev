@@ -2047,7 +2047,7 @@ const CURRENT_PROPERTY_SLUG =
   urlParams.get('property') ||
   PROPERTY_HOST_MAP[hostname] ||
   null;
-const IS_ADMIN_MODE = false;
+const IS_ADMIN_MODE = !CURRENT_PROPERTY_SLUG;
  
 function setupPropertyAppFiles(){
 const iconEl = document.getElementById('appIcon');
