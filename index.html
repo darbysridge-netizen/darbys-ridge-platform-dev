@@ -5,7 +5,7 @@
 <title>Guest Guide</title>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
+ 
   <style>
   :root{
   --bg-main:#dceff2;
@@ -2793,12 +2793,15 @@ if(openLinkSecondary){
   if (igHandle) igHandle.textContent = instagramHandle;
   if (fbLink) fbLink.href = facebookUrl || '#';
   if (fbName) fbName.textContent = facebookName;
-  if (igLink){
-  igLink.style.display = instagramUrl ? 'flex' : 'none';
+const hasInstagram = instagramUrl && instagramUrl !== '#';
+const hasFacebook = facebookUrl && facebookUrl !== '#';
+
+if (igLink){
+  igLink.style.display = hasInstagram ? 'flex' : 'none';
 }
 
 if (fbLink){
-  fbLink.style.display = facebookUrl ? 'flex' : 'none';
+  fbLink.style.display = hasFacebook ? 'flex' : 'none';
 }
 
   const wazeTitle = await getPropertyContent('waze_title', 'Directions');
