@@ -1495,7 +1495,7 @@ background:#ead8c7;
   <div class="page-banner">
     <img id="imgBannerTrail" src="trail.jpg" alt="">
     <div class="page-banner-text">
-    <strong>Property Feature</strong>
+   <strong id="trailBannerTitle">Property Feature</strong>
       <span></span>
     </div>
   </div>
@@ -1884,7 +1884,8 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
 <option value="waze_card_label">Waze Card Label</option>
  <option value="home_info_label">Home Info Card Label</option>    
 <option value="home_feature_kicker">Home Feature Kicker</option>
-<option value="home_feature_label">Home Feature Label</option>        
+<option value="home_feature_label">Home Feature Label</option>      
+ <option value="trail_banner_title">Trail Banner Title</option>       
 <option value="waze_intro">Waze Intro</option>
 <option value="waze_button_text">Waze Button Text</option>
 <option value="waze_address">Waze Address</option>
@@ -2689,7 +2690,8 @@ const wazeKicker = await getPropertyContent('waze_kicker', 'ADDRESS & DIRECTIONS
 const wazeCardLabel = await getPropertyContent('waze_card_label', 'Address & Directions');
 const homeInfoLabel = await getPropertyContent('home_info_label', 'WiFi + Home Essentials');  
 const homeFeatureKicker = await getPropertyContent('home_feature_kicker', 'FEATURE');
-const homeFeatureLabel = await getPropertyContent('home_feature_label', 'Explore More');  
+const homeFeatureLabel = await getPropertyContent('home_feature_label', 'Explore More'); 
+const trailBannerTitle = await getPropertyContent('trail_banner_title', 'Property Feature');  
   const guidebookTitle = await getPropertyContent('guidebook_title', 'Guest Guide');
 const defaultGuidebookPdf =
   CURRENT_PROPERTY_SLUG === 'darbys-ridge'
@@ -2771,6 +2773,8 @@ if(homeFeatureKickerEl) homeFeatureKickerEl.textContent = homeFeatureKicker;
 
 const homeFeatureLabelEl = document.getElementById('trailCardLabel');
 if(homeFeatureLabelEl) homeFeatureLabelEl.textContent = homeFeatureLabel;  
+ const trailBannerTitleEl = document.getElementById('trailBannerTitle');
+if(trailBannerTitleEl) trailBannerTitleEl.textContent = trailBannerTitle; 
 
 const openLink = document.getElementById('guidebookOpenLink');
 const openLinkSecondary = document.getElementById('guidebookOpenLinkSecondary');
