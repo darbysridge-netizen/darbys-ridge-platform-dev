@@ -1420,7 +1420,7 @@ background:#ead8c7;
 <p id="socialText">See beach moments, local favorites, and updates from the coast.</p>
 
         <div class="social-links">
-          <a id="socialInstagramLink" class="social-link" href="#" target="_blank">
+       <a id="socialInstagramWrap" class="social-link" href="#" target="_blank"> 
             <div class="social-icon">📸</div>
             <div class="social-text">
               <strong>Instagram</strong>
@@ -1428,7 +1428,7 @@ background:#ead8c7;
             </div>
           </a>
 
-          <a id="socialFacebookLink" class="social-link" href="#" target="_blank">
+       <a id="socialFacebookWrap" class="social-link" href="#" target="_blank"> 
             <div class="social-icon">👍</div>
             <div class="social-text">
               <strong>Facebook</strong>
@@ -2784,15 +2784,22 @@ if(openLinkSecondary){
   openLinkSecondary.href = guidebookPdf || '#';
   openLinkSecondary.style.display = 'none';
 }
-  const igLink = document.getElementById('socialInstagramLink');
+  const igLink = document.getElementById('socialInstagramWrap');
   const igHandle = document.getElementById('socialInstagramHandle');
-  const fbLink = document.getElementById('socialFacebookLink');
+  const fbLink = document.getElementById('socialFacebookWrap');
   const fbName = document.getElementById('socialFacebookName');
 
   if (igLink) igLink.href = instagramUrl || '#';
   if (igHandle) igHandle.textContent = instagramHandle;
   if (fbLink) fbLink.href = facebookUrl || '#';
   if (fbName) fbName.textContent = facebookName;
+  if (igLink){
+  igLink.style.display = instagramUrl ? 'flex' : 'none';
+}
+
+if (fbLink){
+  fbLink.style.display = facebookUrl ? 'flex' : 'none';
+}
 
   const wazeTitle = await getPropertyContent('waze_title', 'Directions');
   const wazeSubtitle = await getPropertyContent('waze_subtitle', 'Use Waze for the most accurate route to the property.');
