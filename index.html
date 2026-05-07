@@ -2047,7 +2047,7 @@ const CURRENT_PROPERTY_SLUG =
   urlParams.get('property') ||
   PROPERTY_HOST_MAP[hostname] ||
   null;
-
+const IS_ADMIN_MODE = true;
  
 function setupPropertyAppFiles(){
 const iconEl = document.getElementById('appIcon');
@@ -3610,6 +3610,9 @@ async function deleteTurnoverMedia(id, imagePath){
     }
 
     async function renderOwnerDashboard(){
+      document.querySelectorAll('.admin-only').forEach(section => {
+    section.style.display = IS_ADMIN_MODE ? '' : 'none';
+  });  
       const [
         requestsRes,
         suppliesRes,
