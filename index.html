@@ -2203,6 +2203,12 @@ Object.entries(EARLY_THEME).forEach(([k,v])=>{
 
 
 const defaultContent = {
+    welcome: `<div class="favorites-list">
+    <div class="favorite-item">
+      <h3>Welcome / Start Here</h3>
+      <p>Add your welcome message here from the Admin Portal.</p>
+    </div>
+  </div>`,
   info: `House information has not been added for this property yet.`,
 
   local: `<div class="favorites-list">
@@ -2920,6 +2926,7 @@ await renderPropertyChrome();
   }
 
   setTimeout(async () => {
+        const welcome = await getPropertyContent('welcome', defaultContent.welcome);
     const info = await getPropertyContent('info', defaultContent.info);
     const local = await getPropertyContent('local', defaultContent.local);
     const trail = await getPropertyContent('trail', defaultContent.trail);
@@ -2927,6 +2934,8 @@ await renderPropertyChrome();
     const checkout = await getPropertyContent('checkout', defaultContent.checkout);
     const checklistRaw = await getPropertyContent('checklist', defaultContent.checklist);
 
+        const welcomeContent = document.getElementById('welcomeContent');
+    if(welcomeContent) welcomeContent.innerHTML = welcome;
     const infoContent = document.getElementById('infoContent');
     if(infoContent) infoContent.innerHTML = formatInfoContent(info);
 
