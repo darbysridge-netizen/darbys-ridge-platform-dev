@@ -4301,6 +4301,7 @@ async function saveReservationNote(rowIndex, reservationKey, guestLabel, checkIn
       const { error } = await supabaseClient
         .from('reservation_notes')
         .insert([{
+         property_slug: CURRENT_PROPERTY_SLUG,     
           reservation_key: reservationKey,
           guest_label: guestLabel,
           check_in: checkIn,
@@ -4552,12 +4553,12 @@ async function loadCalendar(){
    
 
   try{
-    const response = await fetch('/api/airbnb-calendar', {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
+   const response = await fetch(`/api/airbnb-calendar?property=${encodeURIComponent(CURRENT_PROPERTY_SLUG)}`, {
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json'
+  }
+});
 
     if(!response.ok){
       status.textContent = `Calendar sync error (${response.status})`;
@@ -4590,9 +4591,10 @@ async function loadCalendar(){
 
     let savedNotes = [];
     if(supabaseClient){
-      const { data: noteRows, error: notesError } = await supabaseClient
-        .from('reservation_notes')
-        .select('reservation_key, check_in, check_out, note');
+    const { data: noteRows, error: notesError } = await supabaseClient
+  .from('reservation_notes')
+  .select('reservation_key, check_in, check_out, note')
+  .eq('property_slug', CURRENT_PROPERTY_SLUG); 
 
       if(notesError){
         console.error(notesError);
