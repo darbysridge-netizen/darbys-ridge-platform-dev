@@ -1348,9 +1348,9 @@ background:#ead8c7;
 <div class="menu-card wide-card" onclick="showPage('welcome')">
   <img id="imgHomeWelcome" src="ocean-welcome.jpg" alt="" loading="lazy">
   <div class="menu-label">
-    <span>START HERE</span>
-    <strong>Welcome</strong>
-    <div class="request-subtext">A quick hello, helpful stay notes, and where to begin.</div>
+    <span id="welcomeCardKicker">START HERE</span>
+    <strong id="welcomeCardLabel">Welcome</strong>
+    <div id="welcomeCardSubtext" class="request-subtext">A quick hello, helpful stay notes, and where to begin.</div>
   </div>
 </div>
 
@@ -2231,7 +2231,9 @@ const defaultContent = {
   checkout: `Checkout instructions have not been added for this property yet.`,
 
   checklist: `Turnover checklist has not been added for this property yet.`,
-
+  welcome_card_kicker: `START HERE`,
+  welcome_card_label: `Welcome`,
+  welcome_card_subtext: `A quick hello, helpful stay notes, and where to begin.`,
   hero_image: `default-hero.jpg`,
   home_guide_image: `default-guide.jpg`,
   home_info_image: `default-info.jpg`,
@@ -2928,6 +2930,9 @@ await renderPropertyChrome();
 
   setTimeout(async () => {
         const welcome = await getPropertyContent('welcome', defaultContent.welcome);
+        const welcomeCardKicker = await getPropertyContent('welcome_card_kicker', defaultContent.welcome_card_kicker);
+    const welcomeCardLabel = await getPropertyContent('welcome_card_label', defaultContent.welcome_card_label);
+    const welcomeCardSubtext = await getPropertyContent('welcome_card_subtext', defaultContent.welcome_card_subtext);
     const info = await getPropertyContent('info', defaultContent.info);
     const local = await getPropertyContent('local', defaultContent.local);
     const trail = await getPropertyContent('trail', defaultContent.trail);
@@ -2937,6 +2942,14 @@ await renderPropertyChrome();
 
         const welcomeContent = document.getElementById('welcomeContent');
     if(welcomeContent) welcomeContent.innerHTML = welcome;
+        const welcomeCardKickerEl = document.getElementById('welcomeCardKicker');
+    if(welcomeCardKickerEl) welcomeCardKickerEl.textContent = welcomeCardKicker;
+
+    const welcomeCardLabelEl = document.getElementById('welcomeCardLabel');
+    if(welcomeCardLabelEl) welcomeCardLabelEl.textContent = welcomeCardLabel;
+
+    const welcomeCardSubtextEl = document.getElementById('welcomeCardSubtext');
+    if(welcomeCardSubtextEl) welcomeCardSubtextEl.textContent = welcomeCardSubtext;
     const infoContent = document.getElementById('infoContent');
     if(infoContent) infoContent.innerHTML = formatInfoContent(info);
 
