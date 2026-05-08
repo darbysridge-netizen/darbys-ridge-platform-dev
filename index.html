@@ -3141,7 +3141,7 @@ function openProperty(slug){
 
   window.location.href = `?property=${slug}`;
 }
-  async function checkLogin(){
+ async function checkLogin(){
   const password = document.getElementById('teamPassword').value;
   const error = document.getElementById('loginError');
 
@@ -3157,8 +3157,10 @@ function openProperty(slug){
     .from('app_users')
     .select('*')
     .eq('password', password)
-    .eq('role', 'team')
     .eq('active', true)
+    .in('role', ['team', 'owner_team', 'admin'])
+    .or(`property_slug.eq.${CURRENT_PROPERTY_SLUG},property_slug.is.null`)
+    .limit(1)
     .maybeSingle();
 
   if(dbError){
@@ -3177,7 +3179,7 @@ function openProperty(slug){
   currentUser = data;
   document.getElementById('teamPassword').value = '';
   showPage('team');
-} 
+}
 
 async function checkOwnerLogin(){
   const username = document.getElementById('ownerUsername').value.trim().toLowerCase();
@@ -3198,7 +3200,7 @@ async function checkOwnerLogin(){
     .eq('username', username)
     .eq('password', password)
     .eq('active', true)
-    .in('role', ['owner', 'admin'])
+    .in('role', ['owner', 'owner_team', 'admin'])
     .maybeSingle();
 
   if(dbError){
@@ -3214,8 +3216,8 @@ async function checkOwnerLogin(){
     return;
   }
 
-  if(data.role === 'owner' && data.property_slug !== CURRENT_PROPERTY_SLUG){
-    error.textContent = 'This owner login is not connected to this property.';
+  if(data.role !== 'admin' && data.property_slug !== CURRENT_PROPERTY_SLUG){
+    error.textContent = 'This login is not connected to this property.';
     error.style.display = 'block';
     return;
   }
