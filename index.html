@@ -3715,9 +3715,9 @@ async function loadAdminUsageMetrics(){
   `;
 }
     async function renderOwnerDashboard(){
-      document.querySelectorAll('.admin-only').forEach(section => {
-    section.style.display = IS_ADMIN_MODE ? '' : 'none';
-  });  
+  document.querySelectorAll('.admin-only').forEach(section => {
+  section.style.display = currentUser?.role === 'admin' ? '' : 'none';
+});  
       const [
         requestsRes,
         suppliesRes,
