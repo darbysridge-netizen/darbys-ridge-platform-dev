@@ -1453,7 +1453,21 @@ background:#ead8c7;
       </div> 
     </div>
   </div>
+<div id="welcome" class="hidden page">
+  <button class="back" type="button" onclick="showPage('home')">← Back</button>
 
+  <div class="page-banner">
+    <img id="imgBannerWelcome" src="ocean-welcome.jpg" alt="">
+    <div class="page-banner-text">
+      <strong id="welcomeBannerTitle">Welcome / Start Here</strong>
+      <span id="welcomeBannerText">Helpful details for your stay.</span>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div id="welcomeContent"></div>
+  </div>
+</div>
    <div id="guidebook" class="hidden page">
     <button class="back" type="button" onclick="showPage('home')">← Back to Home</button>
     <h1 id="guidebookTitle">Guest Guide</h1>
@@ -1888,6 +1902,7 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
 
       <label for="ownerSectionSelect">Choose Section</label>
       <select id="ownerSectionSelect" onchange="loadOwnerEditor()">
+       <option value="welcome">Welcome / Start Here</option> 
        <option value="info">WiFi & Home Essentials</option>
         <option value="local">Blue Ridge Guest Favorites</option>
         <option value="trail">Trail to Lake</option>
