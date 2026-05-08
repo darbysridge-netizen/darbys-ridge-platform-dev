@@ -3262,7 +3262,7 @@ async function checkOwnerLogin(){
   currentUser = data;
   document.getElementById('ownerUsername').value = '';
   document.getElementById('ownerPassword').value = '';
-
+await renderOwnerDashboard();
   showPage('owner');
 }
   
