@@ -3657,7 +3657,62 @@ async function deleteTurnoverMedia(id, imagePath){
 
       container.innerHTML = html || '<div class="small-note">No turnover submissions yet.</div>';
     }
+async function loadAdminUsageMetrics(){
+  const box = document.getElementById('adminUsageMetrics');
 
+  if(!box) return;
+
+  if(!currentUser || currentUser.role !== 'admin'){
+    box.innerHTML = '';
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('usage_events')
+    .select('*')
+    .order('created_at', { ascending:false })
+    .limit(50);
+
+  if(error){
+    console.error(error);
+    box.innerHTML = 'Unable to load usage metrics.';
+    return;
+  }
+
+  const total = data.length;
+
+  const ocean = data.filter(
+    e => e.property_slug === 'ocean-pearl'
+  ).length;
+
+  const ridge = data.filter(
+    e => e.property_slug === 'darbys-ridge'
+  ).length;
+
+  box.innerHTML = `
+    <div class="status-row">
+      <div>
+        <strong>Total Recent Events</strong><br>
+        <span class="small-note">Last 50 tracked actions</span>
+      </div>
+      <div class="status-pill">${total}</div>
+    </div>
+
+    <div class="status-row">
+      <div>
+        <strong>Ocean Pearl Activity</strong>
+      </div>
+      <div class="status-pill">${ocean}</div>
+    </div>
+
+    <div class="status-row">
+      <div>
+        <strong>Darby’s Ridge Activity</strong>
+      </div>
+      <div class="status-pill">${ridge}</div>
+    </div>
+  `;
+}
     async function renderOwnerDashboard(){
       document.querySelectorAll('.admin-only').forEach(section => {
     section.style.display = IS_ADMIN_MODE ? '' : 'none';
@@ -3681,7 +3736,7 @@ async function deleteTurnoverMedia(id, imagePath){
       const guestPhotoCount = guestGalleryRes.count || 0;
       const supplyList = suppliesRes.data || [];
       const maintenanceList = maintenanceRes.data || [];
-
+await loadAdminUsageMetrics();
       const snapshot = document.getElementById('ownerDashboardCounts');
       if(snapshot){
         snapshot.innerHTML = `
