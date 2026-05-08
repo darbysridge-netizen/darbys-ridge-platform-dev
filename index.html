@@ -1981,6 +1981,8 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
   <label for="ownerImageSelect">Choose Photo</label>
   <select id="ownerImageSelect" onchange="loadOwnerImageEditor()">
     <option value="hero_image">Hero Background</option>
+    <option value="home_welcome_image">Welcome Card Image</option>
+<option value="banner_welcome_image">Welcome Banner Image</option>
     <option value="home_guide_image">Guest Guide Card</option>
     <option value="home_waze_image">Waze Card</option>
     <option value="home_info_image">Essentials Card</option>
@@ -2665,6 +2667,8 @@ async function renderDynamicImages(){
  const values = {
   hero_image: await getPropertyContent('hero_image', defaultImages.hero_image),
 
+    home_welcome_image: await getPropertyContent('home_welcome_image', defaultImages.home_welcome_image),
+  banner_welcome_image: await getPropertyContent('banner_welcome_image', defaultImages.banner_welcome_image), 
   home_guide_image: await getPropertyContent('home_guide_image', defaultImages.home_guide_image),
   home_waze_image: await getPropertyContent('home_waze_image', defaultImages.home_waze_image),
   home_info_image: await getPropertyContent('home_info_image', defaultImages.home_info_image),
@@ -2691,6 +2695,8 @@ banner_enhance_image: await getPropertyContent('banner_enhance_image', defaultIm
   }
 
   const imageMap = {
+        imgHomeWelcome: values.home_welcome_image,
+    imgBannerWelcome: values.banner_welcome_image,
     imgHomeGuide: values.home_guide_image,
     imgHomeWaze: values.home_waze_image,
     imgHomeInfo: values.home_info_image,
