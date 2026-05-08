@@ -3601,9 +3601,10 @@ async function deleteTurnoverMedia(id, imagePath){
       if(!container) return;
 
       const { data, error } = await supabaseClient
-        .from('turnovers')
-        .select('*')
-        .order('created_at', { ascending: false });
+      .from('turnovers')
+.select('*')
+.eq('property_slug', CURRENT_PROPERTY_SLUG)
+.order('created_at', { ascending: false }); 
 
       if(error || !data || !data.length){
         container.innerHTML = '<div class="small-note">No turnover submissions yet.</div>';
@@ -3970,7 +3971,11 @@ async function submitTurnoverComplete(){
   try{
     const { data: turnoverInsert, error: insertError } = await supabaseClient
       .from('turnovers')
-      .insert([{ turnover_date: date, notes }])
+     .insert([{
+  property_slug: CURRENT_PROPERTY_SLUG,
+  turnover_date: date,
+  notes
+}])
       .select()
       .single();
 
