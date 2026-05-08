@@ -3143,14 +3143,15 @@ function openProperty(slug){
 
   window.location.href = `?property=${slug}`;
 }
- async function checkLogin(){
+async function checkLogin(){
+  const username = document.getElementById('teamUsername').value.trim().toLowerCase();
   const password = document.getElementById('teamPassword').value;
   const error = document.getElementById('loginError');
 
   error.style.display = 'none';
 
-  if(!password){
-    error.textContent = 'Enter the team password.';
+  if(!username || !password){
+    error.textContent = 'Enter username and password.';
     error.style.display = 'block';
     return;
   }
@@ -3158,11 +3159,10 @@ function openProperty(slug){
   const { data, error: dbError } = await supabaseClient
     .from('app_users')
     .select('*')
+    .eq('username', username)
     .eq('password', password)
     .eq('active', true)
     .in('role', ['team', 'owner_team', 'admin'])
-    .or(`property_slug.eq.${CURRENT_PROPERTY_SLUG},property_slug.is.null`)
-    .limit(1)
     .maybeSingle();
 
   if(dbError){
@@ -3173,16 +3173,24 @@ function openProperty(slug){
   }
 
   if(!data){
-    error.textContent = 'Incorrect password. Please try again.';
+    error.textContent = 'Incorrect username or password.';
+    error.style.display = 'block';
+    return;
+  }
+
+  if(data.role !== 'admin' && data.property_slug !== CURRENT_PROPERTY_SLUG){
+    error.textContent = 'This login is not connected to this property.';
     error.style.display = 'block';
     return;
   }
 
   currentUser = data;
-  document.getElementById('teamPassword').value = '';
-  showPage('team');
-}
 
+  document.getElementById('teamUsername').value = '';
+  document.getElementById('teamPassword').value = '';
+
+  showPage('team');
+} 
 async function checkOwnerLogin(){
   const username = document.getElementById('ownerUsername').value.trim().toLowerCase();
   const password = document.getElementById('ownerPassword').value;
