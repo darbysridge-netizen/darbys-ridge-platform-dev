@@ -1829,6 +1829,13 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
   <div id="owner" class="hidden page">
     <button class="back" type="button" onclick="showPage('home')">← Back</button>
     <h1>Owner Dashboard</h1>
+   <div class="panel admin-only">
+  <h3>Platform Usage</h3>
+
+  <div id="adminUsageMetrics" class="small-note">
+    Loading usage metrics...
+  </div>
+</div> 
   
 
    <details class="panel">
@@ -3124,6 +3131,7 @@ async function saveOwnerTheme(){
     const target = document.getElementById(page);
 if (target) {
   target.classList.remove('hidden');
+ trackUsageEvent('page_view', page, page); 
   window.scrollTo(0,0);
 }
 
