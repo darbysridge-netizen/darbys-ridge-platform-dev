@@ -2141,6 +2141,25 @@ Object.entries(EARLY_THEME).forEach(([k,v])=>{
     let supabaseClient = null;
 
    let currentUser = null; 
+    async function trackUsageEvent(eventType, eventLabel = '', page = '', details = {}){
+  try{
+    if(!supabaseClient) return;
+
+    await supabaseClient
+      .from('usage_events')
+      .insert({
+        property_slug: CURRENT_PROPERTY_SLUG,
+        event_type: eventType,
+        event_label: eventLabel,
+        user_role: currentUser?.role || 'guest',
+        username: currentUser?.username || null,
+        page: page || null,
+        details: details || {}
+      });
+  } catch(error){
+    console.warn('Usage tracking skipped:', error);
+  }
+}
 
     const GUEST_BUCKET = 'guest-bucket';
     const TURNOVER_BUCKET = 'turnover-bucket';
