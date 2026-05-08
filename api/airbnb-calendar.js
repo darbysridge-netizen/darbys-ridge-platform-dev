@@ -1,13 +1,21 @@
 export default async function handler(req, res) {
   try {
-    const calendarUrl = process.env.AIRBNB_ICAL_URL;
+ const property = req.query.property;
 
-    if (!calendarUrl) {
-      return res.status(500).json({
-        success: false,
-        error: 'Missing AIRBNB_ICAL_URL environment variable.'
-      });
-    }
+const CALENDAR_MAP = {
+  'darbys-ridge': process.env.AIRBNB_ICAL_URL_DARBYS_RIDGE,
+  'ocean-pearl': process.env.AIRBNB_ICAL_URL_OCEAN_PEARL
+};
+
+const calendarUrl = CALENDAR_MAP[property];
+
+if (!calendarUrl) {
+  return res.status(200).json({
+    success: true,
+    bookings: [],
+    message: 'Calendar not connected yet.'
+  });
+}  
 
     const response = await fetch(calendarUrl, {
       headers: {
