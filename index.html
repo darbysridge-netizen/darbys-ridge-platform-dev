@@ -3184,6 +3184,8 @@ async function checkOwnerLogin(){
   const password = document.getElementById('ownerPassword').value;
   const error = document.getElementById('ownerLoginError');
 
+  error.style.display = 'none';
+
   if(!username || !password){
     error.textContent = 'Enter username and password.';
     error.style.display = 'block';
@@ -3195,8 +3197,8 @@ async function checkOwnerLogin(){
     .select('*')
     .eq('username', username)
     .eq('password', password)
-    .eq('role', 'owner')
     .eq('active', true)
+    .in('role', ['owner', 'admin'])
     .maybeSingle();
 
   if(dbError){
@@ -3206,16 +3208,24 @@ async function checkOwnerLogin(){
     return;
   }
 
-  if(data){
-    currentUser = data;
-    error.style.display = 'none';
-    showPage('owner');
-  } else {
+  if(!data){
     error.textContent = 'Incorrect username or password.';
     error.style.display = 'block';
+    return;
   }
-}
 
+  if(data.role === 'owner' && data.property_slug !== CURRENT_PROPERTY_SLUG){
+    error.textContent = 'This owner login is not connected to this property.';
+    error.style.display = 'block';
+    return;
+  }
+
+  currentUser = data;
+  document.getElementById('ownerUsername').value = '';
+  document.getElementById('ownerPassword').value = '';
+
+  showPage('owner');
+}
   
     async function addSupplyItem(){
       const input = document.getElementById('supplySimpleInput');
