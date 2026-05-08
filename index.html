@@ -1469,7 +1469,8 @@ background:#ead8c7;
 </div>
    <div id="guidebook" class="hidden page">
     <button class="back" type="button" onclick="showPage('home')">← Back to Home</button>
-    <h1 id="guidebookTitle">Guest Guide</h1>
+    <h1 id="guidebookTitle">Cape Canaveral Peacocks</h1>
+   <div id="guidebookContent"></div>  
 
     <div class="pdf-wrap">
 <div class="mobile-open">
@@ -1902,6 +1903,7 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
       <label for="ownerSectionSelect">Choose Section</label>
       <select id="ownerSectionSelect" onchange="loadOwnerEditor()">
        <option value="welcome">Welcome / Start Here</option> 
+        <option value="peacocks">Cape Canaveral Peacocks</option>
         <option value="welcome_card_kicker">Welcome Card Kicker</option>
 <option value="welcome_card_label">Welcome Card Title</option>
 <option value="welcome_card_subtext">Welcome Card Subtext</option>
@@ -2207,6 +2209,12 @@ Object.entries(EARLY_THEME).forEach(([k,v])=>{
 
 
 const defaultContent = {
+    peacocks: `<div class="favorites-list">
+    <div class="favorite-item">
+      <h3>Cape Canaveral’s Famous Peacocks</h3>
+      <p>Add peacock page content here from the Admin Portal.</p>
+    </div>
+  </div>`,
     welcome: `<div class="favorites-list">
     <div class="favorite-item">
       <h3>Welcome / Start Here</h3>
@@ -2939,6 +2947,7 @@ await renderPropertyChrome();
 
   setTimeout(async () => {
         const welcome = await getPropertyContent('welcome', defaultContent.welcome);
+        const peacocks = await getPropertyContent('peacocks', defaultContent.peacocks);
         const welcomeCardKicker = await getPropertyContent('welcome_card_kicker', defaultContent.welcome_card_kicker);
     const welcomeCardLabel = await getPropertyContent('welcome_card_label', defaultContent.welcome_card_label);
     const welcomeCardSubtext = await getPropertyContent('welcome_card_subtext', defaultContent.welcome_card_subtext);
@@ -2951,6 +2960,8 @@ await renderPropertyChrome();
 
         const welcomeContent = document.getElementById('welcomeContent');
     if(welcomeContent) welcomeContent.innerHTML = welcome;
+        const guidebookContent = document.getElementById('guidebookContent');
+    if(guidebookContent) guidebookContent.innerHTML = peacocks;
         const welcomeCardKickerEl = document.getElementById('welcomeCardKicker');
     if(welcomeCardKickerEl) welcomeCardKickerEl.textContent = welcomeCardKicker;
 
