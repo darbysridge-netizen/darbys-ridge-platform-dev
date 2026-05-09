@@ -3248,14 +3248,16 @@ if (target) {
 if (page === 'trail') {
   const launchCard = document.getElementById('nextLaunchCard');
 
-if (CURRENT_PROPERTY_SLUG === 'ocean-pearl') {
+  if (CURRENT_PROPERTY_SLUG === 'ocean-pearl') {
     loadNextLaunch();
   } else if (launchCard) {
     launchCard.innerHTML = '';
- if (CURRENT_PROPERTY_SLUG === 'darbys-ridge') {
-  loadNextMountainEvent();
-} 
   }
+
+  if (CURRENT_PROPERTY_SLUG === 'darbys-ridge') {
+    loadNextMountainEvent();
+  }
+}
 }
 
       if (page === 'supplies') renderSupplyList();
