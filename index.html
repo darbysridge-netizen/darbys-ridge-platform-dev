@@ -2354,44 +2354,34 @@ async function loadNextLaunch(){
   const box = document.getElementById('nextMountainEvent');
   if(!box) return;
 
-  box.innerHTML = `<p><strong>Checking local event calendars...</strong></p>`;
+  box.innerHTML = `
+    <p><strong>Upcoming Mountain Events</strong></p>
 
-  const fallbackHtml = `
-    <p><strong>See what’s happening during your stay</strong></p>
-    <p>Local event schedules change often, so check the live calendars below for current festivals, live music, markets, orchard events, and mountain celebrations.</p>
-    <div style="margin-top:14px; display:flex; flex-direction:column; gap:12px;">
-      <a href="https://www.blueridgemountains.com/events/" target="_blank" class="link-btn secondary">Blue Ridge Events Calendar</a>
-      <a href="https://www.gilmerchamber.com/community-events/" target="_blank" class="link-btn secondary">Ellijay / Gilmer Community Events</a>
+    <ul style="padding-left:18px; line-height:1.7; margin-top:10px;">
+      <li>Live music in Downtown Blue Ridge</li>
+      <li>Seasonal festivals and art markets</li>
+      <li>Orchard events and farmers markets in Ellijay</li>
+      <li>Local winery and brewery events</li>
+      <li>Holiday celebrations and railway specials</li>
+    </ul>
+
+    <p style="margin-top:14px;">
+      Event schedules change often, so check the live calendars below for the most current happenings during your stay.
+    </p>
+
+    <div style="margin-top:18px; display:flex; flex-direction:column; gap:12px;">
+
+      <a href="https://www.blueridgemountains.com/events/" target="_blank" class="link-btn secondary">
+        Blue Ridge Events Calendar
+      </a>
+
+      <a href="https://www.gilmerchamber.com/calendar-content/festivals-events/" target="_blank" class="link-btn secondary">
+        Ellijay Festivals & Events
+      </a>
+
     </div>
   `;
-
-  try{
-    const response = await fetch('https://www.blueridgemountains.com/events/');
-    const html = await response.text();
-
-    const titleMatch = html.match(/<h3[^>]*>(.*?)<\/h3>/i) || html.match(/<h2[^>]*>(.*?)<\/h2>/i);
-    const dateMatch = html.match(/(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+\d{1,2}(?:\s*[-–]\s*\d{1,2})?/i);
-
-    const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g,'').trim() : '';
-    const date = dateMatch ? dateMatch[0].trim() : '';
-
-    if(!title){
-      box.innerHTML = fallbackHtml;
-      return;
-    }
-
-    box.innerHTML = `
-      <p><strong>${title}</strong></p>
-      ${date ? `<p><strong>Date:</strong> ${date}</p>` : ''}
-      <p>Event schedules can change, so please confirm details before heading out.</p>
-      <div style="margin-top:14px;">
-        <a href="https://www.blueridgemountains.com/events/" target="_blank" class="link-btn secondary">View Blue Ridge Events</a>
-      </div>
-    `;
-  } catch(error){
-    box.innerHTML = fallbackHtml;
-  }
-}   
+}
     function escapeHtml(text){
  return String(text ?? '')
     .replace(/&/g, '&amp;')
