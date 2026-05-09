@@ -2351,37 +2351,6 @@ async function loadNextLaunch(){
   }
 }
  async function loadNextMountainEvent(){
-  const box = document.getElementById('nextMountainEvent');
-  if(!box) return;
-
-  box.innerHTML = `
-    <p><strong>Upcoming Mountain Events</strong></p>
-
-    <ul style="padding-left:18px; line-height:1.7; margin-top:10px;">
-      <li>Live music in Downtown Blue Ridge</li>
-      <li>Seasonal festivals and art markets</li>
-      <li>Orchard events and farmers markets in Ellijay</li>
-      <li>Local winery and brewery events</li>
-      <li>Holiday celebrations and railway specials</li>
-    </ul>
-
-    <p style="margin-top:14px;">
-      Event schedules change often, so check the live calendars below for the most current happenings during your stay.
-    </p>
-
-    <div style="margin-top:18px; display:flex; flex-direction:column; gap:12px;">
-
-      <a href="https://www.blueridgemountains.com/events/" target="_blank" class="link-btn secondary">
-        Blue Ridge Events Calendar
-      </a>
-
-      <a href="https://www.gilmerchamber.com/calendar-content/festivals-events/" target="_blank" class="link-btn secondary">
-        Ellijay Festivals & Events
-      </a>
-
-    </div>
-  `;
-}
     function escapeHtml(text){
  return String(text ?? '')
     .replace(/&/g, '&amp;')
