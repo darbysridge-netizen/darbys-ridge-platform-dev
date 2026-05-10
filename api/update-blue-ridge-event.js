@@ -87,15 +87,35 @@ module.exports = async function handler(req, res) {
        const featuredStart = html.indexOf('Featured Events');
     const featuredHtml = featuredStart >= 0 ? html.slice(featuredStart) : html;
 
-const firstEventMatch = featuredHtml.match(
-  /([A-Z][a-z]{2,}\s+\d{1,2}(?:\s+—\s+[A-Z][a-z]{2,}\s+\d{1,2}|\s+—\s+\d{1,2})?)[\s\S]*?<h2[^>]*>[\s\S]*?<a[^>]*href="([^"]+)"[^>]*>(.*?)<\/a>[\s\S]*?<\/h2>[\s\S]*?([^<\n]+?)(?:\n|<)/i
+const eventLinks = [...featuredHtml.matchAll(
+  /<a[^>]*href="([^"]*\/events\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi
+)];
+
+const firstRealEvent = eventLinks.find(match => {
+  const link = match[1] || '';
+  const text = cleanText(match[2] || '');
+
+  return (
+    link !== '/events/' &&
+    !link.includes('tel:') &&
+    text &&
+    text.toLowerCase() !== 'events' &&
+    !text.includes('706')
+  );
+});
+
+const eventPath = firstRealEvent?.[1] || '/events/';
+const title = cleanText(firstRealEvent?.[2] || 'Upcoming Blue Ridge Event');
+
+const titleIndex = featuredHtml.indexOf(firstRealEvent?.[0] || '');
+const beforeTitle = titleIndex > 0 ? featuredHtml.slice(Math.max(0, titleIndex - 1200), titleIndex) : featuredHtml;
+
+const dateMatch = beforeTitle.match(
+  /([A-Z][a-z]{2,}\s+\d{1,2}\s*(?:—|-|&mdash;|&#8211;|&#8212;)\s*(?:[A-Z][a-z]{2,}\s+)?\d{1,2}|[A-Z][a-z]{2,}\s+\d{1,2})/i
 );
 
-const dates = cleanText(firstEventMatch?.[1] || '');
-const eventPath = firstEventMatch?.[2] || '/events/';
-const title = cleanText(firstEventMatch?.[3] || 'Upcoming Blue Ridge Event');
-const location = cleanText(firstEventMatch?.[4] || 'Blue Ridge, Georgia');  
-
+const dates = cleanText(dateMatch?.[1] || '');
+const location = 'Blue Ridge, Georgia';
     const eventLink = eventPath.startsWith('http')
       ? eventPath
       : `https://www.blueridgemountains.com${eventPath}`;
