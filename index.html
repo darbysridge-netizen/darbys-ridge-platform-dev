@@ -3188,7 +3188,47 @@ async function saveOwnerTheme(){
     alert(`Theme save failed: ${e?.message || JSON.stringify(e) || 'Unknown error'}`);
   }
 }
+async function loadNextPropertyEvent(){
+  const card = document.getElementById('nextLaunchCard');
+  if(!card) return;
 
+  if(CURRENT_PROPERTY_SLUG !== 'darbys-ridge'){
+    return;
+  }
+
+  const showEvent = (await getPropertyContent('next_event_show', 'no')).trim().toLowerCase();
+
+  if(showEvent !== 'yes'){
+    card.innerHTML = '';
+    return;
+  }
+
+  const title = await getPropertyContent('next_event_title', '');
+  const dates = await getPropertyContent('next_event_dates', '');
+  const location = await getPropertyContent('next_event_location', '');
+  const description = await getPropertyContent('next_event_description', '');
+  const link = await getPropertyContent('next_event_link', '');
+
+  if(!title.trim()){
+    card.innerHTML = '';
+    return;
+  }
+
+  card.innerHTML = `
+    <div class="launch-highlight">
+      <h3>Next Upcoming Event</h3>
+      <p><strong>${escapeHtml(title)}</strong></p>
+      ${dates ? `<p><strong>Dates:</strong> ${escapeHtml(dates)}</p>` : ''}
+      ${location ? `<p><strong>Location:</strong> ${escapeHtml(location)}</p>` : ''}
+      ${description ? `<p>${escapeHtml(description)}</p>` : ''}
+      ${link ? `
+        <a href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer" class="link-btn">
+          View Event Details
+        </a>
+      ` : ''}
+    </div>
+  `;
+}
    function showPage(page){
   const pages = [
    'propertySelect','home','welcome','guidebook','info','local','trail','waysToTheRidge','enhanceStay','guestMemories','checkout','requestToBook',
@@ -3208,19 +3248,16 @@ if (target) {
 }
 
 if (page === 'trail') {
-  const launchCard = document.getElementById('nextLaunchCard');
+  const eventCard = document.getElementById('nextLaunchCard');
 
   if (CURRENT_PROPERTY_SLUG === 'ocean-pearl') {
     loadNextLaunch();
-  } else if (launchCard) {
-    launchCard.innerHTML = '';
-  }
-
-  if (CURRENT_PROPERTY_SLUG === 'darbys-ridge') {
-    setTimeout(loadNextMountainEvent, 300);
+  } else if (CURRENT_PROPERTY_SLUG === 'darbys-ridge') {
+    loadNextPropertyEvent();
+  } else if (eventCard) {
+    eventCard.innerHTML = '';
   }
 }
-
       if (page === 'supplies') renderSupplyList();
       if (page === 'maintenance') renderMaintenanceList();
       if (page === 'guestMemories') renderGuestGallery();
