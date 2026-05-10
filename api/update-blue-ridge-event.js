@@ -84,38 +84,28 @@ module.exports = async function handler(req, res) {
 
     const html = await page.text();
 
-    const firstEventLinkMatch = html.match(/href="([^"]*\/events\/annual-events\/[^"]+)"/i);
-    const eventPath = firstEventLinkMatch ? firstEventLinkMatch[1] : '/events/';
+       const featuredStart = html.indexOf('Featured Events');
+    const featuredHtml = featuredStart >= 0 ? html.slice(featuredStart) : html;
+
+    const firstEventMatch = featuredHtml.match(
+      /([A-Z][a-z]+\.?\s+\d{1,2}(?:\s+—\s+(?:[A-Z][a-z]+\.?\s+)?\d{1,2})?)[\s\S]*?<h2[^>]*>[\s\S]*?<a[^>]*href="([^"]+)"[^>]*>(.*?)<\/a>[\s\S]*?<\/h2>[\s\S]*?<p[^>]*>(.*?)<\/p>/i
+    );
+
+    const dates = cleanText(firstEventMatch?.[1] || '');
+    const eventPath = firstEventMatch?.[2] || '/events/';
+    const title = cleanText(firstEventMatch?.[3] || 'Upcoming Blue Ridge Event');
+    const location = cleanText(firstEventMatch?.[4] || 'Blue Ridge, Georgia');
+
     const eventLink = eventPath.startsWith('http')
       ? eventPath
       : `https://www.blueridgemountains.com${eventPath}`;
 
-    const eventPage = await fetch(eventLink, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 DarbysRidgeGuestGuide/1.0'
-      }
-    });
-
-    const eventHtml = await eventPage.text();
-
-    const titleMatch = eventHtml.match(/<h1[^>]*>(.*?)<\/h1>/i);
-    const title = cleanText(titleMatch?.[1] || 'Upcoming Blue Ridge Event');
-
-    const descriptionMatch = eventHtml.match(/<p[^>]*>(.*?)<\/p>/i);
-    const description = cleanText(
-      descriptionMatch?.[1] ||
-      'See what’s happening during your stay in Blue Ridge.'
-    );
-
-    const datesMatch =
-      html.match(/([A-Z][a-z]+\.?\s+\d{1,2}\s+—\s+[A-Z][a-z]+\.?\s+\d{1,2}|[A-Z][a-z]+\.?\s+\d{1,2}\s+—\s+\d{1,2})/);
-
-    const dates = cleanText(datesMatch?.[1] || '');
+    const description = `Upcoming event in Blue Ridge: ${title}.`;
 
     await saveContent('next_event_show', 'yes');
     await saveContent('next_event_title', title);
     await saveContent('next_event_dates', dates);
-    await saveContent('next_event_location', 'Blue Ridge, Georgia');
+ await saveContent('next_event_location', location);
     await saveContent('next_event_description', description);
     await saveContent('next_event_link', eventLink);
 
