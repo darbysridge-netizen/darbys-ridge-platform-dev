@@ -98,10 +98,6 @@ const title = cleanText(firstEvent?.[2] || 'Upcoming Blue Ridge Event');
 const dates = cleanText(firstEvent?.[3] || '');
 const location = 'Blue Ridge, Georgia';
 
-    const dates = cleanText(firstEventMatch?.[1] || '');
-    const eventPath = firstEventMatch?.[2] || '/events/';
-    const title = cleanText(firstEventMatch?.[3] || 'Upcoming Blue Ridge Event');
-    const location = cleanText(firstEventMatch?.[4] || 'Blue Ridge, Georgia');
 
     const eventLink = eventPath.startsWith('http')
       ? eventPath
@@ -116,14 +112,14 @@ const location = 'Blue Ridge, Georgia';
     await saveContent('next_event_description', description);
     await saveContent('next_event_link', eventLink);
 
-    res.status(200).json({
-      success: true,
-      title,
-      dates,
-      location: 'Blue Ridge, Georgia',
-      description,
-      link: eventLink
-    });
+res.status(200).json({
+  success: true,
+  title,
+  dates,
+  location,
+  description,
+  link: eventLink
+});
   } catch (error) {
     console.error(error);
     res.status(500).json({
