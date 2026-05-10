@@ -22,7 +22,7 @@ async function saveContent(key, value) {
       apikey: SUPABASE_KEY,
       Authorization: `Bearer ${SUPABASE_KEY}`,
       'Content-Type': 'application/json',
-      Prefer: 'resolution=merge-duplicates'
+        Prefer: 'resolution=merge-duplicates,return=minimal'
     },
     body: JSON.stringify({
       property_slug: PROPERTY_SLUG,
