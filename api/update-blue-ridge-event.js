@@ -87,9 +87,16 @@ module.exports = async function handler(req, res) {
        const featuredStart = html.indexOf('Featured Events');
     const featuredHtml = featuredStart >= 0 ? html.slice(featuredStart) : html;
 
-    const firstEventMatch = featuredHtml.match(
-      /([A-Z][a-z]+\.?\s+\d{1,2}(?:\s+—\s+(?:[A-Z][a-z]+\.?\s+)?\d{1,2})?)[\s\S]*?<h2[^>]*>[\s\S]*?<a[^>]*href="([^"]+)"[^>]*>(.*?)<\/a>[\s\S]*?<\/h2>[\s\S]*?<p[^>]*>(.*?)<\/p>/i
-    );
+   const eventCards = [...featuredHtml.matchAll(
+  /<a[^>]*href="([^"]*\/events\/[^"]+)"[^>]*>[\s\S]*?<h3[^>]*>(.*?)<\/h3>[\s\S]*?<p[^>]*class="[^"]*date[^"]*"[^>]*>(.*?)<\/p>/gi
+)];
+
+const firstEvent = eventCards[0];
+
+const eventPath = firstEvent?.[1] || '/events/';
+const title = cleanText(firstEvent?.[2] || 'Upcoming Blue Ridge Event');
+const dates = cleanText(firstEvent?.[3] || '');
+const location = 'Blue Ridge, Georgia';
 
     const dates = cleanText(firstEventMatch?.[1] || '');
     const eventPath = firstEventMatch?.[2] || '/events/';
