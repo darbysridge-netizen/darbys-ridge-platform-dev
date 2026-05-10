@@ -111,7 +111,9 @@ const titleIndex = featuredHtml.indexOf(firstRealEvent?.[0] || '');
 const beforeTitle = titleIndex > 0 ? featuredHtml.slice(Math.max(0, titleIndex - 1200), titleIndex) : featuredHtml;
 
 const dateMatch = beforeTitle.match(
-  /([A-Z][a-z]{2,}\s+\d{1,2}\s*(?:—|-|&mdash;|&#8211;|&#8212;)\s*(?:[A-Z][a-z]{2,}\s+)?\d{1,2}|[A-Z][a-z]{2,}\s+\d{1,2})/i
+  /([A-Z][a-z]{2,}\s+\d{1,2}\s*(?:—|-|&mdash;|&#8211;|&#8212;|to)\s*(?:[A-Z][a-z]{2,}\s+)?\d{1,2})/i
+) || beforeTitle.match(
+  /([A-Z][a-z]{2,}\s+\d{1,2})/i
 );
 
 const dates = cleanText(dateMatch?.[1] || '');
