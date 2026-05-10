@@ -16,13 +16,50 @@ function cleanText(value = '') {
 }
 
 async function saveContent(key, value) {
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/property_content`, {
+  const updateResponse = await fetch(
+    `${SUPABASE_URL}/rest/v1/property_content?property_slug=eq.${PROPERTY_SLUG}&content_key=eq.${key}`,
+    {
+      method: 'PATCH',
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        Prefer: 'return=minimal'
+      },
+      body: JSON.stringify({
+        content_value: value
+      })
+    }
+  );
+
+  if (!updateResponse.ok) {
+    const text = await updateResponse.text();
+    throw new Error(`Supabase update failed for ${key}: ${text}`);
+  }
+
+  const checkResponse = await fetch(
+    `${SUPABASE_URL}/rest/v1/property_content?property_slug=eq.${PROPERTY_SLUG}&content_key=eq.${key}&select=content_key`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization: `Bearer ${SUPABASE_KEY}`
+      }
+    }
+  );
+
+  const existingRows = await checkResponse.json();
+
+  if (existingRows.length > 0) {
+    return;
+  }
+
+  const insertResponse = await fetch(`${SUPABASE_URL}/rest/v1/property_content`, {
     method: 'POST',
     headers: {
       apikey: SUPABASE_KEY,
       Authorization: `Bearer ${SUPABASE_KEY}`,
       'Content-Type': 'application/json',
-        Prefer: 'resolution=merge-duplicates,return=minimal'
+      Prefer: 'return=minimal'
     },
     body: JSON.stringify({
       property_slug: PROPERTY_SLUG,
@@ -31,9 +68,9 @@ async function saveContent(key, value) {
     })
   });
 
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Supabase save failed for ${key}: ${text}`);
+  if (!insertResponse.ok) {
+    const text = await insertResponse.text();
+    throw new Error(`Supabase insert failed for ${key}: ${text}`);
   }
 }
 
