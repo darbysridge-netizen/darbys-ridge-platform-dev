@@ -2954,9 +2954,10 @@ await renderPropertyChrome();
     const info = await getPropertyContent('info', defaultContent.info);
     const local = await getPropertyContent('local', defaultContent.local);
     const trail = await getPropertyContent('trail', defaultContent.trail);
-    const photos = await getPropertyContent('photos', defaultContent.photos);
-    const checkout = await getPropertyContent('checkout', defaultContent.checkout);
-    const checklistRaw = await getPropertyContent('checklist', defaultContent.checklist);
+  const photos = await getPropertyContent('photos', defaultContent.photos);
+const checkout = await getPropertyContent('checkout', defaultContent.checkout);
+const enhanceStay = await getPropertyContent('enhance_stay', '');
+const checklistRaw = await getPropertyContent('checklist', defaultContent.checklist); 
 
         const welcomeContent = document.getElementById('welcomeContent');
     if(welcomeContent) welcomeContent.innerHTML = welcome;
@@ -2975,6 +2976,9 @@ await renderPropertyChrome();
 
     const localContent = document.getElementById('localContent');
     if(localContent) localContent.innerHTML = local;
+
+    const enhanceStayContent = document.getElementById('enhanceStayContent');
+if(enhanceStayContent) enhanceStayContent.innerHTML = enhanceStay;
 
     const trailContent = document.getElementById('trailContent');
     if(trailContent) trailContent.innerHTML = trail;
