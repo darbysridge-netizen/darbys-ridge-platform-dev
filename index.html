@@ -1565,64 +1565,19 @@ background:#ead8c7;
   <button class="back" type="button" onclick="showPage('home')">← Back</button>
 
   <div class="page-banner">
-       <img id="imgBannerEnhance" src="default-banner.jpg" alt="">
+    <img id="imgBannerEnhance" src="default-banner.jpg" alt="">
     <div class="page-banner-text">
       <strong>Enhance Your Stay</strong>
-    <span>Add a little extra to make your stay even more memorable.</span>  
+      <span>Add a little extra to make your stay even more memorable.</span>
     </div>
   </div>
 
   <div class="panel">
-  <div id="enhanceStayContent"></div>  
-<div style="display:none;">
-  
-  <div style="font-family:'Playfair Display', serif; font-size:19px; color:#3e2f22; font-weight:600; margin-bottom:6px;">
-    Something Special is on the Way
-  </div>
-  
-  <div style="font-family:'Inter', sans-serif; font-size:13.5px; color:#5f4e3d; font-weight:500; line-height:1.5;">
-    Thoughtfully crafted packages are coming soon to make your stay even more unforgettable.
-  </div>
-
-</div>
-   <div class="panel">
-  <h3>Choose a Package</h3>
-  <p class="small-note">Tap a package below to select it. Then complete the request form underneath.</p>
-
- <div id="enhancePackagesList"></div>
-   </div>
-<div class="panel">
-  <h3>Request Form</h3>
-
-  <label for="enhancePackage">Selected Package</label>
-  <input id="enhancePackage" type="text" placeholder="Tap a package above" readonly>
-
-  <label for="enhanceGuestName">Guest Name</label>
-  <input id="enhanceGuestName" type="text" placeholder="Your name">
-
-  <label for="enhanceGuestEmail">Email</label>
-  <input id="enhanceGuestEmail" type="email" placeholder="you@example.com">
-
-  <label for="enhanceGuestPhone">Phone</label>
-  <input id="enhanceGuestPhone" type="text" placeholder="Best phone number">
-
-  <label for="enhanceArrivalDate">Arrival Date</label>
-  <input id="enhanceArrivalDate" type="date">
-
-  <label for="enhanceNotes">Notes or Requests</label>
-  <textarea id="enhanceNotes" rows="4" placeholder="Add any details here, such as celebration wording, food preferences, or arrival timing."></textarea>
-
-  <button type="button" class="action-btn center-button" onclick="submitEnhanceStayRequest()">Submit Request</button>
-
-  <div id="enhanceStaySuccess" class="form-message form-success">Your request was sent successfully.</div>
-  <div id="enhanceStayError" class="form-message form-error">There was a problem sending your request.</div>
-
-  <p class="small-note">
-    Please allow at least 48 hours notice. Orders are based on availability and delivery timing and may not be fulfilled if timing does not allow.
-  </p>
-</div>
+    <div id="enhanceStayContent"></div>
   </div>
 </div>
+
+<div id="guestMemories" class="hidden page">
  
   <div id="guestMemories" class="hidden page">
     <button class="back" type="button" onclick="showPage('home')">← Back</button>
