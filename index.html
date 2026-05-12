@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-document.title = propertyName || "Guest Guide";
+<title>Guest Guide</title>
   <link href="https://fonts.googleapis.com/css2?family=Allura&family=Playfair+Display:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -2051,6 +2051,13 @@ const iconEl = document.getElementById('appIcon');
 const browserIconEl = document.getElementById('browserIcon'); 
   const manifestEl = document.getElementById('appManifest');
   const themeColorEl = document.getElementById('browserThemeColor');
+    if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+    document.title = 'The Ocean Pearl';
+  } else if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
+    document.title = 'Darby’s Ridge';
+  } else {
+    document.title = 'Sunshine Property Hub';
+  }
 
   if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
     if(iconEl) iconEl.setAttribute('href', 'op-icon-192.png');
