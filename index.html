@@ -2650,16 +2650,15 @@ async function loadPresentationSections(){
       <div class="panel" style="margin-top:20px;">
 
         <div class="hub-kicker">
-          ${escapeHtml(section.subtitle || '')}
+    ${escapeHtml(section.section_subtitle || '')}
         </div>
 
         <h2 class="hub-section-title">
-          ${escapeHtml(section.icon || '')}
-          ${escapeHtml(section.title || '')}
+        ${escapeHtml(section.section_title || '')} 
         </h2>
 
         <p class="hub-intro" style="margin-bottom:18px;">
-          ${escapeHtml(section.description || '')}
+        ${escapeHtml(section.section_body || '')}
         </p>
 
         ${itemsHtml}
