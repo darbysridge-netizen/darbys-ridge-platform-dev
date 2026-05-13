@@ -539,10 +539,7 @@ margin-right:auto;
   opacity:.85;
 }
 
-.presentation-tile.wide{
-  grid-column:1 / -1;
-  background:linear-gradient(135deg,#8F744D,#2F3A44);
-}
+
 
 @media(max-width:760px){
   .presentation-tile-grid{
@@ -2654,15 +2651,11 @@ async function loadPresentationSections(){
 
   for(const section of sections){
 
-    const isWide =
-      section.section_key === 'build_management_plan' ||
-      section.section_key === 'pricing_summary' ||
-      section.section_key === 'next_steps';
 
     html += `
       <button
         type="button"
-        class="presentation-tile ${isWide ? 'wide' : ''}"
+     class="presentation-tile"
         onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
       >
         <strong>${escapeHtml(section.section_title || '')}</strong>
@@ -2675,6 +2668,67 @@ async function loadPresentationSections(){
 
   container.innerHTML = html;
 }
+ async function openPresentationSection(sectionKey){
+
+  const container =
+    document.getElementById('presentationSectionsContainer');
+
+  if(!container) return;
+
+  container.innerHTML = '<div class="small-note">Loading section...</div>';
+
+  const { data: section, error: sectionError } = await supabaseClient
+    .from('presentation_sections')
+    .select('*')
+    .eq('section_key', sectionKey)
+    .single();
+
+  if(sectionError || !section){
+    console.error(sectionError);
+    container.innerHTML = '<div class="panel">Unable to open this section.</div>';
+    return;
+  }
+
+  const { data: items, error: itemsError } = await supabaseClient
+    .from('presentation_section_items')
+    .select('*')
+    .eq('section_key', sectionKey)
+    .order('display_order', { ascending:true });
+
+  if(itemsError){
+    console.error(itemsError);
+  }
+
+  let html = `
+    <button class="back" type="button" onclick="loadPresentationSections()">
+      ← Back to Presentation
+    </button>
+
+    <div class="panel">
+      <div class="hub-kicker">${escapeHtml(section.section_subtitle || '')}</div>
+      <h2 class="hub-section-title">${escapeHtml(section.section_title || '')}</h2>
+      <p class="small-note">${escapeHtml(section.section_body || '')}</p>
+    </div>
+  `;
+
+  if(items && items.length){
+
+    for(const item of items){
+
+      html += `
+        <div class="panel">
+          <h3>${escapeHtml(item.title || '')}</h3>
+          <p class="small-note">
+            ${escapeHtml(item.description || '')}
+          </p>
+        </div>
+      `;
+    }
+
+  }
+
+  container.innerHTML = html;
+}   
 async function loadPresentationLibrary(){
 
   const container =
