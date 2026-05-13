@@ -341,7 +341,13 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
   font-size:12px;
   font-weight:600;
 }   
+.hub-mode .bottom-nav{
+  display:none !important;
+}
 
+.hub-mode .page{
+  padding-bottom:18px;
+}
     .bottom-nav{
   position:fixed;
   bottom:0;
@@ -2105,7 +2111,8 @@ setupPropertyAppFiles();
 
 console.log('CURRENT PROPERTY:', CURRENT_PROPERTY_SLUG);
 // Show selector only if we truly don't know the property
-if(!CURRENT_PROPERTY_SLUG){
+if(!CURRENT_PROPERTY_SLUG && !IS_PRESENTATION_MODE){
+  document.body.classList.add('hub-mode');
   showPage('propertySelect');
 }
 let EARLY_THEME;
