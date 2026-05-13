@@ -2750,10 +2750,10 @@ container.innerHTML = `
 `;
 
 document.getElementById('presentationHeroArea').innerHTML = `
-  <div class="hub-card" style="margin-bottom:24px; overflow:hidden;">
+<div class="hub-card" style="margin:0 auto 24px; overflow:hidden; max-width:720px;">
 
     ${data.hero_image_url ? `
-      <div class="hub-card-image" style="height:240px;">
+      <div class="hub-card-image" style="height:260px;">
         <img
           src="${escapeHtml(data.hero_image_url)}"
           alt="${escapeHtml(data.property_name || '')}"
@@ -2767,7 +2767,7 @@ document.getElementById('presentationHeroArea').innerHTML = `
         CUSTOM PROPERTY PRESENTATION
       </div>
 
-      <h3 style="font-size:40px;">
+      <h3 style="font-size:34px;">
         ${escapeHtml(data.property_name || '')}
       </h3>
 
