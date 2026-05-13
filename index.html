@@ -2349,9 +2349,12 @@ const pathParts = window.location.pathname
   .filter(Boolean);
 
 const PRESENTATION_SLUG =
-  pathParts[0] === 'p'
-    ? pathParts[1]
-    : null;
+  urlParams.get('presentation') ||
+  (
+    pathParts[0] === 'p'
+      ? pathParts[1]
+      : null
+  );
 
 const CURRENT_PROPERTY_SLUG =
   urlParams.get('property') ||
@@ -2500,8 +2503,8 @@ async function loadPresentationLibrary(){
 
   container.innerHTML = data.map(item => {
 
-    const link =
-      `${window.location.origin}/p/${item.slug}`;
+   const link =
+  `${window.location.origin}/?presentation=${item.slug}`;
 
     return `
       <div class="owner-list-card">
