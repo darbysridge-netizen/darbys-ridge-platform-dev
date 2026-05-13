@@ -2292,8 +2292,14 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
     <label>Property Location</label>
     <input id="presentationLocation" type="text" placeholder="Blue Ridge, Georgia">
 
-    <label>Property Hero Image URL</label>
-    <input id="presentationHeroImage" type="text" placeholder="https://...">
+ <label>Property Hero Image</label>
+<input id="presentationHeroFile" type="file" accept="image/*" onchange="previewPresentationHeroImage()">
+
+<input id="presentationHeroImage" type="hidden">
+
+<div id="presentationHeroPreview" class="small-note" style="margin-top:10px;">
+  No image selected yet.
+</div>  
 
     <button
       class="action-btn center-button"
@@ -2436,7 +2442,38 @@ if(manifestEl) manifestEl.setAttribute('href', 'manifest-sunshine.json');
     return;
   }
 }
+function previewPresentationHeroImage(){
+  const fileInput = document.getElementById('presentationHeroFile');
+  const preview = document.getElementById('presentationHeroPreview');
 
+  if(!fileInput || !preview) return;
+
+  const file = fileInput.files && fileInput.files[0];
+
+  if(!file){
+    preview.innerHTML = 'No image selected yet.';
+    return;
+  }
+
+  if(!file.type.startsWith('image/')){
+    preview.innerHTML = 'Please choose an image file.';
+    return;
+  }
+
+  const previewUrl = URL.createObjectURL(file);
+
+  preview.innerHTML = `
+    <div style="font-size:13px; font-weight:700; margin-bottom:8px;">
+      Selected Image Preview
+    </div>
+
+    <img
+      src="${previewUrl}"
+      alt="Selected presentation hero"
+      style="width:100%; max-height:220px; object-fit:cover; border-radius:16px; border:1px solid #eadbc8;"
+    >
+  `;
+}
 function makeSlug(text){
   return text
     .toLowerCase()
@@ -2457,8 +2494,23 @@ async function createPresentation(){
   const location =
     document.getElementById('presentationLocation').value.trim();
 
-  const heroImage =
-    document.getElementById('presentationHeroImage').value.trim();
+let heroImage =
+  document.getElementById('presentationHeroImage').value.trim();
+
+const heroFileInput =
+  document.getElementById('presentationHeroFile');
+
+if(heroFileInput && heroFileInput.files && heroFileInput.files[0]){
+  const uploadedUrl = await uploadFileToBucket(
+    'guest-media',
+    heroFileInput.files[0],
+    `presentations/${makeSlug(propertyName)}`
+  );
+
+  if(uploadedUrl){
+    heroImage = uploadedUrl;
+  }
+} 
 
   if(!propertyName){
     alert('Please enter a property name.');
