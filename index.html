@@ -2325,6 +2325,17 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
   </div>
 
 </div>
+ <div id="presentationView" class="hidden page">
+
+  <button class="back" type="button" onclick="showPage('propertySelect')">
+    ← Back to Hub
+  </button>
+
+  <div id="presentationViewContent">
+    Loading presentation...
+  </div>
+
+</div> 
   <div class="bottom-nav">
     <button type="button" onclick="showPage('login')">Team Portal</button>
     <button class="bottom-home" type="button" onclick="showPage('home')">Home</button>
@@ -3646,6 +3657,7 @@ async function loadNextPropertyEvent(){
   'propertySelect',
   'presentationManager',
   'presentationLibrary',
+   'presentationView', 
   'home',
   'welcome',
   'guidebook',
