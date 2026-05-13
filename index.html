@@ -124,7 +124,8 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
     }
 
     .menu-card{
-      aspect-ratio:1/1;
+     min-height:92px;
+padding:0; 
       border-radius:18px;
       overflow:hidden;
       position:relative;
@@ -205,11 +206,10 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
       line-height:1.2;
     }
 
-    .wide-card{
-      grid-column:1 / -1;
-      aspect-ratio:auto;
-      height:108px;
-    }
+   .wide-card{
+  grid-column:1 / -1;
+  min-height:92px;
+}
 
     .wide-card .menu-label{
       bottom:14px;
