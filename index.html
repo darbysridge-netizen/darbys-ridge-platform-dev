@@ -2524,13 +2524,13 @@ async function createPresentation(){
 
     const { error } = await supabaseClient
       .from('presentations')
-      .upsert([{
+     .upsert([{ 
         slug: slug,
         property_name: propertyName,
         owner_name: ownerName,
         location: location,
         hero_image_url: heroImage
-      }]);
+}], { onConflict: 'slug' });
 
     if(error){
       console.error(error);
