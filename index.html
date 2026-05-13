@@ -2574,8 +2574,8 @@ async function loadPresentationSections(){
 
   const { data: sections, error } = await supabaseClient
     .from('presentation_sections')
-    .select('*')
- .eq('is_active', true)
+.select('*')
+.eq('is_active', true)
     .order('display_order', { ascending:true });
 
   if(error){
@@ -2594,13 +2594,11 @@ async function loadPresentationSections(){
 
   for(const section of sections){
 
-    const { data: items } = await supabaseClient
-      .from('presentation_section_items')
-      .select('*')
-      .eq('section_key', section.section_key)
-      .eq('active', true)
-      .order('display_order', { ascending:true });
-
+   const { data: items } = await supabaseClient
+  .from('presentation_section_items')
+  .select('*')
+  .eq('section_key', section.section_key)
+  .order('display_order', { ascending:true }); 
     let itemsHtml = '';
 
     if(items?.length){
