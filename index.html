@@ -2268,6 +2268,64 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
    </details>
   </div> 
 
+  <div id="presentationManager" class="hidden page">
+
+  <button class="back" type="button" onclick="showPage('propertySelect')">
+    ← Back
+  </button>
+
+  <h1>Presentation Center</h1>
+
+  <div class="panel">
+
+    <h3>Create New Presentation</h3>
+
+    <p class="small-note">
+      Build a personalized management proposal and hospitality presentation for a property owner.
+    </p>
+
+    <label>Property Name</label>
+    <input id="presentationPropertyName" type="text" placeholder="Jazzy's Cozy Creekside">
+
+    <label>Owner Name</label>
+    <input id="presentationOwnerName" type="text" placeholder="Jazzy">
+
+    <label>Property Location</label>
+    <input id="presentationLocation" type="text" placeholder="Blue Ridge, Georgia">
+
+    <label>Property Hero Image URL</label>
+    <input id="presentationHeroImage" type="text" placeholder="https://...">
+
+    <button
+      class="action-btn center-button"
+      type="button"
+      onclick="createPresentation()">
+
+      Create Presentation
+
+    </button>
+
+  </div>
+
+</div>
+
+<div id="presentationLibrary" class="hidden page">
+
+  <button class="back" type="button" onclick="showPage('propertySelect')">
+    ← Back
+  </button>
+
+  <h1>Presentation Library</h1>
+
+  <div class="panel">
+
+    <div id="presentationLibraryList" class="small-note">
+      No presentations yet.
+    </div>
+
+  </div>
+
+</div>
   <div class="bottom-nav">
     <button type="button" onclick="showPage('login')">Team Portal</button>
     <button class="bottom-home" type="button" onclick="showPage('home')">Home</button>
