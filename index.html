@@ -185,7 +185,9 @@ padding:0;
 
     .menu-label{
       position:absolute;
-      bottom:12px;
+    bottom:50%;
+transform:translateY(50%);
+text-align:center;
       left:14px;
       right:14px;
       color:white;
@@ -2599,11 +2601,9 @@ async function loadPresentationSections(){
      style="background:#EFE4D6; border:1px solid #D8C7B2; min-height:92px; padding:16px; cursor:pointer; border-radius:22px;" 
       >
         <div class="menu-label">
-          <span>${escapeHtml(section.section_subtitle || 'SUNSHINE')}</span>
-         <strong style="font-size:22px; color:#2E3640;">${escapeHtml(section.section_title || '')}</strong> 
-         <div class="request-subtext" style="font-size:12px; margin-top:8px;">
-            ${escapeHtml(section.section_body || '')}
-          </div>
+        <strong style="font-size:22px; color:#2E3640;">
+  ${escapeHtml(section.section_title || '')}
+</strong> 
         </div>
       </div>
     `;
