@@ -2454,14 +2454,14 @@ async function createPresentation(){
 
   const slug = makeSlug(propertyName);
 
-  const { error } = await supabase
+ const { error } = await supabaseClient
     .from('presentations')
     .upsert([{
       slug: slug,
       property_name: propertyName,
       owner_name: ownerName,
       location: location,
-      hero_image: heroImage
+   hero_image_url: heroImage  
     }]);
 
   if(error){
@@ -2484,7 +2484,7 @@ async function loadPresentationLibrary(){
 
   if(!container) return;
 
-  const { data, error } = await supabase
+ const { data, error } = await supabaseClient
     .from('presentations')
     .select('*')
     .order('created_at', { ascending:false });
