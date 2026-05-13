@@ -2300,86 +2300,63 @@ const IS_ADMIN_MODE =
   !IS_PRESENTATION_MODE;
  
 function setupPropertyAppFiles(){
-const iconEl = document.getElementById('appIcon');
-const browserIconEl = document.getElementById('browserIcon'); 
+  const iconEl = document.getElementById('appIcon');
+  const browserIconEl = document.getElementById('browserIcon'); 
   const manifestEl = document.getElementById('appManifest');
   const themeColorEl = document.getElementById('browserThemeColor');
- if(!CURRENT_PROPERTY_SLUG){
 
-  document.title = 'Sunshine Property Hub';
-
-  if(iconEl) iconEl.setAttribute('href', 'sunshine-icon-192.png');
-
-  if(browserIconEl) browserIconEl.setAttribute('href', 'sunshine-favicon.png');
-
-  if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
-
-  if(themeColorEl) themeColorEl.setAttribute('content', '#F1ECE4');
-
-}
-if(!CURRENT_PROPERTY_SLUG){
-
-  document.title = 'Sunshine Property Hub';
-
-  if(iconEl) iconEl.setAttribute('href', 'sunshine-icon-192.png');
-
-  if(browserIconEl) browserIconEl.setAttribute('href', 'sunshine-favicon.png');
-
-  if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
-
-  if(themeColorEl) themeColorEl.setAttribute('content', '#F1ECE4');
-
-}
-else if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
-
-  document.title = 'The Ocean Pearl';
-
-}
-else if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
-
-  document.title = 'Darby’s Ridge';
-
-}
-
- if(!CURRENT_PROPERTY_SLUG){
-
-  if(iconEl) iconEl.setAttribute('href', 'sunshine-icon-192.png');
-  if(browserIconEl) browserIconEl.setAttribute('href', 'sunshine-favicon.png');
-  if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
-  if(themeColorEl) themeColorEl.setAttribute('content', '#F1ECE4');
-
-} else if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
-
-  if(iconEl) iconEl.setAttribute('href', 'op-icon-192.png');
-  if(browserIconEl) browserIconEl.setAttribute('href', 'op-icon-192.png');
-  if(manifestEl) manifestEl.setAttribute('href', 'manifest-ocean.json');
-  if(themeColorEl) themeColorEl.setAttribute('content', '#F7F5F2');
-
-} else if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
-
-  if(iconEl) iconEl.setAttribute('href', 'icon-192.png');
-  if(browserIconEl) browserIconEl.setAttribute('href', 'icon-192.png');
-  if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
-  if(themeColorEl) themeColorEl.setAttribute('content', '#f7efe3');
-
-}
   const ogTitle = document.querySelector('meta[property="og:title"]');
   const ogDesc = document.querySelector('meta[property="og:description"]');
   const ogImage = document.querySelector('meta[property="og:image"]');
 
+  if(!CURRENT_PROPERTY_SLUG){
+
+    document.title = 'Sunshine Property Hub';
+
+    if(iconEl) iconEl.setAttribute('href', 'sunshine-icon-192.png');
+    if(browserIconEl) browserIconEl.setAttribute('href', 'sunshine-favicon.png');
+    if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
+    if(themeColorEl) themeColorEl.setAttribute('content', '#F1ECE4');
+
+    if(ogTitle) ogTitle.setAttribute('content', 'Sunshine Property Hub');
+    if(ogDesc) ogDesc.setAttribute('content', 'Luxury co-hosting, guest experience, property operations, and custom hospitality systems.');
+    if(ogImage) ogImage.setAttribute('content', 'sunshine-icon-512.png');
+
+    return;
+  }
+
   if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+
+    document.title = 'The Ocean Pearl';
+
+    if(iconEl) iconEl.setAttribute('href', 'op-icon-192.png');
+    if(browserIconEl) browserIconEl.setAttribute('href', 'op-icon-192.png');
+    if(manifestEl) manifestEl.setAttribute('href', 'manifest-ocean.json');
+    if(themeColorEl) themeColorEl.setAttribute('content', '#F7F5F2');
+
     if(ogTitle) ogTitle.setAttribute('content', 'The Ocean Pearl');
     if(ogDesc) ogDesc.setAttribute('content', 'A relaxed coastal stay just steps from the beach.');
     if(ogImage) ogImage.setAttribute('content', 'op-icon-512.png');
+
+    return;
   }
 
   if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
+
+    document.title = 'Darby’s Ridge';
+
+    if(iconEl) iconEl.setAttribute('href', 'icon-192.png');
+    if(browserIconEl) browserIconEl.setAttribute('href', 'icon-192.png');
+    if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
+    if(themeColorEl) themeColorEl.setAttribute('content', '#f7efe3');
+
     if(ogTitle) ogTitle.setAttribute('content', 'Darby’s Ridge');
     if(ogDesc) ogDesc.setAttribute('content', 'Your Blue Ridge mountain escape.');
     if(ogImage) ogImage.setAttribute('content', 'icon-512.png');
-  }  
-}
 
+    return;
+  }
+}
 setupPropertyAppFiles();
 
 console.log('CURRENT PROPERTY:', CURRENT_PROPERTY_SLUG);
