@@ -2511,7 +2511,7 @@ async function createPresentation(){
     if(heroFileInput && heroFileInput.files && heroFileInput.files[0]){
 
       const uploadedUrl = await uploadFileToBucket(
-        'guest-media',
+     'guest-bucket',  
         heroFileInput.files[0],
         `presentations/${slug}`
       );
