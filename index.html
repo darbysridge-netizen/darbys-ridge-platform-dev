@@ -2752,14 +2752,30 @@ container.innerHTML = `
 document.getElementById('presentationHeroArea').innerHTML = `
 <div class="hub-card" style="margin:0 auto 24px; overflow:hidden; max-width:720px;">
 
-    ${data.hero_image_url ? `
-      <div class="hub-card-image" style="height:260px;">
-        <img
-          src="${escapeHtml(data.hero_image_url)}"
-          alt="${escapeHtml(data.property_name || '')}"
-        >
-      </div>
-    ` : ''}
+ ${data.hero_image_url ? `
+
+  <div style="
+    margin:0 auto;
+    background:#F1ECE4;
+    text-align:center;
+    padding:18px;
+  ">
+    <img
+      src="${escapeHtml(data.hero_image_url)}"
+      alt=""
+      style="
+        width:100%;
+        max-width:720px;
+        max-height:520px;
+        object-fit:contain;
+        display:block;
+        margin:0 auto;
+        border-radius:22px;
+      "
+    >
+  </div>
+
+` : ''} 
 
     <div class="hub-card-body">
 
