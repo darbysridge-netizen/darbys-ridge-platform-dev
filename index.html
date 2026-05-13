@@ -2621,8 +2621,11 @@ setupPropertyAppFiles();
 
 console.log('CURRENT PROPERTY:', CURRENT_PROPERTY_SLUG);
 // Show selector only if we truly don't know the property
-if(!CURRENT_PROPERTY_SLUG && !IS_PRESENTATION_MODE){
+if((!CURRENT_PROPERTY_SLUG && !IS_PRESENTATION_MODE) || IS_PRESENTATION_MODE){
   document.body.classList.add('hub-mode');
+}
+
+if(!CURRENT_PROPERTY_SLUG && !IS_PRESENTATION_MODE){
   showPage('propertySelect');
 }
 let EARLY_THEME;
