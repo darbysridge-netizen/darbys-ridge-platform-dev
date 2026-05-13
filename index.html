@@ -2566,109 +2566,53 @@ async function loadPresentationSections(){
 
   if(!container) return;
 
-  container.innerHTML = `
-    <div class="small-note">
-      Loading presentation sections...
-    </div>
-  `;
+  container.innerHTML = '<div class="small-note">Loading presentation...</div>';
 
   const { data: sections, error } = await supabaseClient
     .from('presentation_sections')
-.select('*')
-.eq('is_active', true)
+    .select('*')
+    .eq('is_active', true)
     .order('display_order', { ascending:true });
 
   if(error){
     console.error(error);
-
-    container.innerHTML = `
-      <div class="panel">
-        Unable to load presentation sections.
-      </div>
-    `;
-
+    container.innerHTML = '<div class="panel">Unable to load presentation sections.</div>';
     return;
   }
 
-  let html = '';
+  let html = `
+    <h2 class="hub-section-title">Choose an Area</h2>
+    <div class="card-grid">
+  `;
 
   for(const section of sections){
 
-   const { data: items } = await supabaseClient
-  .from('presentation_section_items')
-  .select('*')
-  .eq('section_key', section.section_key)
-  .order('display_order', { ascending:true }); 
-    let itemsHtml = '';
-
-    if(items?.length){
-
-      for(const item of items){
-
-        itemsHtml += `
-
-          <div style="
-            background:white;
-            border:1px solid #E5D8C7;
-            border-radius:18px;
-            padding:18px;
-            margin-top:12px;
-          ">
-
-            <div style="
-              font-size:11px;
-              letter-spacing:.14em;
-              text-transform:uppercase;
-              font-weight:800;
-              color:#2F7C85;
-              margin-bottom:8px;
-            ">
-              ${escapeHtml(item.subtitle || '')}
-            </div>
-
-            <div style="
-              font-size:22px;
-              font-family:'Playfair Display',serif;
-              color:#2E3640;
-              margin-bottom:10px;
-            ">
-              ${escapeHtml(item.title || '')}
-            </div>
-
-            <div class="small-note">
-              ${escapeHtml(item.description || '')}
-            </div>
-
-          </div>
-        `;
-      }
-
-    }
+    const isWide =
+      section.section_key === 'build_management_plan' ||
+      section.section_key === 'pricing_summary' ||
+      section.section_key === 'next_steps';
 
     html += `
-
-      <div class="panel" style="margin-top:20px;">
-
-        <div class="hub-kicker">
-    ${escapeHtml(section.section_subtitle || '')}
+      <div
+        class="menu-card ${isWide ? 'wide-card' : ''}"
+        onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
+        style="background:linear-gradient(135deg,#2E3640,#2F7C85);"
+      >
+        <div class="menu-label">
+          <span>${escapeHtml(section.section_subtitle || 'SUNSHINE')}</span>
+          <strong>${escapeHtml(section.section_title || '')}</strong>
+          <div class="request-subtext">
+            ${escapeHtml(section.section_body || '')}
+          </div>
         </div>
-
-        <h2 class="hub-section-title">
-        ${escapeHtml(section.section_title || '')} 
-        </h2>
-
-        <p class="hub-intro" style="margin-bottom:18px;">
-        ${escapeHtml(section.section_body || '')}
-        </p>
-
-        ${itemsHtml}
-
       </div>
     `;
   }
 
+  html += '</div>';
+
   container.innerHTML = html;
-}    
+}
 async function loadPresentationLibrary(){
 
   const container =
