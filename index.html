@@ -2485,58 +2485,72 @@ function makeSlug(text){
 
 async function createPresentation(){
 
-  const propertyName =
-    document.getElementById('presentationPropertyName').value.trim();
+  try{
 
-  const ownerName =
-    document.getElementById('presentationOwnerName').value.trim();
+    const propertyName =
+      document.getElementById('presentationPropertyName').value.trim();
 
-  const location =
-    document.getElementById('presentationLocation').value.trim();
+    const ownerName =
+      document.getElementById('presentationOwnerName').value.trim();
 
-let heroImage =
-  document.getElementById('presentationHeroImage').value.trim();
+    const location =
+      document.getElementById('presentationLocation').value.trim();
 
-const heroFileInput =
-  document.getElementById('presentationHeroFile');
+    let heroImage = '';
 
-if(heroFileInput && heroFileInput.files && heroFileInput.files[0]){
-  const uploadedUrl = await uploadFileToBucket(
-    'guest-media',
-    heroFileInput.files[0],
-    `presentations/${makeSlug(propertyName)}`
-  );
+    if(!propertyName){
+      alert('Please enter a property name.');
+      return;
+    }
 
-  if(uploadedUrl){
-    heroImage = uploadedUrl;
+    const slug = makeSlug(propertyName);
+
+    const heroFileInput =
+      document.getElementById('presentationHeroFile');
+
+    if(heroFileInput && heroFileInput.files && heroFileInput.files[0]){
+
+      const uploadedUrl = await uploadFileToBucket(
+        'guest-media',
+        heroFileInput.files[0],
+        `presentations/${slug}`
+      );
+
+      if(uploadedUrl){
+        heroImage = uploadedUrl;
+      }
+
+    }
+
+    const { error } = await supabaseClient
+      .from('presentations')
+      .upsert([{
+        slug: slug,
+        property_name: propertyName,
+        owner_name: ownerName,
+        location: location,
+        hero_image_url: heroImage
+      }]);
+
+    if(error){
+      console.error(error);
+      alert('Presentation save error: ' + error.message);
+      return;
+    }
+
+    alert('Presentation created.');
+
+    await loadPresentationLibrary();
+
+    showPage('presentationLibrary');
+
+  } catch(err){
+
+    console.error(err);
+    alert('Create presentation error: ' + err.message);
+
   }
-} 
-
-  if(!propertyName){
-    alert('Please enter a property name.');
-    return;
-  }
-
-  const slug = makeSlug(propertyName);
-
- const { error } = await supabaseClient
-    .from('presentations')
-    .upsert([{
-      slug: slug,
-      property_name: propertyName,
-      owner_name: ownerName,
-      location: location,
-   hero_image_url: heroImage  
-    }]);
-
-  if(error){
-    console.error(error);
-    alert('There was a problem creating the presentation.');
-    return;
-  }
-
-  alert('Presentation created.');
-
+}
   loadPresentationLibrary();
 
   showPage('presentationLibrary');
