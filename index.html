@@ -2575,7 +2575,7 @@ async function loadPresentationSections(){
   const { data: sections, error } = await supabaseClient
     .from('presentation_sections')
     .select('*')
-    .eq('active', true)
+ .eq('is_active', true)
     .order('display_order', { ascending:true });
 
   if(error){
