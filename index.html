@@ -2646,9 +2646,26 @@ async function loadPresentationLibrary(){
 
     ${data.hero_image_url ? `
 
-      <div class="page-banner" style="height:260px;">
-        <img src="${escapeHtml(data.hero_image_url)}" alt="">
-      </div>
+    <div style="
+  margin:24px auto 30px;
+  max-width:860px;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 18px 38px rgba(0,0,0,.18);
+  background:#F1ECE4;
+">
+  <img
+    src="${escapeHtml(data.hero_image_url)}"
+    alt=""
+    style="
+      width:100%;
+      max-height:520px;
+      object-fit:contain;
+      display:block;
+      background:#F1ECE4;
+    "
+  >
+</div> 
 
     ` : ''}
 
