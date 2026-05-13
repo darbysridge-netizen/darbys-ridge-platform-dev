@@ -123,9 +123,8 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
       gap:14px;
     }
 
-    .menu-card{
-     min-height:92px;
-padding:0; 
+   .menu-card{
+      aspect-ratio:1/1;
       border-radius:18px;
       overflow:hidden;
       position:relative;
@@ -2634,7 +2633,7 @@ async function loadPresentationSections(){
 
   if(!container) return;
 
-  container.innerHTML = '<div class="small-note">Loading presentation...</div>';
+  container.innerHTML = '<div class="small-note">Loading presentation.</div>';
 
   const { data: sections, error } = await supabaseClient
     .from('presentation_sections')
@@ -2650,7 +2649,7 @@ async function loadPresentationSections(){
 
   let html = `
     <h2 class="hub-section-title">Choose an Area</h2>
-    <div class="card-grid">
+    <div class="presentation-tile-grid">
   `;
 
   for(const section of sections){
@@ -2661,17 +2660,14 @@ async function loadPresentationSections(){
       section.section_key === 'next_steps';
 
     html += `
-      <div
-        class="menu-card ${isWide ? 'wide-card' : ''}"
+      <button
+        type="button"
+        class="presentation-tile ${isWide ? 'wide' : ''}"
         onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
-     style="background:#EFE4D6; border:1px solid #D8C7B2; min-height:92px; padding:16px; cursor:pointer; border-radius:22px;" 
       >
-        <div class="menu-label">
-        <strong style="font-size:22px; color:#2E3640;">
-  ${escapeHtml(section.section_title || '')}
-</strong> 
-        </div>
-      </div>
+        <strong>${escapeHtml(section.section_title || '')}</strong>
+        <span>›</span>
+      </button>
     `;
   }
 
