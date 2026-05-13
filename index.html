@@ -2341,17 +2341,28 @@ else if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
 
 }
 
-  if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
-    if(iconEl) iconEl.setAttribute('href', 'op-icon-192.png');
-    if(browserIconEl) browserIconEl.setAttribute('href', 'op-icon-192.png');
-    if(manifestEl) manifestEl.setAttribute('href', 'manifest-ocean.json');
-    if(themeColorEl) themeColorEl.setAttribute('content', '#F7F5F2');
-  } else {
-    if(iconEl) iconEl.setAttribute('href', 'icon-192.png');
-    if(browserIconEl) browserIconEl.setAttribute('href', 'icon-192.png');
-    if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
-    if(themeColorEl) themeColorEl.setAttribute('content', '#f7efe3');
-  }
+ if(!CURRENT_PROPERTY_SLUG){
+
+  if(iconEl) iconEl.setAttribute('href', 'sunshine-icon-192.png');
+  if(browserIconEl) browserIconEl.setAttribute('href', 'sunshine-favicon.png');
+  if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
+  if(themeColorEl) themeColorEl.setAttribute('content', '#F1ECE4');
+
+} else if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+
+  if(iconEl) iconEl.setAttribute('href', 'op-icon-192.png');
+  if(browserIconEl) browserIconEl.setAttribute('href', 'op-icon-192.png');
+  if(manifestEl) manifestEl.setAttribute('href', 'manifest-ocean.json');
+  if(themeColorEl) themeColorEl.setAttribute('content', '#F7F5F2');
+
+} else if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
+
+  if(iconEl) iconEl.setAttribute('href', 'icon-192.png');
+  if(browserIconEl) browserIconEl.setAttribute('href', 'icon-192.png');
+  if(manifestEl) manifestEl.setAttribute('href', 'manifest.json');
+  if(themeColorEl) themeColorEl.setAttribute('content', '#f7efe3');
+
+}
   const ogTitle = document.querySelector('meta[property="og:title"]');
   const ogDesc = document.querySelector('meta[property="og:description"]');
   const ogImage = document.querySelector('meta[property="og:image"]');
