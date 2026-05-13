@@ -2337,9 +2337,13 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
     ← Back to Hub
   </button>
 
-  <div id="presentationViewContent">
-    Loading presentation...
-  </div>
+ <div id="presentationViewContent">
+
+  <div id="presentationHeroArea"></div>
+
+  <div id="presentationSectionsContainer"></div>
+
+</div>
 
 </div> 
   <div class="bottom-nav">
@@ -2551,6 +2555,119 @@ async function createPresentation(){
 
   }
 }
+async function loadPresentationSections(){
+
+  const container =
+    document.getElementById('presentationSectionsContainer');
+
+  if(!container) return;
+
+  container.innerHTML = `
+    <div class="small-note">
+      Loading presentation sections...
+    </div>
+  `;
+
+  const { data: sections, error } = await supabaseClient
+    .from('presentation_sections')
+    .select('*')
+    .eq('active', true)
+    .order('display_order', { ascending:true });
+
+  if(error){
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="panel">
+        Unable to load presentation sections.
+      </div>
+    `;
+
+    return;
+  }
+
+  let html = '';
+
+  for(const section of sections){
+
+    const { data: items } = await supabaseClient
+      .from('presentation_section_items')
+      .select('*')
+      .eq('section_key', section.section_key)
+      .eq('active', true)
+      .order('display_order', { ascending:true });
+
+    let itemsHtml = '';
+
+    if(items?.length){
+
+      for(const item of items){
+
+        itemsHtml += `
+
+          <div style="
+            background:white;
+            border:1px solid #E5D8C7;
+            border-radius:18px;
+            padding:18px;
+            margin-top:12px;
+          ">
+
+            <div style="
+              font-size:11px;
+              letter-spacing:.14em;
+              text-transform:uppercase;
+              font-weight:800;
+              color:#2F7C85;
+              margin-bottom:8px;
+            ">
+              ${escapeHtml(item.subtitle || '')}
+            </div>
+
+            <div style="
+              font-size:22px;
+              font-family:'Playfair Display',serif;
+              color:#2E3640;
+              margin-bottom:10px;
+            ">
+              ${escapeHtml(item.title || '')}
+            </div>
+
+            <div class="small-note">
+              ${escapeHtml(item.description || '')}
+            </div>
+
+          </div>
+        `;
+      }
+
+    }
+
+    html += `
+
+      <div class="panel" style="margin-top:20px;">
+
+        <div class="hub-kicker">
+          ${escapeHtml(section.subtitle || '')}
+        </div>
+
+        <h2 class="hub-section-title">
+          ${escapeHtml(section.icon || '')}
+          ${escapeHtml(section.title || '')}
+        </h2>
+
+        <p class="hub-intro" style="margin-bottom:18px;">
+          ${escapeHtml(section.description || '')}
+        </p>
+
+        ${itemsHtml}
+
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+}    
 async function loadPresentationLibrary(){
 
   const container =
@@ -2627,73 +2744,47 @@ async function loadPresentationLibrary(){
     return;
   }
 
-  container.innerHTML = `
+container.innerHTML = `
+  <div id="presentationHeroArea"></div>
+  <div id="presentationSectionsContainer"></div>
+`;
 
-    <div class="hub-hero">
-
-      <div class="hub-kicker">
-        SUNSHINE PROPERTY COLLECTIVE
-      </div>
-
-      <h1>${escapeHtml(data.property_name)}</h1>
-
-      <p class="hub-intro">
-        A personalized management proposal and hospitality plan
-        ${data.location ? `for ${escapeHtml(data.location)}` : ''}.
-      </p>
-
-    </div>
+document.getElementById('presentationHeroArea').innerHTML = `
+  <div class="hub-card" style="margin-bottom:24px; overflow:hidden;">
 
     ${data.hero_image_url ? `
-
-    <div style="
-  margin:24px auto 30px;
-  max-width:860px;
-  border-radius:28px;
-  overflow:hidden;
-  box-shadow:0 18px 38px rgba(0,0,0,.18);
-  background:#F1ECE4;
-">
-  <img
-    src="${escapeHtml(data.hero_image_url)}"
-    alt=""
-    style="
-      width:100%;
-      max-height:520px;
-      object-fit:contain;
-      display:block;
-      background:#F1ECE4;
-    "
-  >
-</div> 
-
+      <div class="hub-card-image" style="height:320px;">
+        <img
+          src="${escapeHtml(data.hero_image_url)}"
+          alt="${escapeHtml(data.property_name || '')}"
+        >
+      </div>
     ` : ''}
 
-    <div class="panel">
+    <div class="hub-card-body">
 
-      <h3>Welcome</h3>
+      <div class="hub-kicker">
+        CUSTOM PROPERTY PRESENTATION
+      </div>
+
+      <h3 style="font-size:40px;">
+        ${escapeHtml(data.property_name || '')}
+      </h3>
+
+      <p style="font-size:16px;">
+        Prepared for ${escapeHtml(data.owner_name || 'Property Owner')}
+      </p>
 
       <p class="small-note">
-        This presentation will walk through Sunshine’s management options,
-        guest experience systems, launch support, app add-ons,
-        onboarding flow, and next steps.
+        ${escapeHtml(data.location || '')}
       </p>
 
     </div>
 
-    <div class="panel">
+  </div>
+`;
 
-      <h3>Management Packages</h3>
-
-      <p class="small-note">
-        Essential Hosting, Elevated Hosting,
-        and Luxury Full-Service options
-        will display here next.
-      </p>
-
-    </div>
-
-  `;
+await loadPresentationSections(); 
 }   
 setupPropertyAppFiles();
 
