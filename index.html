@@ -2596,12 +2596,12 @@ async function loadPresentationSections(){
       <div
         class="menu-card ${isWide ? 'wide-card' : ''}"
         onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
-        style="background:linear-gradient(135deg,#2E3640,#2F7C85);"
+      style="background:#E7D8C4; border:1px solid #D6C2A8; min-height:140px; cursor:pointer;"  
       >
         <div class="menu-label">
           <span>${escapeHtml(section.section_subtitle || 'SUNSHINE')}</span>
-          <strong>${escapeHtml(section.section_title || '')}</strong>
-          <div class="request-subtext">
+         <strong style="font-size:22px; color:#2E3640;">${escapeHtml(section.section_title || '')}</strong> 
+         <div class="request-subtext" style="font-size:12px; margin-top:8px;">
             ${escapeHtml(section.section_body || '')}
           </div>
         </div>
