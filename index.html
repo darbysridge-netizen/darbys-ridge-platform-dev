@@ -2423,6 +2423,108 @@ if(manifestEl) manifestEl.setAttribute('href', 'manifest-sunshine.json');
     return;
   }
 }
+
+function makeSlug(text){
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
+async function createPresentation(){
+
+  const propertyName =
+    document.getElementById('presentationPropertyName').value.trim();
+
+  const ownerName =
+    document.getElementById('presentationOwnerName').value.trim();
+
+  const location =
+    document.getElementById('presentationLocation').value.trim();
+
+  const heroImage =
+    document.getElementById('presentationHeroImage').value.trim();
+
+  if(!propertyName){
+    alert('Please enter a property name.');
+    return;
+  }
+
+  const slug = makeSlug(propertyName);
+
+  const { error } = await supabase
+    .from('presentations')
+    .upsert([{
+      slug: slug,
+      property_name: propertyName,
+      owner_name: ownerName,
+      location: location,
+      hero_image: heroImage
+    }]);
+
+  if(error){
+    console.error(error);
+    alert('There was a problem creating the presentation.');
+    return;
+  }
+
+  alert('Presentation created.');
+
+  loadPresentationLibrary();
+
+  showPage('presentationLibrary');
+}
+
+async function loadPresentationLibrary(){
+
+  const container =
+    document.getElementById('presentationLibraryList');
+
+  if(!container) return;
+
+  const { data, error } = await supabase
+    .from('presentations')
+    .select('*')
+    .order('created_at', { ascending:false });
+
+  if(error){
+    container.innerHTML = 'Unable to load presentations.';
+    return;
+  }
+
+  if(!data || !data.length){
+    container.innerHTML = 'No presentations yet.';
+    return;
+  }
+
+  container.innerHTML = data.map(item => {
+
+    const link =
+      `${window.location.origin}/p/${item.slug}`;
+
+    return `
+      <div class="owner-list-card">
+
+        <strong>${item.property_name}</strong><br>
+
+        ${item.location || ''}<br><br>
+
+        <a
+          href="${link}"
+          target="_blank"
+          class="link-btn">
+
+          Open Presentation
+
+        </a>
+
+      </div>
+    `;
+
+  }).join('');
+}    
 setupPropertyAppFiles();
 
 console.log('CURRENT PROPERTY:', CURRENT_PROPERTY_SLUG);
