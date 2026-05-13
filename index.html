@@ -5331,11 +5331,14 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   await renderEditablePages();
 
-  if(CURRENT_PROPERTY_SLUG){
-    showPage('home');
-  } else {
-    showPage('propertySelect');
-  }
+if(IS_PRESENTATION_MODE){
+  await loadPresentationView();
+  showPage('presentationView');
+} else if(CURRENT_PROPERTY_SLUG){
+  showPage('home');
+} else {
+  showPage('propertySelect');
+} 
 
   renderEnhancePackages();
 });   
