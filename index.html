@@ -2699,12 +2699,14 @@ async function loadPresentationSections(){
     console.error(itemsError);
   }
 
-  let html = `
-    <button class="back" type="button" onclick="loadPresentationSections()">
-      ← Back to Presentation
-    </button>
+  document.querySelector('.presentation-card').style.display = 'none';
 
-    <div class="panel">
+let html = `
+  <button class="back" type="button" onclick="closePresentationSection()">
+    ← Back to Presentation
+  </button>
+
+  <div class="panel">
       <div class="hub-kicker">${escapeHtml(section.section_subtitle || '')}</div>
       <h2 class="hub-section-title">${escapeHtml(section.section_title || '')}</h2>
       <p class="small-note">${escapeHtml(section.section_body || '')}</p>
@@ -2728,6 +2730,17 @@ async function loadPresentationSections(){
   }
 
   container.innerHTML = html;
+}  
+ function closePresentationSection(){
+
+  const card =
+    document.querySelector('.presentation-card');
+
+  if(card){
+    card.style.display = '';
+  }
+
+  loadPresentationSections();
 }   
 async function loadPresentationLibrary(){
 
