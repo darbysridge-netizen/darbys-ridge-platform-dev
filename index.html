@@ -2537,7 +2537,86 @@ async function loadPresentationLibrary(){
     `;
 
   }).join('');
-}    
+}   
+ async function loadPresentationView(){
+
+  const container =
+    document.getElementById('presentationViewContent');
+
+  if(!container) return;
+
+  const { data, error } = await supabaseClient
+    .from('presentations')
+    .select('*')
+    .eq('slug', PRESENTATION_SLUG)
+    .single();
+
+  if(error || !data){
+
+    container.innerHTML = `
+      <div class="panel">
+        <h3>Presentation Not Found</h3>
+
+        <p class="small-note">
+          We could not find this presentation.
+        </p>
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML = `
+
+    <div class="hub-hero">
+
+      <div class="hub-kicker">
+        SUNSHINE PROPERTY COLLECTIVE
+      </div>
+
+      <h1>${escapeHtml(data.property_name)}</h1>
+
+      <p class="hub-intro">
+        A personalized management proposal and hospitality plan
+        ${data.location ? `for ${escapeHtml(data.location)}` : ''}.
+      </p>
+
+    </div>
+
+    ${data.hero_image_url ? `
+
+      <div class="page-banner" style="height:260px;">
+        <img src="${escapeHtml(data.hero_image_url)}" alt="">
+      </div>
+
+    ` : ''}
+
+    <div class="panel">
+
+      <h3>Welcome</h3>
+
+      <p class="small-note">
+        This presentation will walk through Sunshine’s management options,
+        guest experience systems, launch support, app add-ons,
+        onboarding flow, and next steps.
+      </p>
+
+    </div>
+
+    <div class="panel">
+
+      <h3>Management Packages</h3>
+
+      <p class="small-note">
+        Essential Hosting, Elevated Hosting,
+        and Luxury Full-Service options
+        will display here next.
+      </p>
+
+    </div>
+
+  `;
+}   
 setupPropertyAppFiles();
 
 console.log('CURRENT PROPERTY:', CURRENT_PROPERTY_SLUG);
