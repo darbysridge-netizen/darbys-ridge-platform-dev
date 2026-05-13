@@ -183,13 +183,18 @@ padding:0;
   background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.25));
 }    
 
-   .menu-label{
+.menu-label{
   position:absolute;
-  left:18px;
-  right:18px;
-  bottom:16px;
+  bottom:12px;
+  left:14px;
+  right:14px;
+  color:white;
   z-index:2;
-}
+  transform:none;
+  text-align:left;
+  width:auto;
+  padding:0;
+}  
 .menu-label,
 .menu-label strong,
 .menu-label span,
@@ -222,16 +227,18 @@ padding:0;
       line-height:1.2;
     }
 
-   .wide-card{
+  .wide-card{
   grid-column:1 / -1;
-  min-height:92px;
+  aspect-ratio:auto;
+  height:108px;
+  min-height:0;
 }
 
-    .wide-card .menu-label{
-      bottom:14px;
-      left:16px;
-      right:16px;
-    }
+.wide-card .menu-label{
+  bottom:14px;
+  left:16px;
+  right:16px;
+}   
 
     .wide-card .menu-label strong{
       font-size:20px;
