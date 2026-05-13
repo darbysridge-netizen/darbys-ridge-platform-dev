@@ -2040,11 +2040,25 @@ const PROPERTY_HOST_MAP = {
 const urlParams = new URLSearchParams(window.location.search);
 const hostname = window.location.hostname.toLowerCase();
 
+const pathParts = window.location.pathname
+  .split('/')
+  .filter(Boolean);
+
+const PRESENTATION_SLUG =
+  pathParts[0] === 'p'
+    ? pathParts[1]
+    : null;
+
 const CURRENT_PROPERTY_SLUG =
   urlParams.get('property') ||
   PROPERTY_HOST_MAP[hostname] ||
   null;
-const IS_ADMIN_MODE = !CURRENT_PROPERTY_SLUG;
+
+const IS_PRESENTATION_MODE = !!PRESENTATION_SLUG;
+
+const IS_ADMIN_MODE =
+  !CURRENT_PROPERTY_SLUG &&
+  !IS_PRESENTATION_MODE;
  
 function setupPropertyAppFiles(){
 const iconEl = document.getElementById('appIcon');
