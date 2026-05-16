@@ -2718,7 +2718,40 @@ let html = `
       <p class="small-note">${escapeHtml(section.section_body || '')}</p>
     </div>
   `;
+  if(sectionKey === 'management_plans'){
+    const { data: plans, error: plansError } = await supabaseClient
+      .from('management_plans')
+      .select('*')
+      .eq('is_active', true)
+      .order('display_order', { ascending:true });
 
+    if(plansError){
+      console.error(plansError);
+      html += '<div class="panel">Unable to load management plans.</div>';
+    } else if(plans && plans.length){
+      for(const plan of plans){
+        const itemsList = String(plan.included_items || '')
+          .split('\n')
+          .map(item => item.trim())
+          .filter(Boolean)
+          .map(item => `<li>${escapeHtml(item)}</li>`)
+          .join('');
+
+        html += `
+          <div class="panel">
+            <h3>${escapeHtml(plan.plan_name || '')}</h3>
+            <p class="small-note">${escapeHtml(plan.plan_description || '')}</p>
+            <ul class="check-list">
+              ${itemsList}
+            </ul>
+          </div>
+        `;
+      }
+    }
+
+    container.innerHTML = html;
+    return;
+  }
   if(items && items.length){
 
     for(const item of items){
