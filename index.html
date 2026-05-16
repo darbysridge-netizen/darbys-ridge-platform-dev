@@ -2674,14 +2674,13 @@ async function loadPresentationSections(){
 
   container.innerHTML = html;
 }
- async function openPresentationSection(sectionKey){
+async function openPresentationSection(sectionKey){
 
-  const container =
-    document.getElementById('presentationSectionsContainer');
+  const container = document.getElementById('presentationSectionsContainer');
 
   if(!container) return;
 
-  container.innerHTML = '<div class="small-note">Loading section...</div>';
+  container.innerHTML = '<div class="small-note">Loading section.</div>';
 
   const { data: section, error: sectionError } = await supabaseClient
     .from('presentation_sections')
@@ -2695,40 +2694,46 @@ async function loadPresentationSections(){
     return;
   }
 
-  const { data: items, error: itemsError } = await supabaseClient
-    .from('presentation_section_items')
-    .select('*')
-    .eq('section_key', sectionKey)
-    .order('display_order', { ascending:true });
-
-  if(itemsError){
-    console.error(itemsError);
+  const presentationCard = document.querySelector('.presentation-card');
+  if(presentationCard){
+    presentationCard.style.display = 'none';
   }
 
-  document.querySelector('.presentation-card').style.display = 'none';
-document.querySelector('.presentation-card').style.display = 'none';
-let html = `
-  <button class="back" type="button" onclick="closePresentationSection()">
-    ← Back to Presentation
-  </button>
+  let html = `
+    <button class="back" type="button" onclick="closePresentationSection()">
+      ← Back to Presentation
+    </button>
 
-  <div class="panel">
+    <div class="panel">
       <div class="hub-kicker">${escapeHtml(section.section_subtitle || '')}</div>
       <h2 class="hub-section-title">${escapeHtml(section.section_title || '')}</h2>
       <p class="small-note">${escapeHtml(section.section_body || '')}</p>
     </div>
   `;
+
   if(sectionKey === 'management_plans'){
+
     const { data: plans, error: plansError } = await supabaseClient
       .from('management_plans')
       .select('*')
-      .eq('is_active', true)
       .order('display_order', { ascending:true });
 
     if(plansError){
       console.error(plansError);
-      html += '<div class="panel">Unable to load management plans.</div>';
-    } else if(plans && plans.length){
+      html += `
+        <div class="panel">
+          <h3>Management Plans Error</h3>
+          <p class="small-note">${escapeHtml(plansError.message || 'Unable to load management plans.')}</p>
+        </div>
+      `;
+    } else if(!plans || !plans.length){
+      html += `
+        <div class="panel">
+          <h3>No management plans found</h3>
+          <p class="small-note">The management_plans table loaded, but no rows were returned.</p>
+        </div>
+      `;
+    } else {
       for(const plan of plans){
         const itemsList = String(plan.included_items || '')
           .split('\n')
@@ -2752,10 +2757,19 @@ let html = `
     container.innerHTML = html;
     return;
   }
+
+  const { data: items, error: itemsError } = await supabaseClient
+    .from('presentation_section_items')
+    .select('*')
+    .eq('section_key', sectionKey)
+    .order('display_order', { ascending:true });
+
+  if(itemsError){
+    console.error(itemsError);
+  }
+
   if(items && items.length){
-
     for(const item of items){
-
       html += `
         <div class="panel">
           <h3>${escapeHtml(item.title || '')}</h3>
@@ -2765,11 +2779,10 @@ let html = `
         </div>
       `;
     }
-
   }
 
   container.innerHTML = html;
-}  
+} 
  function closePresentationSection(){
 
   const card =
