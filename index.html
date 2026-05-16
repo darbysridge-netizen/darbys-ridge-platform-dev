@@ -910,7 +910,20 @@ button.tertiary-btn:active{
   border:2px solid rgba(216,137,107,.35);
   box-shadow:0 10px 24px rgba(0,0,0,.08);
 }
+.plan-card{
+  background:white;
+  border:1px solid #E5D8C7;
+  border-radius:22px;
+  padding:22px;
+  margin-top:18px;
+  box-shadow:0 8px 20px rgba(0,0,0,.06);
+}
 
+.plan-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:24px;
+  margin-bottom:8px;
+}
 .plan-tier-premium h3{
   color:var(--highlight);
 }
@@ -2795,7 +2808,7 @@ async function openPresentationSection(sectionKey){
   .join('');    
 
         html += `
-       <div class="panel ${plan.plan_name.includes('25%') ? 'plan-tier-premium' : ''}"> 
+   <div class="plan-card ${plan.plan_name.includes('25%') ? 'plan-tier-premium' : ''}">
             <h3>${escapeHtml(plan.plan_name || '')}</h3>
             <p class="small-note">${escapeHtml(plan.plan_description || '')}</p>
             <ul class="check-list">
