@@ -503,12 +503,7 @@ margin-right:auto;
   color:rgba(255,255,255,.82);
   line-height:1.5;
 }
-.presentation-tile-grid{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0, 1fr));
-  gap:14px;
-  margin-top:14px;
-}
+
 
 .presentation-tile{
   min-height:82px;
@@ -538,14 +533,25 @@ margin-right:auto;
   color:white;
   opacity:.85;
 }
+.presentation-tile-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-template-rows:repeat(4, minmax(82px, auto));
+  grid-auto-flow:column;
+  gap:14px;
+  margin-top:14px;
+}
 
-
-
-@media(max-width:760px){
+@media(max-width:560px){
   .presentation-tile-grid{
     grid-template-columns:1fr;
+    grid-template-rows:auto;
+    grid-auto-flow:row;
   }
 }
+
+
+
 .presentation-card button{
   border:1px solid rgba(255,255,255,.4);
   background:#2F7C85;
