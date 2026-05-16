@@ -878,7 +878,42 @@ button.tertiary-btn:active{
       line-height:1.7;
       margin:0;
     }
+.plan-divider{
+  margin:16px 0 10px;
+  padding:10px 14px;
+  border-radius:12px;
+  background:#eef6f7;
+  color:var(--accent);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
 
+.plan-note{
+  margin-top:16px;
+  padding:14px;
+  border-radius:12px;
+  background:#f7f3ee;
+  font-size:13px;
+  line-height:1.6;
+  color:#6d5a49;
+}
+
+.plan-note strong{
+  display:block;
+  margin-bottom:6px;
+  color:#3c2c1f;
+}
+
+.plan-tier-premium{
+  border:2px solid rgba(216,137,107,.35);
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+}
+
+.plan-tier-premium h3{
+  color:var(--highlight);
+}
     .list-row{
       display:flex;
       align-items:center;
@@ -2735,15 +2770,32 @@ async function openPresentationSection(sectionKey){
       `;
     } else {
       for(const plan of plans){
-        const itemsList = String(plan.included_items || '')
-          .split('\n')
-          .map(item => item.trim())
-          .filter(Boolean)
-          .map(item => `<li>${escapeHtml(item)}</li>`)
-          .join('');
+    const itemsList = String(plan.included_items || '')
+  .split('\n')
+  .map(item => item.trim())
+  .filter(Boolean)
+  .map(item => {
+
+    if(item.startsWith('Includes everything')){
+      return `<div class="plan-divider">${escapeHtml(item)}</div>`;
+    }
+
+    if(item.startsWith('Notes:')){
+      return `
+        <div class="plan-note">
+          <strong>Additional Notes</strong>
+          ${escapeHtml(item.replace('Notes:','').trim())}
+        </div>
+      `;
+    }
+
+    return `<li>${escapeHtml(item)}</li>`;
+
+  })
+  .join('');    
 
         html += `
-          <div class="panel">
+       <div class="panel ${plan.plan_name.includes('25%') ? 'plan-tier-premium' : ''}"> 
             <h3>${escapeHtml(plan.plan_name || '')}</h3>
             <p class="small-note">${escapeHtml(plan.plan_description || '')}</p>
             <ul class="check-list">
