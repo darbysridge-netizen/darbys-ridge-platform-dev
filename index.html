@@ -906,24 +906,65 @@ button.tertiary-btn:active{
   color:#3c2c1f;
 }
 
-.plan-tier-premium{
-  border:2px solid rgba(216,137,107,.35);
-  box-shadow:0 10px 24px rgba(0,0,0,.08);
+.presentation-section-heading{
+  text-align:center;
+  background:transparent;
+  padding:0;
+  margin-top:6px;
 }
+
+.presentation-section-heading .hub-section-title{
+  margin-bottom:8px;
+}
+
 .plan-card{
-  background:white;
+  background:linear-gradient(180deg,#ffffff,#FFFCF8);
   border:1px solid #E5D8C7;
-  border-radius:22px;
-  padding:22px;
+  border-radius:26px;
+  padding:24px;
   margin-top:18px;
-  box-shadow:0 8px 20px rgba(0,0,0,.06);
+  box-shadow:0 14px 30px rgba(0,0,0,.08);
 }
 
 .plan-card h3{
   font-family:'Playfair Display',serif;
-  font-size:24px;
-  margin-bottom:8px;
+  font-size:26px;
+  margin:0 0 8px;
+  color:#2E3640;
 }
+
+.plan-card .small-note{
+  margin-bottom:16px;
+}
+
+.plan-card .check-list{
+  list-style:none;
+  padding-left:0;
+}
+
+.plan-card .check-list li{
+  padding:10px 0 10px 26px;
+  border-bottom:1px solid #EFE4D6;
+  position:relative;
+}
+
+.plan-card .check-list li:before{
+  content:"✓";
+  position:absolute;
+  left:0;
+  color:#2F7C85;
+  font-weight:800;
+}
+
+.plan-card .check-list li:last-child{
+  border-bottom:none;
+}
+
+.plan-tier-premium{
+  border:2px solid rgba(216,137,107,.55);
+  box-shadow:0 18px 38px rgba(216,137,107,.16);
+}
+
 .plan-tier-premium h3{
   color:var(--highlight);
 }
@@ -2752,11 +2793,9 @@ async function openPresentationSection(sectionKey){
       ← Back to Presentation
     </button>
 
-    <div class="panel">
-      <div class="hub-kicker">${escapeHtml(section.section_subtitle || '')}</div>
+     <div class="panel presentation-section-heading">
       <h2 class="hub-section-title">${escapeHtml(section.section_title || '')}</h2>
-      <p class="small-note">${escapeHtml(section.section_body || '')}</p>
-    </div>
+    </div>  
   `;
 
   if(sectionKey === 'management_plans'){
