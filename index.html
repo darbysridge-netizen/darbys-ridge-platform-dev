@@ -2787,7 +2787,10 @@ async function openPresentationSection(sectionKey){
   if(presentationCard){
     presentationCard.style.display = 'none';
   }
-
+  const heroArea = document.getElementById('presentationHeroArea');
+  if(heroArea){
+    heroArea.style.display = 'none';
+  }
   let html = `
     <button class="back" type="button" onclick="closePresentationSection()">
       ← Back to Presentation
@@ -2896,7 +2899,12 @@ async function openPresentationSection(sectionKey){
     card.style.display = '';
   }
 
-  loadPresentationSections();
+  const heroArea = document.getElementById('presentationHeroArea');
+  if(heroArea){
+    heroArea.style.display = '';
+  }
+
+  loadPresentationSections(); 
 }   
 async function loadPresentationLibrary(){
 
