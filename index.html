@@ -905,7 +905,16 @@ button.tertiary-btn:active{
   margin-bottom:6px;
   color:#3c2c1f;
 }
-
+.plan-card{
+  background:#FFFCF8;
+  border:1px solid #E7DCCF;
+  border-radius:26px;
+  padding:30px;
+  margin-top:28px;
+  margin-bottom:34px;
+  box-shadow:0 10px 26px rgba(0,0,0,.05);
+  position:relative;
+}
 .presentation-section-heading{
   text-align:center;
   background:transparent;
@@ -957,8 +966,18 @@ button.tertiary-btn:active{
   list-style:none;
   padding-left:0;
   margin:0;
-}
 
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  column-gap:40px;
+}
+@media (max-width:768px){
+
+  .plan-services{
+    grid-template-columns:1fr;
+  }
+
+}
 .plan-services li{
   position:relative;
   padding:10px 0 10px 30px;
@@ -980,15 +999,17 @@ button.tertiary-btn:active{
 }
 
 .plan-notes{
-  margin-top:16px;
-  padding-top:10px;
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid #EFE4D6;
 }
-
 .plan-notes .plan-section-label{
-  margin:0 0 6px;
+  margin:0 0 10px;
   font-size:11px;
-  letter-spacing:.12em;
-  color:#7D6A58;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#C8643D;
+  font-weight:700;
 }
 .plan-notes p{
   margin:6px 0 0;
