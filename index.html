@@ -920,44 +920,134 @@ button.tertiary-btn:active{
 .plan-card{
   background:linear-gradient(180deg,#ffffff,#FFFCF8);
   border:1px solid #E5D8C7;
-  border-radius:26px;
+  border-radius:28px;
   padding:24px;
   margin-top:18px;
-  box-shadow:0 14px 30px rgba(0,0,0,.08);
+  box-shadow:0 16px 34px rgba(0,0,0,.09);
+}
+
+.plan-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
+  margin-bottom:18px;
+}
+
+.plan-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:7px 13px;
+  border-radius:999px;
+  background:#EEF6F7;
+  color:#2F7C85;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:12px;
 }
 
 .plan-card h3{
   font-family:'Playfair Display',serif;
-  font-size:26px;
+  font-size:28px;
+  line-height:1.1;
   margin:0 0 8px;
   color:#2E3640;
 }
 
-.plan-card .small-note{
-  margin-bottom:16px;
+.plan-description{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:#53606b;
 }
 
-.plan-card .check-list{
+.plan-price{
+  text-align:right;
+  min-width:88px;
+}
+
+.plan-price strong{
+  display:block;
+  font-family:'Playfair Display',serif;
+  font-size:42px;
+  line-height:1;
+  color:#2E3640;
+}
+
+.plan-price span{
+  display:block;
+  margin-top:6px;
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#2F7C85;
+}
+
+.plan-section-label{
+  margin-top:20px;
+  margin-bottom:12px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:#2F7C85;
+}
+
+.plan-services{
   list-style:none;
   padding-left:0;
+  margin:0;
 }
 
-.plan-card .check-list li{
-  padding:10px 0 10px 26px;
-  border-bottom:1px solid #EFE4D6;
+.plan-services li{
   position:relative;
+  padding:10px 0 10px 30px;
+  border-bottom:1px solid #EFE4D6;
+  font-size:14px;
+  line-height:1.45;
+  color:#2E3640;
 }
 
-.plan-card .check-list li:before{
+.plan-services li:before{
   content:"✓";
   position:absolute;
   left:0;
-  color:#2F7C85;
+  top:10px;
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  background:#2F7C85;
+  color:white;
+  font-size:12px;
+  line-height:18px;
+  text-align:center;
   font-weight:800;
 }
 
-.plan-card .check-list li:last-child{
+.plan-services li:last-child{
   border-bottom:none;
+}
+
+.plan-notes{
+  margin-top:20px;
+  padding:16px;
+  border-radius:18px;
+  background:#F7F3EE;
+  border:1px solid #E8DCCB;
+}
+
+.plan-notes .plan-section-label{
+  margin-top:0;
+}
+
+.plan-notes p{
+  margin:0;
+  font-size:13px;
+  line-height:1.7;
+  color:#6d5a49;
 }
 
 .plan-tier-premium{
@@ -965,8 +1055,18 @@ button.tertiary-btn:active{
   box-shadow:0 18px 38px rgba(216,137,107,.16);
 }
 
-.plan-tier-premium h3{
-  color:var(--highlight);
+.plan-tier-premium .plan-badge{
+  background:#F8E5DA;
+  color:#C8643D;
+}
+
+.plan-tier-premium .plan-price span,
+.plan-tier-premium .plan-section-label{
+  color:#C8643D;
+}
+
+.plan-tier-premium .plan-services li:before{
+  background:#C8643D;
 }
     .list-row{
       display:flex;
@@ -2825,37 +2925,67 @@ async function openPresentationSection(sectionKey){
       `;
     } else {
       for(const plan of plans){
-    const itemsList = String(plan.included_items || '')
-  .split('\n')
-  .map(item => item.trim())
-  .filter(Boolean)
-  .map(item => {
 
-    if(item.startsWith('Includes everything')){
-      return `<div class="plan-divider">${escapeHtml(item)}</div>`;
-    }
+        const rawLines = String(plan.included_items || '')
+          .split('\n')
+          .map(item => item.trim())
+          .filter(Boolean);
 
-    if(item.startsWith('Notes:')){
-      return `
-        <div class="plan-note">
-          <strong>Additional Notes</strong>
-          ${escapeHtml(item.replace('Notes:','').trim())}
-        </div>
-      `;
-    }
+        const serviceItems = rawLines.filter(item => !item.startsWith('Notes:'));
 
-    return `<li>${escapeHtml(item)}</li>`;
+        const noteItems = rawLines
+          .filter(item => item.startsWith('Notes:'))
+          .map(item => item.replace('Notes:', '').trim());
 
-  })
-  .join('');    
+        const serviceHtml = serviceItems
+          .map(item => `<li>${escapeHtml(item)}</li>`)
+          .join('');
+
+        const notesHtml = noteItems.length
+          ? `
+            <div class="plan-notes">
+              <div class="plan-section-label">Service Notes</div>
+              ${noteItems.map(note => `<p>${escapeHtml(note)}</p>`).join('')}
+            </div>
+          `
+          : '';
+
+        const planName = String(plan.plan_name || '');
+        const planText = planName.toLowerCase();
+
+        const isPremium =
+          planName.includes('25%') ||
+          planText.includes('luxury') ||
+          planText.includes('premier');
+
+        const planBadge = isPremium ? 'Luxury Hosting' : 'Signature Hosting';
 
         html += `
-   <div class="plan-card ${plan.plan_name.includes('25%') ? 'plan-tier-premium' : ''}">
-            <h3>${escapeHtml(plan.plan_name || '')}</h3>
-            <p class="small-note">${escapeHtml(plan.plan_description || '')}</p>
-            <ul class="check-list">
-              ${itemsList}
+          <div class="plan-card ${isPremium ? 'plan-tier-premium' : ''}">
+
+            <div class="plan-top">
+
+              <div>
+                <div class="plan-badge">${planBadge}</div>
+                <h3>${escapeHtml(plan.plan_name || '')}</h3>
+                <p class="plan-description">${escapeHtml(plan.plan_description || '')}</p>
+              </div>
+
+              <div class="plan-price">
+                <strong>${escapeHtml(plan.plan_price || '')}</strong>
+                <span>Management</span>
+              </div>
+
+            </div>
+
+            <div class="plan-section-label">Included Services</div>
+
+            <ul class="plan-services">
+              ${serviceHtml}
             </ul>
+
+            ${notesHtml}
+
           </div>
         `;
       }
