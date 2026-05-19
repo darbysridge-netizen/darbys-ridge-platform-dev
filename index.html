@@ -918,20 +918,35 @@ button.tertiary-btn:active{
 }
 
 .plan-card{
-  background:linear-gradient(180deg,#ffffff,#FFFCF8);
-  border:1px solid #E5D8C7;
-  border-radius:28px;
-  padding:24px;
-  margin-top:18px;
-  box-shadow:0 16px 34px rgba(0,0,0,.09);
+
+  background:
+    linear-gradient(180deg,#fffdfb 0%, #fff8f2 100%);
+
+  border:none;
+
+  border-radius:34px;
+
+  padding:38px;
+
+  margin-top:28px;
+
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.07),
+    0 10px 24px rgba(0,0,0,.03);
+
+  position:relative;
+
+  overflow:hidden;
+
 }
 
 .plan-card-header{
-  border-bottom:1px solid #EFE4D6;
-  padding-bottom:14px;
-  margin-bottom:18px;
-}
 
+  padding-bottom:10px;
+
+  margin-bottom:24px;
+
+}
 .plan-card h3{
   font-family:'Playfair Display',serif;
   font-size:38px;
@@ -964,28 +979,47 @@ button.tertiary-btn:active{
 }
 
 .plan-services li{
+
   position:relative;
-  padding:10px 0 10px 30px;
-  border-bottom:1px solid #EFE4D6;
-  font-size:14px;
-  line-height:1.45;
-  color:#2E3640;
+
+  padding:13px 0 13px 38px;
+
+  font-size:15px;
+
+  line-height:1.65;
+
+  color:#32414d;
+
 }
 
 .plan-services li:before{
+
   content:"✓";
+
   position:absolute;
+
   left:0;
-  top:10px;
-  width:18px;
-  height:18px;
+
+  top:15px;
+
+  width:22px;
+
+  height:22px;
+
   border-radius:999px;
-  background:#2F7C85;
-  color:white;
+
+  background:#EEF6F7;
+
+  color:#2F7C85;
+
   font-size:12px;
-  line-height:18px;
+
+  line-height:22px;
+
   text-align:center;
+
   font-weight:800;
+
 }
 
 .plan-services li:last-child{
@@ -993,11 +1027,20 @@ button.tertiary-btn:active{
 }
 
 .plan-notes{
-  margin-top:22px;
-  padding:16px;
-  border-radius:18px;
-  background:#F7F3EE;
-  border:1px solid #E8DCCB;
+
+  margin-top:30px;
+
+  padding:22px 24px;
+
+  border-radius:24px;
+
+  background:
+    rgba(247,243,238,.55);
+
+  backdrop-filter:blur(10px);
+
+  border:none;
+
 }
 
 .plan-notes .plan-section-label{
@@ -1006,15 +1049,30 @@ button.tertiary-btn:active{
 }
 
 .plan-notes p{
+
   margin:0;
+
   font-size:13px;
-  line-height:1.7;
-  color:#6d5a49;
+
+  line-height:1.9;
+
+  color:#7a6553;
+
+  font-style:italic;
+
 }
 
 .plan-tier-premium{
-  border:2px solid rgba(216,137,107,.55);
-  box-shadow:0 18px 38px rgba(216,137,107,.16);
+
+  background:
+    linear-gradient(180deg,#fffdfb 0%, #fff5ee 100%);
+
+  box-shadow:
+    0 34px 80px rgba(216,137,107,.20),
+    0 12px 28px rgba(0,0,0,.04);
+
+  transform:translateY(-6px);
+
 }
 
 .plan-tier-premium .plan-section-label{
@@ -2923,7 +2981,7 @@ async function openPresentationSection(sectionKey){
               <p class="plan-description">${escapeHtml(plan.plan_description || '')}</p>
             </div>
 
-            <div class="plan-section-label">Included Services</div>
+           
 
             <ul class="plan-services">
               ${serviceHtml}
