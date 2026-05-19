@@ -926,64 +926,25 @@ button.tertiary-btn:active{
   box-shadow:0 16px 34px rgba(0,0,0,.09);
 }
 
-.plan-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:18px;
+.plan-card-header{
+  border-bottom:1px solid #EFE4D6;
+  padding-bottom:14px;
   margin-bottom:18px;
-}
-
-.plan-badge{
-  display:inline-flex;
-  align-items:center;
-  padding:7px 13px;
-  border-radius:999px;
-  background:#EEF6F7;
-  color:#2F7C85;
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  margin-bottom:12px;
 }
 
 .plan-card h3{
   font-family:'Playfair Display',serif;
-  font-size:28px;
-  line-height:1.1;
+  font-size:30px;
+  line-height:1.15;
   margin:0 0 8px;
   color:#2E3640;
 }
 
 .plan-description{
   margin:0;
-  font-size:14px;
+  font-size:15px;
   line-height:1.6;
   color:#53606b;
-}
-
-.plan-price{
-  text-align:right;
-  min-width:88px;
-}
-
-.plan-price strong{
-  display:block;
-  font-family:'Playfair Display',serif;
-  font-size:42px;
-  line-height:1;
-  color:#2E3640;
-}
-
-.plan-price span{
-  display:block;
-  margin-top:6px;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:#2F7C85;
 }
 
 .plan-section-label{
@@ -1032,7 +993,7 @@ button.tertiary-btn:active{
 }
 
 .plan-notes{
-  margin-top:20px;
+  margin-top:22px;
   padding:16px;
   border-radius:18px;
   background:#F7F3EE;
@@ -1041,6 +1002,7 @@ button.tertiary-btn:active{
 
 .plan-notes .plan-section-label{
   margin-top:0;
+  margin-bottom:10px;
 }
 
 .plan-notes p{
@@ -1055,12 +1017,6 @@ button.tertiary-btn:active{
   box-shadow:0 18px 38px rgba(216,137,107,.16);
 }
 
-.plan-tier-premium .plan-badge{
-  background:#F8E5DA;
-  color:#C8643D;
-}
-
-.plan-tier-premium .plan-price span,
 .plan-tier-premium .plan-section-label{
   color:#C8643D;
 }
@@ -2956,26 +2912,15 @@ async function openPresentationSection(sectionKey){
         const isPremium =
           planName.includes('25%') ||
           planText.includes('luxury') ||
-          planText.includes('premier');
-
-        const planBadge = isPremium ? 'Luxury Hosting' : 'Signature Hosting';
+          planText.includes('premier') ||
+          planText.includes('signature');
 
         html += `
           <div class="plan-card ${isPremium ? 'plan-tier-premium' : ''}">
 
-            <div class="plan-top">
-
-              <div>
-                <div class="plan-badge">${planBadge}</div>
-                <h3>${escapeHtml(plan.plan_name || '')}</h3>
-                <p class="plan-description">${escapeHtml(plan.plan_description || '')}</p>
-              </div>
-
-              <div class="plan-price">
-                <strong>${escapeHtml(plan.plan_price || '')}</strong>
-                <span>Management</span>
-              </div>
-
+            <div class="plan-card-header">
+              <h3>${escapeHtml(plan.plan_name || '')}</h3>
+              <p class="plan-description">${escapeHtml(plan.plan_description || '')}</p>
             </div>
 
             <div class="plan-section-label">Included Services</div>
