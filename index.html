@@ -3089,7 +3089,170 @@ async function openPresentationSection(sectionKey){
       <h2 class="hub-section-title">${escapeHtml(section.section_title || '')}</h2>
     </div>  
   `;
+if(sectionKey === 'launch_setup'){
 
+container.innerHTML = `
+
+<div class="presentation-shell">
+
+  <div class="presentation-shell-hero">
+
+    <div class="presentation-shell-hero-content">
+
+      <div class="presentation-shell-kicker">
+        LAUNCH + SETUP
+      </div>
+
+      <div class="presentation-shell-title">
+        A successful launch starts long before the first guest arrives.
+      </div>
+
+      <div class="presentation-shell-line"></div>
+
+      <div class="presentation-shell-description">
+        Hospitality infrastructure, operational organization, branded guest experience systems, and premium onboarding designed to create a smoother launch from day one.
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="presentation-shell-grid">
+
+    <div class="presentation-shell-card">
+
+      <div class="presentation-shell-number">1</div>
+
+      <div class="presentation-shell-label">
+        Setup Services
+      </div>
+
+      <div class="presentation-shell-card-title">
+        Basic Transition Setup
+      </div>
+
+      <div class="presentation-shell-price">
+        Starting at $500+
+      </div>
+
+      <div class="presentation-shell-body">
+        For active listings already operating that need transition restructuring and operational organization.
+      </div>
+
+      <ul class="presentation-shell-list">
+        <li>Transition coordination</li>
+        <li>Operational restructuring</li>
+        <li>Communication alignment</li>
+        <li>Workflow organization</li>
+      </ul>
+
+      <div class="presentation-shell-note">
+        Pricing varies based on current systems, listing readiness, and operational condition.
+      </div>
+
+    </div>
+
+    <div class="presentation-shell-card featured">
+
+      <div class="presentation-shell-number">2</div>
+
+      <div class="presentation-shell-label">
+        Hospitality Launch
+      </div>
+
+      <div class="presentation-shell-card-title">
+        Full Hospitality Setup
+      </div>
+
+      <div class="presentation-shell-price">
+        Starting at $1,500+
+      </div>
+
+      <div class="presentation-shell-body">
+        Designed for properties needing operational infrastructure, hospitality systems, and launch preparation.
+      </div>
+
+      <ul class="presentation-shell-list">
+        <li>Guest-ready preparation</li>
+        <li>Hospitality setup</li>
+        <li>Supply organization</li>
+        <li>Workflow creation</li>
+        <li>Guest experience setup</li>
+      </ul>
+
+      <div class="presentation-shell-note">
+        Additional coordination, extended vendor management, delays, or scope expansion may require additional setup fees.
+      </div>
+
+    </div>
+
+    <div class="presentation-shell-card featured">
+
+      <div class="presentation-shell-number">3</div>
+
+      <div class="presentation-shell-label">
+        Signature Platform
+      </div>
+
+      <div class="presentation-shell-card-title">
+        Branded Digital Guest Guide + Operations Platform
+      </div>
+
+      <div class="presentation-shell-price">
+        Starting at $750+
+      </div>
+
+      <div class="presentation-shell-body">
+        A branded hospitality operating system customized specifically for the property and owner experience.
+      </div>
+
+      <ul class="presentation-shell-list">
+        <li>Branded guest guide</li>
+        <li>Owner visibility tools</li>
+        <li>Team workflow systems</li>
+        <li>Operational organization</li>
+        <li>Guest experience systems</li>
+      </ul>
+
+      <div class="presentation-shell-note">
+        Platform pricing depends on customization level, integrations, workflows, and operational complexity.
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="presentation-shell-cta">
+
+    <div class="presentation-shell-cta-title">
+      Built to launch beautifully — and operate clearly.
+    </div>
+
+    <div class="presentation-shell-cta-buttons">
+
+      <button>
+        Schedule Consultation
+      </button>
+
+      <button>
+        View Management Plans
+      </button>
+
+      <button>
+        Build Your Plan
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+`;
+
+return;
+
+}
   if(sectionKey === 'management_plans'){
 
     const { data: plans, error: plansError } = await supabaseClient
