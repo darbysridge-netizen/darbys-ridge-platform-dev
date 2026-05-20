@@ -1041,6 +1041,222 @@ button.tertiary-btn:active{
 .plan-tier-premium .plan-services li:before{
   background:#C8643D;
 }
+/* Premium Presentation Section Shell */
+
+.presentation-shell{
+  max-width:980px;
+  margin:0 auto;
+}
+
+.presentation-shell-hero{
+  position:relative;
+  min-height:340px;
+  overflow:hidden;
+  margin:-28px -28px 30px;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.76) 0%, rgba(0,0,0,.42) 45%, rgba(0,0,0,.08) 100%),
+    url('ocean-hero.jpeg') center/cover no-repeat;
+}
+
+.presentation-shell-hero-content{
+  position:absolute;
+  left:42px;
+  bottom:38px;
+  max-width:520px;
+  color:white;
+}
+
+.presentation-shell-kicker{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#D7AE6D;
+  margin-bottom:14px;
+}
+
+.presentation-shell-title{
+  font-family:'Playfair Display',serif;
+  font-size:48px;
+  line-height:1.02;
+  margin:0 0 18px;
+}
+
+.presentation-shell-line{
+  width:120px;
+  height:2px;
+  background:#D7AE6D;
+  margin-bottom:18px;
+}
+
+.presentation-shell-description{
+  font-size:15px;
+  line-height:1.6;
+  color:rgba(255,255,255,.92);
+}
+
+.presentation-shell-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:18px;
+}
+
+.presentation-shell-card{
+  background:#FFFCF8;
+  border:1px solid #E8DCCD;
+  padding:26px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+}
+
+.presentation-shell-card.featured{
+  border-color:#D7AE6D;
+  box-shadow:0 14px 30px rgba(215,174,109,.18);
+}
+
+.presentation-shell-number{
+  width:24px;
+  height:24px;
+  border-radius:999px;
+  border:2px solid #D7AE6D;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:18px;
+  color:#1F2833;
+}
+
+.presentation-shell-label{
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:#B57A36;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.presentation-shell-card-title{
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  line-height:1.08;
+  color:#1F2833;
+  margin-bottom:12px;
+}
+
+.presentation-shell-price{
+  font-size:17px;
+  font-weight:900;
+  color:#B57A36;
+  margin-bottom:14px;
+}
+
+.presentation-shell-body{
+  font-size:13px;
+  line-height:1.5;
+  color:#34404B;
+  margin-bottom:18px;
+}
+
+.presentation-shell-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+.presentation-shell-list li{
+  position:relative;
+  padding-left:24px;
+  margin-bottom:10px;
+  font-size:13px;
+  line-height:1.35;
+  color:#1F2833;
+}
+
+.presentation-shell-list li:before{
+  content:"✓";
+  position:absolute;
+  left:0;
+  top:0;
+  width:15px;
+  height:15px;
+  border-radius:999px;
+  background:#D7AE6D;
+  color:white;
+  font-size:10px;
+  font-weight:900;
+  text-align:center;
+  line-height:15px;
+}
+
+.presentation-shell-note{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid #EFE4D6;
+  font-size:12px;
+  line-height:1.45;
+  color:#6B5A4B;
+}
+
+.presentation-shell-cta{
+  margin-top:30px;
+  text-align:center;
+}
+
+.presentation-shell-cta-title{
+  font-family:'Playfair Display',serif;
+  font-size:30px;
+  color:#1F2833;
+  margin-bottom:18px;
+}
+
+.presentation-shell-cta-buttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.presentation-shell-cta-buttons button{
+  border:1px solid #D7AE6D;
+  background:#FFFCF8;
+  color:#B57A36;
+  padding:15px;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+
+.presentation-shell-cta-buttons button:first-child{
+  background:#1F2833;
+  border-color:#1F2833;
+  color:white;
+}
+
+@media(max-width:760px){
+
+  .presentation-shell-hero{
+    margin:-24px -18px 24px;
+    min-height:380px;
+  }
+
+  .presentation-shell-hero-content{
+    left:24px;
+    right:24px;
+    bottom:26px;
+  }
+
+  .presentation-shell-title{
+    font-size:38px;
+  }
+
+  .presentation-shell-grid,
+  .presentation-shell-cta-buttons{
+    grid-template-columns:1fr;
+  }
+
+}    
     .list-row{
       display:flex;
       align-items:center;
