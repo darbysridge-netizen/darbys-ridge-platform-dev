@@ -1050,7 +1050,7 @@ button.tertiary-btn:active{
 
 .presentation-shell-hero{
   position:relative;
-  min-height:340px;
+  min-height:420px;
   overflow:hidden;
   margin:-28px -28px 30px;
   background:
@@ -1062,7 +1062,7 @@ button.tertiary-btn:active{
   position:absolute;
   left:42px;
   bottom:38px;
-  max-width:520px;
+  max-width:430px;
   color:white;
 }
 
@@ -1097,6 +1097,9 @@ button.tertiary-btn:active{
 
 .presentation-shell-grid{
   display:grid;
+  background:#F5F0E8;
+padding:28px;
+border-radius:20px;
   grid-template-columns:repeat(3, 1fr);
   gap:18px;
 }
@@ -1110,9 +1113,9 @@ button.tertiary-btn:active{
 
 .presentation-shell-card.featured{
   border-color:#D7AE6D;
-  box-shadow:0 14px 30px rgba(215,174,109,.18);
+  box-shadow:0 18px 40px rgba(215,174,109,.20);
+  transform:translateY(-10px);
 }
-
 .presentation-shell-number{
   width:24px;
   height:24px;
@@ -3095,13 +3098,7 @@ container.innerHTML = `
 
 <div class="presentation-shell">
 
-  <button
-    class="back"
-    type="button"
-    onclick="showPage('presentationManager')"
-    style="margin-bottom:20px;">
-    ← Back to Presentation Center
-  </button>
+
 
   <div
     class="presentation-shell-hero"
@@ -3130,7 +3127,18 @@ container.innerHTML = `
     </div>
 
   </div>
-
+<div
+  style="
+    text-align:center;
+    margin-bottom:16px;
+    font-size:11px;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    font-weight:800;
+    color:#B57A36;
+  ">
+  Hospitality Readiness Pathways
+</div>
   <div class="presentation-shell-grid">
 
     <div class="presentation-shell-card">
