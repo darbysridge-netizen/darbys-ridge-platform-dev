@@ -3642,13 +3642,15 @@ async function openPresentationSection(sectionKey){
   if(!container) return;
 
   container.innerHTML = '<div class="small-note">Loading section.</div>';
+  document.body.scrollTop = 0;
+document.documentElement.scrollTop = 0;
 
   const heroArea = document.getElementById('presentationHeroArea');
   if(heroArea){
     heroArea.style.display = 'none';
   }
 
- if(sectionKey === 'launch_setup'){
+if(sectionKey === 'launch_setup'){
 
   const { data: items, error } = await supabaseClient
     .from('presentation_section_content')
@@ -3674,12 +3676,10 @@ async function openPresentationSection(sectionKey){
     const bulletsHtml = String(item.bullets || '')
       .split('\n')
       .filter(Boolean)
-      .map(bullet => `
-        <li>${escapeHtml(bullet)}</li>
-      `).join('');
+      .map(bullet => `<li>${escapeHtml(bullet)}</li>`)
+      .join('');
 
     return `
-
       <div class="presentation-section-card launch-detail-card">
 
         <div class="launch-card-eyebrow">
@@ -3707,7 +3707,6 @@ async function openPresentationSection(sectionKey){
         </div>
 
       </div>
-
     `;
 
   }).join('');
@@ -3724,18 +3723,22 @@ async function openPresentationSection(sectionKey){
         ← Back to Presentation Center
       </button>
 
-      <div class="presentation-section-hero">
+      <div class="launch-hero-image">
 
-        <div class="presentation-section-kicker">
-          HOSPITALITY READINESS PATHWAYS
-        </div>
+        <div class="launch-hero-overlay">
 
-        <h1 class="presentation-section-title">
-          Choose the level of support your property actually needs.
-        </h1>
+          <div class="presentation-section-kicker">
+            HOSPITALITY READINESS PATHWAYS
+          </div>
 
-        <div class="presentation-section-intro">
-          Every property starts from a different place. These launch pathways help owners understand the right level of setup, reset, or full launch support before moving forward.
+          <h1 class="launch-hero-title">
+            Launch hospitality the way the property deserves.
+          </h1>
+
+          <div class="launch-hero-intro">
+            Whether transitioning from another manager, rebuilding a struggling rental, or launching for the first time, we help create a more elevated and organized hospitality experience from the start.
+          </div>
+
         </div>
 
       </div>
@@ -3750,78 +3753,6 @@ async function openPresentationSection(sectionKey){
 
   return;
 }
-  if(sectionKey === 'management_plans'){
-
-    const { data: plans, error } = await supabaseClient
-      .from('management_plans')
-      .select('*')
-      .order('display_order', { ascending:true });
-
-    if(error){
-      console.error(error);
-      container.innerHTML = '<div class="panel">Unable to load management plans.</div>';
-      return;
-    }
-
-    const plansHtml = (plans || []).map(plan => {
-
-      const rawLines = String(plan.included_items || '')
-        .split('\n')
-        .map(item => item.trim())
-        .filter(Boolean);
-
-      const serviceItems = rawLines.filter(item => !item.startsWith('Notes:'));
-
-      const serviceHtml = serviceItems
-        .map(item => `<li>${escapeHtml(item)}</li>`)
-        .join('');
-
-      return `
-        <div class="plan-card">
-          <div class="plan-card-header">
-            <h3>${escapeHtml(plan.plan_name || '')}</h3>
-            <p class="plan-description">${escapeHtml(plan.plan_description || '')}</p>
-          </div>
-
-          <ul class="plan-services">
-            ${serviceHtml}
-          </ul>
-        </div>
-      `;
-    }).join('');
-
-    container.innerHTML = `
-      <div class="presentation-shell">
-
-        <button
-          class="presentation-section-back"
-          type="button"
-          onclick="closePresentationSection()"
-        >
-          ← Back to Presentation Center
-        </button>
-
-        <div class="presentation-section-hero">
-          <div class="presentation-section-kicker">
-            Management Plans
-          </div>
-
-          <h1 class="presentation-section-title">
-            Flexible Support Built Around Your Goals
-          </h1>
-
-          <div class="presentation-section-intro">
-            Choose the level of support that fits the property, the owner, and the guest experience.
-          </div>
-        </div>
-
-        ${plansHtml || '<div class="panel">No management plans found.</div>'}
-
-      </div>
-    `;
-
-    return;
-  }
 
 const shellContent = {
 
