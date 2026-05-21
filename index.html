@@ -3650,6 +3650,27 @@ async function openPresentationSection(sectionKey){
   `;
 if(sectionKey === 'launch_setup'){
 
+  const { data: items, error } =
+    await supabaseClient
+      .from('presentation_section_content')
+      .select('*')
+      .eq('presentation_slug', PRESENTATION_SLUG)
+      .eq('section_key', 'launch_setup')
+      .order('sort_order', { ascending:true });
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="panel">
+        Failed loading section.
+      </div>
+    `;
+
+    return;
+  }
+
   container.innerHTML =
     renderPresentationSection({
 
@@ -3661,24 +3682,10 @@ if(sectionKey === 'launch_setup'){
         Every property starts from a different place. Whether you are transitioning from another manager, refreshing an existing rental, or launching for the first time, we help create a smoother path forward.
       `,
 
-      items:[
-
-        {
-          title:'Simple Transfer Setup',
-          text:'For already-operating rentals needing a smooth management transition with minimal disruption.'
-        },
-
-        {
-          title:'Rental Reset + Overhaul',
-          text:'For properties needing updated systems, hospitality improvements, branding, or operational organization.'
-        },
-
-        {
-          title:'Complete Property Launch',
-          text:'For first-time STR owners needing startup guidance, setup support, and hospitality direction.'
-        }
-
-      ]
+      items:(items || []).map(item => ({
+        title:item.title,
+        text:item.body
+      }))
 
     });
 
