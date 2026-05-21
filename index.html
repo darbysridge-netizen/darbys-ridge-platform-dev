@@ -3682,10 +3682,12 @@ if(sectionKey === 'launch_setup'){
         Every property starts from a different place. Whether you are transitioning from another manager, refreshing an existing rental, or launching for the first time, we help create a smoother path forward.
       `,
 
-      items:(items || []).map(item => ({
-        title:item.title,
-        text:item.body
-      }))
+    items:[
+  ...(items || []).map(item => ({
+    title:item.title,
+    text:item.body
+  }))
+] 
 
     });
 
