@@ -3627,63 +3627,108 @@ async function openPresentationSection(sectionKey){
     heroArea.style.display = 'none';
   }
 
-  if(sectionKey === 'launch_setup'){
+ if(sectionKey === 'launch_setup'){
 
-    const { data: items, error } = await supabaseClient
-      .from('presentation_section_content')
-      .select('*')
-      .eq('presentation_slug', PRESENTATION_SLUG)
-      .eq('section_key', 'launch_setup')
-      .order('sort_order', { ascending:true });
+  const { data: items, error } = await supabaseClient
+    .from('presentation_section_content')
+    .select('*')
+    .eq('presentation_slug', PRESENTATION_SLUG)
+    .eq('section_key', 'launch_setup')
+    .order('sort_order', { ascending:true });
 
-    if(error){
-      console.error(error);
-      container.innerHTML = '<div class="panel">Failed loading Launch + Setup.</div>';
-      return;
-    }
-
-    const cardsHtml = (items || []).map(item => `
-      <div class="presentation-section-card">
-        <h3>${escapeHtml(item.title || '')}</h3>
-        <p>${escapeHtml(item.body || '')}</p>
-      </div>
-    `).join('');
+  if(error){
+    console.error(error);
 
     container.innerHTML = `
-      <div class="presentation-shell">
-
-        <button
-          class="presentation-section-back"
-          type="button"
-          onclick="closePresentationSection()"
-        >
-          ← Back to Presentation Center
-        </button>
-
-        <div class="presentation-section-hero">
-          <div class="presentation-section-kicker">
-            Launch + Setup
-          </div>
-
-          <h1 class="presentation-section-title">
-            A Personalized Start for Every Property
-          </h1>
-
-          <div class="presentation-section-intro">
-            Every property starts from a different place. Whether you are transitioning from another manager, refreshing an existing rental, or launching for the first time, we help create a smoother path forward.
-          </div>
-        </div>
-
-        <div class="presentation-section-grid">
-          ${cardsHtml || '<div class="panel">No Launch + Setup content found yet.</div>'}
-        </div>
-
+      <div class="panel">
+        Failed loading Launch + Setup.
       </div>
     `;
 
     return;
   }
 
+  const cardsHtml = (items || []).map(item => {
+
+    const bulletsHtml = String(item.bullets || '')
+      .split('\n')
+      .filter(Boolean)
+      .map(bullet => `
+        <li>${escapeHtml(bullet)}</li>
+      `).join('');
+
+    return `
+
+      <div class="presentation-section-card launch-detail-card">
+
+        <div class="launch-card-eyebrow">
+          ${escapeHtml(item.eyebrow || '')}
+        </div>
+
+        <h3>
+          ${escapeHtml(item.title || '')}
+        </h3>
+
+        <div class="launch-card-price">
+          ${escapeHtml(item.price || '')}
+        </div>
+
+        <p>
+          ${escapeHtml(item.body || '')}
+        </p>
+
+        <ul class="launch-card-list">
+          ${bulletsHtml}
+        </ul>
+
+        <div class="launch-card-note">
+          ${escapeHtml(item.note || '')}
+        </div>
+
+      </div>
+
+    `;
+
+  }).join('');
+
+  container.innerHTML = `
+
+    <div class="presentation-shell">
+
+      <button
+        class="presentation-section-back"
+        type="button"
+        onclick="closePresentationSection()"
+      >
+        ← Back to Presentation Center
+      </button>
+
+      <div class="presentation-section-hero">
+
+        <div class="presentation-section-kicker">
+          HOSPITALITY READINESS PATHWAYS
+        </div>
+
+        <h1 class="presentation-section-title">
+          Choose the level of support your property actually needs.
+        </h1>
+
+        <div class="presentation-section-intro">
+          Every property starts from a different place. These launch pathways help owners understand the right level of setup, reset, or full launch support before moving forward.
+        </div>
+
+      </div>
+
+      <div class="presentation-section-grid">
+        ${cardsHtml}
+      </div>
+
+    </div>
+
+  `;
+
+  return;
+}
   if(sectionKey === 'management_plans'){
 
     const { data: plans, error } = await supabaseClient
