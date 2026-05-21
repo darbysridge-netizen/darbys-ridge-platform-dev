@@ -3817,7 +3817,112 @@ if(sectionKey === 'launch_setup'){
 
   return;
 }
+if(sectionKey === 'management_plans'){
 
+  const { data: plans, error } = await supabaseClient
+    .from('management_plans')
+    .select('*')
+    .order('display_order', { ascending:true });
+
+  if(error){
+
+    console.error(error);
+
+    container.innerHTML = `
+      <div class="panel">
+        Unable to load management plans.
+      </div>
+    `;
+
+    return;
+  }
+
+  const plansHtml = (plans || []).map(plan => {
+
+    const rawLines = String(plan.included_items || '')
+      .split('\n')
+      .map(item => item.trim())
+      .filter(Boolean);
+
+    const serviceItems =
+      rawLines.filter(item => !item.startsWith('Notes:'));
+
+    const serviceHtml = serviceItems
+      .map(item => `<li>${escapeHtml(item)}</li>`)
+      .join('');
+
+    return `
+
+      <div class="plan-card">
+
+        <div class="plan-card-header">
+
+          <div class="plan-tier">
+            ${escapeHtml(plan.plan_name || '')}
+          </div>
+
+          <div class="plan-price">
+            ${escapeHtml(plan.price_display || '')}
+          </div>
+
+          <p class="plan-description">
+            ${escapeHtml(plan.plan_description || '')}
+          </p>
+
+        </div>
+
+        <ul class="plan-services">
+          ${serviceHtml}
+        </ul>
+
+      </div>
+
+    `;
+
+  }).join('');
+
+  container.innerHTML = `
+
+    <div class="presentation-shell">
+
+      <button
+        class="presentation-section-back"
+        type="button"
+        onclick="closePresentationSection()"
+      >
+        ← Back to Presentation Center
+      </button>
+
+      <div class="launch-hero-image">
+
+        <div class="launch-hero-overlay">
+
+          <div class="presentation-section-kicker">
+            MANAGEMENT STRUCTURE
+          </div>
+
+          <h1 class="launch-hero-title">
+            Flexible support designed around the property.
+          </h1>
+
+          <div class="launch-hero-intro">
+            Every property requires a different level of operational support, hospitality involvement, and owner visibility. These plans create a flexible foundation that can evolve with the property.
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="management-plans-stack">
+        ${plansHtml}
+      </div>
+
+    </div>
+
+  `;
+
+  return;
+}
 const shellContent = {
 
   management_plans:{
