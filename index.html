@@ -478,103 +478,271 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
 
 /* Luxury Presentation Center Shell */
 
+/* Luxury Presentation Center */
+
 .presentation-card{
   margin:34px auto 0;
   max-width:720px;
   background:
-    linear-gradient(135deg, rgba(31,40,51,.96), rgba(20,36,51,.98));
+    linear-gradient(135deg, rgba(17,30,42,.96), rgba(38,55,66,.96)),
+    url('ocean-hero.jpeg') center/cover no-repeat;
   color:white;
-  border:1px solid rgba(215,174,109,.45);
+  border:1px solid rgba(215,174,109,.55);
   border-radius:30px;
   padding:34px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:22px;
-  box-shadow:0 18px 42px rgba(0,0,0,.18);
+  box-shadow:0 22px 48px rgba(0,0,0,.22);
 }
 
 .presentation-card h3{
   font-family:'Playfair Display',serif;
-  font-size:34px;
-  line-height:1.05;
+  font-size:36px;
+  line-height:1.02;
   margin:0 0 10px;
   color:white;
 }
 
 .presentation-card p{
   margin:0;
-  color:rgba(255,255,255,.82);
-  line-height:1.6;
+  max-width:480px;
   font-size:14px;
-  max-width:460px;
+  line-height:1.65;
+  color:rgba(255,255,255,.86);
 }
 
 .presentation-card button{
-  border:1px solid rgba(215,174,109,.65);
+  border:1px solid rgba(215,174,109,.75);
   background:#D7AE6D;
-  color:#1F2833;
+  color:#172331;
   border-radius:999px;
   padding:14px 20px;
   font-size:12px;
   font-weight:900;
-  letter-spacing:.08em;
+  letter-spacing:.1em;
   text-transform:uppercase;
   cursor:pointer;
   white-space:nowrap;
 }
 
 .presentation-card button:nth-child(2){
-  background:transparent !important;
+  background:rgba(255,255,255,.08) !important;
   color:white;
+}
+
+.presentation-luxury-wrap{
+  max-width:1180px;
+  margin:0 auto;
+}
+
+.presentation-luxury-hero{
+  position:relative;
+  min-height:520px;
+  margin:-28px -28px 36px;
+  overflow:hidden;
+  background:
+    linear-gradient(90deg, rgba(10,18,28,.88) 0%, rgba(10,18,28,.58) 42%, rgba(10,18,28,.12) 100%),
+    url('ocean-hero.jpeg') center/cover no-repeat;
+}
+
+.presentation-luxury-hero-inner{
+  position:absolute;
+  left:52px;
+  bottom:52px;
+  max-width:560px;
+  color:white;
+}
+
+.presentation-luxury-logo{
+  font-size:13px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:#D7AE6D;
+  font-weight:800;
+  margin-bottom:28px;
+}
+
+.presentation-luxury-title{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  line-height:.98;
+  margin:0 0 12px;
+  color:white;
+}
+
+.presentation-luxury-subtitle{
+  font-family:'Playfair Display',serif;
+  font-size:31px;
+  font-style:italic;
+  line-height:1.15;
+  color:rgba(255,255,255,.94);
+  margin-bottom:24px;
+}
+
+.presentation-luxury-line{
+  width:92px;
+  height:2px;
+  background:#D7AE6D;
+  margin-bottom:24px;
+}
+
+.presentation-luxury-intro{
+  font-size:16px;
+  line-height:1.75;
+  max-width:470px;
+  color:rgba(255,255,255,.9);
+}
+
+.presentation-menu-shell{
+  padding:0 20px 36px;
+}
+
+.presentation-menu-label{
+  text-align:center;
+  margin-bottom:22px;
+  font-size:11px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:#B57A36;
+  font-weight:900;
 }
 
 .presentation-tile-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  grid-template-rows:repeat(4, minmax(104px, auto));
+  grid-template-rows:repeat(4, minmax(112px, auto));
   grid-auto-flow:column;
-  gap:18px 28px;
-  margin:22px auto 34px;
-  max-width:940px;
+  gap:18px 66px;
   position:relative;
 }
 
-.presentation-tile{
-  min-height:104px;
-  border:1px solid #E5D8C7;
-  border-radius:8px;
+.presentation-tile-grid:before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom, transparent, rgba(181,122,54,.45), transparent);
+}
+
+.presentation-tile-grid:after{
+  content:"✦";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%, -50%);
+  width:42px;
+  height:42px;
+  border-radius:999px;
   background:#FFFCF8;
-  color:#1F2833;
-  box-shadow:0 10px 24px rgba(0,0,0,.07);
-  padding:22px 24px;
-  text-align:left;
-  cursor:pointer;
+  border:1px solid rgba(181,122,54,.35);
+  color:#B57A36;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  gap:18px;
+  justify-content:center;
+  font-size:22px;
+}
+
+.presentation-tile{
+  min-height:112px;
+  border:1px solid rgba(229,216,199,.95);
+  border-radius:10px;
+  background:
+    linear-gradient(135deg, rgba(255,252,248,.98), rgba(248,244,238,.98));
+  color:#1F2833;
+  box-shadow:0 12px 28px rgba(31,40,51,.09);
+  padding:24px;
+  text-align:left;
+  cursor:pointer;
+  display:grid;
+  grid-template-columns:44px 1px 1fr 24px;
+  align-items:center;
+  gap:20px;
   transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 
 .presentation-tile:hover{
   transform:translateY(-2px);
-  box-shadow:0 16px 34px rgba(0,0,0,.10);
   border-color:#D7AE6D;
+  box-shadow:0 18px 36px rgba(31,40,51,.13);
+}
+
+.presentation-tile-number{
+  font-family:'Playfair Display',serif;
+  color:#B57A36;
+  font-size:18px;
+}
+
+.presentation-tile-divider{
+  width:1px;
+  height:56px;
+  background:rgba(181,122,54,.32);
 }
 
 .presentation-tile strong{
   font-family:'Playfair Display',serif;
-  font-size:23px;
-  line-height:1.1;
-  color:#1F2833;
+  font-size:24px;
+  line-height:1.08;
+  color:#111C28;
   font-weight:500;
+}
+
+.presentation-tile small{
+  display:block;
+  margin-top:8px;
+  color:#34404B;
+  font-size:12px;
+  line-height:1.45;
+  font-family:'Inter',sans-serif;
 }
 
 .presentation-tile span{
   color:#B57A36;
   font-size:26px;
-  opacity:1;
+}
+
+.presentation-promise{
+  display:grid;
+  grid-template-columns:.85fr 1.15fr;
+  margin:20px -28px 0;
+  background:#F8F4EE;
+  border-top:1px solid #E6D8C8;
+}
+
+.presentation-promise-copy{
+  padding:54px 44px;
+}
+
+.presentation-promise-kicker{
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#B57A36;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.presentation-promise h2{
+  font-family:'Playfair Display',serif;
+  font-size:44px;
+  line-height:1.04;
+  color:#111C28;
+  margin:0 0 22px;
+}
+
+.presentation-promise p{
+  font-size:15px;
+  line-height:1.7;
+  color:#34404B;
+  margin:0;
+}
+
+.presentation-promise-image{
+  min-height:320px;
+  background:url('hero.jpg') center/cover no-repeat;
 }
 
 @media(max-width:760px){
@@ -588,6 +756,29 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
     width:100%;
   }
 
+  .presentation-luxury-hero{
+    margin:-24px -18px 28px;
+    min-height:480px;
+  }
+
+  .presentation-luxury-hero-inner{
+    left:26px;
+    right:26px;
+    bottom:34px;
+  }
+
+  .presentation-luxury-title{
+    font-size:43px;
+  }
+
+  .presentation-luxury-subtitle{
+    font-size:25px;
+  }
+
+  .presentation-menu-shell{
+    padding:0 0 30px;
+  }
+
   .presentation-tile-grid{
     grid-template-columns:1fr;
     grid-template-rows:auto;
@@ -595,8 +786,37 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
     gap:14px;
   }
 
+  .presentation-tile-grid:before,
+  .presentation-tile-grid:after{
+    display:none;
+  }
+
   .presentation-tile{
-    min-height:92px;
+    grid-template-columns:34px 1px 1fr 20px;
+    gap:14px;
+    min-height:104px;
+    padding:20px;
+  }
+
+  .presentation-tile strong{
+    font-size:22px;
+  }
+
+  .presentation-promise{
+    grid-template-columns:1fr;
+    margin:10px -18px 0;
+  }
+
+  .presentation-promise-copy{
+    padding:38px 26px;
+  }
+
+  .presentation-promise h2{
+    font-size:36px;
+  }
+
+  .presentation-promise-image{
+    min-height:240px;
   }
 }
     .bottom-nav{
@@ -3034,27 +3254,104 @@ async function loadPresentationSections(){
     return;
   }
 
+  const descriptions = {
+    launch_setup: 'Three tailored paths to prepare, transition, or fully launch a property.',
+    management_plans: 'Clear service levels designed around owner goals and property needs.',
+    branded_hospitality_platform: 'Connected guest, owner, and team systems branded around the property.',
+    path_to_listing: 'A guided roadmap from property readiness to guest-facing launch.',
+    guest_experience: 'Thoughtful hospitality touches that create smoother stays and stronger reviews.',
+    owner_experience: 'Visibility, confidence, and organized communication for property owners.',
+    team_experience: 'Cleaner workflows for turnovers, supplies, maintenance, and accountability.',
+    build_your_plan: 'A guided way to shape the right package instead of forcing one-size-fits-all.'
+  };
+
   let html = `
-    <h2 class="hub-section-title">Choose an Area</h2>
-    <div class="presentation-tile-grid">
+    <div class="presentation-luxury-wrap">
+
+      <div class="presentation-luxury-hero">
+        <div class="presentation-luxury-hero-inner">
+          <div class="presentation-luxury-logo">
+            SUNSHINE PROPERTY MANAGEMENT
+          </div>
+
+          <h1 class="presentation-luxury-title">
+            Boutique Hospitality Management
+          </h1>
+
+          <div class="presentation-luxury-subtitle">
+            Built Around the Property.
+          </div>
+
+          <div class="presentation-luxury-line"></div>
+
+          <div class="presentation-luxury-intro">
+            We combine elevated guest experiences, owner confidence, and operational excellence to protect your investment and grow your property’s potential.
+          </div>
+        </div>
+      </div>
+
+      <div class="presentation-menu-shell">
+        <div class="presentation-menu-label">
+          Presentation Center
+        </div>
+
+        <div class="presentation-tile-grid">
   `;
+
+  let number = 1;
 
   for(const section of sections){
 
+    const paddedNumber = String(number).padStart(2, '0');
+    const description = descriptions[section.section_key] || '';
 
     html += `
       <button
         type="button"
-     class="presentation-tile"
+        class="presentation-tile"
         onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
       >
-        <strong>${escapeHtml(section.section_title || '')}</strong>
+        <div class="presentation-tile-number">${paddedNumber}</div>
+        <div class="presentation-tile-divider"></div>
+
+        <div>
+          <strong>${escapeHtml(section.section_title || '')}</strong>
+          <small>${escapeHtml(description)}</small>
+        </div>
+
         <span>›</span>
       </button>
     `;
+
+    number++;
   }
 
-  html += '</div>';
+  html += `
+        </div>
+      </div>
+
+      <div class="presentation-promise">
+        <div class="presentation-promise-copy">
+          <div class="presentation-promise-kicker">
+            Our Promise
+          </div>
+
+          <h2>
+            Your Property.<br>
+            Your Goals.<br>
+            Our Expertise.
+          </h2>
+
+          <p>
+            We do not believe in one-size-fits-all management. We build hospitality, operations, and owner support around the property itself.
+          </p>
+        </div>
+
+        <div class="presentation-promise-image"></div>
+      </div>
+
+    </div>
+  `;
 
   container.innerHTML = html;
 }
@@ -3078,10 +3375,7 @@ async function openPresentationSection(sectionKey){
     return;
   }
 
-  const presentationCard = document.querySelector('.presentation-card');
-  if(presentationCard){
-    presentationCard.style.display = 'none';
-  }
+
   const heroArea = document.getElementById('presentationHeroArea');
   if(heroArea){
     heroArea.style.display = 'none';
@@ -3392,12 +3686,7 @@ return;
 } 
  function closePresentationSection(){
 
-  const card =
-    document.querySelector('.presentation-card');
-
-  if(card){
-    card.style.display = '';
-  }
+ 
 
   const heroArea = document.getElementById('presentationHeroArea');
   if(heroArea){
