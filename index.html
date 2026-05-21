@@ -649,8 +649,8 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
 .presentation-tile{
   position:relative;
   overflow:hidden;
-  min-height:240px;
-  border:none;
+  min-height:150px;
+  border:1px solid rgba(215,174,109,.32);
   border-radius:18px;
   padding:28px;
   text-align:left;
@@ -659,23 +659,11 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
   flex-direction:column;
   justify-content:flex-end;
   align-items:flex-start;
-  background-size:cover;
-  background-position:center;
-  color:white;
-  box-shadow:0 18px 42px rgba(0,0,0,.24);
+  background:
+    linear-gradient(135deg, rgba(255,252,248,.98), rgba(235,226,212,.96));
+  color:#111C28;
+  box-shadow:0 18px 42px rgba(0,0,0,.18);
   transition:transform .22s ease, box-shadow .22s ease;
-}
-
-.presentation-tile:before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,.20));
-}
-
-.presentation-tile > *{
-  position:relative;
-  z-index:2;
 }
 
 .presentation-tile:hover{
@@ -693,17 +681,17 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
 
 .presentation-tile strong{
   font-family:'Playfair Display',serif;
-  font-size:34px;
+  font-size:32px;
   line-height:1;
-  color:white;
+  color:#111C28;
   font-weight:500;
-  max-width:280px;
+  max-width:300px;
 }
 
 .presentation-tile small{
   display:block;
   margin-top:14px;
-  color:rgba(255,255,255,.92);
+  color:#42505B;
   font-size:12px;
   line-height:1.55;
   font-family:'Inter',sans-serif;
@@ -828,6 +816,19 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
     min-height:240px;
   }
 }
+ .presentation-section-back{
+  display:inline-block;
+  margin:24px 0 18px;
+  border:none;
+  background:#1F2833;
+  color:white;
+  border-radius:999px;
+  padding:11px 18px;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  box-shadow:0 8px 18px rgba(0,0,0,.16);
+}   
 /* FINAL Presentation View Stage Override */
 
 .hub-mode #presentationView.page{
@@ -3428,17 +3429,7 @@ async function loadPresentationSections(){
     build_your_plan: 'Shape the right package.'
   };
 
-  const cardImages = {
-    launch_setup:'hero.jpg',
-    management_plans:'interior.jpg',
-    branded_hospitality_platform:'ocean-guide.jpg',
-    path_to_listing:'ocean-local.jpg',
-    guest_experience:'ocean-enhance.jpg',
-    owner_experience:'ocean-memories.jpeg',
-    team_experience:'ocean-checkout.jpeg',
-    build_your_plan:'ocean-feature.jpg'
-  };
-
+ 
    let html = `
     <div class="presentation-final-menu-label">
       Presentation Center
@@ -3455,12 +3446,11 @@ async function loadPresentationSections(){
     const description = descriptions[section.section_key] || '';
 
     html += `
-           <button
+             <button
         type="button"
         class="presentation-tile"
-        style="background-image:url('${cardImages[section.section_key] || 'hero.jpg'}');"
         onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
-      >
+      >  
         <div class="presentation-tile-number">${paddedNumber}</div>
         <div class="presentation-tile-divider"></div>
 
@@ -3528,9 +3518,9 @@ async function openPresentationSection(sectionKey){
     heroArea.style.display = 'none';
   }
   let html = `
-    <button class="back" type="button" onclick="closePresentationSection()">
-      ← Back to Presentation
-    </button>
+    <button class="presentation-section-back" type="button" onclick="closePresentationSection()">
+      ← Back to Presentation Center
+    </button> 
 
      <div class="panel presentation-section-heading">
       <h2 class="hub-section-title">${escapeHtml(section.section_title || '')}</h2>
@@ -3539,7 +3529,9 @@ async function openPresentationSection(sectionKey){
 if(sectionKey === 'launch_setup'){
 
 container.innerHTML = `
-
+<button class="presentation-section-back" type="button" onclick="closePresentationSection()">
+  ← Back to Presentation Center
+</button>
 <div class="presentation-shell">
 
 
