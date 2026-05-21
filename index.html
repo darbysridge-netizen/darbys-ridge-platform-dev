@@ -1697,7 +1697,28 @@ background:#F8F4EE;
   border-color:#1F2833;
   color:white;
 }
+.presentation-placeholder-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  margin-top:40px;
+}
 
+.presentation-placeholder-card{
+  height:260px;
+  border-radius:26px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(8px);
+}
+
+@media(max-width:760px){
+
+  .presentation-placeholder-grid{
+    grid-template-columns:1fr;
+  }
+
+}
 @media(max-width:760px){
 
   .presentation-shell-hero{
@@ -3802,7 +3823,58 @@ async function openPresentationSection(sectionKey){
     return;
   }
 
+const shellContent = {
+
+  management_plans:{
+    kicker:'Management Plans',
+    title:'Flexible Support Designed Around the Property',
+    intro:'Every owner needs a different level of support. Our management structure is designed to adapt to the property, communication style, and operational goals.'
+  },
+
+  branded_hospitality_platform:{
+    kicker:'Branded Hospitality Platform',
+    title:'Connected Hospitality Infrastructure',
+    intro:'A branded operational system designed to organize guest experience, owner visibility, team workflows, and hospitality operations in one connected platform.'
+  },
+
+  path_to_listing:{
+    kicker:'Path to Listing',
+    title:'From Property Readiness to Guest-Facing Launch',
+    intro:'A guided launch pathway that helps prepare the property operationally, visually, and strategically before going live to guests.'
+  },
+
+  guest_experience:{
+    kicker:'Guest Experience',
+    title:'Thoughtful Hospitality Creates Stronger Reviews',
+    intro:'From arrival flow to communication touchpoints, every part of the guest experience is designed to feel smoother, clearer, and more elevated.'
+  },
+
+  owner_experience:{
+    kicker:'Owner Experience',
+    title:'Visibility, Confidence, and Organized Communication',
+    intro:'Owners should feel informed and supported without being overwhelmed by operations. Our systems are designed to simplify visibility and communication.'
+  },
+
+  team_experience:{
+    kicker:'Team Experience',
+    title:'Cleaner Workflows Create Better Operations',
+    intro:'Team systems help organize turnovers, maintenance, supplies, accountability, and property communication through one connected workflow.'
+  },
+
+  build_your_plan:{
+    kicker:'Build Your Plan',
+    title:'Shape the Right Hospitality Partnership',
+    intro:'Not every property needs the same structure. Build a support plan based on the property’s actual goals, operational needs, and guest expectations.'
+  }
+
+};
+
+const sectionData = shellContent[sectionKey];
+
+if(sectionData){
+
   container.innerHTML = `
+
     <div class="presentation-shell">
 
       <button
@@ -3813,15 +3885,36 @@ async function openPresentationSection(sectionKey){
         ← Back to Presentation Center
       </button>
 
-      <div class="panel">
-        <h3>${escapeHtml(sectionKey.replaceAll('_', ' '))}</h3>
-        <p class="small-note">
-          This section shell is ready. Content will be connected next.
-        </p>
+      <div class="presentation-section-hero">
+
+        <div class="presentation-section-kicker">
+          ${sectionData.kicker}
+        </div>
+
+        <h1 class="presentation-section-title">
+          ${sectionData.title}
+        </h1>
+
+        <div class="presentation-section-intro">
+          ${sectionData.intro}
+        </div>
+
+      </div>
+
+      <div class="presentation-placeholder-grid">
+
+        <div class="presentation-placeholder-card"></div>
+        <div class="presentation-placeholder-card"></div>
+        <div class="presentation-placeholder-card"></div>
+
       </div>
 
     </div>
+
   `;
+
+  return;
+}  
 }
  function closePresentationSection(){
 
