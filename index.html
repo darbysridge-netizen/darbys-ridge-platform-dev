@@ -753,6 +753,75 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
   min-height:520px;
   background:url('interior.jpg') center/cover no-repeat;
 }
+.presentation-section-hero{
+  margin-bottom:42px;
+}
+
+.presentation-section-kicker{
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#B57A36;
+  font-weight:900;
+  margin-bottom:18px;
+}
+
+.presentation-section-title{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  line-height:.96;
+  color:#111C28;
+  margin:0 0 22px;
+  max-width:760px;
+}
+
+.presentation-section-intro{
+  max-width:760px;
+  font-size:16px;
+  line-height:1.8;
+  color:#42505B;
+}
+
+.presentation-section-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:24px;
+}
+
+.presentation-section-card{
+  background:#FFFCF8;
+  border:1px solid rgba(215,174,109,.18);
+  border-radius:18px;
+  padding:30px;
+  box-shadow:0 12px 28px rgba(0,0,0,.08);
+}
+
+.presentation-section-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  line-height:1.05;
+  color:#111C28;
+  margin:0 0 16px;
+}
+
+.presentation-section-card p{
+  font-size:15px;
+  line-height:1.7;
+  color:#42505B;
+  margin:0;
+}
+
+@media(max-width:760px){
+
+  .presentation-section-title{
+    font-size:42px;
+  }
+
+  .presentation-section-grid{
+    grid-template-columns:1fr;
+  }
+
+}    
 @media(max-width:760px){
   .presentation-card{
     flex-direction:column;
@@ -3497,6 +3566,54 @@ async function loadPresentationSections(){
 
   container.innerHTML = html;
 }
+function renderPresentationSection(config){
+
+  return `
+    <div class="presentation-shell">
+
+      <button
+        class="presentation-section-back"
+        type="button"
+        onclick="closePresentationSection()"
+      >
+        ← Back to Presentation Center
+      </button>
+
+      <div class="presentation-section-hero">
+
+        <div class="presentation-section-kicker">
+          ${config.kicker || 'Sunshine Property Management'}
+        </div>
+
+        <h1 class="presentation-section-title">
+          ${config.title || ''}
+        </h1>
+
+        <div class="presentation-section-intro">
+          ${config.intro || ''}
+        </div>
+
+      </div>
+
+      <div class="presentation-section-grid">
+
+        ${(config.items || []).map(item => `
+          <div class="presentation-section-card">
+
+            <h3>${item.title || ''}</h3>
+
+            <p>
+              ${item.text || ''}
+            </p>
+
+          </div>
+        `).join('')}
+
+      </div>
+
+    </div>
+  `;
+}    
 async function openPresentationSection(sectionKey){
 
   const container = document.getElementById('presentationSectionsContainer');
@@ -3533,192 +3650,39 @@ async function openPresentationSection(sectionKey){
   `;
 if(sectionKey === 'launch_setup'){
 
-container.innerHTML = `
-<button class="presentation-section-back" type="button" onclick="closePresentationSection()">
-  ← Back to Presentation Center
-</button>
-<div class="presentation-shell">
+  container.innerHTML =
+    renderPresentationSection({
 
+      kicker:'Launch + Setup',
 
+      title:'A Personalized Start for Every Property',
 
-  <div
-    class="presentation-shell-hero"
-    style="
-      background:
-      linear-gradient(90deg, rgba(0,0,0,.76) 0%, rgba(0,0,0,.42) 45%, rgba(0,0,0,.08) 100%),
-      url('hero.jpg') center/cover no-repeat;
-    ">
+      intro:`
+        Every property starts from a different place. Whether you are transitioning from another manager, refreshing an existing rental, or launching for the first time, we help create a smoother path forward.
+      `,
 
-    <div class="presentation-shell-hero-content">
+      items:[
 
-      <div class="presentation-shell-kicker">
-        LAUNCH + SETUP
-      </div>
+        {
+          title:'Simple Transfer Setup',
+          text:'For already-operating rentals needing a smooth management transition with minimal disruption.'
+        },
 
-      <div class="presentation-shell-title">
-        Every property starts from a different place.
-      </div>
+        {
+          title:'Rental Reset + Overhaul',
+          text:'For properties needing updated systems, hospitality improvements, branding, or operational organization.'
+        },
 
-      <div class="presentation-shell-line"></div>
+        {
+          title:'Complete Property Launch',
+          text:'For first-time STR owners needing startup guidance, setup support, and hospitality direction.'
+        }
 
-      <div class="presentation-shell-description">
-        Some homes are already operating smoothly. Others need a complete hospitality reset. Some are launching for the very first time. Our setup structure is designed around the level of support each property truly needs.
-      </div>
+      ]
 
-    </div>
+    });
 
-  </div>
-<div
-  style="
-    text-align:center;
-    margin-bottom:16px;
-    font-size:11px;
-    letter-spacing:.24em;
-    text-transform:uppercase;
-    font-weight:800;
-    color:#B57A36;
-  ">
-  Hospitality Readiness Pathways
-</div>
-  <div class="presentation-shell-grid">
-
-    <div class="presentation-shell-card">
-
-      <div class="presentation-shell-number">1</div>
-
-      <div class="presentation-shell-label">
-        Existing Rental
-      </div>
-
-      <div class="presentation-shell-card-title">
-        Simple Transfer Setup
-      </div>
-
-      <div class="presentation-shell-price">
-        Starting at $500+
-      </div>
-
-      <div class="presentation-shell-body">
-        For established short-term rentals already operating and guest-ready that simply need a smooth transition into Sunshine management.
-      </div>
-
-      <ul class="presentation-shell-list">
-        <li>Management transfer</li>
-        <li>Calendar coordination</li>
-        <li>Guest communication transition</li>
-        <li>Team onboarding</li>
-        <li>Operational alignment</li>
-      </ul>
-
-      <div class="presentation-shell-note">
-        Best for properties already functioning well with minimal restructuring needed.
-      </div>
-
-    </div>
-
-   <div class="presentation-shell-card">
-
-      <div class="presentation-shell-number">2</div>
-
-      <div class="presentation-shell-label">
-        Hospitality Overhaul
-      </div>
-
-      <div class="presentation-shell-card-title">
-        Rental Reset + Overhaul
-      </div>
-
-      <div class="presentation-shell-price">
-        Starting at $1,000+
-      </div>
-
-      <div class="presentation-shell-body">
-        For properties that have been rented previously but need major improvements to the listing, operations, guest experience, or overall presentation.
-      </div>
-
-      <ul class="presentation-shell-list">
-        <li>Listing rebuild</li>
-        <li>Guest experience improvements</li>
-        <li>Hospitality restructuring</li>
-        <li>Property recommendations</li>
-        <li>Operational cleanup</li>
-        <li>Workflow improvements</li>
-      </ul>
-
-      <div class="presentation-shell-note">
-        Pricing varies depending on current property condition, operational issues, and setup complexity.
-      </div>
-
-    </div>
-
- <div class="presentation-shell-card">
-
-      <div class="presentation-shell-number">3</div>
-
-      <div class="presentation-shell-label">
-        Full Launch
-      </div>
-
-      <div class="presentation-shell-card-title">
-        Complete Property Launch
-      </div>
-
-      <div class="presentation-shell-price">
-        Starting at $1,500+
-      </div>
-
-      <div class="presentation-shell-body">
-        Designed for properties launching as short-term rentals for the first time or requiring complete startup guidance from the ground up.
-      </div>
-
-      <ul class="presentation-shell-list">
-        <li>Licensing guidance</li>
-        <li>Inspection coordination</li>
-        <li>Launch preparation</li>
-        <li>Hospitality setup planning</li>
-        <li>Guest-ready organization</li>
-        <li>Listing creation</li>
-        <li>Operational setup</li>
-      </ul>
-
-      <div class="presentation-shell-note">
-        Larger startup projects may require phased onboarding, vendor coordination, and expanded launch timelines.
-      </div>
-
-    </div>
-
-  </div>
-
-  <div class="presentation-shell-cta">
-
-    <div class="presentation-shell-cta-title">
-      Built around the level of support your property actually needs.
-    </div>
-
-    <div class="presentation-shell-cta-buttons">
-
-      <button>
-        Schedule Consultation
-      </button>
-
-      <button>
-        View Management Plans
-      </button>
-
-      <button>
-        Build Your Plan
-      </button>
-
-    </div>
-
-  </div>
-
-</div>
-
-`;
-
-return;
-
+  return;
 }
   if(sectionKey === 'management_plans'){
 
