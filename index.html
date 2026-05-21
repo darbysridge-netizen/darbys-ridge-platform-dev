@@ -819,6 +819,158 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
     min-height:240px;
   }
 }
+/* FINAL Presentation View Stage Override */
+
+.hub-mode #presentationView.page{
+  max-width:none;
+  width:100%;
+  padding:0;
+  background:#F1ECE4;
+}
+
+#presentationView .back{
+  position:absolute;
+  top:28px;
+  left:38px;
+  z-index:20;
+  color:white;
+  background:rgba(17,28,40,.55);
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:999px;
+  padding:10px 16px;
+  backdrop-filter:blur(8px);
+}
+
+#presentationViewContent{
+  width:100%;
+}
+
+.presentation-final-stage{
+  max-width:1180px;
+  margin:0 auto;
+  background:#FFFCF8;
+  min-height:100vh;
+  box-shadow:0 0 60px rgba(0,0,0,.08);
+}
+
+.presentation-final-hero{
+  position:relative;
+  min-height:620px;
+  background:center/cover no-repeat;
+  overflow:hidden;
+}
+
+.presentation-final-hero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(10,18,28,.92) 0%, rgba(10,18,28,.62) 42%, rgba(10,18,28,.18) 100%),
+    linear-gradient(to top, rgba(10,18,28,.55), transparent 45%);
+}
+
+.presentation-final-hero-content{
+  position:absolute;
+  left:64px;
+  bottom:64px;
+  max-width:610px;
+  z-index:2;
+  color:white;
+}
+
+.presentation-final-brand{
+  font-size:12px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:#D7AE6D;
+  font-weight:900;
+  margin-bottom:28px;
+}
+
+.presentation-final-title{
+  font-family:'Playfair Display',serif;
+  font-size:66px;
+  line-height:.96;
+  margin:0 0 16px;
+  color:white;
+}
+
+.presentation-final-subtitle{
+  font-family:'Playfair Display',serif;
+  font-size:34px;
+  font-style:italic;
+  line-height:1.12;
+  color:rgba(255,255,255,.94);
+  margin-bottom:26px;
+}
+
+.presentation-final-line{
+  width:96px;
+  height:2px;
+  background:#D7AE6D;
+  margin-bottom:24px;
+}
+
+.presentation-final-meta{
+  font-size:15px;
+  line-height:1.7;
+  color:rgba(255,255,255,.88);
+}
+
+.presentation-final-menu{
+  padding:56px 64px 60px;
+}
+
+.presentation-final-menu-label{
+  text-align:center;
+  margin-bottom:30px;
+  font-size:11px;
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  color:#B57A36;
+  font-weight:900;
+}
+
+.presentation-tile-grid{
+  gap:18px 44px;
+}
+
+.presentation-tile{
+  min-height:96px;
+}
+
+.presentation-promise{
+  margin:0;
+}
+
+@media(max-width:760px){
+  #presentationView .back{
+    top:16px;
+    left:16px;
+  }
+
+  .presentation-final-hero{
+    min-height:560px;
+  }
+
+  .presentation-final-hero-content{
+    left:26px;
+    right:26px;
+    bottom:38px;
+  }
+
+  .presentation-final-title{
+    font-size:44px;
+  }
+
+  .presentation-final-subtitle{
+    font-size:25px;
+  }
+
+  .presentation-final-menu{
+    padding:36px 20px 42px;
+  }
+}    
     .bottom-nav{
   position:fixed;
   bottom:0;
@@ -3012,7 +3164,7 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
  <div id="presentationView" class="hidden page">
 
   <button class="back" type="button" onclick="showPage('propertySelect')">
-    ← Back to Hub
+ ← Back to Presentation Center
   </button>
 
  <div id="presentationViewContent">
@@ -3265,37 +3417,13 @@ async function loadPresentationSections(){
     build_your_plan: 'A guided way to shape the right package instead of forcing one-size-fits-all.'
   };
 
-  let html = `
-    <div class="presentation-luxury-wrap">
+   let html = `
+    <div class="presentation-final-menu-label">
+      Presentation Center
+    </div>
 
-      <div class="presentation-luxury-hero">
-        <div class="presentation-luxury-hero-inner">
-          <div class="presentation-luxury-logo">
-            SUNSHINE PROPERTY MANAGEMENT
-          </div>
-
-          <h1 class="presentation-luxury-title">
-            Boutique Hospitality Management
-          </h1>
-
-          <div class="presentation-luxury-subtitle">
-            Built Around the Property.
-          </div>
-
-          <div class="presentation-luxury-line"></div>
-
-          <div class="presentation-luxury-intro">
-            We combine elevated guest experiences, owner confidence, and operational excellence to protect your investment and grow your property’s potential.
-          </div>
-        </div>
-      </div>
-
-      <div class="presentation-menu-shell">
-        <div class="presentation-menu-label">
-          Presentation Center
-        </div>
-
-        <div class="presentation-tile-grid">
+    <div class="presentation-tile-grid">
+  `;
   `;
 
   let number = 1;
@@ -3327,31 +3455,28 @@ async function loadPresentationSections(){
   }
 
   html += `
-        </div>
-      </div>
-
-      <div class="presentation-promise">
-        <div class="presentation-promise-copy">
-          <div class="presentation-promise-kicker">
-            Our Promise
-          </div>
-
-          <h2>
-            Your Property.<br>
-            Your Goals.<br>
-            Our Expertise.
-          </h2>
-
-          <p>
-            We do not believe in one-size-fits-all management. We build hospitality, operations, and owner support around the property itself.
-          </p>
-        </div>
-
-        <div class="presentation-promise-image"></div>
-      </div>
-
     </div>
-  `;
+
+    <div class="presentation-promise">
+      <div class="presentation-promise-copy">
+        <div class="presentation-promise-kicker">
+          Our Promise
+        </div>
+
+        <h2>
+          Your Property.<br>
+          Your Goals.<br>
+          Our Expertise.
+        </h2>
+
+        <p>
+          We do not believe in one-size-fits-all management. We build hospitality, operations, and owner support around the property itself.
+        </p>
+      </div>
+
+      <div class="presentation-promise-image"></div>
+    </div>
+  `;  
 
   container.innerHTML = html;
 }
@@ -3743,7 +3868,7 @@ async function loadPresentationLibrary(){
 
   }).join('');
 }   
- async function loadPresentationView(){
+async function loadPresentationView(){
 
   const container =
     document.getElementById('presentationViewContent');
@@ -3761,7 +3886,6 @@ async function loadPresentationLibrary(){
     container.innerHTML = `
       <div class="panel">
         <h3>Presentation Not Found</h3>
-
         <p class="small-note">
           We could not find this presentation.
         </p>
@@ -3771,62 +3895,50 @@ async function loadPresentationLibrary(){
     return;
   }
 
-container.innerHTML = `
-  <div id="presentationHeroArea"></div>
-  <div id="presentationSectionsContainer"></div>
-`;
+  const heroImage =
+    data.hero_image_url || 'ocean-hero.jpeg';
 
-document.getElementById('presentationHeroArea').innerHTML = `
-<div class="hub-card" style="margin:0 auto 24px; overflow:hidden; max-width:720px;">
+  container.innerHTML = `
+    <div class="presentation-final-stage">
 
- ${data.hero_image_url ? `
+      <div
+        id="presentationHeroArea"
+        class="presentation-final-hero"
+        style="background-image:url('${escapeHtml(heroImage)}');"
+      >
+        <div class="presentation-final-hero-content">
 
-  <div style="
-    margin:0 auto;
-    background:#F1ECE4;
-    text-align:center;
-    padding:18px;
-  ">
-    <img
-      src="${escapeHtml(data.hero_image_url)}"
-      alt=""
-      style="
-        width:100%;
-        max-width:720px;
-        max-height:520px;
-        object-fit:contain;
-        display:block;
-        margin:0 auto;
-        border-radius:22px;
-      "
-    >
-  </div>
+          <div class="presentation-final-brand">
+            Sunshine Property Management
+          </div>
 
-` : ''} 
+          <h1 class="presentation-final-title">
+            ${escapeHtml(data.property_name || 'Custom Property Presentation')}
+          </h1>
 
-    <div class="hub-card-body">
+          <div class="presentation-final-subtitle">
+            Boutique hospitality management, built around the property.
+          </div>
 
-      <div class="hub-kicker">
-        CUSTOM PROPERTY PRESENTATION
+          <div class="presentation-final-line"></div>
+
+          <div class="presentation-final-meta">
+            ${data.owner_name ? `Prepared for ${escapeHtml(data.owner_name)}<br>` : ''}
+            ${data.location ? escapeHtml(data.location) : ''}
+          </div>
+
+        </div>
       </div>
 
-      <h3 style="font-size:34px;">
-        ${escapeHtml(data.property_name || '')}
-      </h3>
-
-      <p style="font-size:16px;">
-        Prepared for ${escapeHtml(data.owner_name || 'Property Owner')}
-      </p>
-
-      <p class="small-note">
-        ${escapeHtml(data.location || '')}
-      </p>
+      <div class="presentation-final-menu">
+        <div id="presentationSectionsContainer"></div>
+      </div>
 
     </div>
+  `;
 
-  </div>
-`;
-
+  await loadPresentationSections();
+}
 await loadPresentationSections(); 
 }   
 setupPropertyAppFiles();
