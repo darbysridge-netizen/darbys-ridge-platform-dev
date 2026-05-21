@@ -3622,237 +3622,162 @@ async function openPresentationSection(sectionKey){
 
   container.innerHTML = '<div class="small-note">Loading section.</div>';
 
-  const { data: section, error: sectionError } = await supabaseClient
-    .from('presentation_sections')
-    .select('*')
-    .eq('section_key', sectionKey)
-    .single();
-
-  if(sectionError || !section){
-    console.error(sectionError);
-    container.innerHTML = '<div class="panel">Unable to open this section.</div>';
-    return;
-  }
-
-
   const heroArea = document.getElementById('presentationHeroArea');
   if(heroArea){
     heroArea.style.display = 'none';
   }
-  showPage('presentationView');
-  let html = `
-    <button class="presentation-section-back" type="button" onclick="closePresentationSection()">
-      ← Back to Presentation Center
-    </button> 
 
-     <div class="panel presentation-section-heading">
-      <h2 class="hub-section-title">${escapeHtml(section.section_title || '')}</h2>
-    </div>  
-  `;
-if(sectionKey === 'launch_setup'){
+  if(sectionKey === 'launch_setup'){
 
-  const container =
-    document.getElementById('presentationSectionsContainer');
-
-  const { data, error } =
-    await supabaseClient
+    const { data: items, error } = await supabaseClient
       .from('presentation_section_content')
       .select('*')
-      .eq('presentation_slug', CURRENT_PRESENTATION.slug)
+      .eq('presentation_slug', PRESENTATION_SLUG)
       .eq('section_key', 'launch_setup')
       .order('sort_order', { ascending:true });
 
-  if(error){
+    if(error){
+      console.error(error);
+      container.innerHTML = '<div class="panel">Failed loading Launch + Setup.</div>';
+      return;
+    }
 
-    console.error(error);
-let html = `
- html += `
-      <div class="panel">
-        Failed loading section.
+    const cardsHtml = (items || []).map(item => `
+      <div class="presentation-section-card">
+        <h3>${escapeHtml(item.title || '')}</h3>
+        <p>${escapeHtml(item.body || '')}</p>
+      </div>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="presentation-shell">
+
+        <button
+          class="presentation-section-back"
+          type="button"
+          onclick="closePresentationSection()"
+        >
+          ← Back to Presentation Center
+        </button>
+
+        <div class="presentation-section-hero">
+          <div class="presentation-section-kicker">
+            Launch + Setup
+          </div>
+
+          <h1 class="presentation-section-title">
+            A Personalized Start for Every Property
+          </h1>
+
+          <div class="presentation-section-intro">
+            Every property starts from a different place. Whether you are transitioning from another manager, refreshing an existing rental, or launching for the first time, we help create a smoother path forward.
+          </div>
+        </div>
+
+        <div class="presentation-section-grid">
+          ${cardsHtml || '<div class="panel">No Launch + Setup content found yet.</div>'}
+        </div>
+
       </div>
     `;
-container.innerHTML = html;
+
     return;
   }
 
-  let cardsHtml = '';
-
-  for(const item of (data || [])){
-
-    cardsHtml += `
-      <div class="presentation-section-card">
-        <h3>${item.title || ''}</h3>
-        <p>${item.body || ''}</p>
-      </div>
-    `;
-  }
-
-  container.innerHTML = `
-
-    <button
-      class="presentation-section-back"
-      onclick="renderPresentationCenter()">
-      ← Back to Presentation Center
-    </button>
-
-    <div class="presentation-shell">
-
-      <div class="presentation-section-hero">
-
-        <div class="presentation-section-kicker">
-          LAUNCH + SETUP
-        </div>
-
-        <h1 class="presentation-section-title">
-          A Personalized Start for Every Property
-        </h1>
-
-        <div class="presentation-section-intro">
-          Every property starts from a different place. Whether you are transitioning from another manager, refreshing an existing rental, or launching for the first time, we help create a smoother path forward.
-        </div>
-
-      </div>
-
-      <div class="presentation-section-grid">
-        ${cardsHtml}
-      </div>
-
-    </div>
-  `;
-
-  return;
-}
-
-  container.innerHTML =
-    renderPresentationSection({
-
-      kicker:'Launch + Setup',
-
-      title:'A Personalized Start for Every Property',
-
-      intro:`
-        Every property starts from a different place. Whether you are transitioning from another manager, refreshing an existing rental, or launching for the first time, we help create a smoother path forward.
-      `,
-
-    items:[
-  ...(items || []).map(item => ({
-    title:item.title,
-    text:item.body
-  }))
-] 
-
-    });
-
-  return;
-}
   if(sectionKey === 'management_plans'){
 
-    const { data: plans, error: plansError } = await supabaseClient
+    const { data: plans, error } = await supabaseClient
       .from('management_plans')
       .select('*')
       .order('display_order', { ascending:true });
 
-    if(plansError){
-      console.error(plansError);
-      html += `
-        <div class="panel">
-          <h3>Management Plans Error</h3>
-          <p class="small-note">${escapeHtml(plansError.message || 'Unable to load management plans.')}</p>
-        </div>
-      `;
-    } else if(!plans || !plans.length){
-      html += `
-        <div class="panel">
-          <h3>No management plans found</h3>
-          <p class="small-note">The management_plans table loaded, but no rows were returned.</p>
-        </div>
-      `;
-    } else {
-      for(const plan of plans){
-
-        const rawLines = String(plan.included_items || '')
-          .split('\n')
-          .map(item => item.trim())
-          .filter(Boolean);
-
-        const serviceItems = rawLines.filter(item => !item.startsWith('Notes:'));
-
-        const noteItems = rawLines
-          .filter(item => item.startsWith('Notes:'))
-          .map(item => item.replace('Notes:', '').trim());
-
-        const serviceHtml = serviceItems
-          .map(item => `<li>${escapeHtml(item)}</li>`)
-          .join('');
-
-        const notesHtml = noteItems.length
-          ? `
-            <div class="plan-notes">
-              <div class="plan-section-label">Service Notes</div>
-              ${noteItems.map(note => `<p>${escapeHtml(note)}</p>`).join('')}
-            </div>
-          `
-          : '';
-
-        const planName = String(plan.plan_name || '');
-        const planText = planName.toLowerCase();
-
-        const isPremium =
-          planName.includes('25%') ||
-          planText.includes('luxury') ||
-          planText.includes('premier') ||
-          planText.includes('signature');
-
-        html += `
-          <div class="plan-card ${isPremium ? 'plan-tier-premium' : ''}">
-
-            <div class="plan-card-header">
-              <h3>${escapeHtml(plan.plan_name || '')}</h3>
-              <p class="plan-description">${escapeHtml(plan.plan_description || '')}</p>
-            </div>
-
-           
-
-            <ul class="plan-services">
-              ${serviceHtml}
-            </ul>
-
-            ${notesHtml}
-
-          </div>
-        `;
-      }
+    if(error){
+      console.error(error);
+      container.innerHTML = '<div class="panel">Unable to load management plans.</div>';
+      return;
     }
 
-    container.innerHTML = html;
+    const plansHtml = (plans || []).map(plan => {
+
+      const rawLines = String(plan.included_items || '')
+        .split('\n')
+        .map(item => item.trim())
+        .filter(Boolean);
+
+      const serviceItems = rawLines.filter(item => !item.startsWith('Notes:'));
+
+      const serviceHtml = serviceItems
+        .map(item => `<li>${escapeHtml(item)}</li>`)
+        .join('');
+
+      return `
+        <div class="plan-card">
+          <div class="plan-card-header">
+            <h3>${escapeHtml(plan.plan_name || '')}</h3>
+            <p class="plan-description">${escapeHtml(plan.plan_description || '')}</p>
+          </div>
+
+          <ul class="plan-services">
+            ${serviceHtml}
+          </ul>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = `
+      <div class="presentation-shell">
+
+        <button
+          class="presentation-section-back"
+          type="button"
+          onclick="closePresentationSection()"
+        >
+          ← Back to Presentation Center
+        </button>
+
+        <div class="presentation-section-hero">
+          <div class="presentation-section-kicker">
+            Management Plans
+          </div>
+
+          <h1 class="presentation-section-title">
+            Flexible Support Built Around Your Goals
+          </h1>
+
+          <div class="presentation-section-intro">
+            Choose the level of support that fits the property, the owner, and the guest experience.
+          </div>
+        </div>
+
+        ${plansHtml || '<div class="panel">No management plans found.</div>'}
+
+      </div>
+    `;
+
     return;
   }
 
-  const { data: items, error: itemsError } = await supabaseClient
-    .from('presentation_section_items')
-    .select('*')
-    .eq('section_key', sectionKey)
-    .order('display_order', { ascending:true });
+  container.innerHTML = `
+    <div class="presentation-shell">
 
-  if(itemsError){
-    console.error(itemsError);
-  }
+      <button
+        class="presentation-section-back"
+        type="button"
+        onclick="closePresentationSection()"
+      >
+        ← Back to Presentation Center
+      </button>
 
-  if(items && items.length){
-    for(const item of items){
-      html += `
-        <div class="panel">
-          <h3>${escapeHtml(item.title || '')}</h3>
-          <p class="small-note">
-            ${escapeHtml(item.description || '')}
-          </p>
-        </div>
-      `;
-    }
-  }
+      <div class="panel">
+        <h3>${escapeHtml(sectionKey.replaceAll('_', ' '))}</h3>
+        <p class="small-note">
+          This section shell is ready. Content will be connected next.
+        </p>
+      </div>
 
-  container.innerHTML = html;
-} 
+    </div>
+  `;
+}
  function closePresentationSection(){
 
  
