@@ -3650,11 +3650,14 @@ async function openPresentationSection(sectionKey){
   `;
 if(sectionKey === 'launch_setup'){
 
-  const { data: items, error } =
+  const container =
+    document.getElementById('presentationSectionsContainer');
+
+  const { data, error } =
     await supabaseClient
       .from('presentation_section_content')
       .select('*')
-      .eq('presentation_slug', PRESENTATION_SLUG)
+      .eq('presentation_slug', CURRENT_PRESENTATION.slug)
       .eq('section_key', 'launch_setup')
       .order('sort_order', { ascending:true });
 
@@ -3670,6 +3673,54 @@ if(sectionKey === 'launch_setup'){
 
     return;
   }
+
+  let cardsHtml = '';
+
+  for(const item of (data || [])){
+
+    cardsHtml += `
+      <div class="presentation-section-card">
+        <h3>${item.title || ''}</h3>
+        <p>${item.body || ''}</p>
+      </div>
+    `;
+  }
+
+  container.innerHTML = `
+
+    <button
+      class="presentation-section-back"
+      onclick="renderPresentationCenter()">
+      ← Back to Presentation Center
+    </button>
+
+    <div class="presentation-shell">
+
+      <div class="presentation-section-hero">
+
+        <div class="presentation-section-kicker">
+          LAUNCH + SETUP
+        </div>
+
+        <h1 class="presentation-section-title">
+          A Personalized Start for Every Property
+        </h1>
+
+        <div class="presentation-section-intro">
+          Every property starts from a different place. Whether you are transitioning from another manager, refreshing an existing rental, or launching for the first time, we help create a smoother path forward.
+        </div>
+
+      </div>
+
+      <div class="presentation-section-grid">
+        ${cardsHtml}
+      </div>
+
+    </div>
+  `;
+
+  return;
+}
 
   container.innerHTML =
     renderPresentationSection({
