@@ -1210,18 +1210,25 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
   align-items:stretch;
 }
 
-.presentation-tile{
-  min-height:138px;
+.presentation-final-menu .presentation-tile-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:24px;
+}
+
+.presentation-final-menu .presentation-tile{
+  min-height:150px;
   border-radius:30px;
+  background:
+    linear-gradient(135deg, #FFFCF8 0%, #F2E8DC 100%);
 }
 
-.presentation-tile:nth-child(1),
-.presentation-tile:nth-child(4),
-.presentation-tile:nth-child(5),
-.presentation-tile:nth-child(8){
-  min-height:190px;
+.presentation-final-menu .presentation-tile:nth-child(1),
+.presentation-final-menu .presentation-tile:nth-child(4),
+.presentation-final-menu .presentation-tile:nth-child(5),
+.presentation-final-menu .presentation-tile:nth-child(8){
+  min-height:210px;
 }
-
 .presentation-promise{
   margin-top:84px;
   display:grid;
