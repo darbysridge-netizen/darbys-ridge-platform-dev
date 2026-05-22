@@ -648,25 +648,61 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
 
 .presentation-tile{
   position:relative;
-  overflow:hidden;
-  min-height:150px;
-  border:1px solid rgba(215,174,109,.22);
-  border-radius:18px;
-  padding:30px;
+  width:100%;
+  min-height:118px;
+  border:1px solid rgba(215,174,109,.24);
+  border-radius:22px;
+  padding:0;
   text-align:left;
   cursor:pointer;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  align-items:flex-start;
-  background:
-    linear-gradient(135deg, rgba(255,252,248,.99), rgba(244,236,224,.98));
+  background:linear-gradient(135deg, #FFFCF8 0%, #F5EEE5 100%);
   color:#111C28;
-  box-shadow:0 14px 32px rgba(0,0,0,.14);
-  transition:
-    transform .22s ease,
-    box-shadow .22s ease,
-    border-color .22s ease;
+  box-shadow:0 12px 28px rgba(0,0,0,.10);
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+  overflow:hidden;
+}
+
+.presentation-tile-inner{
+  min-height:118px;
+  display:grid;
+  grid-template-columns:54px 1fr 34px;
+  gap:18px;
+  align-items:center;
+  padding:24px;
+}
+
+.presentation-tile-eyebrow{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+  color:#B57A36;
+}
+
+.presentation-tile-copy strong{
+  display:block;
+  font-family:'Playfair Display',serif;
+  font-size:25px;
+  line-height:1.05;
+  color:#111C28;
+  font-weight:500;
+}
+
+.presentation-tile-copy small{
+  display:block;
+  margin-top:8px;
+  color:#42505B;
+  font-size:12px;
+  line-height:1.45;
+  font-family:'Inter',sans-serif;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+.presentation-tile-arrow{
+  color:#B57A36;
+  font-size:24px;
+  line-height:1;
+  text-align:right;
 }
 
 .presentation-tile:hover{
@@ -3693,23 +3729,24 @@ async function loadPresentationSections(){
     const paddedNumber = String(number).padStart(2, '0');
     const description = descriptions[section.section_key] || '';
 
-    html += `
-             <button
-        type="button"
-        class="presentation-tile"
-        onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
-      >  
-        <div class="presentation-tile-number">${paddedNumber}</div>
-        <div class="presentation-tile-divider"></div>
+ html += `
+  <button
+    type="button"
+    class="presentation-tile presentation-tile-${escapeHtml(section.section_key)}"
+    onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
+  >
+    <div class="presentation-tile-inner">
+      <div class="presentation-tile-eyebrow">${paddedNumber}</div>
 
-        <div>
-          <strong>${escapeHtml(section.section_title || '')}</strong>
-          <small>${escapeHtml(description)}</small>
-        </div>
+      <div class="presentation-tile-copy">
+        <strong>${escapeHtml(section.section_title || '')}</strong>
+        <small>${escapeHtml(description)}</small>
+      </div>
 
-        <span>›</span>
-      </button>
-    `;
+      <div class="presentation-tile-arrow">→</div>
+    </div>
+  </button>
+`; 
 
     number++;
   }
