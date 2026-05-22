@@ -2748,7 +2748,14 @@ background:#ead8c7;
 
 #presentationView .spc-menu-grid{
   display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr));
+  grid-template-columns:1fr 1fr;
+  gap:34px;
+  align-items:start;
+}
+
+#presentationView .spc-menu-column{
+  display:flex;
+  flex-direction:column;
   gap:18px;
 }
 
@@ -2758,7 +2765,7 @@ background:#ead8c7;
   position:relative;
   overflow:hidden;
 
-  min-height:108px;
+  min-height:120px;
 
   border-radius:22px;
 
@@ -2790,7 +2797,7 @@ background:#ead8c7;
 /* FEATURED SIZE VARIATION */
 
 #presentationView .spc-menu-card.featured{
-  min-height:122px;
+  min-height:120px;
 }
 
 /* INNER LAYOUT */
