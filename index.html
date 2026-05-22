@@ -2596,95 +2596,178 @@ background:#ead8c7;
   font-weight:600;
 } 
 
-/* Clean Sunshine Presentation Center Menu */
+/* =========================================================
+   SUNSHINE PRESENTATION CENTER — CLEAN FOUNDATION
+========================================================= */
 
 #presentationView .spc-menu{
-  padding:84px 64px 96px;
-  background:linear-gradient(180deg, #2D3742 0%, #1B2530 100%);
+  padding:72px 48px 88px;
+  background:
+    linear-gradient(180deg, #26323C 0%, #182129 100%);
 }
 
-#presentationView .spc-menu-label{
-  max-width:1040px;
-  margin:0 auto 38px;
-  color:#D7AE6D;
+#presentationView .spc-menu-shell{
+  max-width:1120px;
+  margin:0 auto;
+}
+
+#presentationView .spc-menu-header{
+  margin-bottom:42px;
+}
+
+#presentationView .spc-menu-kicker{
   font-size:11px;
-  font-weight:900;
+  font-weight:800;
   letter-spacing:.24em;
   text-transform:uppercase;
+  color:#D7AE6D;
+  margin-bottom:14px;
 }
+
+#presentationView .spc-menu-title{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  line-height:.95;
+  color:#FFF9F1;
+  margin:0 0 18px;
+  max-width:720px;
+}
+
+#presentationView .spc-menu-intro{
+  max-width:720px;
+  font-size:16px;
+  line-height:1.8;
+  color:rgba(255,249,241,.82);
+}
+
+/* GRID */
 
 #presentationView .spc-menu-grid{
-  max-width:1040px;
-  margin:0 auto;
   display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:24px;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:22px;
 }
+
+/* CARD */
 
 #presentationView .spc-menu-card{
-  min-height:154px;
-  border:1px solid rgba(215,174,109,.26);
-  border-radius:30px;
-  background:linear-gradient(135deg, #FFFCF8 0%, #F2E8DC 100%);
-  box-shadow:0 18px 36px rgba(0,0,0,.18);
-  cursor:pointer;
-  text-align:left;
+  position:relative;
   overflow:hidden;
+
+  min-height:185px;
+
+  border-radius:30px;
+
+  background:
+    linear-gradient(135deg, #FFFDF9 0%, #F3EADF 100%);
+
+  border:1px solid rgba(215,174,109,.22);
+
+  box-shadow:
+    0 18px 38px rgba(0,0,0,.16);
+
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease;
+
+  cursor:pointer;
 }
 
-#presentationView .spc-menu-card:nth-child(1),
-#presentationView .spc-menu-card:nth-child(4),
-#presentationView .spc-menu-card:nth-child(5),
-#presentationView .spc-menu-card:nth-child(8){
-  min-height:210px;
+#presentationView .spc-menu-card:hover{
+  transform:translateY(-4px);
+
+  border-color:rgba(215,174,109,.55);
+
+  box-shadow:
+    0 26px 52px rgba(0,0,0,.20);
 }
+
+/* FEATURED SIZE VARIATION */
+
+#presentationView .spc-menu-card.featured{
+  min-height:230px;
+}
+
+/* INNER LAYOUT */
 
 #presentationView .spc-menu-card-inner{
-  min-height:inherit;
-  display:grid;
-  grid-template-columns:58px 1fr 34px;
-  gap:20px;
-  align-items:center;
+  height:100%;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+
   padding:30px;
 }
 
-#presentationView .spc-menu-number{
-  align-self:start;
-  color:#B57A36;
-  font-size:12px;
-  font-weight:900;
-  letter-spacing:.14em;
+/* TOP */
+
+#presentationView .spc-menu-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:18px;
 }
+
+#presentationView .spc-menu-number{
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.18em;
+  color:#B57A36;
+}
+
+#presentationView .spc-menu-arrow{
+  font-size:24px;
+  color:#B57A36;
+  line-height:1;
+}
+
+/* CONTENT */
 
 #presentationView .spc-menu-copy strong{
   display:block;
+
   font-family:'Playfair Display',serif;
-  color:#111C28;
-  font-size:32px;
-  line-height:1.02;
+
+  font-size:34px;
+  line-height:1;
+
+  color:#16202A;
+
   font-weight:500;
+
+  margin-bottom:14px;
 }
 
 #presentationView .spc-menu-copy small{
   display:block;
-  max-width:340px;
-  margin-top:12px;
+
+  max-width:420px;
+
+  font-size:13px;
+  line-height:1.7;
+
   color:#42505B;
-  font-size:12px;
-  line-height:1.55;
-  letter-spacing:.055em;
-  text-transform:uppercase;
+
+  letter-spacing:.04em;
 }
 
-#presentationView .spc-menu-arrow{
-  color:#B57A36;
-  font-size:26px;
-  text-align:right;
-}
+/* MOBILE */
 
 @media(max-width:760px){
+
   #presentationView .spc-menu{
-    padding:42px 20px 52px;
+    padding:42px 20px 56px;
+  }
+
+  #presentationView .spc-menu-title{
+    font-size:42px;
+  }
+
+  #presentationView .spc-menu-intro{
+    font-size:15px;
+    line-height:1.7;
   }
 
   #presentationView .spc-menu-grid{
@@ -2693,21 +2776,18 @@ background:#ead8c7;
   }
 
   #presentationView .spc-menu-card,
-  #presentationView .spc-menu-card:nth-child(1),
-  #presentationView .spc-menu-card:nth-child(4),
-  #presentationView .spc-menu-card:nth-child(5),
-  #presentationView .spc-menu-card:nth-child(8){
-    min-height:132px;
+  #presentationView .spc-menu-card.featured{
+    min-height:160px;
   }
 
   #presentationView .spc-menu-card-inner{
-    grid-template-columns:44px 1fr 24px;
-    padding:22px;
+    padding:24px;
   }
 
   #presentationView .spc-menu-copy strong{
-    font-size:24px;
+    font-size:28px;
   }
+
 }
   </style>
 
@@ -3846,13 +3926,24 @@ async function loadPresentationSections(){
  
 let html = `
     <div class="spc-menu">
-      <div class="spc-menu-label">
-        Presentation Center
-      </div>
+      <div class="spc-menu-shell">
 
-      <div class="spc-menu-grid">
+        <div class="spc-menu-header">
+          <div class="spc-menu-kicker">
+            Sunshine Property Management
+          </div>
+
+          <h2 class="spc-menu-title">
+            A warmer way to manage short-term rentals.
+          </h2>
+
+          <div class="spc-menu-intro">
+            Built from real hosting experience, hands-on property care, and a custom branded hospitality platform designed for guests, owners, and teams.
+          </div>
+        </div>
+
+        <div class="spc-menu-grid">
   `;  
-
   let number = 1;
 
   for(const section of sections){
@@ -3883,6 +3974,7 @@ html += `
   }
 
  html += `
+        </div>
       </div>
     </div>
 
