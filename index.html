@@ -2596,7 +2596,119 @@ background:#ead8c7;
   font-weight:600;
 } 
 
+/* Clean Sunshine Presentation Center Menu */
 
+#presentationView .spc-menu{
+  padding:84px 64px 96px;
+  background:linear-gradient(180deg, #2D3742 0%, #1B2530 100%);
+}
+
+#presentationView .spc-menu-label{
+  max-width:1040px;
+  margin:0 auto 38px;
+  color:#D7AE6D;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+}
+
+#presentationView .spc-menu-grid{
+  max-width:1040px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:24px;
+}
+
+#presentationView .spc-menu-card{
+  min-height:154px;
+  border:1px solid rgba(215,174,109,.26);
+  border-radius:30px;
+  background:linear-gradient(135deg, #FFFCF8 0%, #F2E8DC 100%);
+  box-shadow:0 18px 36px rgba(0,0,0,.18);
+  cursor:pointer;
+  text-align:left;
+  overflow:hidden;
+}
+
+#presentationView .spc-menu-card:nth-child(1),
+#presentationView .spc-menu-card:nth-child(4),
+#presentationView .spc-menu-card:nth-child(5),
+#presentationView .spc-menu-card:nth-child(8){
+  min-height:210px;
+}
+
+#presentationView .spc-menu-card-inner{
+  min-height:inherit;
+  display:grid;
+  grid-template-columns:58px 1fr 34px;
+  gap:20px;
+  align-items:center;
+  padding:30px;
+}
+
+#presentationView .spc-menu-number{
+  align-self:start;
+  color:#B57A36;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.14em;
+}
+
+#presentationView .spc-menu-copy strong{
+  display:block;
+  font-family:'Playfair Display',serif;
+  color:#111C28;
+  font-size:32px;
+  line-height:1.02;
+  font-weight:500;
+}
+
+#presentationView .spc-menu-copy small{
+  display:block;
+  max-width:340px;
+  margin-top:12px;
+  color:#42505B;
+  font-size:12px;
+  line-height:1.55;
+  letter-spacing:.055em;
+  text-transform:uppercase;
+}
+
+#presentationView .spc-menu-arrow{
+  color:#B57A36;
+  font-size:26px;
+  text-align:right;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-menu{
+    padding:42px 20px 52px;
+  }
+
+  #presentationView .spc-menu-grid{
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+
+  #presentationView .spc-menu-card,
+  #presentationView .spc-menu-card:nth-child(1),
+  #presentationView .spc-menu-card:nth-child(4),
+  #presentationView .spc-menu-card:nth-child(5),
+  #presentationView .spc-menu-card:nth-child(8){
+    min-height:132px;
+  }
+
+  #presentationView .spc-menu-card-inner{
+    grid-template-columns:44px 1fr 24px;
+    padding:22px;
+  }
+
+  #presentationView .spc-menu-copy strong{
+    font-size:24px;
+  }
+}
   </style>
 
 <link id="browserIcon" rel="icon" href="sunshine-favicon.png">
@@ -3732,13 +3844,14 @@ async function loadPresentationSections(){
   };
 
  
-   let html = `
-    <div class="presentation-final-menu-label">
-      Presentation Center
-    </div>
+let html = `
+    <div class="spc-menu">
+      <div class="spc-menu-label">
+        Presentation Center
+      </div>
 
-    <div class="presentation-tile-grid">
-  `;
+      <div class="spc-menu-grid">
+  `;  
 
   let number = 1;
 
@@ -3747,29 +3860,30 @@ async function loadPresentationSections(){
     const paddedNumber = String(number).padStart(2, '0');
     const description = descriptions[section.section_key] || '';
 
- html += `
+html += `
   <button
     type="button"
-    class="presentation-tile presentation-tile-${escapeHtml(section.section_key)}"
+    class="spc-menu-card spc-menu-card-${escapeHtml(section.section_key)}"
     onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
   >
-    <div class="presentation-tile-inner">
-      <div class="presentation-tile-eyebrow">${paddedNumber}</div>
+    <div class="spc-menu-card-inner">
+      <div class="spc-menu-number">${paddedNumber}</div>
 
-      <div class="presentation-tile-copy">
+      <div class="spc-menu-copy">
         <strong>${escapeHtml(section.section_title || '')}</strong>
         <small>${escapeHtml(description)}</small>
       </div>
 
-      <div class="presentation-tile-arrow">→</div>
+      <div class="spc-menu-arrow">→</div>
     </div>
   </button>
-`; 
+`;
 
     number++;
   }
 
-  html += `
+ html += `
+      </div>
     </div>
 
     <div class="presentation-promise">
