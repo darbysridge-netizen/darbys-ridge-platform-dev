@@ -3958,14 +3958,17 @@ html += `
     onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
   >
     <div class="spc-menu-card-inner">
-      <div class="spc-menu-number">${paddedNumber}</div>
+
+      <div class="spc-menu-top">
+        <div class="spc-menu-number">${paddedNumber}</div>
+        <div class="spc-menu-arrow">→</div>
+      </div>
 
       <div class="spc-menu-copy">
         <strong>${escapeHtml(section.section_title || '')}</strong>
         <small>${escapeHtml(description)}</small>
       </div>
 
-      <div class="spc-menu-arrow">→</div>
     </div>
   </button>
 `;
