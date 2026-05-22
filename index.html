@@ -1114,29 +1114,58 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
 
 .presentation-final-stage{
   max-width:1320px;
+  margin:0 auto;
+  background:#FFFCF8;
+  min-height:100vh;
+  box-shadow:0 0 40px rgba(0,0,0,.06);
 }
 
 .presentation-final-hero{
+  position:relative;
   min-height:560px;
+  overflow:hidden;
+
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+
+.presentation-final-hero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg, rgba(10,18,28,.42) 0%, rgba(10,18,28,.18) 46%, rgba(10,18,28,.04) 100%),
+    linear-gradient(to top, rgba(10,18,28,.12), transparent 45%);
 }
 
 .presentation-final-hero-content{
+  position:absolute;
   left:72px;
   bottom:70px;
   max-width:760px;
-  transform:none;
+  z-index:2;
+  color:white;
 }
 
 .presentation-final-title{
+  font-family:'Playfair Display',serif;
   font-size:82px;
   line-height:.95;
+  margin:0 0 18px;
+  color:white;
   max-width:760px;
   letter-spacing:-1px;
+  text-shadow:0 8px 26px rgba(0,0,0,.28);
 }
 
 .presentation-final-subtitle{
+  font-family:'Inter',sans-serif;
   font-size:21px;
+  font-weight:400;
   line-height:1.5;
+  color:rgba(255,255,255,.92);
+  margin-bottom:24px;
   max-width:700px;
 }
 .presentation-final-line{
