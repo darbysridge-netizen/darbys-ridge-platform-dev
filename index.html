@@ -1719,6 +1719,110 @@ button.tertiary-btn:active{
 .plan-tier-premium .plan-services li:before{
   background:#C8643D;
 }
+/* =========================================================
+   SUNSHINE PRESENTATION CENTER — SECTION FOUNDATION
+========================================================= */
+
+#presentationView .spc-section{
+  max-width:1120px;
+  margin:0 auto;
+  padding:42px 48px 90px;
+}
+
+#presentationView .spc-section-back{
+  border:none;
+  background:#1F2833;
+  color:white;
+  border-radius:999px;
+  padding:12px 18px;
+  font-size:13px;
+  font-weight:800;
+  cursor:pointer;
+  margin-bottom:34px;
+}
+
+#presentationView .spc-section-hero{
+  padding:54px;
+  border-radius:34px;
+  background:
+    linear-gradient(135deg, #FFFDF9 0%, #F3EADF 100%);
+  border:1px solid rgba(215,174,109,.22);
+  box-shadow:0 18px 42px rgba(0,0,0,.10);
+  margin-bottom:34px;
+}
+
+#presentationView .spc-section-kicker{
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#B57A36;
+  margin-bottom:18px;
+}
+
+#presentationView .spc-section-title{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  line-height:.96;
+  color:#16202A;
+  margin:0 0 20px;
+  max-width:780px;
+}
+
+#presentationView .spc-section-intro{
+  max-width:760px;
+  font-size:16px;
+  line-height:1.8;
+  color:#42505B;
+}
+
+#presentationView .spc-section-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:22px;
+}
+
+#presentationView .spc-section-card{
+  background:#FFFDF9;
+  border:1px solid rgba(215,174,109,.18);
+  border-radius:26px;
+  padding:30px;
+  box-shadow:0 14px 32px rgba(0,0,0,.08);
+}
+
+#presentationView .spc-section-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:30px;
+  line-height:1.05;
+  color:#16202A;
+  margin:0 0 14px;
+}
+
+#presentationView .spc-section-card p{
+  margin:0;
+  font-size:15px;
+  line-height:1.7;
+  color:#42505B;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-section{
+    padding:28px 20px 56px;
+  }
+
+  #presentationView .spc-section-hero{
+    padding:32px 26px;
+    border-radius:28px;
+  }
+
+  #presentationView .spc-section-title{
+    font-size:40px;
+  }
+
+  #presentationView .spc-section-grid{
+    grid-template-columns:1fr;
+  }
+}    
 /* Premium Presentation Section Shell */
 
 .presentation-shell{
