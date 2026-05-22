@@ -1586,13 +1586,70 @@ button.tertiary-btn:active{
 .plan-card{
   background:#FFFCF8;
   border:1px solid #E7DCCF;
-  border-radius:26px;
-  padding:30px;
-  margin-top:28px;
-  margin-bottom:34px;
-  box-shadow:0 10px 26px rgba(0,0,0,.05);
+  border-radius:22px;
+  padding:22px;
+  margin:0;
+  box-shadow:0 6px 18px rgba(0,0,0,.04);
   position:relative;
+  height:100%;
 }
+ .management-plans-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:18px;
+  align-items:stretch;
+}
+
+.management-plans-grid .plan-card{
+  margin:0;
+  padding:22px;
+  border-radius:22px;
+}
+
+.management-plans-grid .plan-card h3,
+.management-plans-grid .plan-tier{
+  font-family:'Playfair Display',serif;
+  font-size:24px;
+  line-height:1.1;
+  color:#16202A;
+}
+
+.management-plans-grid .plan-price{
+  font-size:28px;
+  color:#B57A36;
+  font-family:'Playfair Display',serif;
+  margin:8px 0;
+}
+
+.management-plans-grid .plan-description{
+  font-size:13px;
+  line-height:1.45;
+  margin-bottom:14px;
+}
+
+.management-plans-grid .plan-services{
+  grid-template-columns:1fr;
+}
+
+.management-plans-grid .plan-services li{
+  font-size:12px;
+  line-height:1.35;
+  padding:6px 0 6px 24px;
+}
+
+.management-plans-grid .plan-services li:before{
+  top:7px;
+  width:15px;
+  height:15px;
+  line-height:15px;
+  font-size:9px;
+}
+
+@media(max-width:900px){
+  .management-plans-grid{
+    grid-template-columns:1fr;
+  }
+}   
 .presentation-section-heading{
   text-align:center;
   background:transparent;
@@ -4410,9 +4467,9 @@ if(sectionKey === 'management_plans'){
 
       </div>
 
-      <div class="management-plans-stack">
-        ${plansHtml}
-      </div>
+  <div class="management-plans-grid">
+  ${plansHtml}
+</div>   
 
     </div>
 
