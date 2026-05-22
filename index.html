@@ -4016,19 +4016,77 @@ async function loadPresentationSections(){
     return;
   }
 
-   const descriptions = {
+  const descriptions = {
     launch_setup: 'Three paths to get started.',
     management_plans: 'Tailored to your goals.',
     branded_hospitality_platform: 'Connected. Branded. Seamless.',
     path_to_listing: 'From readiness to revenue.',
     guest_experience: 'Thoughtful touches that matter.',
-    owner_experience: 'Visibility and peace of mind.',
     team_experience: 'Cleaner workflows and accountability.',
+    owner_experience: 'Visibility and peace of mind.',
     build_your_plan: 'Shape the right package.'
   };
 
- 
-let html = `
+  const sectionMap = {};
+  (sections || []).forEach(section => {
+    sectionMap[section.section_key] = section;
+  });
+
+  const leftColumn = [
+    'launch_setup',
+    'management_plans',
+    'branded_hospitality_platform',
+    'path_to_listing'
+  ];
+
+  const rightColumn = [
+    'guest_experience',
+    'team_experience',
+    'owner_experience',
+    'build_your_plan'
+  ];
+
+  function renderMenuCard(sectionKey, number){
+    const section = sectionMap[sectionKey];
+    if(!section) return '';
+
+    const paddedNumber = String(number).padStart(2, '0');
+    const description = descriptions[sectionKey] || '';
+
+    return `
+      <button
+        type="button"
+        class="spc-menu-card spc-menu-card-${escapeHtml(sectionKey)}"
+        onclick="openPresentationSection('${escapeHtml(sectionKey)}')"
+      >
+        <div class="spc-menu-card-inner">
+
+          <div class="spc-menu-top">
+            <div class="spc-menu-number">${paddedNumber}</div>
+            <div class="spc-menu-arrow">→</div>
+          </div>
+
+          <div class="spc-menu-copy">
+            <strong>${escapeHtml(section.section_title || '')}</strong>
+            <small>${escapeHtml(description)}</small>
+          </div>
+
+        </div>
+      </button>
+    `;
+  }
+
+  let number = 1;
+
+  const leftHtml = leftColumn
+    .map(sectionKey => renderMenuCard(sectionKey, number++))
+    .join('');
+
+  const rightHtml = rightColumn
+    .map(sectionKey => renderMenuCard(sectionKey, number++))
+    .join('');
+
+  container.innerHTML = `
     <div class="spc-menu">
       <div class="spc-menu-shell">
 
@@ -4042,46 +4100,20 @@ let html = `
           </h2>
 
           <div class="spc-menu-intro">
-            Built from real hosting experience, hands-on property care, and a custom branded hospitality platform designed for guests, owners, and teams.
+            Personal, hands-on property management supported by branded guest tools, owner visibility, team systems, and real hospitality experience.
           </div>
         </div>
 
         <div class="spc-menu-grid">
-  `;  
-  let number = 1;
+          <div class="spc-menu-column">
+            ${leftHtml}
+          </div>
 
-  for(const section of sections){
-
-    const paddedNumber = String(number).padStart(2, '0');
-    const description = descriptions[section.section_key] || '';
-
-html += `
-  <button
-    type="button"
-    class="spc-menu-card spc-menu-card-${escapeHtml(section.section_key)}"
-    onclick="openPresentationSection('${escapeHtml(section.section_key)}')"
-  >
-    <div class="spc-menu-card-inner">
-
-      <div class="spc-menu-top">
-        <div class="spc-menu-number">${paddedNumber}</div>
-        <div class="spc-menu-arrow">→</div>
-      </div>
-
-      <div class="spc-menu-copy">
-        <strong>${escapeHtml(section.section_title || '')}</strong>
-        <small>${escapeHtml(description)}</small>
-      </div>
-
-    </div>
-  </button>
-`;
-
-    number++;
-  }
-
- html += `
+          <div class="spc-menu-column">
+            ${rightHtml}
+          </div>
         </div>
+
       </div>
     </div>
 
@@ -4104,9 +4136,7 @@ html += `
 
       <div class="presentation-promise-image"></div>
     </div>
-  `;  
-
-  container.innerHTML = html;
+  `;
 }
 function renderPresentationSection(config){
 
