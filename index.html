@@ -4232,17 +4232,17 @@ if(sectionKey === 'launch_setup'){
 
   }).join('');
 
-  container.innerHTML = `
+container.innerHTML = `
 
-    <div class="presentation-shell">
+    <div class="spc-section">
 
       <button
-        class="presentation-section-back"
+        class="spc-section-back"
         type="button"
         onclick="closePresentationSection()"
       >
         ← Back to Presentation Center
-      </button>
+      </button> 
 
       <div class="launch-hero-image">
 
@@ -4264,9 +4264,9 @@ if(sectionKey === 'launch_setup'){
 
       </div>
 
-      <div class="presentation-section-grid">
+      <div class="spc-section-grid">
         ${cardsHtml}
-      </div>
+      </div>     
 
     </div>
 
