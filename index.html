@@ -4221,27 +4221,27 @@ async function loadPresentationSections(){
 function renderPresentationSection(config){
 
   return `
-  <div class="spc-section">
+    <div class="spc-section">
 
-  <button
-    class="spc-section-back"
-    type="button"
-    onclick="closePresentationSection()"
-  >
-    ← Back to Presentation Center
-  </button> 
+      <button
+        class="spc-section-back"
+        type="button"
+        onclick="closePresentationSection()"
+      >
+        ← Back to Presentation Center
+      </button> 
 
-      <div class="presentation-section-hero">
+      <div class="spc-section-hero">
 
-        <div class="presentation-section-kicker">
+        <div class="spc-section-kicker">
           ${config.kicker || 'Sunshine Property Management'}
         </div>
 
-        <h1 class="presentation-section-title">
+        <h1 class="spc-section-title">
           ${config.title || ''}
         </h1>
 
-        <div class="presentation-section-intro">
+        <div class="spc-section-intro">
           ${config.intro || ''}
         </div>
 
@@ -4250,7 +4250,7 @@ function renderPresentationSection(config){
       <div class="spc-section-grid">
 
         ${(config.items || []).map(item => `
-          <div class="presentation-section-card">
+          <div class="spc-section-card">
 
             <h3>${item.title || ''}</h3>
 
@@ -4265,7 +4265,7 @@ function renderPresentationSection(config){
 
     </div>
   `;
-}    
+}   
 async function openPresentationSection(sectionKey){
 
   const container = document.getElementById('presentationSectionsContainer');
