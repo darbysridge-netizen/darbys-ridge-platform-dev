@@ -4117,19 +4117,19 @@ async function loadPresentationSections(){
     sectionMap[section.section_key] = section;
   });
 
-  const leftColumn = [
-    'launch_setup',
-    'management_plans',
- 'branded_platform',
-    'path_to_listing'
-  ];
+ const leftColumn = [
+  'guest_experience',
+  'team_experience',
+  'management_plans',
+  'build_your_plan'
+]; 
 
-  const rightColumn = [
-    'guest_experience',
-    'team_experience',
-    'owner_experience',
-    'build_your_plan'
-  ];
+const rightColumn = [
+  'owner_experience',
+  'launch_setup',
+  'branded_platform',
+  'path_to_listing'
+]; 
 
   function renderMenuCard(sectionKey, number){
     const section = sectionMap[sectionKey];
