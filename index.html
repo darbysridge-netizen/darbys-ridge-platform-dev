@@ -2822,7 +2822,7 @@ color:#42505B;
 #presentationView .spc-menu-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:20px;
+  gap:14px;
   align-items:start;
 }
 
@@ -2838,9 +2838,9 @@ color:#42505B;
   position:relative;
   overflow:hidden;
 
-  min-height:86px;
+aspect-ratio:1/1; 
 
-  border-radius:20px;
+  border-radius:18px;
 
   background:
     linear-gradient(135deg, #FFFDF9 0%, #F3EADF 100%);
@@ -2870,7 +2870,9 @@ color:#42505B;
 /* FEATURED SIZE VARIATION */
 
 #presentationView .spc-menu-card.featured{
-  min-height:120px;
+  aspect-ratio:auto;
+  min-height:108px;
+  grid-column:1 / -1;
 }
 
 /* INNER LAYOUT */
@@ -2880,10 +2882,10 @@ color:#42505B;
 
   display:flex;
   flex-direction:column;
-  justify-content:flex-start;
+justify-content:flex-end; 
   gap:12px;
 
- padding:14px 18px; 
+padding:16px;
 }
 /* TOP */
 
