@@ -4233,6 +4233,79 @@ const rightHtml = rightColumn
     </div>
   `;
 }
+function renderGuestJourneySection(config){
+
+  const steps = config.items || [];
+
+  return `
+    <div class="spc-section spc-journey-section">
+
+      <button
+        class="spc-section-back"
+        type="button"
+        onclick="closePresentationSection()"
+      >
+        ← Back to Presentation Center
+      </button>
+
+      <div class="spc-journey-hero">
+
+        <div class="spc-journey-hero-copy">
+          <div class="spc-section-kicker">
+            ${config.kicker || 'Guest Experience'}
+          </div>
+
+          <h1 class="spc-journey-title">
+            ${config.title || ''}
+          </h1>
+
+          <div class="spc-journey-line"></div>
+
+          <p class="spc-journey-intro">
+            ${config.intro || ''}
+          </p>
+        </div>
+
+        <div class="spc-journey-hero-image"></div>
+
+      </div>
+
+      <div class="spc-journey-timeline">
+
+        ${steps.map((item, index) => `
+          <div class="spc-journey-row ${index % 2 ? 'reverse' : ''}">
+
+            <div class="spc-journey-image spc-journey-image-${index + 1}"></div>
+
+            <div class="spc-journey-card">
+              <div class="spc-journey-number">
+                ${String(index + 1).padStart(2, '0')}
+              </div>
+
+              <h3>
+                ${item.title || ''}
+              </h3>
+
+              <p>
+                ${item.text || ''}
+              </p>
+            </div>
+
+          </div>
+        `).join('')}
+
+      </div>
+
+      <div class="spc-journey-footer">
+        <span>♡</span>
+        <p>
+          Real hospitality is in the details, the follow-through, and the care guests remember after they leave.
+        </p>
+      </div>
+
+    </div>
+  `;
+}    
 function renderPresentationSection(config){
 
   return `
@@ -4327,7 +4400,7 @@ if(sectionKey === 'guest_experience'){
       text: item.body || ''
     }));
 
-  container.innerHTML = renderPresentationSection({
+ container.innerHTML = renderGuestJourneySection({
     kicker: 'Guest Experience',
     title: heroItem?.title || 'Guest Experience',
     intro: heroItem?.body || '',
