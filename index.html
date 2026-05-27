@@ -4298,24 +4298,40 @@ document.documentElement.scrollTop = 0;
 
 if(sectionKey === 'guest_experience'){
 
+  const { data: guestItems, error: guestError } = await supabaseClient
+    .from('presentation_section_content')
+    .select('*')
+    .eq('presentation_slug', PRESENTATION_SLUG)
+    .eq('section_key', 'guest_experience')
+    .eq('is_active', true)
+    .order('display_order', { ascending:true });
+
+  if(guestError){
+    console.error(guestError);
+
+    container.innerHTML = `
+      <div class="panel">
+        Failed loading Guest Experience.
+      </div>
+    `;
+
+    return;
+  }
+
+  const heroItem = (guestItems || []).find(item => item.content_type === 'hero');
+
+  const cardItems = (guestItems || [])
+    .filter(item => item.content_type === 'card')
+    .map(item => ({
+      title: item.title || '',
+      text: item.body || ''
+    }));
+
   container.innerHTML = renderPresentationSection({
     kicker: 'Guest Experience',
-    title: 'Thoughtful hospitality designed around real guest stays.',
-    intro: 'Every property experience should feel organized, welcoming, and personal — from arrival instructions to local recommendations and memorable stay details.',
-    items: [
-      {
-        title: 'Lightweight Digital Guest Guide',
-        text: 'Every plan includes a guest-facing digital guide that helps guests find arrival details, Wi-Fi, checkout guidance, house information, and important stay details without confusion.'
-      },
-      {
-        title: 'Seamless Arrival',
-        text: 'Clear directions, smart entry guidance, Waze support, and property-specific notes help guests arrive with less stress and fewer repeated questions.'
-      },
-      {
-        title: 'Curated Stay Experience',
-        text: 'Local recommendations, property personality, trails, launches, beach details, and thoughtful touches help each stay feel more personal and memorable.'
-      }
-    ]
+    title: heroItem?.title || 'Guest Experience',
+    intro: heroItem?.body || '',
+    items: cardItems
   });
 
   return;
