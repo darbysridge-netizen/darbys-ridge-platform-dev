@@ -4605,6 +4605,46 @@ if(sectionKey === 'branded_platform'){
 
   return;
 }  
+if(sectionKey === 'guest_experience'){
+
+  const { data: guestItems, error: guestError } = await supabaseClient
+    .from('presentation_section_content')
+    .select('*')
+    .eq('presentation_slug', PRESENTATION_SLUG)
+    .eq('section_key', 'guest_experience')
+    .eq('is_active', true)
+    .order('display_order', { ascending:true });
+
+  if(guestError){
+    console.error(guestError);
+
+    container.innerHTML = `
+      <div class="panel">
+        Failed loading Guest Experience.
+      </div>
+    `;
+
+    return;
+  }
+
+  const heroItem = (guestItems || []).find(item => item.content_type === 'hero');
+
+  const cardItems = (guestItems || [])
+    .filter(item => item.content_type === 'card')
+    .map(item => ({
+      title: item.title || '',
+      text: item.body || ''
+    }));
+
+  container.innerHTML = renderPresentationSection({
+    kicker: 'Guest Experience',
+    title: heroItem?.title || 'Guest Experience',
+    intro: heroItem?.body || '',
+    items: cardItems
+  });
+
+  return;
+}  
 const shellContent = {
 
   management_plans:{
