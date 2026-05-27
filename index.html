@@ -4104,7 +4104,7 @@ async function loadPresentationSections(){
   const descriptions = {
     launch_setup: 'Three paths to get started.',
     management_plans: 'Tailored to your goals.',
-    branded_hospitality_platform: 'Connected. Branded. Seamless.',
+  branded_platform: 'Connected. Branded. Seamless.',
     path_to_listing: 'From readiness to revenue.',
     guest_experience: 'Thoughtful touches that matter.',
     team_experience: 'Cleaner workflows and accountability.',
@@ -4117,20 +4117,24 @@ async function loadPresentationSections(){
     sectionMap[section.section_key] = section;
   });
 
-const leftColumn = [
+const menuOrder = [
   'guest_experience',
-  'owner_experience',
-  'launch_setup',
-  'path_to_listing'
-]; 
-
-const rightColumn = [
   'team_experience',
+  'owner_experience',
   'management_plans',
+  'launch_setup',
   'branded_platform',
+  'path_to_listing',
   'build_your_plan'
 ];
 
+const leftColumn = menuOrder.filter((sectionKey, index) => index % 2 === 0);
+const rightColumn = menuOrder.filter((sectionKey, index) => index % 2 === 1);
+
+const menuNumbers = {};
+menuOrder.forEach((sectionKey, index) => {
+  menuNumbers[sectionKey] = index + 1;
+});
   function renderMenuCard(sectionKey, number){
     const section = sectionMap[sectionKey];
     if(!section) return '';
@@ -4163,14 +4167,13 @@ const rightColumn = [
 
   let number = 1;
 
-  const leftHtml = leftColumn
-    .map(sectionKey => renderMenuCard(sectionKey, number++))
-    .join('');
+ const leftHtml = leftColumn
+  .map(sectionKey => renderMenuCard(sectionKey, menuNumbers[sectionKey]))
+  .join('');
 
-  const rightHtml = rightColumn
-    .map(sectionKey => renderMenuCard(sectionKey, number++))
-    .join('');
-
+const rightHtml = rightColumn
+  .map(sectionKey => renderMenuCard(sectionKey, menuNumbers[sectionKey]))
+  .join('');
   container.innerHTML = `
     <div class="spc-menu">
       <div class="spc-menu-shell">
