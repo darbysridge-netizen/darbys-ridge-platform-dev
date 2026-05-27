@@ -4318,10 +4318,10 @@ if(sectionKey === 'guest_experience'){
     return;
   }
 
-  const heroItem = (guestItems || []).find(item => item.content_type === 'hero');
+  const heroItem = (guestItems || []).find(item => item.item_type === 'hero');
 
   const cardItems = (guestItems || [])
-    .filter(item => item.content_type === 'card')
+    .filter(item => item.item_type === 'card')
     .map(item => ({
       title: item.title || '',
       text: item.body || ''
