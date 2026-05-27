@@ -2934,7 +2934,7 @@ aspect-ratio:1/1;
 
   max-width:180px;
 }
-}
+
 
 #presentationView .spc-menu-copy small{
   display:block;
@@ -4292,9 +4292,36 @@ async function openPresentationSection(sectionKey){
 document.documentElement.scrollTop = 0;
 
   const heroArea = document.getElementById('presentationHeroArea');
-  if(heroArea){
+ if(heroArea){
     heroArea.style.display = 'none';
   }
+
+if(sectionKey === 'guest_experience'){
+
+  container.innerHTML = renderPresentationSection({
+    kicker: 'Guest Experience',
+    title: 'Thoughtful hospitality designed around real guest stays.',
+    intro: 'Every property experience should feel organized, welcoming, and personal — from arrival instructions to local recommendations and memorable stay details.',
+    items: [
+      {
+        title: 'Lightweight Digital Guest Guide',
+        text: 'Every plan includes a guest-facing digital guide that helps guests find arrival details, Wi-Fi, checkout guidance, house information, and important stay details without confusion.'
+      },
+      {
+        title: 'Seamless Arrival',
+        text: 'Clear directions, smart entry guidance, Waze support, and property-specific notes help guests arrive with less stress and fewer repeated questions.'
+      },
+      {
+        title: 'Curated Stay Experience',
+        text: 'Local recommendations, property personality, trails, launches, beach details, and thoughtful touches help each stay feel more personal and memorable.'
+      }
+    ]
+  });
+
+  return;
+}
+
+if(sectionKey === 'launch_setup'){
 
 if(sectionKey === 'launch_setup'){
 
