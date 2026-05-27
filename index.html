@@ -4427,7 +4427,18 @@ function renderGuestJourneySection(config){
         ${steps.map((item, index) => `
           <div class="spc-journey-row ${index % 2 ? 'reverse' : ''}">
 
-            <div class="spc-journey-image spc-journey-image-${index + 1}"></div>
+         <div
+  class="spc-journey-image"
+  style="
+    background-image:
+      linear-gradient(
+        135deg,
+        rgba(245,239,231,.18),
+        rgba(255,255,255,.04)
+      ),
+      url('${item.image_url || ''}');
+  "
+></div>
 
             <div class="spc-journey-card">
               <div class="spc-journey-number">
@@ -4548,8 +4559,9 @@ if(sectionKey === 'guest_experience'){
   const cardItems = (guestItems || [])
     .filter(item => item.item_type === 'card')
     .map(item => ({
-      title: item.title || '',
-      text: item.body || ''
+    title: item.title || '',
+text: item.body || '',
+image_url: item.image_url || ''  
     }));
 
  container.innerHTML = renderGuestJourneySection({
