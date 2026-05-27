@@ -2985,6 +2985,158 @@ aspect-ratio:1/1;
   }
 
 }
+/* =========================================================
+   GUEST EXPERIENCE — JOURNEY TIMELINE
+========================================================= */
+
+#presentationView .spc-journey-section{
+  max-width:920px;
+  background:#FFFCF8;
+}
+
+#presentationView .spc-journey-hero{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:34px;
+  align-items:stretch;
+  padding:46px;
+  border-radius:34px;
+  background:#FFF9F1;
+  border:1px solid rgba(215,174,109,.25);
+  box-shadow:0 18px 42px rgba(0,0,0,.08);
+  margin-bottom:38px;
+}
+
+#presentationView .spc-journey-title{
+  font-family:'Playfair Display',serif;
+  font-size:56px;
+  line-height:.98;
+  color:#16202A;
+  margin:0 0 18px;
+}
+
+#presentationView .spc-journey-line{
+  width:54px;
+  height:2px;
+  background:#B57A36;
+  margin:0 0 22px;
+}
+
+#presentationView .spc-journey-intro{
+  font-size:16px;
+  line-height:1.75;
+  color:#42505B;
+  margin:0;
+}
+
+#presentationView .spc-journey-hero-image,
+#presentationView .spc-journey-image{
+  min-height:220px;
+  border-radius:24px;
+  background:
+    linear-gradient(135deg, rgba(245,239,231,.35), rgba(255,255,255,.1)),
+    url('interior.jpg') center/cover no-repeat;
+  border:1px solid rgba(215,174,109,.22);
+}
+
+#presentationView .spc-journey-timeline{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+#presentationView .spc-journey-row{
+  display:grid;
+  grid-template-columns:.9fr 1.1fr;
+  gap:24px;
+  align-items:stretch;
+}
+
+#presentationView .spc-journey-row.reverse{
+  grid-template-columns:1.1fr .9fr;
+}
+
+#presentationView .spc-journey-row.reverse .spc-journey-image{
+  order:2;
+}
+
+#presentationView .spc-journey-card{
+  background:#FFFDF9;
+  border:1px solid rgba(215,174,109,.22);
+  border-radius:26px;
+  padding:34px;
+  box-shadow:0 14px 34px rgba(0,0,0,.07);
+}
+
+#presentationView .spc-journey-number{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.18em;
+  color:#B57A36;
+  margin-bottom:14px;
+}
+
+#presentationView .spc-journey-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:32px;
+  line-height:1.02;
+  color:#16202A;
+  margin:0 0 14px;
+}
+
+#presentationView .spc-journey-card p{
+  font-size:15px;
+  line-height:1.7;
+  color:#42505B;
+  margin:0;
+}
+
+#presentationView .spc-journey-footer{
+  margin-top:28px;
+  padding:24px 30px;
+  border-radius:24px;
+  background:#FFF9F1;
+  border:1px solid rgba(215,174,109,.22);
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+#presentationView .spc-journey-footer span{
+  font-size:24px;
+  color:#B57A36;
+}
+
+#presentationView .spc-journey-footer p{
+  margin:0;
+  font-size:15px;
+  line-height:1.6;
+  color:#42505B;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-journey-hero,
+  #presentationView .spc-journey-row,
+  #presentationView .spc-journey-row.reverse{
+    grid-template-columns:1fr;
+  }
+
+  #presentationView .spc-journey-row.reverse .spc-journey-image{
+    order:0;
+  }
+
+  #presentationView .spc-journey-hero{
+    padding:30px;
+  }
+
+  #presentationView .spc-journey-title{
+    font-size:42px;
+  }
+
+  #presentationView .spc-journey-card{
+    padding:28px;
+  }
+}    
   </style>
 
 <link id="browserIcon" rel="icon" href="sunshine-favicon.png">
