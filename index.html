@@ -3094,10 +3094,10 @@ aspect-ratio:1/1;
 }
 
 #presentationView .spc-journey-number{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
+  grid-column:2;
+  grid-row:1;
+  align-self:center;
+  justify-self:center;
   width:38px;
   height:38px;
   border-radius:999px;
@@ -3110,7 +3110,7 @@ aspect-ratio:1/1;
   font-size:11px;
   font-weight:900;
   letter-spacing:.04em;
-  z-index:2;
+  z-index:3;
   box-shadow:0 6px 14px rgba(0,0,0,.06);
 }
 
@@ -3166,7 +3166,8 @@ aspect-ratio:1/1;
   }
 
   #presentationView .spc-journey-timeline:before{
-    left:19px;
+  grid-column:1;
+    justify-self:center; 
   }
 
   #presentationView .spc-journey-row,
@@ -3185,9 +3186,36 @@ aspect-ratio:1/1;
     grid-column:2;
   }
 
-  #presentationView .spc-journey-number{
-    left:19px;
-  }
+.spc-journey-number{
+  grid-column:2;
+  grid-row:1;
+
+  align-self:center;
+  justify-self:center;
+
+  width:38px;
+  height:38px;
+
+  border-radius:999px;
+
+  background:#FFFCF8;
+
+  border:1px solid rgba(181,122,54,.42);
+
+  color:#B57A36;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.04em;
+
+  z-index:3;
+
+  box-shadow:0 6px 14px rgba(0,0,0,.06);
+}
 
   #presentationView .spc-journey-card{
     padding:24px;
