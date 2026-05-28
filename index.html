@@ -5704,106 +5704,129 @@ container.innerHTML = `
 }
 if(sectionKey === 'management_plans'){
 
-  const { data: plans, error } = await supabaseClient
-    .from('management_plans')
-    .select('*')
-    .order('display_order', { ascending:true });
-
-  if(error){
-
-    console.error(error);
-
-    container.innerHTML = `
-      <div class="panel">
-        Unable to load management plans.
-      </div>
-    `;
-
-    return;
-  }
-
-  const plansHtml = (plans || []).map(plan => {
-
-    const rawLines = String(plan.included_items || '')
-      .split('\n')
-      .map(item => item.trim())
-      .filter(Boolean);
-
-    const serviceItems =
-      rawLines.filter(item => !item.startsWith('Notes:'));
-
-    const serviceHtml = serviceItems
-      .map(item => `<li>${escapeHtml(item)}</li>`)
-      .join('');
-
-    return `
-
-      <div class="plan-card">
-
-        <div class="plan-card-header">
-
-          <div class="plan-tier">
-            ${escapeHtml(plan.plan_name || '')}
-          </div>
-
-          <div class="plan-price">
-            ${escapeHtml(plan.price_display || '')}
-          </div>
-
-          <p class="plan-description">
-            ${escapeHtml(plan.plan_description || '')}
-          </p>
-
-        </div>
-
-        <ul class="plan-services">
-          ${serviceHtml}
-        </ul>
-
-      </div>
-
-    `;
-
-  }).join('');
+  const plans = managementPlans || [];
 
   container.innerHTML = `
+    <div class="spc-section spc-plans-section">
 
-<div class="spc-section">
-
-      <button
-     class="spc-section-back" 
-        type="button"
-        onclick="closePresentationSection()"
-      >
-        ← Back to Presentation Center
+      <button class="spc-section-back" onclick="showPresentationHome()">
+        ← Back To Presentation Center
       </button>
 
-      <div class="launch-hero-image">
+      <div class="spc-section-hero">
+        <div class="spc-section-kicker">
+          MANAGEMENT STRUCTURE
+        </div>
 
-        <div class="launch-hero-overlay">
+        <h1 class="spc-section-title">
+          Flexible support designed around the property.
+        </h1>
 
-    <div class="spc-section-kicker">
-  MANAGEMENT STRUCTURE
-</div> 
+        <div class="spc-section-intro">
+          Every property requires a different level of operational support,
+          hospitality involvement, and owner visibility. These plans create
+          a flexible foundation that evolves with the property.
+        </div>
+      </div>
 
-          <h1 class="launch-hero-title">
-            Flexible support designed around the property.
-          </h1>
+      <div class="spc-plans-grid">
 
-          <div class="launch-hero-intro">
-            Every property requires a different level of operational support, hospitality involvement, and owner visibility. These plans create a flexible foundation that can evolve with the property.
-          </div>
+        ${plans.map((plan, index) => {
 
+          const featured = index === 1;
+
+          return `
+            <div class="spc-plan-card ${featured ? 'featured' : ''}">
+
+              ${featured ? `
+                <div class="spc-plan-ribbon">
+                  MOST POPULAR
+                </div>
+              ` : ''}
+
+              <div class="spc-plan-top">
+
+                <div class="spc-plan-icon">
+                  ${index === 0 ? '○' : index === 1 ? '✦' : '◆'}
+                </div>
+
+                <div class="spc-plan-tier">
+                  ${plan.plan_name || ''}
+                </div>
+
+              </div>
+
+              <div class="spc-plan-description">
+                ${plan.plan_description || ''}
+              </div>
+
+              <ul class="spc-plan-list">
+                ${(plan.included_items || '')
+                  .split('\n')
+                  .filter(Boolean)
+                  .map(item => {
+
+                    const highlight =
+                      item.includes('Digital Guest Guide') ||
+                      item.includes('Operations Platform') ||
+                      item.includes('Everything Included');
+
+                    return `
+                      <li class="${highlight ? 'highlight' : ''}">
+                        ${item}
+                      </li>
+                    `;
+                  }).join('')
+                }
+              </ul>
+
+              ${index === 1 ? `
+                <div class="spc-plan-note">
+                  Includes setup + onboarding for the branded digital guest
+                  guide and operations platform. Monthly platform fee currently waived.
+                </div>
+              ` : ''}
+
+              ${index === 2 ? `
+                <div class="spc-plan-note">
+                  Seasonal decorating provided using owner-supplied decor.
+                  Includes additional walkthroughs and higher-touch support.
+                </div>
+              ` : ''}
+
+            </div>
+          `;
+
+        }).join('')}
+
+      </div>
+
+      <div class="spc-plans-values">
+
+        <div class="spc-plans-value">
+          <strong>Owner-Owned Listings</strong>
+          <span>
+            Your listing, reviews, and business remain yours.
+          </span>
+        </div>
+
+        <div class="spc-plans-value">
+          <strong>Flexible Partnership</strong>
+          <span>
+            No feeling trapped inside a large corporate system.
+          </span>
+        </div>
+
+        <div class="spc-plans-value">
+          <strong>Built Around Hospitality</strong>
+          <span>
+            Real guest experience and real operational involvement.
+          </span>
         </div>
 
       </div>
 
-  <div class="management-plans-grid">
-  ${plansHtml}
-</div>   
-
     </div>
-
   `;
 
   return;
