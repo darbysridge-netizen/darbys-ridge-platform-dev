@@ -4711,6 +4711,193 @@ const rightHtml = rightColumn
     </div>
   `;
 }
+function renderOwnerExperienceSection(){
+
+  return `
+    <div class="spc-section spc-owner-section">
+
+      <button
+        class="spc-section-back"
+        type="button"
+        onclick="closePresentationSection()"
+      >
+        ← Back to Presentation Center
+      </button>
+
+      <div class="spc-owner-hero">
+
+        <div>
+
+          <div class="spc-section-kicker">
+            Owner Experience
+          </div>
+
+          <h1 class="spc-owner-title">
+            Visibility, communication, and peace of mind for every property owner.
+          </h1>
+
+          <div class="spc-owner-intro">
+            Owners stay connected to the guest experience, turnovers, maintenance, and property activity without needing to manage day-to-day operations themselves.
+          </div>
+
+        </div>
+
+        <div class="spc-owner-phone">
+
+          <div class="spc-owner-phone-top">
+            Darby’s Ridge<br>
+            <span style="font-weight:500; color:#6A737D;">
+              Owner Portal
+            </span>
+          </div>
+
+          <div class="spc-owner-stat-grid">
+
+            <div class="spc-owner-stat">
+              <div class="spc-owner-stat-label">
+                Returning Guest Requests
+              </div>
+
+              <div class="spc-owner-stat-value">
+                4
+              </div>
+            </div>
+
+            <div class="spc-owner-stat">
+              <div class="spc-owner-stat-label">
+                Turnover Updates
+              </div>
+
+              <div class="spc-owner-stat-value">
+                12
+              </div>
+            </div>
+
+          </div>
+
+          <div class="spc-owner-phone-card">
+
+            <h4>
+              Recent Activity
+            </h4>
+
+            <div class="spc-owner-note">
+              Guest uploaded new memories to the gallery from their weekend stay.
+            </div>
+
+            <div class="spc-owner-note">
+              Team submitted turnover completion photos and restock updates.
+            </div>
+
+            <div class="spc-owner-note">
+              Maintenance request submitted for outdoor lighting replacement.
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="spc-owner-grid">
+
+        <div class="spc-owner-card">
+          <div class="spc-owner-icon">◎</div>
+
+          <h3>
+            Guest Guide Engagement
+          </h3>
+
+          <p>
+            Owners can see how guests are interacting with the digital guest guide and hospitality experience.
+          </p>
+        </div>
+
+        <div class="spc-owner-card">
+          <div class="spc-owner-icon">♡</div>
+
+          <h3>
+            Returning Guest Requests
+          </h3>
+
+          <p>
+            View repeat stay inquiries and returning guest requests submitted directly through the app.
+          </p>
+        </div>
+
+        <div class="spc-owner-card">
+          <div class="spc-owner-icon">📷</div>
+
+          <h3>
+            Turnover Submissions
+          </h3>
+
+          <p>
+            Review turnover completion updates including photos, videos, notes, and issue reporting from the team.
+          </p>
+        </div>
+
+        <div class="spc-owner-card">
+          <div class="spc-owner-icon">▣</div>
+
+          <h3>
+            Guest Gallery Management
+          </h3>
+
+          <p>
+            Moderate and manage guest-submitted memories and photos shared through the property experience.
+          </p>
+        </div>
+
+        <div class="spc-owner-card">
+          <div class="spc-owner-icon">□</div>
+
+          <h3>
+            Supplies + Restock Requests
+          </h3>
+
+          <p>
+            Stay aware of low inventory items, replacement needs, and supply requests before they affect guests.
+          </p>
+        </div>
+
+        <div class="spc-owner-card">
+          <div class="spc-owner-icon">⚑</div>
+
+          <h3>
+            Maintenance Requests
+          </h3>
+
+          <p>
+            Maintenance concerns, repair needs, and property issues remain visible, documented, and organized.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="spc-owner-footer">
+
+        <div class="spc-owner-footer-icon">
+          ♡
+        </div>
+
+        <div>
+
+          <h3>
+            Owners should feel informed without feeling overwhelmed.
+          </h3>
+
+          <p>
+            Our owner experience is designed to create confidence, visibility, and cleaner communication while we handle the day-to-day hospitality operations.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+  `;
+}    
 function renderTeamExperienceSection(){
 
   return `
@@ -4979,6 +5166,12 @@ document.documentElement.scrollTop = 0;
  if(heroArea){
     heroArea.style.display = 'none';
   }
+if(sectionKey === 'owner_experience'){
+
+  container.innerHTML = renderOwnerExperienceSection();
+
+  return;
+}  
 if(sectionKey === 'team_experience'){
 
   container.innerHTML = renderTeamExperienceSection();
