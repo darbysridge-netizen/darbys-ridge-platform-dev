@@ -3211,6 +3211,277 @@ aspect-ratio:1/1;
   #presentationView .spc-team-footer-icon{
     margin:0 auto;
   }
+}   
+/* =========================================================
+   MANAGEMENT PLANS — PREMIUM PRICING SHELL
+========================================================= */
+
+#presentationView .spc-plans-section{
+  max-width:1180px;
+  padding:34px 34px 64px;
+  background:#F7F1E8;
+}
+
+#presentationView .spc-plans-header{
+  text-align:center;
+  margin:0 auto 30px;
+  max-width:920px;
+}
+
+#presentationView .spc-plans-kicker{
+  font-size:12px;
+  letter-spacing:.34em;
+  text-transform:uppercase;
+  color:#B57A36;
+  font-weight:900;
+  margin-bottom:12px;
+}
+
+#presentationView .spc-plans-title{
+  font-family:'Playfair Display',serif;
+  font-size:50px;
+  line-height:1.02;
+  color:#16202A;
+  margin:0 0 14px;
+}
+
+#presentationView .spc-plans-intro{
+  font-size:17px;
+  line-height:1.65;
+  color:#34404B;
+  margin:0 auto;
+  max-width:820px;
+}
+
+#presentationView .spc-plans-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:24px;
+  align-items:stretch;
+}
+
+#presentationView .spc-plan-card{
+  position:relative;
+  background:#FFFCF8;
+  border:1px solid rgba(215,174,109,.22);
+  border-radius:26px;
+  padding:30px 28px;
+  box-shadow:0 14px 34px rgba(0,0,0,.07);
+  overflow:hidden;
+}
+
+#presentationView .spc-plan-card.featured{
+  border:2px solid #D7AE6D;
+  transform:translateY(-14px);
+  box-shadow:0 22px 48px rgba(0,0,0,.12);
+}
+
+#presentationView .spc-plan-ribbon{
+  display:none;
+}
+
+#presentationView .spc-plan-card.featured .spc-plan-ribbon{
+  display:block;
+  position:absolute;
+  top:22px;
+  right:-42px;
+  background:#D7AE6D;
+  color:white;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.12em;
+  padding:8px 48px;
+  transform:rotate(38deg);
+}
+
+#presentationView .spc-plan-icon{
+  width:68px;
+  height:68px;
+  border-radius:999px;
+  border:1px solid rgba(181,122,54,.38);
+  background:#F8F1E8;
+  color:#B57A36;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:32px;
+  margin:0 auto 18px;
+}
+
+#presentationView .spc-plan-name{
+  font-family:'Playfair Display',serif;
+  font-size:31px;
+  line-height:1.05;
+  color:#16202A;
+  margin:0;
+  text-align:center;
+}
+
+#presentationView .spc-plan-price{
+  font-family:'Playfair Display',serif;
+  font-size:31px;
+  color:#B57A36;
+  margin:10px 0 16px;
+  text-align:center;
+}
+
+#presentationView .spc-plan-description{
+  font-size:14px;
+  line-height:1.55;
+  color:#34404B;
+  text-align:center;
+  margin:0 0 22px;
+  min-height:68px;
+}
+
+#presentationView .spc-plan-divider{
+  height:1px;
+  background:rgba(215,174,109,.22);
+  margin:0 0 20px;
+}
+
+#presentationView .spc-plan-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:11px;
+}
+
+#presentationView .spc-plan-list li{
+  position:relative;
+  padding-left:28px;
+  font-size:14px;
+  line-height:1.35;
+  color:#16202A;
+}
+
+#presentationView .spc-plan-list li:before{
+  content:"✓";
+  position:absolute;
+  left:0;
+  top:1px;
+  width:17px;
+  height:17px;
+  border-radius:999px;
+  border:1px solid #B57A36;
+  color:#B57A36;
+  font-size:11px;
+  font-weight:900;
+  line-height:16px;
+  text-align:center;
+}
+
+#presentationView .spc-plan-list li.plan-includes{
+  background:#F3E8DA;
+  border:1px solid rgba(215,174,109,.22);
+  border-radius:12px;
+  padding:12px 14px 12px 40px;
+  font-weight:900;
+}
+
+#presentationView .spc-plan-list li.plan-includes:before{
+  content:"★";
+  border:none;
+  top:12px;
+  left:15px;
+}
+
+#presentationView .spc-plan-list li.plan-platform{
+  font-weight:900;
+}
+
+#presentationView .spc-plan-note{
+  margin-top:18px;
+  background:#F3E8DA;
+  border:1px solid rgba(215,174,109,.22);
+  border-radius:14px;
+  padding:14px 16px;
+  font-size:13px;
+  line-height:1.45;
+  color:#16202A;
+}
+
+#presentationView .spc-plans-values{
+  margin-top:28px;
+  background:#FFF9F1;
+  border:1px solid rgba(215,174,109,.22);
+  border-radius:24px;
+  padding:22px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  box-shadow:0 12px 28px rgba(0,0,0,.06);
+}
+
+#presentationView .spc-value{
+  display:grid;
+  grid-template-columns:54px 1fr;
+  gap:12px;
+  align-items:center;
+  border-right:1px solid rgba(215,174,109,.22);
+}
+
+#presentationView .spc-value:last-child{
+  border-right:none;
+}
+
+#presentationView .spc-value-icon{
+  color:#B57A36;
+  font-size:34px;
+  text-align:center;
+}
+
+#presentationView .spc-value h3{
+  font-family:'Playfair Display',serif;
+  margin:0 0 4px;
+  font-size:22px;
+  color:#16202A;
+}
+
+#presentationView .spc-value p{
+  margin:0;
+  font-size:13px;
+  line-height:1.4;
+  color:#34404B;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-plans-section{
+    padding:24px 14px 48px;
+  }
+
+  #presentationView .spc-plans-title{
+    font-size:34px;
+  }
+
+  #presentationView .spc-plans-intro{
+    font-size:14px;
+  }
+
+  #presentationView .spc-plans-grid{
+    grid-template-columns:1fr;
+    gap:18px;
+  }
+
+  #presentationView .spc-plan-card.featured{
+    transform:none;
+  }
+
+  #presentationView .spc-plans-values{
+    grid-template-columns:1fr;
+  }
+
+  #presentationView .spc-value{
+    border-right:none;
+    border-bottom:1px solid rgba(215,174,109,.22);
+    padding-bottom:14px;
+  }
+
+  #presentationView .spc-value:last-child{
+    border-bottom:none;
+  }
 }    
 /* =========================================================
    GUEST EXPERIENCE — JOURNEY TIMELINE
