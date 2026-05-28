@@ -2986,6 +2986,232 @@ aspect-ratio:1/1;
 
 }
 /* =========================================================
+   TEAM EXPERIENCE — PRESENTATION SHELL
+========================================================= */
+
+#presentationView .spc-team-section{
+  max-width:960px;
+  padding:34px 34px 62px;
+  background:#F7F1E8;
+}
+
+#presentationView .spc-team-hero{
+  display:grid;
+  grid-template-columns:1fr 380px;
+  gap:34px;
+  align-items:center;
+  background:#FFFCF8;
+  border-radius:34px;
+  padding:42px;
+  box-shadow:0 18px 42px rgba(0,0,0,.07);
+  margin-bottom:28px;
+}
+
+#presentationView .spc-team-title{
+  font-family:'Playfair Display',serif;
+  font-size:48px;
+  line-height:1.04;
+  color:#16202A;
+  margin:0 0 18px;
+}
+
+#presentationView .spc-team-intro{
+  font-size:18px;
+  line-height:1.65;
+  color:#34404B;
+  max-width:470px;
+}
+
+#presentationView .spc-team-phone{
+  background:white;
+  border-radius:28px;
+  padding:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
+}
+
+#presentationView .spc-team-phone-top{
+  text-align:center;
+  font-weight:800;
+  font-size:14px;
+  color:#16202A;
+  margin-bottom:18px;
+}
+
+#presentationView .spc-team-phone-card{
+  background:#FFF9F1;
+  border:1px solid #EFE1CE;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:14px;
+}
+
+#presentationView .spc-team-phone-card h4{
+  margin:0 0 10px;
+  font-size:14px;
+  color:#16202A;
+}
+
+#presentationView .spc-team-task{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:12px;
+  padding:10px 0;
+  border-top:1px solid #EFE1CE;
+}
+
+#presentationView .spc-team-pill{
+  background:#F3E4D2;
+  color:#9A6424;
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:11px;
+  white-space:nowrap;
+}
+
+#presentationView .spc-team-actions{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+  text-align:center;
+  font-size:11px;
+}
+
+#presentationView .spc-team-action-icon{
+  width:34px;
+  height:34px;
+  border-radius:999px;
+  background:#F3E4D2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 6px;
+}
+
+#presentationView .spc-team-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+#presentationView .spc-team-card{
+  background:#FFFCF8;
+  border:1px solid rgba(215,174,109,.18);
+  border-radius:26px;
+  padding:30px 24px;
+  text-align:center;
+  box-shadow:0 12px 28px rgba(0,0,0,.06);
+}
+
+#presentationView .spc-team-icon{
+  width:66px;
+  height:66px;
+  border-radius:999px;
+  background:#F3E4D2;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  margin:0 auto 18px;
+  font-size:28px;
+}
+
+#presentationView .spc-team-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:24px;
+  line-height:1.08;
+  color:#16202A;
+  margin:0 0 12px;
+}
+
+#presentationView .spc-team-card p{
+  font-size:14px;
+  line-height:1.55;
+  color:#34404B;
+  margin:0;
+}
+
+#presentationView .spc-team-footer{
+  margin-top:26px;
+  background:#F3E4D2;
+  border-radius:26px;
+  padding:28px;
+  display:grid;
+  grid-template-columns:90px 1fr;
+  gap:24px;
+  align-items:center;
+}
+
+#presentationView .spc-team-footer-icon{
+  width:70px;
+  height:70px;
+  border-radius:999px;
+  border:2px solid #D7AE6D;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+}
+
+#presentationView .spc-team-footer h3{
+  font-family:'Playfair Display',serif;
+  font-size:26px;
+  margin:0 0 8px;
+  color:#16202A;
+}
+
+#presentationView .spc-team-footer p{
+  margin:0;
+  font-size:15px;
+  line-height:1.55;
+  color:#34404B;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-team-section{
+    padding:24px 16px 48px;
+  }
+
+  #presentationView .spc-team-hero{
+    grid-template-columns:1fr;
+    padding:26px;
+  }
+
+  #presentationView .spc-team-title{
+    font-size:34px;
+  }
+
+  #presentationView .spc-team-intro{
+    font-size:15px;
+  }
+
+  #presentationView .spc-team-grid{
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+
+  #presentationView .spc-team-card{
+    padding:20px 14px;
+    border-radius:22px;
+  }
+
+  #presentationView .spc-team-card h3{
+    font-size:19px;
+  }
+
+  #presentationView .spc-team-card p{
+    font-size:12px;
+  }
+
+  #presentationView .spc-team-footer{
+    grid-template-columns:1fr;
+    text-align:center;
+  }
+
+  #presentationView .spc-team-footer-icon{
+    margin:0 auto;
+  }
+}    
+/* =========================================================
    GUEST EXPERIENCE — JOURNEY TIMELINE
 ========================================================= */
 
@@ -4485,6 +4711,127 @@ const rightHtml = rightColumn
     </div>
   `;
 }
+function renderTeamExperienceSection(){
+
+  return `
+    <div class="spc-section spc-team-section">
+
+      <button
+        class="spc-section-back"
+        type="button"
+        onclick="closePresentationSection()"
+      >
+        ← Back to Presentation Center
+      </button>
+
+      <div class="spc-team-hero">
+
+        <div>
+          <div class="spc-section-kicker">
+            Team Experience
+          </div>
+
+          <h1 class="spc-team-title">
+            A simple operating hub for a seamless team experience.
+          </h1>
+
+          <div class="spc-team-intro">
+            We give your home the behind-the-scenes support it deserves — so every stay runs smoothly and every detail is handled.
+          </div>
+        </div>
+
+        <div class="spc-team-phone">
+          <div class="spc-team-phone-top">
+            Darby’s Ridge<br>
+            <span style="font-weight:500; color:#6A737D;">Team App</span>
+          </div>
+
+          <div class="spc-team-phone-card">
+            <h4>Today’s Turnovers</h4>
+
+            <div class="spc-team-task">
+              <div>
+                <strong>Darby’s Ridge</strong><br>
+                Check-out: 10:00 AM
+              </div>
+              <span class="spc-team-pill">In Progress</span>
+            </div>
+
+            <div class="spc-team-task">
+              <div>
+                <strong>The Ocean Pearl</strong><br>
+                Check-out: 11:00 AM
+              </div>
+              <span class="spc-team-pill">To Do</span>
+            </div>
+          </div>
+
+          <div class="spc-team-phone-card">
+            <h4>Quick Actions</h4>
+
+            <div class="spc-team-actions">
+              <div><div class="spc-team-action-icon">✎</div>Add Note</div>
+              <div><div class="spc-team-action-icon">📷</div>Upload Photo</div>
+              <div><div class="spc-team-action-icon">!</div>Report Issue</div>
+              <div><div class="spc-team-action-icon">□</div>Supplies</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="spc-team-grid">
+
+        <div class="spc-team-card">
+          <div class="spc-team-icon">☑</div>
+          <h3>Turnover Flow</h3>
+          <p>Housekeepers see what needs to happen before the next guest arrives.</p>
+        </div>
+
+        <div class="spc-team-card">
+          <div class="spc-team-icon">📷</div>
+          <h3>Photo Proof + Notes</h3>
+          <p>Team can submit photos, issues, and completion updates from the property.</p>
+        </div>
+
+        <div class="spc-team-card">
+          <div class="spc-team-icon">□</div>
+          <h3>Supplies + Restock Requests</h3>
+          <p>Missing items, low supplies, and owner needs stay visible instead of buried in texts.</p>
+        </div>
+
+        <div class="spc-team-card">
+          <div class="spc-team-icon">▣</div>
+          <h3>Calendar Awareness</h3>
+          <p>Team can see check-ins, check-outs, and upcoming stays so everyone knows the rhythm.</p>
+        </div>
+
+        <div class="spc-team-card">
+          <div class="spc-team-icon">☰</div>
+          <h3>Property-Specific Instructions</h3>
+          <p>Each home has its own details, standards, and quirks in one place.</p>
+        </div>
+
+        <div class="spc-team-card">
+          <div class="spc-team-icon">💬</div>
+          <h3>Less Text Chaos</h3>
+          <p>Fewer scattered messages, fewer forgotten details, cleaner accountability.</p>
+        </div>
+
+      </div>
+
+      <div class="spc-team-footer">
+        <div class="spc-team-footer-icon">♡</div>
+
+        <div>
+          <h3>A better experience for your team means a better experience for your guests.</h3>
+          <p>When your team has the right tools and information, your home runs smoother, stays cleaner, and earns better reviews.</p>
+        </div>
+      </div>
+
+    </div>
+  `;
+}    
 function renderGuestJourneySection(config){
 
   const steps = config.items || [];
@@ -4632,7 +4979,12 @@ document.documentElement.scrollTop = 0;
  if(heroArea){
     heroArea.style.display = 'none';
   }
+if(sectionKey === 'team_experience'){
 
+  container.innerHTML = renderTeamExperienceSection();
+
+  return;
+}
 if(sectionKey === 'guest_experience'){
 
   const { data: guestItems, error: guestError } = await supabaseClient
