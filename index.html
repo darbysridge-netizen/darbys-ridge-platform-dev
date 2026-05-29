@@ -6808,10 +6808,12 @@ async function openPresentationSection(sectionKey){
   document.body.scrollTop = 0;
 document.documentElement.scrollTop = 0;
 
-  const heroArea = document.getElementById('presentationHeroArea');
- if(heroArea){
-    heroArea.style.display = 'none';
-  }
+const heroArea = document.getElementById('presentationHeroArea');
+if(heroArea){
+  heroArea.style.display = 'none';
+}
+
+document.body.classList.add('presentation-section-open');  
 if(sectionKey === 'owner_experience'){
 
   container.innerHTML = renderOwnerExperienceSection();
@@ -7384,7 +7386,7 @@ if(sectionData){
 }
  function closePresentationSection(){
 
- 
+ document.body.classList.remove('presentation-section-open');
 
   const heroArea = document.getElementById('presentationHeroArea');
   if(heroArea){
