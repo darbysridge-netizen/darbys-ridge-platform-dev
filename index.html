@@ -3749,7 +3749,316 @@ background:#ead8c7;
     justify-self:center;
     align-self:center;
   }
+}  
+/* =========================================================
+   CARD 0 — SUNSHINE PRESENTATION HOME V2
+========================================================= */
+
+#presentationView .presentation-final-stage{
+  width:min(1180px, calc(100% - 48px));
+  max-width:1180px;
+  margin:0 auto;
+  background:#FFF8EF;
+  min-height:100vh;
+  box-shadow:0 0 40px rgba(0,0,0,.06);
+  overflow:hidden;
 }
+
+#presentationView .presentation-final-hero{
+  position:relative;
+  min-height:560px;
+  overflow:hidden;
+  border-radius:0;
+  margin:0;
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+
+#presentationView .presentation-final-hero:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  background:
+    linear-gradient(90deg, rgba(10,18,28,.78), rgba(10,18,28,.34) 55%, rgba(10,18,28,.05)),
+    linear-gradient(to top, rgba(10,18,28,.22), transparent 52%);
+}
+
+#presentationView .presentation-final-hero:before{
+  content:"";
+  position:absolute;
+  left:-10%;
+  right:-10%;
+  bottom:-82px;
+  height:150px;
+  z-index:2;
+  background:#FFF8EF;
+  border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  pointer-events:none;
+}
+
+#presentationView .presentation-final-hero-content{
+  position:absolute;
+  left:72px;
+  bottom:122px;
+  max-width:620px;
+  z-index:3;
+  color:white;
+}
+
+#presentationView .presentation-final-brand{
+  font-size:14px;
+  font-weight:900;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:#D7AE6D;
+  margin-bottom:18px;
+}
+
+#presentationView .presentation-final-title{
+  font-family:'Playfair Display',serif;
+  font-size:78px;
+  line-height:.94;
+  margin:0 0 18px;
+  color:white;
+  max-width:620px;
+  letter-spacing:-1px;
+  text-shadow:0 10px 28px rgba(0,0,0,.34);
+}
+
+#presentationView .presentation-final-subtitle{
+  font-size:22px;
+  font-weight:500;
+  line-height:1.45;
+  color:rgba(255,255,255,.94);
+  max-width:560px;
+  margin-bottom:24px;
+}
+
+#presentationView .spc-home-v2{
+  position:relative;
+  padding:28px 58px 76px;
+  background:#FFF8EF;
+  overflow:hidden;
+}
+
+#presentationView .spc-home-art{
+  position:absolute;
+  pointer-events:none;
+  opacity:.18;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-size:contain;
+}
+
+#presentationView .spc-home-art-mountains{
+  left:18px;
+  top:118px;
+  width:280px;
+  height:340px;
+  background-image:url("data:image/svg+xml,%3Csvg width='280' height='340' viewBox='0 0 280 340' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%236F7F74' stroke-width='2'%3E%3Cpath d='M8 230 L78 142 L128 200 L184 108 L272 230'/%3E%3Cpath d='M32 236 L92 184 L130 212 L176 166 L246 236'/%3E%3Cpath d='M16 274 C64 250 112 250 154 272 C196 294 232 290 270 270'/%3E%3Cpath d='M52 302 C96 282 140 286 176 304 C212 322 244 316 270 300'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+#presentationView .spc-home-art-branch{
+  right:16px;
+  top:64px;
+  width:260px;
+  height:390px;
+  background-image:url("data:image/svg+xml,%3Csvg width='260' height='390' viewBox='0 0 260 390' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C47A2C' stroke-width='2'%3E%3Cpath d='M126 370 C112 292 122 212 162 134 C184 92 204 54 196 18'/%3E%3Cpath d='M150 194 C190 178 214 150 226 110 C188 122 160 150 150 194Z'/%3E%3Cpath d='M126 254 C88 238 64 210 54 170 C94 184 118 214 126 254Z'/%3E%3Cpath d='M160 132 C134 112 122 82 126 48 C156 68 170 98 160 132Z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+#presentationView .spc-home-v2-header{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+  margin:0 auto 34px;
+  text-align:left;
+}
+
+#presentationView .spc-home-v2-kicker{
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:#C47A2C;
+  margin-bottom:12px;
+}
+
+#presentationView .spc-home-v2-header h2{
+  font-family:'Playfair Display',serif;
+  font-size:48px;
+  line-height:1.02;
+  color:#16202A;
+  margin:0 0 14px;
+}
+
+#presentationView .spc-home-v2-header p{
+  max-width:720px;
+  font-size:16px;
+  line-height:1.7;
+  color:#42505B;
+  margin:0;
+}
+
+#presentationView .spc-home-card-grid{
+  position:relative;
+  z-index:2;
+  display:grid;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:16px;
+  max-width:1000px;
+  margin:0 auto;
+}
+
+#presentationView .spc-home-card{
+  position:relative;
+  min-height:158px;
+  border:none;
+  border-radius:24px;
+  padding:22px 20px;
+  background:rgba(255,252,248,.88);
+  box-shadow:0 16px 34px rgba(31,40,51,.10);
+  text-align:left;
+  cursor:pointer;
+  overflow:hidden;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+
+#presentationView .spc-home-card:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(215,174,109,.28);
+  border-radius:24px;
+  pointer-events:none;
+}
+
+#presentationView .spc-home-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 24px 46px rgba(31,40,51,.16);
+}
+
+#presentationView .spc-home-card-number{
+  display:block;
+  font-family:'Playfair Display',serif;
+  font-size:34px;
+  line-height:1;
+  color:rgba(196,122,44,.72);
+  margin-bottom:18px;
+}
+
+#presentationView .spc-home-card-title{
+  display:block;
+  font-family:'Playfair Display',serif;
+  font-size:23px;
+  line-height:1.04;
+  font-weight:600;
+  color:#16202A;
+  margin-bottom:8px;
+}
+
+#presentationView .spc-home-card-text{
+  display:block;
+  font-size:12px;
+  line-height:1.45;
+  color:#5A6772;
+}
+
+#presentationView .spc-home-card-arrow{
+  display:block;
+  margin-top:16px;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#C47A2C;
+}
+
+#presentationView .spc-home-promise-v2{
+  display:grid;
+  grid-template-columns:.95fr 1.05fr;
+  background:#F5EFE7;
+  border-top:1px solid rgba(215,174,109,.18);
+}
+
+#presentationView .spc-home-promise-copy{
+  padding:72px 58px;
+}
+
+#presentationView .spc-home-promise-copy h2{
+  font-family:'Playfair Display',serif;
+  font-size:44px;
+  line-height:1.04;
+  color:#16202A;
+  margin:0 0 22px;
+}
+
+#presentationView .spc-home-promise-copy p{
+  font-size:15px;
+  line-height:1.75;
+  color:#42505B;
+  margin:0;
+}
+
+#presentationView .spc-home-promise-image{
+  min-height:440px;
+  background:url('interior.jpg') center/cover no-repeat;
+}
+
+@media(max-width:900px){
+  #presentationView .spc-home-card-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media(max-width:760px){
+  #presentationView .presentation-final-stage{
+    width:100%;
+  }
+
+  #presentationView .presentation-final-hero{
+    min-height:520px;
+  }
+
+  #presentationView .presentation-final-hero-content{
+    left:26px;
+    right:26px;
+    bottom:96px;
+  }
+
+  #presentationView .presentation-final-title{
+    font-size:44px;
+  }
+
+  #presentationView .presentation-final-subtitle{
+    font-size:17px;
+  }
+
+  #presentationView .spc-home-v2{
+    padding:28px 20px 52px;
+  }
+
+  #presentationView .spc-home-v2-header h2{
+    font-size:38px;
+  }
+
+  #presentationView .spc-home-card-grid{
+    grid-template-columns:1fr;
+  }
+
+  #presentationView .spc-home-promise-v2{
+    grid-template-columns:1fr;
+  }
+
+  #presentationView .spc-home-promise-copy{
+    padding:44px 26px;
+  }
+
+  #presentationView .spc-home-promise-image{
+    min-height:260px;
+  }
+}    
   </style>
 
 <link id="browserIcon" rel="icon" href="sunshine-favicon.png">
@@ -4874,14 +5183,14 @@ async function loadPresentationSections(){
   }
 
   const descriptions = {
-    launch_setup: 'Three paths to get started.',
-    management_plans: 'Tailored to your goals.',
-  branded_platform: 'Connected. Branded. Seamless.',
-    path_to_listing: 'From readiness to revenue.',
-    guest_experience: 'Thoughtful touches that matter.',
-    team_experience: 'Cleaner workflows and accountability.',
-    owner_experience: 'Visibility and peace of mind.',
-    build_your_plan: 'Shape the right package.'
+    guest_experience: 'The guest journey from first impression to checkout.',
+    team_experience: 'The operations rhythm behind every clean, ready stay.',
+    owner_experience: 'Visibility, communication, and confidence for owners.',
+    branded_platform: 'The custom guest, owner, and team system that ties it together.',
+    management_plans: 'Clear partnership options built around your property goals.',
+    launch_setup: 'The setup path from property readiness to guest-ready launch.',
+    path_to_listing: 'The step-by-step roadmap from prep to live listing.',
+    build_your_plan: 'Choose the support level that fits the property best.'
   };
 
   const sectionMap = {};
@@ -4889,21 +5198,22 @@ async function loadPresentationSections(){
     sectionMap[section.section_key] = section;
   });
 
-const menuOrder = [
-  'guest_experience',
-  'team_experience',
-  'owner_experience',
-  'branded_platform',
-  'management_plans',
-  'launch_setup',
-  'path_to_listing',
-  'build_your_plan'
-];
+  const menuOrder = [
+    'guest_experience',
+    'team_experience',
+    'owner_experience',
+    'branded_platform',
+    'management_plans',
+    'launch_setup',
+    'path_to_listing',
+    'build_your_plan'
+  ];
 
-const menuNumbers = {};
-menuOrder.forEach((sectionKey, index) => {
-  menuNumbers[sectionKey] = index + 1;
-});
+  const menuNumbers = {};
+  menuOrder.forEach((sectionKey, index) => {
+    menuNumbers[sectionKey] = index + 1;
+  });
+
   function renderMenuCard(sectionKey, number){
     const section = sectionMap[sectionKey];
     if(!section) return '';
@@ -4914,59 +5224,50 @@ menuOrder.forEach((sectionKey, index) => {
     return `
       <button
         type="button"
-        class="spc-menu-card spc-menu-card-${escapeHtml(sectionKey)}"
+        class="spc-home-card spc-home-card-${escapeHtml(sectionKey)}"
         onclick="openPresentationSection('${escapeHtml(sectionKey)}')"
       >
-        <div class="spc-menu-card-inner">
-
-          <div class="spc-menu-top">
-            <div class="spc-menu-number">${paddedNumber}</div>
-            <div class="spc-menu-arrow">→</div>
-          </div>
-
-          <div class="spc-menu-copy">
-            <strong>${escapeHtml(section.section_title || '')}</strong>
-            <small>${escapeHtml(description)}</small>
-          </div>
-
-        </div>
+        <span class="spc-home-card-number">${paddedNumber}</span>
+        <span class="spc-home-card-title">${escapeHtml(section.section_title || '')}</span>
+        <span class="spc-home-card-text">${escapeHtml(description)}</span>
+        <span class="spc-home-card-arrow">Explore →</span>
       </button>
     `;
   }
 
- const menuHtml = menuOrder
-  .map(sectionKey => renderMenuCard(sectionKey, menuNumbers[sectionKey]))
-  .join('');
+  const menuHtml = menuOrder
+    .map(sectionKey => renderMenuCard(sectionKey, menuNumbers[sectionKey]))
+    .join('');
+
   container.innerHTML = `
-    <div class="spc-menu">
-      <div class="spc-menu-shell">
+    <section class="spc-home-v2">
 
-        <div class="spc-menu-header">
-          <div class="spc-menu-kicker">
-            Sunshine Property Management
-          </div>
+      <div class="spc-home-art spc-home-art-mountains"></div>
+      <div class="spc-home-art spc-home-art-branch"></div>
 
-          <h2 class="spc-menu-title">
-            A warmer way to manage short-term rentals.
-          </h2>
-
-          <div class="spc-menu-intro">
-            Personal, hands-on property management supported by branded guest tools, owner visibility, team systems, and real hospitality experience.
-          </div>
+      <div class="spc-home-v2-header">
+        <div class="spc-home-v2-kicker">
+          Sunshine Property Management
         </div>
 
-    <div class="spc-menu-grid">
-  ${menuHtml}
-</div>  
+        <h2>
+          A warmer way to manage short-term rentals.
+        </h2>
 
+        <p>
+          A boutique hospitality presentation built to walk owners through the guest experience, team systems, owner support, branded platform, management options, and path to launch.
+        </p>
       </div>
-    </div>
 
-    <div class="presentation-promise">
-      <div class="presentation-promise-copy">
-        <div class="presentation-promise-kicker">
-          Our Promise
-        </div>
+      <div class="spc-home-card-grid">
+        ${menuHtml}
+      </div>
+
+    </section>
+
+    <section class="spc-home-promise-v2">
+      <div class="spc-home-promise-copy">
+        <div class="spc-home-v2-kicker">Our Promise</div>
 
         <h2>
           Your Property.<br>
@@ -4979,8 +5280,8 @@ menuOrder.forEach((sectionKey, index) => {
         </p>
       </div>
 
-      <div class="presentation-promise-image"></div>
-    </div>
+      <div class="spc-home-promise-image"></div>
+    </section>
   `;
 }
 function renderOwnerExperienceSection(){
