@@ -4051,6 +4051,167 @@ background:#ead8c7;
   #presentationView .spc-home-promise-image{
     min-height:260px;
   }
+}  
+/* =========================================================
+   MANAGEMENT PLANS — CLEAN SPC V2
+========================================================= */
+
+#presentationView .spc-plans-v2{
+  position:relative;
+  max-width:1180px;
+  margin:0 auto;
+  padding:42px 58px 82px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(215,174,109,.14), transparent 28%),
+    linear-gradient(180deg,#FFF8EF 0%,#F5EFE7 100%);
+}
+
+#presentationView .spc-plans-v2-hero{
+  position:relative;
+  padding:48px 52px;
+  border-radius:34px;
+  background:rgba(255,252,248,.86);
+  border:1px solid rgba(215,174,109,.26);
+  box-shadow:0 18px 42px rgba(31,40,51,.10);
+  margin-bottom:34px;
+  overflow:hidden;
+}
+
+#presentationView .spc-plans-v2-kicker{
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#C47A2C;
+  margin-bottom:14px;
+}
+
+#presentationView .spc-plans-v2-hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  line-height:.98;
+  color:#16202A;
+  margin:0 0 18px;
+  max-width:760px;
+}
+
+#presentationView .spc-plans-v2-hero p{
+  max-width:760px;
+  font-size:17px;
+  line-height:1.7;
+  color:#42505B;
+  margin:0;
+}
+
+#presentationView .spc-plans-v2-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:20px;
+  align-items:stretch;
+}
+
+#presentationView .spc-plan-v2-card{
+  position:relative;
+  background:rgba(255,252,248,.92);
+  border:1px solid rgba(215,174,109,.26);
+  border-radius:28px;
+  padding:34px 30px;
+  box-shadow:0 16px 36px rgba(31,40,51,.10);
+  overflow:hidden;
+}
+
+#presentationView .spc-plan-v2-card.featured{
+  background:#FFFCF8;
+  border:2px solid #D7AE6D;
+  transform:translateY(-10px);
+  box-shadow:0 26px 54px rgba(31,40,51,.16);
+}
+
+#presentationView .spc-plan-v2-ribbon{
+  position:absolute;
+  top:20px;
+  right:-44px;
+  background:#C47A2C;
+  color:white;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:8px 46px;
+  transform:rotate(38deg);
+}
+
+#presentationView .spc-plan-v2-number{
+  font-family:'Playfair Display',serif;
+  font-size:34px;
+  color:rgba(196,122,44,.72);
+  line-height:1;
+  margin-bottom:18px;
+}
+
+#presentationView .spc-plan-v2-card h2{
+  font-family:'Playfair Display',serif;
+  font-size:32px;
+  line-height:1.04;
+  color:#16202A;
+  margin:0 0 12px;
+}
+
+#presentationView .spc-plan-v2-card p{
+  font-size:14px;
+  line-height:1.6;
+  color:#42505B;
+  margin:0 0 22px;
+}
+
+#presentationView .spc-plan-v2-card ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+#presentationView .spc-plan-v2-card li{
+  position:relative;
+  padding:10px 0 10px 26px;
+  font-size:13px;
+  line-height:1.45;
+  color:#2E3640;
+  border-top:1px solid rgba(215,174,109,.16);
+}
+
+#presentationView .spc-plan-v2-card li:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:15px;
+  width:9px;
+  height:9px;
+  border-radius:999px;
+  background:#C47A2C;
+}
+
+@media(max-width:900px){
+  #presentationView .spc-plans-v2-grid{
+    grid-template-columns:1fr;
+  }
+
+  #presentationView .spc-plan-v2-card.featured{
+    transform:none;
+  }
+}
+
+@media(max-width:760px){
+  #presentationView .spc-plans-v2{
+    padding:28px 20px 56px;
+  }
+
+  #presentationView .spc-plans-v2-hero{
+    padding:34px 26px;
+  }
+
+  #presentationView .spc-plans-v2-hero h1{
+    font-size:40px;
+  }
 }    
   </style>
 
@@ -5998,135 +6159,89 @@ container.innerHTML = `
 }
 if(sectionKey === 'management_plans'){
 
-let { data: plans, error: plansError } = await supabaseClient
-  .from('management_plans')
-  .select('*')
-  .eq('presentation_slug', PRESENTATION_SLUG || 'default')
-  .eq('is_active', true)
-  .order('display_order', { ascending:true });
-
-if(!plansError && (!plans || plans.length === 0)){
-  const fallback = await supabaseClient
+  let { data: plans, error: plansError } = await supabaseClient
     .from('management_plans')
     .select('*')
-    .eq('presentation_slug', 'default')
+    .eq('presentation_slug', PRESENTATION_SLUG || 'default')
     .eq('is_active', true)
     .order('display_order', { ascending:true });
 
-  plans = fallback.data || [];
-  plansError = fallback.error;
-}
+  if(!plansError && (!plans || plans.length === 0)){
+    const fallback = await supabaseClient
+      .from('management_plans')
+      .select('*')
+      .eq('presentation_slug', 'default')
+      .eq('is_active', true)
+      .order('display_order', { ascending:true });
 
-if(plansError){
-  console.error(plansError);
-  container.innerHTML = `
-    <div class="spc-section">
-      <button class="spc-section-back" type="button" onclick="closePresentationSection()">
-        ← Back To Presentation Center
-      </button>
-      <div class="panel">Unable to load management plans.</div>
-    </div>
-  `;
-  return;
-}
+    plans = fallback.data || [];
+    plansError = fallback.error;
+  }
 
-  container.innerHTML = `
-    <div class="spc-section spc-plans-section">
+  if(plansError){
+    console.error(plansError);
+    container.innerHTML = `
+      <div class="spc-section">
+        <button class="spc-section-back" type="button" onclick="closePresentationSection()">
+          ← Back To Presentation Center
+        </button>
+        <div class="panel">Unable to load management plans.</div>
+      </div>
+    `;
+    return;
+  }
 
-      <button class="spc-section-back" onclick="showPresentationHome()">
-        ← Back To Presentation Center
-      </button>
+  const plansHtml = (plans || []).map((plan, index) => {
+    const featured = index === 1;
 
-      <div class="spc-section-hero">
-        <div class="spc-section-kicker">
-          MANAGEMENT STRUCTURE
+    const itemsHtml = String(plan.included_items || '')
+      .split('\n')
+      .filter(Boolean)
+      .map(item => `<li>${escapeHtml(item)}</li>`)
+      .join('');
+
+    return `
+      <article class="spc-plan-v2-card ${featured ? 'featured' : ''}">
+        ${featured ? `<div class="spc-plan-v2-ribbon">Most Popular</div>` : ''}
+
+        <div class="spc-plan-v2-number">
+          ${String(index + 1).padStart(2, '0')}
         </div>
 
-        <h1 class="spc-section-title">
-          Flexible support designed around the property.
-        </h1>
+        <h2>${escapeHtml(plan.plan_name || '')}</h2>
 
-        <div class="spc-section-intro">
-          Every property requires a different level of operational support,
-          hospitality involvement, and owner visibility. These plans create
-          a flexible foundation that evolves with the property.
-        </div>
+        <p>${escapeHtml(plan.plan_description || '')}</p>
+
+        <ul>
+          ${itemsHtml}
+        </ul>
+      </article>
+    `;
+  }).join('');
+
+  container.innerHTML = `
+    <section class="spc-plans-v2">
+
+      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+        ← Back To Presentation Center
+      </button>
+
+      <div class="spc-plans-v2-hero">
+        <div class="spc-plans-v2-kicker">Management Plans</div>
+
+        <h1>Flexible support designed around the property.</h1>
+
+        <p>
+          Every property needs a different level of hospitality support, operating structure,
+          and owner involvement. These plans create a clear starting point for the right partnership.
+        </p>
       </div>
 
-      <div class="spc-plans-grid">
-
-        ${plans.map((plan, index) => {
-
-          const featured = index === 1;
-
-          return `
-            <div class="spc-plan-card ${featured ? 'featured' : ''}">
-
-              ${featured ? `
-                <div class="spc-plan-ribbon">
-                  MOST POPULAR
-                </div>
-              ` : ''}
-
-              <div class="spc-plan-top">
-
-                <div class="spc-plan-icon">
-                  ${index === 0 ? '○' : index === 1 ? '✦' : '◆'}
-                </div>
-
-                <div class="spc-plan-tier">
-                  ${plan.plan_name || ''}
-                </div>
-
-              </div>
-
-              <div class="spc-plan-description">
-                ${plan.plan_description || ''}
-              </div>
-
-              <ul class="spc-plan-list">
-                ${(plan.included_items || '')
-                  .split('\n')
-                  .filter(Boolean)
-                  .map(item => {
-
-                    const highlight =
-                      item.includes('Digital Guest Guide') ||
-                      item.includes('Operations Platform') ||
-                      item.includes('Everything Included');
-
-                    return `
-                      <li class="${highlight ? 'highlight' : ''}">
-                        ${item}
-                      </li>
-                    `;
-                  }).join('')
-                }
-              </ul>
-
-              ${index === 1 ? `
-                <div class="spc-plan-note">
-                  Includes setup + onboarding for the branded digital guest
-                  guide and operations platform. Monthly platform fee currently waived.
-                </div>
-              ` : ''}
-
-              ${index === 2 ? `
-                <div class="spc-plan-note">
-                  Seasonal decorating provided using owner-supplied decor.
-                  Includes additional walkthroughs and higher-touch support.
-                </div>
-              ` : ''}
-
-            </div>
-          `;
-
-        }).join('')}
-
+      <div class="spc-plans-v2-grid">
+        ${plansHtml}
       </div>
 
-
-    </div>
+    </section>
   `;
 
   return;
