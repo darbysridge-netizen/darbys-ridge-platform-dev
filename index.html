@@ -2784,7 +2784,7 @@ background:#ead8c7;
 }
 
 #presentationView .spc-menu-shell{
-  max-width:520px;
+  max-width:980px;
   margin:0 auto;
   background:#FFFCF8;
   border-radius:34px;
@@ -2825,12 +2825,11 @@ color:#42505B;
 
 #presentationView .spc-menu-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  grid-template-rows:repeat(4, auto);
-  grid-auto-flow:column;
-  gap:14px;
-  align-items:start;
-  max-width:430px;
+  grid-template-columns:repeat(4, minmax(0, 1fr));
+  gap:18px;
+  align-items:stretch;
+  width:100%;
+  max-width:none;
 }
 
 #presentationView .spc-menu-column{
@@ -2845,7 +2844,8 @@ color:#42505B;
   position:relative;
   overflow:hidden;
 
-aspect-ratio:1/1; 
+aspect-ratio:auto;
+min-height:180px;
 
   border-radius:18px;
 
@@ -4879,9 +4879,9 @@ const menuOrder = [
   'guest_experience',
   'team_experience',
   'owner_experience',
+  'branded_platform',
   'management_plans',
   'launch_setup',
-  'branded_platform',
   'path_to_listing',
   'build_your_plan'
 ];
