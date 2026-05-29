@@ -5054,6 +5054,59 @@ body.presentation-section-open #presentationView > .back{
     padding:28px 22px !important;
   }
 }   
+/* Guest Experience — outcome panel + stronger visual rhythm */
+#presentationView .spc-journey-outcome{
+  margin:34px auto 0;
+  max-width:980px;
+  background:#16202A;
+  color:white;
+  border-radius:32px;
+  padding:46px 52px;
+  box-shadow:0 22px 48px rgba(31,40,51,.18);
+}
+
+#presentationView .spc-journey-outcome-kicker{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#D7AE6D;
+  margin-bottom:14px;
+}
+
+#presentationView .spc-journey-outcome h2{
+  font-family:'Playfair Display',serif;
+  font-size:42px;
+  line-height:1.05;
+  margin:0 0 14px;
+  color:white;
+}
+
+#presentationView .spc-journey-outcome p{
+  max-width:760px;
+  font-size:16px;
+  line-height:1.7;
+  color:rgba(255,255,255,.84);
+  margin:0;
+}
+
+#presentationView .spc-journey-row:nth-child(even) .spc-journey-card{
+  background:#FFF8EF;
+}
+
+#presentationView .spc-journey-row:nth-child(odd) .spc-journey-card{
+  background:#FFFCF8;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-journey-outcome{
+    padding:34px 26px;
+  }
+
+  #presentationView .spc-journey-outcome h2{
+    font-size:32px;
+  }
+}    
   </style>
 
 <link id="browserIcon" rel="icon" href="sunshine-favicon.png">
@@ -6736,15 +6789,20 @@ function renderGuestJourneySection(config){
           <div class="spc-journey-row ${index % 2 ? 'reverse' : ''}">
 
          <div
+<div
   class="spc-journey-image"
   style="
     background-image:
-      linear-gradient(
-        135deg,
-        rgba(245,239,231,.18),
-        rgba(255,255,255,.04)
-      ),
-      url('${item.image_url || ''}');
+      linear-gradient(135deg, rgba(15,24,34,.08), rgba(255,248,239,.08)),
+      url('${[
+        'hero.jpg',
+        'interior.jpg',
+        'ocean-hero.jpeg',
+        'hero-cabin.jpg',
+        'interior.jpg',
+        'ocean-checkout.jpg',
+        'hero.jpg'
+      ][index] || item.image_url || ''}');
   "
 ></div>
 
@@ -6768,13 +6826,13 @@ function renderGuestJourneySection(config){
 
       </div>
 
-      <div class="spc-journey-footer">
-        <span>♡</span>
+  <div class="spc-journey-outcome">
+        <div class="spc-journey-outcome-kicker">What This Creates</div>
+        <h2>Better stays. Stronger reviews. More repeat guests.</h2>
         <p>
-          Real hospitality is in the details, the follow-through, and the care guests remember after they leave.
+          The guest experience is not one big moment — it is a series of thoughtful touchpoints that make the stay feel easy, personal, and well cared for.
         </p>
-      </div>
-
+      </div>  
     </div>
   `;
 }    
@@ -6886,13 +6944,12 @@ text: item.body || '',
 image_url: item.image_url || ''  
     }));
 
- container.innerHTML = renderGuestJourneySection({
+container.innerHTML = renderGuestJourneySection({
     kicker: 'Guest Experience',
-    title: heroItem?.title || 'Guest Experience',
-    intro: heroItem?.body || '',
+    title: 'A Hospitality Experience Guests Remember',
+    intro: 'From the first booking message to the final thank-you, every touchpoint is designed to create memorable stays, stronger reviews, and lasting guest relationships.',
     items: cardItems
   });
-
   return;
 }
 
