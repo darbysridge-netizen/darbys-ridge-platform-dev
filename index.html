@@ -2882,11 +2882,12 @@ background:#ead8c7;
 #presentationView .spc-menu-card{
   position:relative;
   overflow:hidden;
-  min-height:178px;
-  border-radius:18px;
-  background:linear-gradient(135deg,#FFFDF9 0%,#F5ECDF 100%);
-  border:1px solid rgba(215,174,109,.26);
-  box-shadow:0 14px 30px rgba(31,40,51,.10);
+  min-height:150px;
+  border-radius:22px;
+  background:
+    linear-gradient(135deg, rgba(255,253,249,.96), rgba(245,236,223,.96));
+  border:1px solid rgba(215,174,109,.24);
+  box-shadow:0 14px 28px rgba(31,40,51,.09);
   transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
   cursor:pointer;
 }
@@ -2912,10 +2913,10 @@ background:#ead8c7;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-  gap:10px;
-  padding:18px;
-  text-align:center;
-}
+  gap:12px;
+  padding:22px 20px;
+  text-align:left;
+}    
 /* TOP */
 
 #presentationView .spc-menu-top{
@@ -2926,10 +2927,12 @@ background:#ead8c7;
 }
 
 #presentationView .spc-menu-number{
-  font-size:11px;
-  font-weight:900;
-  letter-spacing:.18em;
-  color:#B57A36;
+  font-family:'Playfair Display',serif;
+  font-size:32px;
+  line-height:1;
+  font-weight:500;
+  letter-spacing:0;
+  color:rgba(196,122,44,.72);
 }
 
 #presentationView .spc-menu-arrow{
@@ -2943,19 +2946,19 @@ background:#ead8c7;
 #presentationView .spc-menu-copy strong{
   display:block;
   font-family:'Playfair Display',serif;
-  font-size:22px;
-  line-height:1.05;
+  font-size:23px;
+  line-height:1.04;
   color:#16202A;
   font-weight:600;
-  margin:0 auto 8px;
-  max-width:170px;
+  margin:0 0 8px;
+  max-width:190px;
 }
 
 
 #presentationView .spc-menu-copy small{
   display:block;
-  max-width:160px;
-  margin:0 auto;
+  max-width:190px;
+  margin:0;
   font-size:12px;
   line-height:1.45;
   color:#5A6772;
