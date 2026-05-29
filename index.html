@@ -5704,7 +5704,25 @@ container.innerHTML = `
 }
 if(sectionKey === 'management_plans'){
 
-const plans = window.managementPlans || [];
+const { data: plans, error: plansError } = await supabaseClient
+  .from('management_plans')
+  .select('*')
+  .eq('presentation_slug', PRESENTATION_SLUG || 'default')
+  .eq('is_active', true)
+  .order('display_order', { ascending:true });
+
+if(plansError){
+  console.error(plansError);
+  container.innerHTML = `
+    <div class="spc-section">
+      <button class="spc-section-back" type="button" onclick="closePresentationSection()">
+        ← Back To Presentation Center
+      </button>
+      <div class="panel">Unable to load management plans.</div>
+    </div>
+  `;
+  return;
+}
 
   container.innerHTML = `
     <div class="spc-section spc-plans-section">
