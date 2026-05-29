@@ -5704,12 +5704,24 @@ container.innerHTML = `
 }
 if(sectionKey === 'management_plans'){
 
-const { data: plans, error: plansError } = await supabaseClient
+let { data: plans, error: plansError } = await supabaseClient
   .from('management_plans')
   .select('*')
   .eq('presentation_slug', PRESENTATION_SLUG || 'default')
   .eq('is_active', true)
   .order('display_order', { ascending:true });
+
+if(!plansError && (!plans || plans.length === 0)){
+  const fallback = await supabaseClient
+    .from('management_plans')
+    .select('*')
+    .eq('presentation_slug', 'default')
+    .eq('is_active', true)
+    .order('display_order', { ascending:true });
+
+  plans = fallback.data || [];
+  plansError = fallback.error;
+}
 
 if(plansError){
   console.error(plansError);
