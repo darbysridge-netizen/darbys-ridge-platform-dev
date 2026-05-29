@@ -2794,29 +2794,23 @@ background:#ead8c7;
   content:"";
   position:absolute;
   left:18px;
-  top:115px;
-  width:190px;
-  height:300px;
-  opacity:.13;
-  background:
-    linear-gradient(135deg, transparent 30%, #6F7F74 31%, transparent 32%),
-    linear-gradient(45deg, transparent 34%, #6F7F74 35%, transparent 36%);
+  top:130px;
+  width:260px;
+  height:360px;
+  opacity:.18;
+  background:url("data:image/svg+xml,%3Csvg width='260' height='360' viewBox='0 0 260 360' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%236F7F74' stroke-width='2' opacity='.75'%3E%3Cpath d='M10 250 L72 170 L122 222 L174 138 L250 250'/%3E%3Cpath d='M28 252 L86 198 L124 232 L170 180 L236 252'/%3E%3Cpath d='M18 292 C64 270 108 268 150 288 C188 306 224 302 252 282'/%3E%3Cpath d='M58 316 C96 300 134 302 168 318 C202 334 230 328 252 314'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
   pointer-events:none;
 }
 
 #presentationView .spc-menu:after{
   content:"";
   position:absolute;
-  right:24px;
-  top:80px;
-  width:170px;
-  height:310px;
-  opacity:.13;
-  border:2px solid #D7AE6D;
-  border-left:none;
-  border-bottom:none;
-  border-radius:60% 40% 0 0;
-  transform:rotate(-18deg);
+  right:18px;
+  top:95px;
+  width:240px;
+  height:390px;
+  opacity:.18;
+  background:url("data:image/svg+xml,%3Csvg width='240' height='390' viewBox='0 0 240 390' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C47A2C' stroke-width='2' opacity='.72'%3E%3Cpath d='M120 370 C104 292 112 210 152 132 C172 92 192 54 186 18'/%3E%3Cpath d='M140 190 C176 178 202 150 214 112 C176 124 150 150 140 190Z'/%3E%3Cpath d='M120 252 C86 236 62 208 52 170 C90 184 112 212 120 252Z'/%3E%3Cpath d='M150 130 C126 112 112 82 116 48 C146 68 158 94 150 130Z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
   pointer-events:none;
 }
 #presentationView .spc-menu-shell{
@@ -2943,12 +2937,7 @@ background:#ead8c7;
   color:#B57A36;
   line-height:1;
 }
-#presentationView .spc-menu-icon{
-  font-size:40px;
-  line-height:1;
-  color:#C47A2C;
-  margin:2px auto 4px;
-}
+
 /* CONTENT */
 
 #presentationView .spc-menu-copy strong{
@@ -4918,16 +4907,7 @@ menuOrder.forEach((sectionKey, index) => {
 
     const paddedNumber = String(number).padStart(2, '0');
     const description = descriptions[sectionKey] || '';
-const icons = {
-  guest_experience: '⌁',
-  team_experience: '♙',
-  owner_experience: '♡',
-  branded_platform: '▣',
-  management_plans: '☑',
-  launch_setup: '✦',
-  path_to_listing: '↗',
-  build_your_plan: '◇'
-};
+
     return `
       <button
         type="button"
@@ -4940,9 +4920,7 @@ const icons = {
             <div class="spc-menu-number">${paddedNumber}</div>
             <div class="spc-menu-arrow">→</div>
           </div>
-<div class="spc-menu-icon">
-  ${icons[sectionKey] || '✦'}
-</div>
+
           <div class="spc-menu-copy">
             <strong>${escapeHtml(section.section_title || '')}</strong>
             <small>${escapeHtml(description)}</small>
