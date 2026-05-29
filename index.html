@@ -3233,8 +3233,10 @@ background:#ead8c7;
 
 #presentationView .spc-plans-section{
   max-width:1180px;
-  padding:34px 34px 64px;
-  background:#F7F1E8;
+  padding:34px 48px 76px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(215,174,109,.14), transparent 28%),
+    linear-gradient(180deg,#FFF8EF 0%,#F5EFE7 100%);
 }
 
 #presentationView .spc-plans-header{
@@ -3277,18 +3279,19 @@ background:#ead8c7;
 
 #presentationView .spc-plan-card{
   position:relative;
-  background:#FFFCF8;
-  border:1px solid rgba(215,174,109,.22);
-  border-radius:26px;
-  padding:30px 28px;
-  box-shadow:0 14px 34px rgba(0,0,0,.07);
+  background:rgba(255,252,248,.94);
+  border:1px solid rgba(215,174,109,.24);
+  border-radius:28px;
+  padding:32px 28px;
+  box-shadow:0 16px 36px rgba(31,40,51,.10);
   overflow:hidden;
 }
 
 #presentationView .spc-plan-card.featured{
   border:2px solid #D7AE6D;
-  transform:translateY(-14px);
-  box-shadow:0 22px 48px rgba(0,0,0,.12);
+  transform:translateY(-12px);
+  background:#FFFCF8;
+  box-shadow:0 26px 54px rgba(31,40,51,.16);
 }
 
 #presentationView .spc-plan-ribbon{
@@ -3310,17 +3313,7 @@ background:#ead8c7;
 }
 
 #presentationView .spc-plan-icon{
-  width:68px;
-  height:68px;
-  border-radius:999px;
-  border:1px solid rgba(181,122,54,.38);
-  background:#F8F1E8;
-  color:#B57A36;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:32px;
-  margin:0 auto 18px;
+  display:none;
 }
 
 #presentationView .spc-plan-name{
