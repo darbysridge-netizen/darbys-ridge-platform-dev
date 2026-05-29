@@ -4212,6 +4212,37 @@ background:#ead8c7;
   #presentationView .spc-plans-v2-hero h1{
     font-size:40px;
   }
+}  
+/* MANAGEMENT PLANS — DECOR LAYER */
+#presentationView .spc-plans-v2:before{
+  content:"";
+  position:absolute;
+  left:18px;
+  top:130px;
+  width:280px;
+  height:360px;
+  opacity:.16;
+  background:url("data:image/svg+xml,%3Csvg width='280' height='360' viewBox='0 0 280 360' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%236F7F74' stroke-width='2'%3E%3Cpath d='M8 250 L76 162 L128 218 L186 126 L272 250'/%3E%3Cpath d='M30 256 L94 202 L132 232 L178 184 L250 256'/%3E%3Cpath d='M16 294 C64 270 112 270 154 292 C196 314 234 308 270 288'/%3E%3Cpath d='M52 322 C98 302 142 306 178 324 C214 342 246 336 272 320'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events:none;
+}
+
+#presentationView .spc-plans-v2:after{
+  content:"";
+  position:absolute;
+  right:18px;
+  top:95px;
+  width:260px;
+  height:390px;
+  opacity:.16;
+  background:url("data:image/svg+xml,%3Csvg width='260' height='390' viewBox='0 0 260 390' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C47A2C' stroke-width='2'%3E%3Cpath d='M126 370 C112 292 122 212 162 134 C184 92 204 54 196 18'/%3E%3Cpath d='M150 194 C190 178 214 150 226 110 C188 122 160 150 150 194Z'/%3E%3Cpath d='M126 254 C88 238 64 210 54 170 C94 184 118 214 126 254Z'/%3E%3Cpath d='M160 132 C134 112 122 82 126 48 C156 68 170 98 160 132Z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events:none;
+}
+
+#presentationView .spc-plans-v2-hero,
+#presentationView .spc-plans-v2-grid,
+#presentationView .spc-section-back{
+  position:relative;
+  z-index:2;
 }    
   </style>
 
