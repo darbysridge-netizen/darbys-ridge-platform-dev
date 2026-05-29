@@ -4243,6 +4243,197 @@ background:#ead8c7;
 #presentationView .spc-section-back{
   position:relative;
   z-index:2;
+}  
+/* =========================================================
+   BRANDED HOSPITALITY PLATFORM — CLEAN SPC V2
+========================================================= */
+
+#presentationView .spc-platform-v2{
+  position:relative;
+  max-width:1180px;
+  margin:0 auto;
+  padding:42px 58px 82px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(215,174,109,.14), transparent 28%),
+    linear-gradient(180deg,#FFF8EF 0%,#F5EFE7 100%);
+  overflow:hidden;
+}
+
+#presentationView .spc-platform-v2:before{
+  content:"";
+  position:absolute;
+  left:18px;
+  top:130px;
+  width:280px;
+  height:360px;
+  opacity:.15;
+  background:url("data:image/svg+xml,%3Csvg width='280' height='360' viewBox='0 0 280 360' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%236F7F74' stroke-width='2'%3E%3Cpath d='M8 250 L76 162 L128 218 L186 126 L272 250'/%3E%3Cpath d='M30 256 L94 202 L132 232 L178 184 L250 256'/%3E%3Cpath d='M16 294 C64 270 112 270 154 292 C196 314 234 308 270 288'/%3E%3Cpath d='M52 322 C98 302 142 306 178 324 C214 342 246 336 272 320'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events:none;
+}
+
+#presentationView .spc-platform-v2:after{
+  content:"";
+  position:absolute;
+  right:18px;
+  top:95px;
+  width:260px;
+  height:390px;
+  opacity:.15;
+  background:url("data:image/svg+xml,%3Csvg width='260' height='390' viewBox='0 0 260 390' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C47A2C' stroke-width='2'%3E%3Cpath d='M126 370 C112 292 122 212 162 134 C184 92 204 54 196 18'/%3E%3Cpath d='M150 194 C190 178 214 150 226 110 C188 122 160 150 150 194Z'/%3E%3Cpath d='M126 254 C88 238 64 210 54 170 C94 184 118 214 126 254Z'/%3E%3Cpath d='M160 132 C134 112 122 82 126 48 C156 68 170 98 160 132Z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events:none;
+}
+
+#presentationView .spc-platform-v2 > *{
+  position:relative;
+  z-index:2;
+}
+
+#presentationView .spc-platform-v2-hero{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:44px;
+  align-items:center;
+  padding:52px;
+  border-radius:34px;
+  background:rgba(255,252,248,.88);
+  border:1px solid rgba(215,174,109,.26);
+  box-shadow:0 18px 42px rgba(31,40,51,.10);
+  margin-bottom:34px;
+}
+
+#presentationView .spc-platform-v2-kicker{
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#C47A2C;
+  margin-bottom:14px;
+}
+
+#presentationView .spc-platform-v2-copy h1{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  line-height:.98;
+  color:#16202A;
+  margin:0 0 18px;
+}
+
+#presentationView .spc-platform-v2-copy p{
+  max-width:680px;
+  font-size:17px;
+  line-height:1.7;
+  color:#42505B;
+  margin:0;
+}
+
+#presentationView .spc-platform-v2-device{
+  display:flex;
+  justify-content:center;
+}
+
+#presentationView .spc-platform-v2-phone{
+  width:250px;
+  min-height:390px;
+  border-radius:36px;
+  padding:28px 22px;
+  background:#16202A;
+  color:white;
+  box-shadow:0 28px 58px rgba(31,40,51,.28);
+  border:8px solid #2E3640;
+}
+
+#presentationView .spc-platform-v2-phone-top{
+  width:74px;
+  height:7px;
+  border-radius:999px;
+  background:rgba(255,255,255,.25);
+  margin:0 auto 28px;
+}
+
+#presentationView .spc-platform-v2-phone h3{
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  line-height:1.05;
+  margin:0 0 12px;
+  color:white;
+}
+
+#presentationView .spc-platform-v2-phone p{
+  font-size:13px;
+  line-height:1.55;
+  color:rgba(255,255,255,.82);
+  margin:0 0 22px;
+}
+
+#presentationView .spc-platform-v2-mini-card{
+  height:86px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#FFF8EF,#EFDCC6);
+  margin-bottom:12px;
+}
+
+#presentationView .spc-platform-v2-mini-card.small{
+  height:58px;
+  opacity:.8;
+}
+
+#presentationView .spc-platform-v2-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:20px;
+}
+
+#presentationView .spc-platform-v2-grid article{
+  background:rgba(255,252,248,.92);
+  border:1px solid rgba(215,174,109,.26);
+  border-radius:28px;
+  padding:34px 30px;
+  box-shadow:0 16px 36px rgba(31,40,51,.10);
+}
+
+#presentationView .spc-platform-v2-grid span{
+  display:block;
+  font-family:'Playfair Display',serif;
+  font-size:34px;
+  line-height:1;
+  color:rgba(196,122,44,.72);
+  margin-bottom:18px;
+}
+
+#presentationView .spc-platform-v2-grid h2{
+  font-family:'Playfair Display',serif;
+  font-size:31px;
+  line-height:1.04;
+  color:#16202A;
+  margin:0 0 12px;
+}
+
+#presentationView .spc-platform-v2-grid p{
+  font-size:14px;
+  line-height:1.65;
+  color:#42505B;
+  margin:0;
+}
+
+@media(max-width:900px){
+  #presentationView .spc-platform-v2-hero,
+  #presentationView .spc-platform-v2-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+@media(max-width:760px){
+  #presentationView .spc-platform-v2{
+    padding:28px 20px 56px;
+  }
+
+  #presentationView .spc-platform-v2-hero{
+    padding:34px 26px;
+  }
+
+  #presentationView .spc-platform-v2-copy h1{
+    font-size:40px;
+  }
 }    
   </style>
 
@@ -6280,77 +6471,71 @@ if(sectionKey === 'management_plans'){
 if(sectionKey === 'branded_platform'){
 
   container.innerHTML = `
+    <section class="spc-platform-v2">
 
- <div class="spc-section"> 
-
-      <button
-     class="spc-section-back"  
-        type="button"
-        onclick="closePresentationSection()"
-      >
-        ← Back to Presentation Center
+      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+        ← Back To Presentation Center
       </button>
 
- <div class="spc-section-hero platform-hero">
+      <div class="spc-platform-v2-hero">
+        <div class="spc-platform-v2-copy">
+          <div class="spc-platform-v2-kicker">Branded Hospitality Platform</div>
 
- class="platform-hero-copy spc-section-intro"    
-     <div class="spc-section-kicker">    
-            BRANDED HOSPITALITY PLATFORM
+          <h1>The guest app, owner view, and team tools — all connected.</h1>
+
+          <p>
+            Sunshine is not just co-hosting. It is a branded hospitality system built around the property,
+            the guest experience, the operating workflow, and owner confidence.
+          </p>
+        </div>
+
+        <div class="spc-platform-v2-device">
+          <div class="spc-platform-v2-phone">
+            <div class="spc-platform-v2-phone-top"></div>
+            <h3>Guest Guide</h3>
+            <p>Welcome info, directions, house details, local favorites, and stay support.</p>
+            <div class="spc-platform-v2-mini-card"></div>
+            <div class="spc-platform-v2-mini-card small"></div>
           </div>
-
-        <h1 class="platform-hero-title spc-section-title">
-            More than management. A connected hospitality system.
-          </h1>
-
-          <p>
-            Sunshine brings the guest experience, owner visibility, and behind-the-scenes operations together in one branded system built around the property.
-          </p>
-        </div>
-
-      </div>
-
-   <div class="platform-editorial-row">
-        <div class="platform-editorial-image image-guest"></div>
-
-      <div class="platform-editorial-copy spc-section-card">
-          <div class="platform-label">Guest Experience</div>
-          <h2>A branded guide that feels personal to the stay.</h2>
-          <p>
-            Guests get a polished digital experience with property details, local guidance, directions, checkout notes, and thoughtful hospitality touches.
-          </p>
         </div>
       </div>
 
-      <div class="platform-editorial-row reverse">
-        <div class="platform-editorial-image image-owner"></div>
+      <div class="spc-platform-v2-grid">
 
-       <div class="platform-editorial-copy spc-section-card">
-          <div class="platform-label">Owner Visibility</div>
-          <h2>Clearer updates without overwhelming the owner.</h2>
+        <article>
+          <span>01</span>
+          <h2>Guest Experience</h2>
           <p>
-            Owners can see what matters most: property readiness, guest activity, turnover notes, photos, supplies, and operational updates.
+            A polished, property-branded digital guide that helps guests feel prepared,
+            welcomed, and supported before and during their stay.
           </p>
-        </div>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h2>Owner Visibility</h2>
+          <p>
+            Owners have a clearer view of what is happening at the property without being buried
+            in day-to-day operational details.
+          </p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h2>Team Operations</h2>
+          <p>
+            Cleaner workflows, turnover notes, supply awareness, and property-specific operating systems
+            help the home stay guest-ready.
+          </p>
+        </article>
+
       </div>
 
- <div class="platform-editorial-row">
-        <div class="platform-editorial-image image-team"></div>
-
-   <div class="platform-editorial-copy spc-section-card">
-          <div class="platform-label">Team Operations</div>
-          <h2>Cleaner workflows behind every stay.</h2>
-          <p>
-            Turnovers, supplies, maintenance notes, and team communication stay organized so the guest experience feels smooth on the front end.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
+    </section>
   `;
 
   return;
-}  
+}
 if(sectionKey === 'guest_experience'){
 
   const { data: guestItems, error: guestError } = await supabaseClient
