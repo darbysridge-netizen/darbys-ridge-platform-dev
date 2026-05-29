@@ -4886,9 +4886,6 @@ const menuOrder = [
   'build_your_plan'
 ];
 
-const leftColumn = menuOrder.filter((sectionKey, index) => index % 2 === 0);
-const rightColumn = menuOrder.filter((sectionKey, index) => index % 2 === 1);
-
 const menuNumbers = {};
 menuOrder.forEach((sectionKey, index) => {
   menuNumbers[sectionKey] = index + 1;
@@ -4923,13 +4920,7 @@ menuOrder.forEach((sectionKey, index) => {
     `;
   }
 
-  let number = 1;
-
- const leftHtml = leftColumn
-  .map(sectionKey => renderMenuCard(sectionKey, menuNumbers[sectionKey]))
-  .join('');
-
-const rightHtml = rightColumn
+ const menuHtml = menuOrder
   .map(sectionKey => renderMenuCard(sectionKey, menuNumbers[sectionKey]))
   .join('');
   container.innerHTML = `
@@ -4950,15 +4941,9 @@ const rightHtml = rightColumn
           </div>
         </div>
 
-        <div class="spc-menu-grid">
-          <div class="spc-menu-column">
-            ${leftHtml}
-          </div>
-
-          <div class="spc-menu-column">
-            ${rightHtml}
-          </div>
-        </div>
+    <div class="spc-menu-grid">
+  ${menuHtml}
+</div>  
 
       </div>
     </div>
