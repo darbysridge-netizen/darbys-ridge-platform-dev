@@ -1155,39 +1155,52 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
   content:"";
   position:absolute;
   inset:0;
+  z-index:1;
   background:
-    linear-gradient(90deg, rgba(10,18,28,.42) 0%, rgba(10,18,28,.18) 46%, rgba(10,18,28,.04) 100%),
-    linear-gradient(to top, rgba(10,18,28,.12), transparent 45%);
+    linear-gradient(90deg, rgba(10,18,28,.78) 0%, rgba(10,18,28,.42) 48%, rgba(10,18,28,.12) 100%),
+    linear-gradient(to top, rgba(10,18,28,.18), transparent 48%);
+}
+
+.presentation-final-hero:before{
+  content:"";
+  position:absolute;
+  left:-8%;
+  right:-8%;
+  bottom:-92px;
+  height:150px;
+  z-index:2;
+  background:#FFF8EF;
+  border-radius:50% 50% 0 0 / 100% 100% 0 0;
+  transform:rotate(-2deg);
 }
 
 .presentation-final-hero-content{
   position:absolute;
   left:72px;
-  bottom:70px;
-  max-width:760px;
-  z-index:2;
+  bottom:96px;
+  max-width:640px;
+  z-index:3;
   color:white;
 }
 
 .presentation-final-title{
   font-family:'Playfair Display',serif;
-  font-size:82px;
+  font-size:76px;
   line-height:.95;
   margin:0 0 18px;
   color:white;
-  max-width:760px;
+  max-width:620px;
   letter-spacing:-1px;
-  text-shadow:0 8px 26px rgba(0,0,0,.28);
+  text-shadow:0 8px 26px rgba(0,0,0,.32);
 }
-
 .presentation-final-subtitle{
   font-family:'Inter',sans-serif;
-  font-size:21px;
-  font-weight:400;
-  line-height:1.5;
-  color:rgba(255,255,255,.92);
-  margin-bottom:24px;
-  max-width:700px;
+  font-size:23px;
+  font-weight:500;
+  line-height:1.45;
+  color:rgba(255,255,255,.94);
+  margin-bottom:26px;
+  max-width:560px;
 }
 .presentation-final-line{
   width:96px;
@@ -1210,11 +1223,11 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
 .presentation-final-menu-label{
   text-align:left;
   max-width:1040px;
-  margin:0 auto 42px;
-  font-size:11px;
+  margin:0 auto 32px;
+  font-size:12px;
   letter-spacing:.24em;
   text-transform:uppercase;
-  color:#D7AE6D;
+  color:#C47A2C;
   font-weight:900;
 }
 
@@ -2779,24 +2792,55 @@ background:#ead8c7;
 
 #presentationView .spc-menu{
   position:relative;
-  padding:52px 48px 72px;
+  padding:34px 48px 72px;
   background:
-    radial-gradient(circle at 8% 18%, rgba(215,174,109,.13), transparent 30%),
-    radial-gradient(circle at 94% 22%, rgba(47,58,68,.08), transparent 28%),
-    #F5EFE7;
+    radial-gradient(circle at 5% 24%, rgba(215,174,109,.16), transparent 28%),
+    radial-gradient(circle at 96% 12%, rgba(47,58,68,.09), transparent 28%),
+    linear-gradient(180deg,#FFF8EF 0%,#F5EFE7 100%);
+  overflow:hidden;
+}
+#presentationView .spc-menu:before{
+  content:"";
+  position:absolute;
+  left:18px;
+  top:115px;
+  width:190px;
+  height:300px;
+  opacity:.13;
+  background:
+    linear-gradient(135deg, transparent 30%, #6F7F74 31%, transparent 32%),
+    linear-gradient(45deg, transparent 34%, #6F7F74 35%, transparent 36%);
+  pointer-events:none;
 }
 
+#presentationView .spc-menu:after{
+  content:"";
+  position:absolute;
+  right:24px;
+  top:80px;
+  width:170px;
+  height:310px;
+  opacity:.13;
+  border:2px solid #D7AE6D;
+  border-left:none;
+  border-bottom:none;
+  border-radius:60% 40% 0 0;
+  transform:rotate(-18deg);
+  pointer-events:none;
+}
 #presentationView .spc-menu-shell{
+  position:relative;
+  z-index:2;
   max-width:980px;
   margin:0 auto;
   background:linear-gradient(135deg,#FFFCF8 0%,#FFF7EC 100%);
-  border:1px solid rgba(215,174,109,.22);
+  border:1px solid rgba(215,174,109,.28);
   border-radius:34px;
-  padding:48px 56px 52px;
-  box-shadow:0 24px 58px rgba(31,40,51,.10);
+  padding:44px 54px 50px;
+  box-shadow:0 26px 62px rgba(31,40,51,.12);
 }
 #presentationView .spc-menu-header{
-  margin-bottom:30px;
+  margin-bottom:26px;
 }
 #presentationView .spc-menu-kicker{
   font-size:13px;
@@ -2804,18 +2848,29 @@ background:#ead8c7;
   letter-spacing:.22em;
   text-transform:uppercase;
   color:#C47A2C;
-  margin-bottom:16px;
+  margin-bottom:14px;
 }
-
+#presentationView .spc-menu-kicker:before{
+  content:"☀";
+  display:block;
+  font-size:34px;
+  line-height:1;
+  color:#C47A2C;
+  letter-spacing:0;
+  margin-bottom:8px;
+}    
 #presentationView .spc-menu-title{
   font-family:'Playfair Display',serif;
-  font-size:42px;
-  line-height:1.05;
+  font-size:46px;
+  line-height:1.02;
   color:#16202A;
-  margin:0 0 16px;
-  max-width:780px;
+  margin:0 0 14px;
+  max-width:760px;
 }
-
+#presentationView .spc-menu-title:after{
+  content:".";
+  color:#C47A2C;
+}    
 #presentationView .spc-menu-intro{
   max-width:760px;
   font-size:17px;
@@ -2845,35 +2900,19 @@ background:#ead8c7;
 #presentationView .spc-menu-card{
   position:relative;
   overflow:hidden;
-
-aspect-ratio:auto;
-min-height:150px;
-
+  min-height:178px;
   border-radius:18px;
-
-  background:
-    linear-gradient(135deg, #FFFDF9 0%, #F3EADF 100%);
-
-  border:1px solid rgba(215,174,109,.22);
-
-  box-shadow:
-    0 18px 38px rgba(0,0,0,.16);
-
-  transition:
-    transform .22s ease,
-    box-shadow .22s ease,
-    border-color .22s ease;
-
+  background:linear-gradient(135deg,#FFFDF9 0%,#F5ECDF 100%);
+  border:1px solid rgba(215,174,109,.26);
+  box-shadow:0 14px 30px rgba(31,40,51,.10);
+  transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
   cursor:pointer;
 }
 
 #presentationView .spc-menu-card:hover{
-  transform:translateY(-4px);
-
-  border-color:rgba(215,174,109,.55);
-
-  box-shadow:
-    0 26px 52px rgba(0,0,0,.20);
+  transform:translateY(-6px);
+  border-color:rgba(196,122,44,.55);
+  box-shadow:0 24px 44px rgba(31,40,51,.16);
 }
 
 /* FEATURED SIZE VARIATION */
@@ -2888,15 +2927,12 @@ min-height:150px;
 
 #presentationView .spc-menu-card-inner{
   min-height:inherit;
-
   display:flex;
   flex-direction:column;
-
   justify-content:space-between;
-
-  gap:18px;
-
+  gap:10px;
   padding:18px;
+  text-align:center;
 }
 /* TOP */
 
@@ -2919,38 +2955,34 @@ min-height:150px;
   color:#B57A36;
   line-height:1;
 }
-
+#presentationView .spc-menu-icon{
+  font-size:40px;
+  line-height:1;
+  color:#C47A2C;
+  margin:2px auto 4px;
+}
 /* CONTENT */
 
 #presentationView .spc-menu-copy strong{
   display:block;
-
   font-family:'Playfair Display',serif;
-
-  font-size:20px;
-  line-height:1.02;
-
+  font-size:22px;
+  line-height:1.05;
   color:#16202A;
-
-  font-weight:500;
-
-  margin-bottom:10px;
-
-  max-width:180px;
+  font-weight:600;
+  margin:0 auto 8px;
+  max-width:170px;
 }
 
 
 #presentationView .spc-menu-copy small{
   display:block;
-
-  max-width:180px;
-
+  max-width:160px;
+  margin:0 auto;
   font-size:12px;
-  line-height:1.6;
-
+  line-height:1.45;
   color:#5A6772;
-
-  letter-spacing:.02em;
+  letter-spacing:.01em;
 }
 
 /* MOBILE */
@@ -4898,7 +4930,16 @@ menuOrder.forEach((sectionKey, index) => {
 
     const paddedNumber = String(number).padStart(2, '0');
     const description = descriptions[sectionKey] || '';
-
+const icons = {
+  guest_experience: '⌁',
+  team_experience: '♙',
+  owner_experience: '♡',
+  branded_platform: '▣',
+  management_plans: '☑',
+  launch_setup: '✦',
+  path_to_listing: '↗',
+  build_your_plan: '◇'
+};
     return `
       <button
         type="button"
@@ -4911,7 +4952,9 @@ menuOrder.forEach((sectionKey, index) => {
             <div class="spc-menu-number">${paddedNumber}</div>
             <div class="spc-menu-arrow">→</div>
           </div>
-
+<div class="spc-menu-icon">
+  ${icons[sectionKey] || '✦'}
+</div>
           <div class="spc-menu-copy">
             <strong>${escapeHtml(section.section_title || '')}</strong>
             <small>${escapeHtml(description)}</small>
