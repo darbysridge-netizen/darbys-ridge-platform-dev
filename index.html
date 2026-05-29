@@ -4434,6 +4434,430 @@ background:#ead8c7;
   #presentationView .spc-platform-v2-copy h1{
     font-size:40px;
   }
+}   
+/* =========================================================
+   LAUNCH + SETUP — CLEAN SPC V2
+========================================================= */
+
+#presentationView .spc-launch-v2{
+  position:relative;
+  max-width:1180px;
+  margin:0 auto;
+  padding:42px 58px 86px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(215,174,109,.14), transparent 28%),
+    linear-gradient(180deg,#FFF8EF 0%,#F5EFE7 100%);
+  overflow:hidden;
+}
+
+#presentationView .spc-launch-v2:before{
+  content:"";
+  position:absolute;
+  left:18px;
+  top:130px;
+  width:280px;
+  height:360px;
+  opacity:.15;
+  background:url("data:image/svg+xml,%3Csvg width='280' height='360' viewBox='0 0 280 360' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%236F7F74' stroke-width='2'%3E%3Cpath d='M8 250 L76 162 L128 218 L186 126 L272 250'/%3E%3Cpath d='M30 256 L94 202 L132 232 L178 184 L250 256'/%3E%3Cpath d='M16 294 C64 270 112 270 154 292 C196 314 234 308 270 288'/%3E%3Cpath d='M52 322 C98 302 142 306 178 324 C214 342 246 336 272 320'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events:none;
+}
+
+#presentationView .spc-launch-v2:after{
+  content:"";
+  position:absolute;
+  right:18px;
+  top:95px;
+  width:260px;
+  height:390px;
+  opacity:.15;
+  background:url("data:image/svg+xml,%3Csvg width='260' height='390' viewBox='0 0 260 390' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C47A2C' stroke-width='2'%3E%3Cpath d='M126 370 C112 292 122 212 162 134 C184 92 204 54 196 18'/%3E%3Cpath d='M150 194 C190 178 214 150 226 110 C188 122 160 150 150 194Z'/%3E%3Cpath d='M126 254 C88 238 64 210 54 170 C94 184 118 214 126 254Z'/%3E%3Cpath d='M160 132 C134 112 122 82 126 48 C156 68 170 98 160 132Z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events:none;
+}
+
+#presentationView .spc-launch-v2 > *{
+  position:relative;
+  z-index:2;
+}
+
+#presentationView .spc-launch-v2-hero{
+  padding:48px 52px;
+  border-radius:34px;
+  background:rgba(255,252,248,.88);
+  border:1px solid rgba(215,174,109,.26);
+  box-shadow:0 18px 42px rgba(31,40,51,.10);
+  margin-bottom:38px;
+}
+
+#presentationView .spc-launch-v2-kicker{
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#C47A2C;
+  margin-bottom:14px;
+}
+
+#presentationView .spc-launch-v2-hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  line-height:.98;
+  color:#16202A;
+  margin:0 0 18px;
+  max-width:780px;
+}
+
+#presentationView .spc-launch-v2-hero p{
+  max-width:760px;
+  font-size:17px;
+  line-height:1.7;
+  color:#42505B;
+  margin:0;
+}
+
+#presentationView .spc-launch-v2-timeline{
+  position:relative;
+  display:grid;
+  gap:22px;
+  max-width:980px;
+  margin:0 auto;
+}
+
+#presentationView .spc-launch-v2-timeline:before{
+  content:"";
+  position:absolute;
+  left:38px;
+  top:16px;
+  bottom:16px;
+  width:2px;
+  background:linear-gradient(to bottom, transparent, rgba(196,122,44,.45), transparent);
+}
+
+#presentationView .spc-launch-v2-step{
+  position:relative;
+  display:grid;
+  grid-template-columns:78px 1fr;
+  gap:22px;
+  align-items:start;
+}
+
+#presentationView .spc-launch-v2-marker{
+  position:relative;
+  z-index:2;
+  width:76px;
+  height:76px;
+  border-radius:999px;
+  background:#FFFCF8;
+  border:1px solid rgba(215,174,109,.38);
+  box-shadow:0 12px 26px rgba(31,40,51,.10);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  color:#C47A2C;
+}
+
+#presentationView .spc-launch-v2-card{
+  background:rgba(255,252,248,.92);
+  border:1px solid rgba(215,174,109,.26);
+  border-radius:28px;
+  padding:30px 32px;
+  box-shadow:0 16px 36px rgba(31,40,51,.10);
+}
+
+#presentationView .spc-launch-v2-eyebrow{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:#C47A2C;
+  margin-bottom:10px;
+}
+
+#presentationView .spc-launch-v2-card h2{
+  font-family:'Playfair Display',serif;
+  font-size:34px;
+  line-height:1.04;
+  color:#16202A;
+  margin:0 0 12px;
+}
+
+#presentationView .spc-launch-v2-price{
+  display:inline-block;
+  margin-bottom:16px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(196,122,44,.11);
+  color:#C47A2C;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+#presentationView .spc-launch-v2-card p{
+  font-size:14px;
+  line-height:1.65;
+  color:#42505B;
+  margin:0 0 18px;
+}
+
+#presentationView .spc-launch-v2-card ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+#presentationView .spc-launch-v2-card li{
+  position:relative;
+  padding:8px 0 8px 24px;
+  font-size:13px;
+  line-height:1.45;
+  color:#2E3640;
+  border-top:1px solid rgba(215,174,109,.14);
+}
+
+#presentationView .spc-launch-v2-card li:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:14px;
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:#C47A2C;
+}
+
+#presentationView .spc-launch-v2-note{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid rgba(215,174,109,.18);
+  font-size:13px;
+  line-height:1.55;
+  color:#6B5A4B;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-launch-v2{
+    padding:28px 20px 56px;
+  }
+
+  #presentationView .spc-launch-v2-hero{
+    padding:34px 26px;
+  }
+
+  #presentationView .spc-launch-v2-hero h1{
+    font-size:40px;
+  }
+
+  #presentationView .spc-launch-v2-step{
+    grid-template-columns:1fr;
+  }
+
+  #presentationView .spc-launch-v2-timeline:before{
+    display:none;
+  }
+}  
+/* =========================================================
+   PATH TO LISTING — CLEAN SPC V2
+========================================================= */
+
+#presentationView .spc-path-v2{
+  position:relative;
+  max-width:1180px;
+  margin:0 auto;
+  padding:42px 58px 86px;
+  background:
+    radial-gradient(circle at 8% 18%, rgba(215,174,109,.14), transparent 28%),
+    linear-gradient(180deg,#FFF8EF 0%,#F5EFE7 100%);
+  overflow:hidden;
+}
+
+#presentationView .spc-path-v2:before{
+  content:"";
+  position:absolute;
+  left:18px;
+  top:130px;
+  width:280px;
+  height:360px;
+  opacity:.15;
+  background:url("data:image/svg+xml,%3Csvg width='280' height='360' viewBox='0 0 280 360' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%236F7F74' stroke-width='2'%3E%3Cpath d='M8 250 L76 162 L128 218 L186 126 L272 250'/%3E%3Cpath d='M30 256 L94 202 L132 232 L178 184 L250 256'/%3E%3Cpath d='M16 294 C64 270 112 270 154 292 C196 314 234 308 270 288'/%3E%3Cpath d='M52 322 C98 302 142 306 178 324 C214 342 246 336 272 320'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events:none;
+}
+
+#presentationView .spc-path-v2:after{
+  content:"";
+  position:absolute;
+  right:18px;
+  top:95px;
+  width:260px;
+  height:390px;
+  opacity:.15;
+  background:url("data:image/svg+xml,%3Csvg width='260' height='390' viewBox='0 0 260 390' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23C47A2C' stroke-width='2'%3E%3Cpath d='M126 370 C112 292 122 212 162 134 C184 92 204 54 196 18'/%3E%3Cpath d='M150 194 C190 178 214 150 226 110 C188 122 160 150 150 194Z'/%3E%3Cpath d='M126 254 C88 238 64 210 54 170 C94 184 118 214 126 254Z'/%3E%3Cpath d='M160 132 C134 112 122 82 126 48 C156 68 170 98 160 132Z'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;
+  pointer-events:none;
+}
+
+#presentationView .spc-path-v2 > *{
+  position:relative;
+  z-index:2;
+}
+
+#presentationView .spc-path-v2-hero{
+  padding:48px 52px;
+  border-radius:34px;
+  background:rgba(255,252,248,.88);
+  border:1px solid rgba(215,174,109,.26);
+  box-shadow:0 18px 42px rgba(31,40,51,.10);
+  margin-bottom:38px;
+}
+
+#presentationView .spc-path-v2-kicker{
+  font-size:13px;
+  font-weight:900;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:#C47A2C;
+  margin-bottom:14px;
+}
+
+#presentationView .spc-path-v2-hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:58px;
+  line-height:.98;
+  color:#16202A;
+  margin:0 0 18px;
+  max-width:780px;
+}
+
+#presentationView .spc-path-v2-hero p{
+  max-width:760px;
+  font-size:17px;
+  line-height:1.7;
+  color:#42505B;
+  margin:0;
+}
+
+#presentationView .spc-path-v2-timeline{
+  position:relative;
+  display:grid;
+  gap:22px;
+  max-width:980px;
+  margin:0 auto;
+}
+
+#presentationView .spc-path-v2-timeline:before{
+  content:"";
+  position:absolute;
+  left:38px;
+  top:16px;
+  bottom:16px;
+  width:2px;
+  background:linear-gradient(to bottom, transparent, rgba(196,122,44,.45), transparent);
+}
+
+#presentationView .spc-path-v2-step{
+  position:relative;
+  display:grid;
+  grid-template-columns:78px 1fr;
+  gap:22px;
+  align-items:start;
+}
+
+#presentationView .spc-path-v2-marker{
+  position:relative;
+  z-index:2;
+  width:76px;
+  height:76px;
+  border-radius:999px;
+  background:#FFFCF8;
+  border:1px solid rgba(215,174,109,.38);
+  box-shadow:0 12px 26px rgba(31,40,51,.10);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:28px;
+  color:#C47A2C;
+}
+
+#presentationView .spc-path-v2-card{
+  background:rgba(255,252,248,.92);
+  border:1px solid rgba(215,174,109,.26);
+  border-radius:28px;
+  padding:30px 32px;
+  box-shadow:0 16px 36px rgba(31,40,51,.10);
+}
+
+#presentationView .spc-path-v2-eyebrow{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:#C47A2C;
+  margin-bottom:10px;
+}
+
+#presentationView .spc-path-v2-card h2{
+  font-family:'Playfair Display',serif;
+  font-size:34px;
+  line-height:1.04;
+  color:#16202A;
+  margin:0 0 12px;
+}
+
+#presentationView .spc-path-v2-card p{
+  font-size:14px;
+  line-height:1.65;
+  color:#42505B;
+  margin:0 0 18px;
+}
+
+#presentationView .spc-path-v2-card ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+
+#presentationView .spc-path-v2-card li{
+  position:relative;
+  padding:8px 0 8px 24px;
+  font-size:13px;
+  line-height:1.45;
+  color:#2E3640;
+  border-top:1px solid rgba(215,174,109,.14);
+}
+
+#presentationView .spc-path-v2-card li:before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:14px;
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:#C47A2C;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-path-v2{
+    padding:28px 20px 56px;
+  }
+
+  #presentationView .spc-path-v2-hero{
+    padding:34px 26px;
+  }
+
+  #presentationView .spc-path-v2-hero h1{
+    font-size:40px;
+  }
+
+  #presentationView .spc-path-v2-step{
+    grid-template-columns:1fr;
+  }
+
+  #presentationView .spc-path-v2-timeline:before{
+    display:none;
+  }
 }    
   </style>
 
@@ -6277,7 +6701,6 @@ image_url: item.image_url || ''
 
 if(sectionKey === 'launch_setup'){
 
-
   const { data: items, error } = await supabaseClient
     .from('presentation_section_content')
     .select('*')
@@ -6287,18 +6710,18 @@ if(sectionKey === 'launch_setup'){
 
   if(error){
     console.error(error);
-
     container.innerHTML = `
-      <div class="panel">
-        Failed loading Launch + Setup.
+      <div class="spc-section">
+        <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+          ← Back To Presentation Center
+        </button>
+        <div class="panel">Failed loading Launch + Setup.</div>
       </div>
     `;
-
     return;
   }
 
-  const cardsHtml = (items || []).map(item => {
-
+  const timelineHtml = (items || []).map((item, index) => {
     const bulletsHtml = String(item.bullets || '')
       .split('\n')
       .filter(Boolean)
@@ -6306,75 +6729,53 @@ if(sectionKey === 'launch_setup'){
       .join('');
 
     return `
-<div class="spc-section-card launch-detail-card">
-
-        <div class="launch-card-eyebrow">
-          ${escapeHtml(item.eyebrow || '')}
+      <article class="spc-launch-v2-step">
+        <div class="spc-launch-v2-marker">
+          ${String(index + 1).padStart(2, '0')}
         </div>
 
-        <h3>
-          ${escapeHtml(item.title || '')}
-        </h3>
+        <div class="spc-launch-v2-card">
+          <div class="spc-launch-v2-eyebrow">
+            ${escapeHtml(item.eyebrow || '')}
+          </div>
 
-        <div class="launch-card-price">
-          ${escapeHtml(item.price || '')}
+          <h2>${escapeHtml(item.title || '')}</h2>
+
+          ${item.price ? `<div class="spc-launch-v2-price">${escapeHtml(item.price)}</div>` : ''}
+
+          <p>${escapeHtml(item.body || '')}</p>
+
+          ${bulletsHtml ? `<ul>${bulletsHtml}</ul>` : ''}
+
+          ${item.note ? `<div class="spc-launch-v2-note">${escapeHtml(item.note)}</div>` : ''}
         </div>
-
-        <p>
-          ${escapeHtml(item.body || '')}
-        </p>
-
-        <ul class="launch-card-list">
-          ${bulletsHtml}
-        </ul>
-
-        <div class="launch-card-note">
-          ${escapeHtml(item.note || '')}
-        </div>
-
-      </div>
+      </article>
     `;
-
   }).join('');
 
-container.innerHTML = `
+  container.innerHTML = `
+    <section class="spc-launch-v2">
 
-    <div class="spc-section">
+      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+        ← Back To Presentation Center
+      </button>
 
-      <button
-        class="spc-section-back"
-        type="button"
-        onclick="closePresentationSection()"
-      >
-        ← Back to Presentation Center
-      </button> 
+      <div class="spc-launch-v2-hero">
+        <div class="spc-launch-v2-kicker">Launch + Setup</div>
 
-      <div class="spc-section-hero launch-hero-image">
+        <h1>Launch hospitality the way the property deserves.</h1>
 
-        <div class="launch-hero-overlay">
-
-       <div class="spc-section-kicker">
-            HOSPITALITY READINESS PATHWAYS
-          </div>
-
-         <h1 class="launch-hero-title spc-section-title">
-            Launch hospitality the way the property deserves.
-          </h1>
-
-         <div class="launch-hero-intro spc-section-intro">
-            Whether transitioning from another manager, rebuilding a struggling rental, or launching for the first time, we help create a more elevated and organized hospitality experience from the start.
-          </div>
-
-        </div>
-
+        <p>
+          Whether transitioning from another manager, rebuilding a struggling rental, or launching for the first time,
+          Sunshine helps organize the property, guest experience, and operating systems before guests arrive.
+        </p>
       </div>
 
-      <div class="spc-section-grid">
-        ${cardsHtml}
-      </div>     
+      <div class="spc-launch-v2-timeline">
+        ${timelineHtml}
+      </div>
 
-    </div>
-
+    </section>
   `;
 
   return;
@@ -6621,7 +7022,86 @@ const shellContent = {
   }
 
 };
+if(sectionKey === 'path_to_listing'){
 
+  const steps = [
+    {
+      eyebrow:'Step One',
+      title:'Decide the partnership path',
+      body:'We start by understanding the property, owner goals, timeline, current listing status, and what level of support makes sense.',
+      bullets:['Review current listing or launch status','Clarify owner involvement','Identify property needs and priorities']
+    },
+    {
+      eyebrow:'Step Two',
+      title:'Prepare the property for hospitality',
+      body:'The home is reviewed through the lens of guest experience, turnover flow, supplies, signage, amenities, and readiness.',
+      bullets:['Walkthrough and readiness notes','Guest-facing details reviewed','Operations needs identified']
+    },
+    {
+      eyebrow:'Step Three',
+      title:'Build the branded guest system',
+      body:'The property receives its branded digital guide, directions, guest information, local content, and stay support structure.',
+      bullets:['Guest guide setup','Property-specific content','Digital hospitality tools']
+    },
+    {
+      eyebrow:'Step Four',
+      title:'Set up team and owner visibility',
+      body:'We connect the behind-the-scenes tools so the property can be supported consistently before the first guest arrives.',
+      bullets:['Owner view','Team workflow','Turnover and supply structure']
+    },
+    {
+      eyebrow:'Step Five',
+      title:'Launch with confidence',
+      body:'Once the listing, guest experience, and operating rhythm are aligned, the property is ready to welcome guests.',
+      bullets:['Final checks','Listing support','Launch-ready handoff']
+    }
+  ];
+
+  const timelineHtml = steps.map((step, index) => `
+    <article class="spc-path-v2-step">
+      <div class="spc-path-v2-marker">
+        ${String(index + 1).padStart(2, '0')}
+      </div>
+
+      <div class="spc-path-v2-card">
+        <div class="spc-path-v2-eyebrow">${escapeHtml(step.eyebrow)}</div>
+        <h2>${escapeHtml(step.title)}</h2>
+        <p>${escapeHtml(step.body)}</p>
+        <ul>
+          ${step.bullets.map(bullet => `<li>${escapeHtml(bullet)}</li>`).join('')}
+        </ul>
+      </div>
+    </article>
+  `).join('');
+
+  container.innerHTML = `
+    <section class="spc-path-v2">
+
+      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+        ← Back To Presentation Center
+      </button>
+
+      <div class="spc-path-v2-hero">
+        <div class="spc-path-v2-kicker">Path To Listing</div>
+
+        <h1>From first conversation to guest-ready listing.</h1>
+
+        <p>
+          The path to listing is not just uploading photos and turning on a calendar.
+          It is the process of preparing the property, guest experience, team workflow,
+          and owner communication before the first stay.
+        </p>
+      </div>
+
+      <div class="spc-path-v2-timeline">
+        ${timelineHtml}
+      </div>
+
+    </section>
+  `;
+
+  return;
+}
 const sectionData = shellContent[sectionKey];
 
 if(sectionData){
