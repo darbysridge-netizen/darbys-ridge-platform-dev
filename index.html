@@ -5704,7 +5704,7 @@ container.innerHTML = `
 }
 if(sectionKey === 'management_plans'){
 
-  const plans = managementPlans || [];
+const plans = window.managementPlans || [];
 
   container.innerHTML = `
     <div class="spc-section spc-plans-section">
