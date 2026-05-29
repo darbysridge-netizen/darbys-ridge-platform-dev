@@ -5026,6 +5026,34 @@ background:#ead8c7;
     padding:28px 20px 60px;
   }
 }    
+/* Presentation Center — hide loose outer back button inside sections */
+body.presentation-section-open #presentationView > .back{
+  display:none !important;
+}    
+ /* Guest Experience — laptop width correction */
+#presentationView .spc-journey-section{
+  max-width:1180px !important;
+  padding:42px 58px 86px !important;
+}
+
+#presentationView .spc-journey-timeline{
+  max-width:980px !important;
+  margin:0 auto !important;
+}
+
+#presentationView .spc-journey-hero{
+  padding:48px 52px !important;
+}
+
+@media(max-width:760px){
+  #presentationView .spc-journey-section{
+    padding:24px 14px 46px !important;
+  }
+
+  #presentationView .spc-journey-hero{
+    padding:28px 22px !important;
+  }
+}   
   </style>
 
 <link id="browserIcon" rel="icon" href="sunshine-favicon.png">
@@ -6881,7 +6909,7 @@ if(sectionKey === 'launch_setup'){
     console.error(error);
     container.innerHTML = `
       <div class="spc-section">
-        <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+        <button class="spc-section-back" type="button"onclick="closePresentationSection()" >
           ← Back To Presentation Center
         </button>
         <div class="panel">Failed loading Launch + Setup.</div>
@@ -6925,7 +6953,7 @@ if(sectionKey === 'launch_setup'){
   container.innerHTML = `
     <section class="spc-launch-v2">
 
-      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+      <button class="spc-section-back" type="button" onclick="closePresentationSection()">
         ← Back To Presentation Center
       </button>
 
@@ -7014,7 +7042,7 @@ if(sectionKey === 'management_plans'){
   container.innerHTML = `
     <section class="spc-plans-v2">
 
-      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+      <button class="spc-section-back" type="button" onclick="closePresentationSection()">
         ← Back To Presentation Center
       </button>
 
@@ -7043,7 +7071,7 @@ if(sectionKey === 'branded_platform'){
   container.innerHTML = `
     <section class="spc-platform-v2">
 
-      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+      <button class="spc-section-back" type="button" onclick="closePresentationSection()">
         ← Back To Presentation Center
       </button>
 
@@ -7246,7 +7274,7 @@ if(sectionKey === 'path_to_listing'){
   container.innerHTML = `
     <section class="spc-path-v2">
 
-      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+      <button class="spc-section-back" type="button" onclick="closePresentationSection()">
         ← Back To Presentation Center
       </button>
 
@@ -7305,7 +7333,7 @@ if(sectionKey === 'build_your_plan'){
   container.innerHTML = `
     <section class="spc-build-v2">
 
-      <button class="spc-section-back" type="button" onclick="showPresentationHome()">
+      <button class="spc-section-back" type="button" onclick="closePresentationSection()">
         ← Back To Presentation Center
       </button>
 
