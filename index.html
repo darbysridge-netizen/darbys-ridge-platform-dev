@@ -9189,44 +9189,58 @@ async function deleteTurnoverMedia(id, imagePath){
   }
 }  
      
-    async function renderOwnerGuestGallery(){
-      const container = document.getElementById('ownerGuestGalleryEntries');
-      if(!container) return;
+  async function renderOwnerGuestGallery(){
+  const container = document.getElementById('ownerGuestGalleryEntries');
+  if(!container) return;
 
-      try{
-     const { data, error } = await supabaseClient
-  .from('guest_gallery')
-  .select('*')
-  .eq('property_slug', CURRENT_PROPERTY_SLUG)
-  .order('created_at', { ascending: false });  
+  try{
+    const { data, error } = await supabaseClient
+      .from('guest_gallery')
+      .select('*')
+      .eq('property_slug', CURRENT_PROPERTY_SLUG)
+      .order('created_at', { ascending: false });
 
-        if(error || !data || !data.length){
-          container.innerHTML = '<div class="small-note">No guest media yet.</div>';
-          return;
-        }
-
-        container.innerHTML = `
-          <div class="owner-gallery-strip">
-            ${data.map(item => `
-              <div class="submission-card">
-                <div class="owner-media-thumb">
-                  ${renderMediaPreviewTag(item.image_url, item.media_type || 'image/jpeg')}
-                </div>
-                <p><strong>Name:</strong> ${escapeHtml(item.guest_name || 'Guest Memory')}</p>
-                <p><strong>Type:</strong> ${escapeHtml(item.media_type || 'image/jpeg')}</p>
-                <div class="admin-actions">
-                  <button class="mini-delete" type="button" onclick="deleteGuestMedia(${item.id}, '${escapeHtml(item.image_path || '')}')">Delete</button>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        `;
-      } catch(e){
-        console.error(e);
-        container.innerHTML = '<div class="small-note">No guest media yet.</div>';
-      }
+    if(error || !data || !data.length){
+      container.innerHTML = '<div class="small-note">No guest media yet.</div>';
+      return;
     }
 
+    container.innerHTML = `
+      <div class="owner-gallery-strip">
+        ${data.map(item => `
+          <div class="submission-card">
+            <div class="owner-media-thumb">
+              ${renderMediaPreviewTag(item.image_url, item.media_type || 'image/jpeg')}
+            </div>
+            <p><strong>Name:</strong> ${escapeHtml(item.guest_name || 'Guest Memory')}</p>
+            <p><strong>Type:</strong> ${escapeHtml(item.media_type || 'image/jpeg')}</p>
+            <div class="admin-actions">
+              <button
+                class="mini-delete"
+                type="button"
+                data-gallery-id="${escapeHtml(String(item.id))}"
+                data-gallery-path="${escapeHtml(item.image_path || '')}"
+                onclick="handleGuestGalleryDeleteClick(this)"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } catch(e){
+    console.error(e);
+    container.innerHTML = '<div class="small-note">No guest media yet.</div>';
+  }
+}
+
+async function handleGuestGalleryDeleteClick(button){
+  const id = button.getAttribute('data-gallery-id');
+  const imagePath = button.getAttribute('data-gallery-path') || '';
+
+  await deleteGuestMedia(id, imagePath);
+}  
     async function renderOwnerTurnovers(){
       const container = document.getElementById('ownerTurnoverEntries');
       if(!container) return;
