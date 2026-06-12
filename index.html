@@ -9078,38 +9078,39 @@ await renderOwnerDashboard();
   `).join('');
 }
   
-    async function deleteGuestMedia(id, imagePath){
-      const okay = confirm('Delete this guest gallery item?');
-      if(!okay) return;
+    
+async function deleteGuestMedia(id, imagePath){
+  const okay = confirm('Delete this guest gallery item?');
+  if(!okay) return;
 
-      try{
-        if(imagePath){
-          const { error: storageError } = await supabaseClient
-            .storage
-            .from(GUEST_BUCKET)
-            .remove([imagePath]);
+  try{
+    const { error } = await supabaseClient
+      .from('guest_gallery')
+      .delete()
+      .eq('id', id);
 
-          if(storageError){
-            console.error(storageError);
-          }
-        }
+    if(error) throw error;
 
-        const { error } = await supabaseClient
-          .from('guest_gallery')
-          .delete()
-          .eq('id', id);
+    if(imagePath){
+      const { error: storageError } = await supabaseClient
+        .storage
+        .from(GUEST_BUCKET)
+        .remove([imagePath]);
 
-        if(error) throw error;
-
-        await renderGuestGallery();
-        await renderOwnerDashboard();
-      } catch(e){
-        console.error(e);
-        alert('Could not delete guest media.');
+      if(storageError){
+        console.warn('Guest gallery file could not be removed from storage:', storageError);
       }
     }
 
-  async function deleteTurnoverSubmission(id){
+    await renderGuestGallery();
+    await renderOwnerDashboard();
+  } catch(e){
+    console.error('Guest gallery delete failed:', e);
+    alert('Could not delete guest media: ' + (e.message || JSON.stringify(e)));
+  }
+}
+
+async function deleteTurnoverSubmission(id){
   const okay = confirm('Delete this entire turnover submission and all attached media?');
   if(!okay) return;
 
@@ -9121,29 +9122,16 @@ await renderOwnerDashboard();
 
     if(mediaLoadError) throw mediaLoadError;
 
-    if(mediaItems && mediaItems.length){
-      const pathsToRemove = mediaItems
-        .map(item => item.image_path)
-        .filter(Boolean);
+    const pathsToRemove = (mediaItems || [])
+      .map(item => item.image_path)
+      .filter(Boolean);
 
-      if(pathsToRemove.length){
-        const { error: storageError } = await supabaseClient
-          .storage
-          .from(TURNOVER_BUCKET)
-          .remove(pathsToRemove);
+    const { error: deletePhotosError } = await supabaseClient
+      .from('turnover_photos')
+      .delete()
+      .eq('turnover_id', id);
 
-        if(storageError){
-          console.error(storageError);
-        }
-      }
-
-      const { error: deletePhotosError } = await supabaseClient
-        .from('turnover_photos')
-        .delete()
-        .eq('turnover_id', id);
-
-      if(deletePhotosError) throw deletePhotosError;
-    }
+    if(deletePhotosError) throw deletePhotosError;
 
     const { error: deleteTurnoverError } = await supabaseClient
       .from('turnovers')
@@ -9152,12 +9140,23 @@ await renderOwnerDashboard();
 
     if(deleteTurnoverError) throw deleteTurnoverError;
 
+    if(pathsToRemove.length){
+      const { error: storageError } = await supabaseClient
+        .storage
+        .from(TURNOVER_BUCKET)
+        .remove(pathsToRemove);
+
+      if(storageError){
+        console.warn('Turnover files could not be removed from storage:', storageError);
+      }
+    }
+
     await renderOwnerDashboard();
   } catch(e){
-    console.error(e);
-    alert('Could not delete turnover submission.');
+    console.error('Turnover submission delete failed:', e);
+    alert('Could not delete turnover submission: ' + (e.message || JSON.stringify(e)));
   }
-}
+} 
 
 async function deleteTurnoverMedia(id, imagePath){
   const okay = confirm('Delete this turnover media item?');
