@@ -9152,11 +9152,14 @@ async function deleteTurnoverSubmission(id){
     }
 
     await renderOwnerDashboard();
-  } catch(e){
-    console.error('Turnover submission delete failed:', e);
-    alert('Could not delete turnover submission: ' + (e.message || JSON.stringify(e)));
-  }
-} 
+ } catch(e){
+  console.error('TURNOVER DELETE ERROR:', e);
+
+  alert(
+    'TURNOVER DELETE ERROR:\n\n' +
+    JSON.stringify(e, null, 2)
+  );
+}
 
 async function deleteTurnoverMedia(id, imagePath){
   const okay = confirm('Delete this turnover media item?');
