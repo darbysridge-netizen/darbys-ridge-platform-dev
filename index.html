@@ -9194,10 +9194,11 @@ async function deleteTurnoverMedia(id, imagePath){
       if(!container) return;
 
       try{
-        const { data, error } = await supabaseClient
-          .from('guest_gallery')
-          .select('*')
-          .order('created_at', { ascending: false });
+     const { data, error } = await supabaseClient
+  .from('guest_gallery')
+  .select('*')
+  .eq('property_slug', CURRENT_PROPERTY_SLUG)
+  .order('created_at', { ascending: false });  
 
         if(error || !data || !data.length){
           container.innerHTML = '<div class="small-note">No guest media yet.</div>';
@@ -9424,30 +9425,32 @@ await loadAdminUsageMetrics();
         }));
     }
 
-    async function uploadFileToBucket(bucket, file, prefix = 'media'){
-      const ext = getFileExtension(file.name) || (isVideoType(file.type) ? 'mp4' : 'jpg');
-      const filePath = `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}.${ext}`;
+async function uploadFileToBucket(bucket, file, prefix = 'media'){
+  const ext = getFileExtension(file.name) || (isVideoType(file.type) ? 'mp4' : 'jpg');
+  const safePrefix = String(prefix || 'media').replace(/[^a-zA-Z0-9-_]/g, '-');
+  const propertyFolder = CURRENT_PROPERTY_SLUG || 'unknown-property';
+  const filePath = `${propertyFolder}/${safePrefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}.${ext}`;
 
-      const { error: uploadError } = await supabaseClient
-        .storage
-        .from(bucket)
-        .upload(filePath, file, {
-          contentType: file.type,
-          upsert: false
-        });
+  const { error: uploadError } = await supabaseClient
+    .storage
+    .from(bucket)
+    .upload(filePath, file, {
+      contentType: file.type || 'application/octet-stream',
+      upsert: false
+    });
 
-      if(uploadError) throw uploadError;
+  if(uploadError) throw uploadError;
 
-      const { data: publicData } = supabaseClient
-        .storage
-        .from(bucket)
-        .getPublicUrl(filePath);
+  const { data: publicData } = supabaseClient
+    .storage
+    .from(bucket)
+    .getPublicUrl(filePath);
 
-      return {
-        path: filePath,
-        url: publicData.publicUrl
-      };
-    }
+  return {
+    path: filePath,
+    url: publicData.publicUrl
+  };
+}   
 
     async function previewGuestMedia(){
       const container = document.getElementById('guestPreview');
