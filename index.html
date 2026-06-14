@@ -8961,7 +8961,9 @@ await renderOwnerDashboard();
 
       const { error } = await supabaseClient
         .from('maintenance')
-        .insert([{ item: value }]);
+      .insert([{
+  notes: item
+}]); 
 
       if(error){
         console.error(error);
@@ -9660,10 +9662,9 @@ async function addSupplyItem(){
   try{
     const { error } = await supabaseClient
       .from('supplies')
-      .insert([{
-        property_slug: CURRENT_PROPERTY_SLUG,
-        item: item
-      }]);
+   .insert([{
+  notes: item
+}]); 
 
     if(error) throw error;
 
@@ -9686,7 +9687,6 @@ async function renderSupplyList(){
     const { data, error } = await supabaseClient
       .from('supplies')
       .select('*')
-    .insert([{ item: item }])
       .order('created_at', { ascending:false });
 
     if(error) throw error;
