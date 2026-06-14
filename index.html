@@ -9162,10 +9162,24 @@ async function deleteTurnoverSubmission(id){
 }
 }
 async function deleteTurnoverMedia(id, imagePath){
+  const mediaId = Number(id);
+
+  if(!mediaId){
+    alert('Missing turnover media ID.');
+    return;
+  }
+
   const okay = confirm('Delete this turnover media item?');
   if(!okay) return;
 
   try{
+    const { error } = await supabaseClient
+      .from('turnover_photos')
+      .delete()
+      .eq('id', mediaId);
+
+    if(error) throw error;
+
     if(imagePath){
       const { error: storageError } = await supabaseClient
         .storage
@@ -9173,23 +9187,19 @@ async function deleteTurnoverMedia(id, imagePath){
         .remove([imagePath]);
 
       if(storageError){
-        console.error(storageError);
+        console.warn('Turnover file could not be removed from storage:', storageError);
       }
     }
 
-    const { error } = await supabaseClient
-      .from('turnover_photos')
-      .delete()
-      .eq('id', id);
-
-    if(error) throw error;
-
     await renderOwnerDashboard();
   } catch(e){
-    console.error(e);
-    alert('Could not delete turnover media.');
+    console.error('TURNOVER MEDIA DELETE ERROR:', e);
+    alert(
+      'TURNOVER MEDIA DELETE ERROR:\n\n' +
+      (e.message || JSON.stringify(e, null, 2))
+    );
   }
-}  
+}
      
   async function renderOwnerGuestGallery(){
   const container = document.getElementById('ownerGuestGalleryEntries');
@@ -9279,7 +9289,7 @@ async function handleGuestGalleryDeleteClick(button){
           ${renderMediaPreviewTag(media.image_url, media.media_type || 'image/jpeg')}
         </div>
         <div class="admin-actions">
-          <button class="mini-delete" type="button" onclick="deleteTurnoverMedia(${media.id}, '${escapeHtml(media.image_path || '')}')">Delete</button>
+     <button class="mini-delete turnover-media-delete-btn" type="button" data-media-id="${media.id}" data-image-path="${escapeHtml(media.image_path || '')}">Delete</button>   
         </div>
       </div>
     `).join('')}
