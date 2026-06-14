@@ -8954,65 +8954,83 @@ await renderOwnerDashboard();
       `).join('');
     }
 
-    async function addMaintenanceItem(){
-      const input = document.getElementById('maintenanceSimpleInput');
-      const value = input.value.trim();
-      if(!value) return;
+ async function addMaintenanceItem(){
+  const input = document.getElementById('maintenanceSimpleInput');
+  const value = input ? input.value.trim() : '';
 
-      const { error } = await supabaseClient
-        .from('maintenance')
-    .insert([{
-  notes: value
-}]); 
+  if(!value){
+    alert('Please enter a maintenance item.');
+    return;
+  }
 
-      if(error){
-        console.error(error);
-        alert('Could not add maintenance item.');
-        return;
-      }
+  try{
+    const { error } = await supabaseClient
+      .from('maintenance')
+      .insert([{ notes: value }]);
 
-      input.value = '';
-      await renderMaintenanceList();
-      await renderOwnerDashboard();
+    if(error) throw error;
+
+    input.value = '';
+
+    await renderMaintenanceList();
+    await renderOwnerDashboard();
+
+  } catch(e){
+    console.error('MAINTENANCE ADD ERROR:', e);
+    alert('MAINTENANCE ADD ERROR:\n\n' + (e.message || JSON.stringify(e, null, 2)));
+  }
+}
+
+async function removeMaintenanceItem(id){
+  const okay = confirm('Delete this maintenance item?');
+  if(!okay) return;
+
+  try{
+    const { error } = await supabaseClient
+      .from('maintenance')
+      .delete()
+      .eq('id', id);
+
+    if(error) throw error;
+
+    await renderMaintenanceList();
+    await renderOwnerDashboard();
+
+  } catch(e){
+    console.error('MAINTENANCE DELETE ERROR:', e);
+    alert('MAINTENANCE DELETE ERROR:\n\n' + (e.message || JSON.stringify(e, null, 2)));
+  }
+}
+
+async function renderMaintenanceList(){
+  const container = document.getElementById('maintenanceListContainer');
+  if(!container) return;
+
+  try{
+    const { data, error } = await supabaseClient
+      .from('maintenance')
+      .select('*')
+      .order('created_at', { ascending:false });
+
+    if(error) throw error;
+
+    if(!data || !data.length){
+      container.innerHTML = '<div class="small-note">No maintenance items listed.</div>';
+      return;
     }
 
-    async function removeMaintenanceItem(id){
-      const { error } = await supabaseClient
-        .from('maintenance')
-        .delete()
-        .eq('id', id);
+    container.innerHTML = data.map(item => `
+      <div class="list-row">
+        <div>${escapeHtml(item.notes || item.name || item.description || item.item || '')}</div>
+        <button class="delete-btn" type="button" onclick="removeMaintenanceItem('${item.id}')">Remove</button>
+      </div>
+    `).join('');
 
-      if(error){
-        console.error(error);
-        alert('Could not remove maintenance item.');
-        return;
-      }
-
-      await renderMaintenanceList();
-      await renderOwnerDashboard();
-    }
-
-    async function renderMaintenanceList(){
-      const container = document.getElementById('maintenanceListContainer');
-      if(!container) return;
-
-      const { data, error } = await supabaseClient
-        .from('maintenance')
-        .select('*')
-        .order('created_at', { ascending: false });
-
-      if(error || !data || !data.length){
-        container.innerHTML = '<div class="small-note">No maintenance items listed.</div>';
-        return;
-      }
-
-      container.innerHTML = data.map(item => `
-        <div class="list-row">
-          <div>${escapeHtml(item.item)}</div>
-          <button class="delete-btn" type="button" onclick="removeMaintenanceItem(${item.id})">Remove</button>
-        </div>
-      `).join('');
-    }
+  } catch(e){
+    console.error('MAINTENANCE LIST ERROR:', e);
+    container.innerHTML = '<div class="small-note">Unable to load maintenance items.</div>';
+  }
+}  
 
  function renderOwnerActionList(items, emptyText, type){
   if(!items || !items.length){
@@ -9652,60 +9670,44 @@ async function uploadFileToBucket(bucket, file, prefix = 'media'){
     }
 async function addSupplyItem(){
   const input = document.getElementById('supplySimpleInput');
-  const item = input ? input.value.trim() : '';
+  const value = input ? input.value.trim() : '';
+  if(!value) return;
 
-  if(!item){
-    alert('Please enter a supply item.');
+  const { error } = await supabaseClient
+    .from('supplies')
+    .insert([{ notes: value }]);
+
+  if(error){
+    console.error('SUPPLY ADD ERROR:', error);
+    alert('Could not add supply item.');
     return;
   }
 
-  try{
-    const { error } = await supabaseClient
-      .from('supplies')
-   .insert([{
-  notes: item
-}]); 
-
-    if(error) throw error;
-
-    input.value = '';
-
-    await renderSupplyList();
-    await renderOwnerDashboard();
-
-  } catch(e){
-    console.error('SUPPLY ADD ERROR:', e);
-    alert('SUPPLY ADD ERROR:\n\n' + (e.message || JSON.stringify(e, null, 2)));
-  }
+  input.value = '';
+  await renderSupplyList();
+  await renderOwnerDashboard();
 }
 
 async function renderSupplyList(){
   const container = document.getElementById('supplyListContainer');
   if(!container) return;
 
-  try{
-    const { data, error } = await supabaseClient
-      .from('supplies')
-      .select('*')
-      .order('created_at', { ascending:false });
+  const { data, error } = await supabaseClient
+    .from('supplies')
+    .select('*')
+    .order('created_at', { ascending:false });
 
-    if(error) throw error;
-
-    if(!data || !data.length){
-      container.innerHTML = 'No supplies listed.';
-      return;
-    }
-
-    container.innerHTML = data.map(item => `
-      <div class="list-row">
-        <div>${escapeHtml(item.item || item.name || item.notes || '')}</div>
-      </div>
-    `).join('');
-
-  } catch(e){
-    console.error('SUPPLY LIST ERROR:', e);
-    container.innerHTML = 'Unable to load supplies.';
+  if(error || !data || !data.length){
+    container.innerHTML = '<div class="small-note">No supplies listed.</div>';
+    return;
   }
+
+  container.innerHTML = data.map(item => `
+    <div class="list-row">
+      <div>${escapeHtml(item.notes || item.name || item.description || item.item || '')}</div>
+      <button class="delete-btn" type="button" onclick="removeSupplyItem('${item.id}')">Remove</button>
+    </div>
+  `).join('');
 }
 async function submitTurnoverComplete(){
   const date = document.getElementById('turnoverDate').value.trim();
