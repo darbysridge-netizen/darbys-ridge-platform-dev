@@ -9315,6 +9315,46 @@ async function handleGuestGalleryDeleteClick(button){
 
       container.innerHTML = html || '<div class="small-note">No turnover submissions yet.</div>';
     }
+ async function deleteTurnoverMedia(id, imagePath){
+  const mediaId = Number(id);
+
+  if(!mediaId){
+    alert('Missing turnover media ID.');
+    return;
+  }
+
+  const okay = confirm('Delete this turnover media item?');
+  if(!okay) return;
+
+  try{
+    const { error: deleteError } = await supabaseClient
+      .from('turnover_photos')
+      .delete()
+      .eq('id', mediaId);
+
+    if(deleteError) throw deleteError;
+
+    if(imagePath){
+      const { error: storageError } = await supabaseClient
+        .storage
+        .from(TURNOVER_BUCKET)
+        .remove([imagePath]);
+
+      if(storageError){
+        console.warn('Turnover storage delete warning:', storageError);
+      }
+    }
+
+    await renderOwnerTurnovers();
+
+  } catch(e){
+    console.error('TURNOVER MEDIA DELETE ERROR:', e);
+    alert(
+      'TURNOVER MEDIA DELETE ERROR:\n\n' +
+      (e.message || JSON.stringify(e, null, 2))
+    );
+  }
+}   
 async function loadAdminUsageMetrics(){
   const box = document.getElementById('adminUsageMetrics');
 
