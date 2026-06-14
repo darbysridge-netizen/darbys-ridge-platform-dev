@@ -8961,8 +8961,8 @@ await renderOwnerDashboard();
 
       const { error } = await supabaseClient
         .from('maintenance')
-      .insert([{
-  notes: item
+    .insert([{
+  notes: value
 }]); 
 
       if(error){
