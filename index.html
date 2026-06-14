@@ -8764,14 +8764,14 @@ if (target) {
   }
 }
 
-if (page === 'guidebook') {
-  const eventCard = document.getElementById('nextLaunchCard');
+const eventCard = document.getElementById('nextLaunchCard');
 
-  if (CURRENT_PROPERTY_SLUG === 'ocean-pearl') {
+if(eventCard){
+  if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
     loadNextLaunch();
-  } else if (CURRENT_PROPERTY_SLUG === 'darbys-ridge') {
+  } else if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
     loadNextPropertyEvent();
-  } else if (eventCard) {
+  } else {
     eventCard.innerHTML = '';
   }
 }
