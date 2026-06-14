@@ -9074,7 +9074,7 @@ await renderOwnerDashboard();
       <p><strong>Departure:</strong> ${escapeHtml(item.departure || '')}</p>
       <p><strong>Guests:</strong> ${escapeHtml(item.guests || '')}</p>
       <div class="admin-actions">
-        <button class="mini-delete" type="button" onclick="deleteBookingRequest(${item.id})">Delete Request</button>
+        <button class="mini-delete" type="button" onclick="deleteBookingRequest('${item.id}')">Delete Request</button>
       </div>
     </div>
   `).join('');
