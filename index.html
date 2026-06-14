@@ -9037,39 +9037,43 @@ async function renderMaintenanceList(){
     return `<div class="small-note">${emptyText}</div>`;
   }
 
-  return items.map(item => `
-    <div class="owner-list-card">
-      <div class="owner-list-row">
-  <div>${escapeHtml(item.notes || item.name || item.description || item.item || '')}</div>    
-        <button class="mini-delete" type="button" onclick="${type === 'supply' ? `removeSupplyItem(${item.id})` : `removeMaintenanceItem(${item.id})`}">Delete</button>
+  return items.map(item => {
+    const displayText = item.notes || item.name || item.description || item.item || '';
+    const id = String(item.id || '');
+
+    return `
+      <div class="owner-list-card">
+        <div class="owner-list-row">
+          <div>${escapeHtml(displayText)}</div>
+          <button class="mini-delete" type="button" onclick="${type === 'supply' ? `removeSupplyItem('${id}')` : `removeMaintenanceItem('${id}')`}">Delete</button>
+        </div>
       </div>
-    </div>
-  `).join('');
-} 
-    async function deleteBookingRequest(id){
-      const okay = confirm('Delete this booking request?');
-      if(!okay) return;
+    `;
+  }).join('');
+}
 
-      try{
-        const { error } = await supabaseClient
-          .from('booking_requests')
-          .delete()
-          .eq('id', id);
+async function deleteBookingRequest(id){
+  const okay = confirm('Delete this booking request?');
+  if(!okay) return;
 
-        if(error){
-          console.error(error);
-          alert('Could not delete booking request.');
-          return;
-        }
+  try{
+    const { error } = await supabaseClient
+      .from('booking_requests')
+      .delete()
+      .eq('id', id);
 
-        await renderOwnerDashboard();
-      } catch(e){
-        console.error(e);
-        alert('Could not delete booking request.');
-      }
-    }
+    if(error) throw error;
 
-   async function renderOwnerRequests(){
+    await renderOwnerRequests();
+    await renderOwnerDashboard();
+
+  } catch(e){
+    console.error('BOOKING REQUEST DELETE ERROR:', e);
+    alert('BOOKING REQUEST DELETE ERROR:\n\n' + (e.message || JSON.stringify(e, null, 2)));
+  }
+}
+
+async function renderOwnerRequests(){
   const container = document.getElementById('ownerRequestList');
   if(!container) return;
 
