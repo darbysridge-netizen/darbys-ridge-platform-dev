@@ -9649,7 +9649,65 @@ async function uploadFileToBucket(bucket, file, prefix = 'media'){
         </div>
       `).join('');
     }
+async function addSupplyItem(){
+  const input = document.getElementById('supplySimpleInput');
+  const item = input ? input.value.trim() : '';
 
+  if(!item){
+    alert('Please enter a supply item.');
+    return;
+  }
+
+  try{
+    const { error } = await supabaseClient
+      .from('supplies')
+      .insert([{
+        property_slug: CURRENT_PROPERTY_SLUG,
+        item: item
+      }]);
+
+    if(error) throw error;
+
+    input.value = '';
+
+    await renderSupplyList();
+    await renderOwnerDashboard();
+
+  } catch(e){
+    console.error('SUPPLY ADD ERROR:', e);
+    alert('SUPPLY ADD ERROR:\n\n' + (e.message || JSON.stringify(e, null, 2)));
+  }
+}
+
+async function renderSupplyList(){
+  const container = document.getElementById('supplyListContainer');
+  if(!container) return;
+
+  try{
+    const { data, error } = await supabaseClient
+      .from('supplies')
+      .select('*')
+      .eq('property_slug', CURRENT_PROPERTY_SLUG)
+      .order('created_at', { ascending:false });
+
+    if(error) throw error;
+
+    if(!data || !data.length){
+      container.innerHTML = 'No supplies listed.';
+      return;
+    }
+
+    container.innerHTML = data.map(item => `
+      <div class="list-row">
+        <div>${escapeHtml(item.item || item.name || item.notes || '')}</div>
+      </div>
+    `).join('');
+
+  } catch(e){
+    console.error('SUPPLY LIST ERROR:', e);
+    container.innerHTML = 'Unable to load supplies.';
+  }
+}
 async function submitTurnoverComplete(){
   const date = document.getElementById('turnoverDate').value.trim();
   const notes = document.getElementById('turnoverNotes').value.trim();
