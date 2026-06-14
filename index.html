@@ -9209,7 +9209,6 @@ async function deleteTurnoverMedia(id, imagePath){
     const { data, error } = await supabaseClient
       .from('guest_gallery')
       .select('*')
-      .eq('property_slug', CURRENT_PROPERTY_SLUG)
       .order('created_at', { ascending: false });
 
     if(error || !data || !data.length){
@@ -9687,7 +9686,7 @@ async function renderSupplyList(){
     const { data, error } = await supabaseClient
       .from('supplies')
       .select('*')
-      .eq('property_slug', CURRENT_PROPERTY_SLUG)
+    .insert([{ item: item }])
       .order('created_at', { ascending:false });
 
     if(error) throw error;
