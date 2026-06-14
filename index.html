@@ -9307,7 +9307,7 @@ async function handleGuestGalleryDeleteClick(button){
     ${item.notes ? `<p><strong>Notes:</strong> ${escapeHtml(item.notes)}</p>` : ''}
     ${mediaHtml}
     <div class="admin-actions">
-      <button class="mini-delete" type="button" onclick="deleteTurnoverSubmission(${item.id})">Delete Submission</button>
+      <button class="mini-delete" type="button" onclick="deleteTurnoverSubmission('${item.id}')">Delete Submission</button>
     </div>
   </div>
 `; 
