@@ -5746,75 +5746,56 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
  <details class="panel admin-only">
   <summary><h3>Edit Guest Guide Content</h3></summary>
 
-      <label for="ownerSectionSelect">Choose Section</label>
-      <select id="ownerSectionSelect" onchange="loadOwnerEditor()">
-       <option value="welcome">Welcome / Start Here</option> 
-        <option value="peacocks">Cape Canaveral Peacocks</option>
-        <option value="welcome_card_kicker">Welcome Card Kicker</option>
-<option value="welcome_card_label">Welcome Card Title</option>
-<option value="welcome_card_subtext">Welcome Card Subtext</option>
-       <option value="info">WiFi & Home Essentials</option>
-        <option value="local">Blue Ridge Guest Favorites</option>
-        <option value="trail">Trail to Lake</option>
-        <option value="enhance_stay">Enhance Your Stay</option>
-        <option value="photos">Guest Memories Intro</option>
-        <option value="checkout">Checkout Instructions</option>
-        <option value="checklist">Turnover Checklist</option>
-        <option value="waze_kicker">Waze Kicker</option>
+<label for="ownerSectionSelect">Choose Section</label>
+
 <select id="ownerSectionSelect" onchange="loadOwnerEditor()">
+  <option value="welcome">Welcome Page Content</option>
 
-<option value="welcome">Welcome Page Content</option>
+  <option value="welcome_card_kicker">Home Card - Welcome Kicker</option>
+  <option value="welcome_card_label">Home Card - Welcome Title</option>
+  <option value="welcome_card_subtext">Home Card - Welcome Subtext</option>
 
-<option value="welcome_card_kicker">Home Card - Welcome Kicker</option>
-<option value="welcome_card_label">Home Card - Welcome Title</option>
-<option value="welcome_card_subtext">Home Card - Welcome Subtext</option>
+  <option value="info">Essentials Page Content</option>
+  <option value="local">Area Guide Page Content</option>
 
-<option value="info">Essentials Page Content</option>
+  <option value="trail">Feature Page Content</option>
+  <option value="trail_banner_title">Feature Page Banner Title</option>
 
-<option value="local">Area Guide Page Content</option>
+  <option value="enhance_stay">Enhance Your Stay Page Content</option>
 
-<option value="trail">Feature Page Content</option>
-<option value="trail_banner_title">Feature Page Banner Title</option>
+  <option value="photos">Guest Memories Page Intro</option>
+  <option value="checkout">Checkout Page Content</option>
+  <option value="checklist">Turnover Checklist</option>
 
-<option value="enhance_stay">Enhance Your Stay Page Content</option>
+  <option value="waze_title">Directions Page Title</option>
+  <option value="waze_subtitle">Directions Page Subtitle</option>
+  <option value="waze_intro">Directions Page Main Content</option>
+  <option value="waze_button_text">Directions Button Text</option>
+  <option value="waze_address">Directions Address</option>
+  <option value="waze_note">Directions Parking / Arrival Note</option>
 
-<option value="photos">Guest Memories Page Intro</option>
+  <option value="waze_kicker">Home Card - Directions Kicker</option>
+  <option value="waze_card_label">Home Card - Directions Title</option>
 
-<option value="checkout">Checkout Page Content</option>
+  <option value="home_info_label">Home Card - Essentials Title</option>
 
-<option value="checklist">Turnover Checklist</option>
+  <option value="home_feature_kicker">Home Card - Feature Kicker</option>
+  <option value="home_feature_label">Home Card - Feature Title</option>
 
-<option value="waze_title">Directions Page Title</option>
-<option value="waze_subtitle">Directions Page Subtitle</option>
-<option value="waze_intro">Directions Page Main Content</option>
-<option value="waze_button_text">Directions Button Text</option>
-<option value="waze_address">Directions Address</option>
-<option value="waze_note">Directions Parking / Arrival Note</option>
+  <option value="social_kicker">Follow Section Kicker</option>
+  <option value="book_again_airbnb_link">Returning Guest Airbnb Link</option>
 
-<option value="waze_kicker">Home Card - Directions Kicker</option>
-<option value="waze_card_label">Home Card - Directions Title</option>
+  <option value="show_launches">Show Launches Yes / No</option>
 
-<option value="home_info_label">Home Card - Essentials Title</option>
-
-<option value="home_feature_kicker">Home Card - Feature Kicker</option>
-<option value="home_feature_label">Home Card - Feature Title</option>
-
-<option value="social_kicker">Follow Section Kicker</option>
-
-<option value="book_again_airbnb_link">Returning Guest Airbnb Link</option>
-
-<option value="show_launches">Show Launches Yes / No</option>
-
-<option value="next_event_show">Show Event Card Yes / No</option>
-<option value="next_event_title">Event Title</option>
-<option value="next_event_dates">Event Dates</option>
-<option value="next_event_location">Event Location</option>
-<option value="next_event_description">Event Description</option>
-<option value="next_event_link">Event Link</option>
-
+  <option value="next_event_show">Show Event Card Yes / No</option>
+  <option value="next_event_title">Event Title</option>
+  <option value="next_event_dates">Event Dates</option>
+  <option value="next_event_location">Event Location</option>
+  <option value="next_event_description">Event Description</option>
+  <option value="next_event_link">Event Link</option>
 </select>
 
-      <textarea id="ownerSectionEditor" rows="10" class="edit-box"></textarea>
+<textarea id="ownerSectionEditor" rows="10" class="edit-box"></textarea>
 
       <button class="action-btn center-button" type="button" onclick="saveOwnerContent()">Save Changes</button>
       <div id="ownerSaveMessage" class="form-message form-success">Changes saved.</div>
