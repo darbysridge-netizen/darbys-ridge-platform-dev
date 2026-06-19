@@ -8389,7 +8389,7 @@ if (fbLink){
   if (wazeSubtitleEl) wazeSubtitleEl.textContent = wazeSubtitle;
 
   const introEl = document.getElementById('wazeIntro');
-  if (introEl) introEl.textContent = wazeIntro;
+if (introEl) introEl.innerHTML = wazeIntro;
 
   const addressEl = document.getElementById('wazeAddress');
   if (addressEl) addressEl.textContent = wazeAddress ? `📍 ${wazeAddress}` : '';
