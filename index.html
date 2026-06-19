@@ -7672,7 +7672,23 @@ Object.entries(EARLY_THEME).forEach(([k,v])=>{
     let supabaseClient = null;
 
    let currentUser = null; 
-    async function trackUsageEvent(eventType, eventLabel = '', page = '', details = {}){
+ async function trackUsageEvent(eventType, eventLabel = '', page = '', details = {}){
+  const safeDetails = details || {};
+
+  try{
+    if(typeof gtag === 'function'){
+      gtag('event', eventType, {
+        event_label: eventLabel || '',
+        page_name: page || '',
+        property_slug: CURRENT_PROPERTY_SLUG || 'hub',
+        user_role: currentUser?.role || 'guest',
+        ...safeDetails
+      });
+    }
+  } catch(gaError){
+    console.warn('Google Analytics tracking skipped:', gaError);
+  }
+
   try{
     if(!supabaseClient) return;
 
@@ -7685,12 +7701,12 @@ Object.entries(EARLY_THEME).forEach(([k,v])=>{
         user_role: currentUser?.role || 'guest',
         username: currentUser?.username || null,
         page: page || null,
-        details: details || {}
+        details: safeDetails
       });
   } catch(error){
-    console.warn('Usage tracking skipped:', error);
+    console.warn('Supabase usage tracking skipped:', error);
   }
-}
+}  
 
     const GUEST_BUCKET = 'guest-bucket';
     const TURNOVER_BUCKET = 'turnover-bucket';
