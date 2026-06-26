@@ -8750,6 +8750,24 @@ async function loadNextPropertyEvent(){
     </div>
   `;
 }
+ async function trackAppEvent(eventType, pageKey = '', label = '', metadata = {}){
+  try{
+    if(!supabaseClient || !CURRENT_PROPERTY_SLUG) return;
+
+    await supabaseClient
+      .from('app_events')
+      .insert([{
+        property_slug: CURRENT_PROPERTY_SLUG,
+        event_type: eventType,
+        page_key: pageKey,
+        label,
+        metadata
+      }]);
+
+  } catch(e){
+    console.warn('APP EVENT TRACKING ERROR:', e);
+  }
+}   
    function showPage(page){
   const pages = [
   'propertySelect',
