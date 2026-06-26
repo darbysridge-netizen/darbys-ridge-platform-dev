@@ -9846,38 +9846,7 @@ async function submitTurnoverComplete(){
   }
 }
 
-    if(files && files.length){
-      const items = getSelectedMedia(files);
-
-      for(const item of items){
-        const uploaded = await uploadFileToBucket(TURNOVER_BUCKET, item.file, 'turnover');
-
-        const { error: photoError } = await supabaseClient
-          .from('turnover_photos')
-          .insert([{
-            turnover_id: turnoverInsert.id,
-            image_url: uploaded.url,
-            image_path: uploaded.path,
-            media_type: item.mediaType
-          }]);
-
-        if(photoError) throw photoError;
-      }
-    }
-
-    success.style.display = 'block';
-    document.getElementById('turnoverDate').value = '';
-    document.getElementById('turnoverNotes').value = '';
-    document.getElementById('turnoverFiles').value = '';
-    document.getElementById('turnoverPreview').innerHTML = '';
-
-    await renderOwnerDashboard();
-} catch(e){
-  console.error('submitRequestToBook crashed:', e);
-  error.textContent = 'Unexpected error: ' + (e.message || JSON.stringify(e));
-  error.style.display = 'block';
-}
-}    
+   
 async function loadPackagesForProperty(){
   const { data, error } = await supabaseClient
     .from('property_packages')
