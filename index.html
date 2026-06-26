@@ -9419,57 +9419,100 @@ async function handleGuestGalleryDeleteClick(button){
 }   
 async function loadAdminUsageMetrics(){
   const box = document.getElementById('adminUsageMetrics');
-
   if(!box) return;
 
-  if(!currentUser || currentUser.role !== 'admin'){
-    box.innerHTML = '';
-    return;
-  }
-
   const { data, error } = await supabaseClient
-    .from('usage_events')
+    .from('app_events')
     .select('*')
+    .eq('property_slug', CURRENT_PROPERTY_SLUG)
     .order('created_at', { ascending:false })
-    .limit(50);
+    .limit(200);
 
   if(error){
-    console.error(error);
-    box.innerHTML = 'Unable to load usage metrics.';
+    console.error('OWNER ANALYTICS ERROR:', error);
+    box.innerHTML = 'Unable to load analytics right now.';
     return;
   }
 
-  const total = data.length;
+  const events = data || [];
+  const now = new Date();
+  const sevenDaysAgo = new Date(now);
+  sevenDaysAgo.setDate(now.getDate() - 7);
 
-  const ocean = data.filter(
-    e => e.property_slug === 'ocean-pearl'
-  ).length;
+  const thirtyDaysAgo = new Date(now);
+  thirtyDaysAgo.setDate(now.getDate() - 30);
 
-  const ridge = data.filter(
-    e => e.property_slug === 'darbys-ridge'
-  ).length;
+  const last7 = events.filter(item => new Date(item.created_at) >= sevenDaysAgo);
+  const last30 = events.filter(item => new Date(item.created_at) >= thirtyDaysAgo);
+
+  const pageViews = events.filter(item => item.event_type === 'page_view');
+  const pageCounts = {};
+
+  pageViews.forEach(item => {
+    const pageName = item.page_key || item.label || 'unknown';
+    pageCounts[pageName] = (pageCounts[pageName] || 0) + 1;
+  });
+
+  const topPages = Object.entries(pageCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5);
+
+  const lastActivity = events[0]?.created_at
+    ? new Date(events[0].created_at).toLocaleString([], {
+        month:'short',
+        day:'numeric',
+        hour:'numeric',
+        minute:'2-digit'
+      })
+    : 'No activity yet';
+
+  const mostViewedPage = topPages.length ? topPages[0][0] : 'None yet';
 
   box.innerHTML = `
     <div class="status-row">
       <div>
-        <strong>Total Recent Events</strong><br>
-        <span class="small-note">Last 50 tracked actions</span>
+        <strong>App Views — Last 7 Days</strong><br>
+        <span class="small-note">Guest and app activity</span>
       </div>
-      <div class="status-pill">${total}</div>
+      <div class="status-pill">${last7.length}</div>
     </div>
 
     <div class="status-row">
       <div>
-        <strong>Ocean Pearl Activity</strong>
+        <strong>App Views — Last 30 Days</strong><br>
+        <span class="small-note">Total tracked activity</span>
       </div>
-      <div class="status-pill">${ocean}</div>
+      <div class="status-pill soft">${last30.length}</div>
     </div>
 
     <div class="status-row">
       <div>
-        <strong>Darby’s Ridge Activity</strong>
+        <strong>Most Viewed Page</strong><br>
+        <span class="small-note">${escapeHtml(mostViewedPage)}</span>
       </div>
-      <div class="status-pill">${ridge}</div>
+      <div class="status-pill">Top</div>
+    </div>
+
+    <div class="status-row">
+      <div>
+        <strong>Last Activity</strong><br>
+        <span class="small-note">${escapeHtml(lastActivity)}</span>
+      </div>
+      <div class="status-pill soft">Live</div>
+    </div>
+
+    <div style="margin-top:14px;">
+      <strong>Top Pages</strong>
+      ${
+        topPages.length
+          ? topPages.map(([pageName, count]) => `
+              <div class="status-row">
+                <div>${escapeHtml(pageName)}</div>
+                <div class="status-pill soft">${count}</div>
+              </div>
+            `).join('')
+          : '<div class="small-note" style="margin-top:8px;">No page views yet.</div>'
+      }
     </div>
   `;
 }
