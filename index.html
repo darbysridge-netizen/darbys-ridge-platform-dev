@@ -9803,35 +9803,37 @@ async function renderTeamTurnoverLog(){
   const container = document.getElementById('teamTurnoverLog');
   if(!container) return;
 
-  const { data, error } = await supabaseClient
+  const { data: turnovers, error: turnoverError } = await supabaseClient
     .from('turnovers')
-    .select(`
-      id,
-      turnover_date,
-      notes,
-      created_at,
-      turnover_photos (
-        id,
-        media_type
-      )
-    `)
+    .select('id, turnover_date, notes, created_at')
     .eq('property_slug', CURRENT_PROPERTY_SLUG)
     .order('created_at', { ascending:false })
     .limit(5);
 
-  if(error){
-    console.error('TEAM TURNOVER LOG ERROR:', error);
+  if(turnoverError){
+    console.error('TEAM TURNOVER LOG ERROR:', turnoverError);
     container.innerHTML = 'Unable to load submitted turnovers.';
     return;
   }
 
-  if(!data || !data.length){
+  if(!turnovers || !turnovers.length){
     container.innerHTML = 'No turnovers submitted yet.';
     return;
   }
 
-  container.innerHTML = data.map(item => {
-    const media = item.turnover_photos || [];
+  const turnoverIds = turnovers.map(item => item.id);
+
+  const { data: photos, error: photoError } = await supabaseClient
+    .from('turnover_photos')
+    .select('id, turnover_id, media_type')
+    .in('turnover_id', turnoverIds);
+
+  if(photoError){
+    console.error('TEAM TURNOVER PHOTO LOG ERROR:', photoError);
+  }
+
+  container.innerHTML = turnovers.map(item => {
+    const media = (photos || []).filter(file => file.turnover_id === item.id);
     const photoCount = media.filter(file => file.media_type && file.media_type.startsWith('image/')).length;
     const videoCount = media.filter(file => file.media_type && file.media_type.startsWith('video/')).length;
     const totalCount = media.length;
@@ -9857,64 +9859,6 @@ async function renderTeamTurnoverLog(){
     `;
   }).join('');
 }
-async function uploadOneTurnoverItem(item){
-  const uploaded = await uploadFileToBucket(TURNOVER_BUCKET, item.file, 'turnover');
-
-  const { error: photoError } = await supabaseClient
-    .from('turnover_photos')
-    .insert([{
-      turnover_id: turnoverInsert.id,
-      image_url: uploaded.url,
-      image_path: uploaded.path,
-      media_type: item.mediaType
-    }]);
-
-  if(photoError){
-    throw photoError;
-  }
-
-  uploadedCount++;
-
-  if(submitBtn){
-    submitBtn.textContent = `Uploading ${uploadedCount} of ${totalCount}...`;
-  }
-}
-
-for(let i = 0; i < items.length; i += CONCURRENT_UPLOADS){
-  const batch = items.slice(i, i + CONCURRENT_UPLOADS);
-  await Promise.all(batch.map(uploadOneTurnoverItem));
-}   
-
-    success.textContent = totalCount
-      ? `Turnover submitted. ${uploadedCount} of ${totalCount} files uploaded — ${photoCount} photos and ${videoCount} videos.`
-      : 'Turnover submission saved.';
-
-    success.style.display = 'block';
-
-    document.getElementById('turnoverDate').value = '';
-    document.getElementById('turnoverNotes').value = '';
-    fileInput.value = '';
-    document.getElementById('turnoverPreview').innerHTML = '';
-
-    await renderOwnerDashboard();
-await renderTeamTurnoverLog();
-  } catch(e){
-    console.error('TURNOVER SUBMIT ERROR:', e);
-    error.textContent = 'Submit failed: ' + (e.message || JSON.stringify(e));
-    error.style.display = 'block';
-
-  } finally {
-    turnoverSubmitInProgress = false;
-
-    if(submitBtn){
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit Turnover';
-      submitBtn.style.opacity = '1';
-    }
-  }
-}
-
-   
 async function loadPackagesForProperty(){
   const { data, error } = await supabaseClient
     .from('property_packages')
