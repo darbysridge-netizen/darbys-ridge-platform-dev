@@ -7710,7 +7710,7 @@ Object.entries(EARLY_THEME).forEach(([k,v])=>{
 
     const GUEST_BUCKET = 'guest-bucket';
     const TURNOVER_BUCKET = 'turnover-bucket';
-    const MAX_MEDIA_ITEMS = 6;
+    const MAX_MEDIA_ITEMS = 50;
 
 
 const defaultContent = {
@@ -9741,13 +9741,19 @@ async function renderSupplyList(){
     </div>
   `).join('');
 }
+let turnoverSubmitInProgress = false;
+
 async function submitTurnoverComplete(){
+  if(turnoverSubmitInProgress) return;
+
   const date = document.getElementById('turnoverDate').value.trim();
   const notes = document.getElementById('turnoverNotes').value.trim();
-  const files = document.getElementById('turnoverFiles').files;
+  const fileInput = document.getElementById('turnoverFiles');
+  const files = fileInput.files;
 
   const success = document.getElementById('turnoverSuccess');
   const error = document.getElementById('turnoverError');
+  const submitBtn = document.querySelector('[onclick="submitTurnoverComplete()"]');
 
   success.style.display = 'none';
   error.style.display = 'none';
@@ -9758,22 +9764,86 @@ async function submitTurnoverComplete(){
     return;
   }
 
+  const items = files && files.length ? getSelectedMedia(files) : [];
+  const photoCount = items.filter(item => item.mediaType && item.mediaType.startsWith('image/')).length;
+  const videoCount = items.filter(item => item.mediaType && item.mediaType.startsWith('video/')).length;
+  const totalCount = items.length;
+
+  turnoverSubmitInProgress = true;
+
+  if(submitBtn){
+    submitBtn.disabled = true;
+    submitBtn.textContent = totalCount ? `Uploading 0 of ${totalCount}...` : 'Submitting...';
+    submitBtn.style.opacity = '.65';
+  }
+
   try{
     const { data: turnoverInsert, error: insertError } = await supabaseClient
       .from('turnovers')
-     .insert([{
-  property_slug: CURRENT_PROPERTY_SLUG,
-  turnover_date: date,
-  notes
-}])
+      .insert([{
+        property_slug: CURRENT_PROPERTY_SLUG,
+        turnover_date: date,
+        notes
+      }])
       .select()
       .single();
 
- if(insertError){
-  console.error('booking request insert error:', insertError);
-  error.textContent = 'Submit failed: ' + (insertError.message || JSON.stringify(insertError));
-  error.style.display = 'block';
-  return;
+    if(insertError){
+      throw insertError;
+    }
+
+    let uploadedCount = 0;
+
+    for(const item of items){
+      const uploaded = await uploadFileToBucket(TURNOVER_BUCKET, item.file, 'turnover');
+
+      const { error: photoError } = await supabaseClient
+        .from('turnover_photos')
+        .insert([{
+          turnover_id: turnoverInsert.id,
+          image_url: uploaded.url,
+          image_path: uploaded.path,
+          media_type: item.mediaType
+        }]);
+
+      if(photoError){
+        throw photoError;
+      }
+
+      uploadedCount++;
+
+      if(submitBtn){
+        submitBtn.textContent = `Uploading ${uploadedCount} of ${totalCount}...`;
+      }
+    }
+
+    success.textContent = totalCount
+      ? `Turnover submitted. ${uploadedCount} of ${totalCount} files uploaded — ${photoCount} photos and ${videoCount} videos.`
+      : 'Turnover submission saved.';
+
+    success.style.display = 'block';
+
+    document.getElementById('turnoverDate').value = '';
+    document.getElementById('turnoverNotes').value = '';
+    fileInput.value = '';
+    document.getElementById('turnoverPreview').innerHTML = '';
+
+    await renderOwnerDashboard();
+
+  } catch(e){
+    console.error('TURNOVER SUBMIT ERROR:', e);
+    error.textContent = 'Submit failed: ' + (e.message || JSON.stringify(e));
+    error.style.display = 'block';
+
+  } finally {
+    turnoverSubmitInProgress = false;
+
+    if(submitBtn){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Turnover';
+      submitBtn.style.opacity = '1';
+    }
+  }
 }
 
     if(files && files.length){
