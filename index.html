@@ -5693,10 +5693,15 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
 
       <div id="turnoverPreview" class="preview-grid"></div>
 
-      <div id="turnoverSuccess" class="form-message form-success">Turnover submission saved.</div>
-      <div id="turnoverError" class="form-message form-error">There was a problem saving the turnover submission.</div>
+   <div id="turnoverSuccess" class="form-message form-success">Turnover submission saved.</div>
+<div id="turnoverError" class="form-message form-error">There was a problem saving the turnover submission.</div>
 
-      <button class="action-btn center-button" type="button" onclick="submitTurnoverComplete()">Submit Turnover</button>
+<button class="action-btn center-button" type="button" onclick="submitTurnoverComplete()">Submit Turnover</button>
+
+<div style="margin-top:18px;">
+  <h3>Submitted Turnovers</h3>
+  <div id="teamTurnoverLog" class="small-note">No turnovers submitted yet.</div>
+</div> 
     </div>
   </div>
 
@@ -9794,7 +9799,64 @@ async function submitTurnoverComplete(){
 
 let uploadedCount = 0;
 const CONCURRENT_UPLOADS = 3;
+async function renderTeamTurnoverLog(){
+  const container = document.getElementById('teamTurnoverLog');
+  if(!container) return;
 
+  const { data, error } = await supabaseClient
+    .from('turnovers')
+    .select(`
+      id,
+      turnover_date,
+      notes,
+      created_at,
+      turnover_photos (
+        id,
+        media_type
+      )
+    `)
+    .eq('property_slug', CURRENT_PROPERTY_SLUG)
+    .order('created_at', { ascending:false })
+    .limit(5);
+
+  if(error){
+    console.error('TEAM TURNOVER LOG ERROR:', error);
+    container.innerHTML = 'Unable to load submitted turnovers.';
+    return;
+  }
+
+  if(!data || !data.length){
+    container.innerHTML = 'No turnovers submitted yet.';
+    return;
+  }
+
+  container.innerHTML = data.map(item => {
+    const media = item.turnover_photos || [];
+    const photoCount = media.filter(file => file.media_type && file.media_type.startsWith('image/')).length;
+    const videoCount = media.filter(file => file.media_type && file.media_type.startsWith('video/')).length;
+    const totalCount = media.length;
+
+    const submittedAt = item.created_at
+      ? new Date(item.created_at).toLocaleString([], {
+          month:'short',
+          day:'numeric',
+          hour:'numeric',
+          minute:'2-digit'
+        })
+      : 'Recently';
+
+    return `
+      <div class="submission-card">
+        <h4>Turnover Submitted</h4>
+        <p><strong>Date:</strong> ${escapeHtml(item.turnover_date || '')}</p>
+        <p><strong>Submitted:</strong> ${escapeHtml(submittedAt)}</p>
+        <p><strong>Files:</strong> ${totalCount} total — ${photoCount} photos, ${videoCount} videos</p>
+        ${item.notes ? `<p><strong>Notes:</strong> ${escapeHtml(item.notes)}</p>` : ''}
+        <p style="color:#25613a; font-weight:700;">Submitted successfully and moved to Owner Dashboard.</p>
+      </div>
+    `;
+  }).join('');
+}
 async function uploadOneTurnoverItem(item){
   const uploaded = await uploadFileToBucket(TURNOVER_BUCKET, item.file, 'turnover');
 
@@ -9835,7 +9897,7 @@ for(let i = 0; i < items.length; i += CONCURRENT_UPLOADS){
     document.getElementById('turnoverPreview').innerHTML = '';
 
     await renderOwnerDashboard();
-
+await renderTeamTurnoverLog();
   } catch(e){
     console.error('TURNOVER SUBMIT ERROR:', e);
     error.textContent = 'Submit failed: ' + (e.message || JSON.stringify(e));
@@ -9983,6 +10045,7 @@ async function deleteOwnerPackage(id){
   }
 
   await renderEnhancePackages();
+  renderTeamTurnoverLog();
   await renderOwnerPackages();
 }
 
