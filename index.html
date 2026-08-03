@@ -134,13 +134,13 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
       -webkit-tap-highlight-color:transparent;
     }
 
-    .menu-card img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      transition:transform .18s ease, filter .18s ease;
-    }
+ .menu-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .18s ease, filter .18s ease;
+}
 
 .menu-card:after{
   content:"";
@@ -148,44 +148,33 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
   inset:0;
   background:linear-gradient(
     to top,
-    rgba(0,0,0,.46),
-    rgba(0,0,0,.02)
+    rgba(0,0,0,.30),
+    rgba(0,0,0,0)
   );
   transition:background .18s ease;
-}   
+}
 
 .menu-card{
-  transition: all 0.25s ease;
+  transition:all .25s ease;
   cursor:pointer;
 }
 
 .menu-card:hover{
-  transform: scale(1.01);
+  transform:scale(1.01);
 }
 
 .menu-card:hover img{
-  filter: brightness(0.85);
-  transform: scale(1.03);
+  filter:brightness(1);
+  transform:scale(1.03);
 }
 
 .menu-card:hover:after{
-  background:linear-gradient(to top, rgba(0,0,0,.75), rgba(0,0,0,.15));
-}
-
-.menu-card:active{
-  transform:scale(0.97);
-  box-shadow:0 4px 10px rgba(0,0,0,.2);
-}
-
-.menu-card:active img{
-  transform:scale(1.02);
-  filter:brightness(0.75);
-}
-
-.menu-card:active:after{
-  background:linear-gradient(to top, rgba(0,0,0,.85), rgba(0,0,0,.25));
-}    
-
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.36),
+    rgba(0,0,0,0)
+  );
+}  
 .menu-label{
   position:absolute;
   bottom:12px;
