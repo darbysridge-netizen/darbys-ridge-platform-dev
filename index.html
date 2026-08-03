@@ -142,13 +142,17 @@ background:url(ocean-hero.jpeg) center/cover no-repeat;
       transition:transform .18s ease, filter .18s ease;
     }
 
-    .menu-card:after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(to top, rgba(0,0,0,.68), rgba(0,0,0,.08));
-      transition:background .18s ease;
-    }
+.menu-card:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.46),
+    rgba(0,0,0,.02)
+  );
+  transition:background .18s ease;
+}   
 
 .menu-card{
   transition: all 0.25s ease;
