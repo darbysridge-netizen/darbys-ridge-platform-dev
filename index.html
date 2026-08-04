@@ -8630,6 +8630,15 @@ setTimeout(loadNextPropertyEvent, 300);
     if(document.body){
       document.body.classList.remove('loading');
       document.body.classList.add('app-ready');
+   const startupScreen = document.getElementById('startupScreen');
+
+if (startupScreen) {
+    startupScreen.classList.add('hide');
+
+    setTimeout(() => {
+        startupScreen.remove();
+    }, 500);
+}   
     }
 
   }, 50);
