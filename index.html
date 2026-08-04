@@ -5711,13 +5711,13 @@ Then click the Airbnb link to start your booking request. Once submitted, we’l
   <div id="owner" class="hidden page">
     <button class="back" type="button" onclick="showPage('home')">← Back</button>
     <h1>Owner Dashboard</h1>
-   <div class="panel admin-only">
-  <h3>Platform Usage</h3>
+ <div class="panel">
+  <h3>Guest App Activity</h3>
 
   <div id="adminUsageMetrics" class="small-note">
-    Loading usage metrics...
+    Loading activity metrics...
   </div>
-</div> 
+</div>
   
 
    <details class="panel">
@@ -9294,11 +9294,11 @@ async function deleteTurnoverMedia(id, imagePath){
   if(!container) return;
 
   try{
-    const { data, error } = await supabaseClient
-      .from('guest_gallery')
-      .select('*')
-      .order('created_at', { ascending: false });
-
+   const { data, error } = await supabaseClient
+  .from('guest_gallery')
+  .select('*')
+  .eq('property_slug', CURRENT_PROPERTY_SLUG)
+  .order('created_at', { ascending: false });
     if(error || !data || !data.length){
       container.innerHTML = '<div class="small-note">No guest media yet.</div>';
       return;
