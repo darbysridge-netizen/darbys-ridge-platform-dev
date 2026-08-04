@@ -8513,7 +8513,9 @@ setTimeout(loadNextPropertyEvent, 300);
     applyMapLinkBehavior('localContent');
     applyMapLinkBehavior('trailContent');
 
-      if(checklistEl){
+    const checklistEl = document.getElementById('teamChecklistDisplay');
+
+    if(checklistEl){
       const items = checklistRaw
         .split('\n')
         .map(item => item.trim())
@@ -8523,10 +8525,6 @@ setTimeout(loadNextPropertyEvent, 300);
         .map(item => `<li>${escapeHtml(item)}</li>`)
         .join('');
     }
-    if(document.body){
-  document.body.classList.remove('loading');
-  document.body.classList.add('app-ready');
-}
 
     if(document.body){
       document.body.classList.remove('loading');
