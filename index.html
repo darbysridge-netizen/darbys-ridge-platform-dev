@@ -8458,14 +8458,10 @@ await renderDynamicImages();
 await renderPropertyChrome();
   } catch(e){
     console.error('Startup render error:', e);
-   } finally {
-    if(document.body){
-      document.body.classList.remove('loading');
-      document.body.classList.add('app-ready');
-    }
+  }
 
     
-  }
+  
 
   setTimeout(async () => {
         const welcome = await getPropertyContent('welcome', defaultContent.welcome);
@@ -8517,13 +8513,28 @@ setTimeout(loadNextPropertyEvent, 300);
     applyMapLinkBehavior('localContent');
     applyMapLinkBehavior('trailContent');
 
-    const checklistEl = document.getElementById('teamChecklistDisplay');
-    if(checklistEl){
-      const items = checklistRaw.split('\n').map(item => item.trim()).filter(Boolean);
-      checklistEl.innerHTML = items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+      if(checklistEl){
+      const items = checklistRaw
+        .split('\n')
+        .map(item => item.trim())
+        .filter(Boolean);
+
+      checklistEl.innerHTML = items
+        .map(item => `<li>${escapeHtml(item)}</li>`)
+        .join('');
     }
-  }, 50);
+    if(document.body){
+  document.body.classList.remove('loading');
+  document.body.classList.add('app-ready');
 }
+
+    if(document.body){
+      document.body.classList.remove('loading');
+      document.body.classList.add('app-ready');
+    }
+
+  }, 50);
+} 
 async function loadOwnerImageEditor(){
   const imageSelect = document.getElementById('ownerImageSelect');
   const imageEditor = document.getElementById('ownerImageEditor');
