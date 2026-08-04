@@ -6120,6 +6120,24 @@ function setupPropertyAppFiles(){
 
     return;
   }
+  if(CURRENT_PROPERTY_SLUG === 'summit-social-club'){
+
+    document.title = 'Summit Social Club Guest App';
+
+    if(iconEl) iconEl.setAttribute('href', 'summit-apple-touch-icon.png');
+    if(browserIconEl) browserIconEl.setAttribute('href', 'summit-favicon-32x32.png');
+    if(manifestEl) manifestEl.setAttribute('href', 'manifest-summit.json');
+    if(themeColorEl) themeColorEl.setAttribute('content', '#F4EFE7');
+
+    if(ogTitle) ogTitle.setAttribute('content', 'Summit Social Club Guest App');
+    if(ogDesc) ogDesc.setAttribute(
+      'content',
+      'Your private guest guide for Summit Social Club in the Smoky Mountains.'
+    );
+    if(ogImage) ogImage.setAttribute('content', 'summit-icon-512.png');
+
+    return;
+  }  
 }
 function previewPresentationHeroImage(){
   const fileInput = document.getElementById('presentationHeroFile');
