@@ -5109,6 +5109,62 @@ body.presentation-section-open #presentationView > .back{
   #presentationView .spc-journey-outcome h2{
     font-size:32px;
   }
+}  
+.startup-screen{
+  position:fixed;
+  inset:0;
+  z-index:999999;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:
+    linear-gradient(
+      rgba(255,255,255,.08),
+      rgba(255,255,255,.08)
+    ),
+    url("summit-return.jpg");
+
+  background-size:cover;
+  background-position:center;
+
+  opacity:1;
+  transition:opacity .45s ease;
+}
+
+.startup-screen.hide{
+  opacity:0;
+  pointer-events:none;
+}
+
+.startup-content{
+  width:min(88%,700px);
+  padding:32px 24px;
+  text-align:center;
+  color:#ffffff;
+}
+
+.startup-content h1{
+  margin:0 0 14px;
+  font-family:'Playfair Display',serif;
+  font-size:clamp(34px,8vw,54px);
+  line-height:1.05;
+  letter-spacing:.07em;
+  text-shadow:0 2px 12px rgba(0,0,0,.22);
+}
+
+.startup-subtitle{
+  margin-bottom:14px;
+  font-size:clamp(16px,4vw,21px);
+  line-height:1.4;
+  text-shadow:0 2px 10px rgba(0,0,0,.22);
+}
+
+.startup-tagline{
+  font-size:clamp(14px,3.5vw,18px);
+  letter-spacing:.08em;
+  text-shadow:0 2px 10px rgba(0,0,0,.22);
 }    
   </style>
 
@@ -5134,12 +5190,22 @@ body.presentation-section-open #presentationView > .back{
 </head>
 
 <body class="loading">
-<div id="appLoader">
-  <div class="loader-card">
- <div class="loader-title">Guest Guide</div>
-<div class="loader-subtitle">Getting things ready...</div>   
+
+<div id="startupScreen" class="startup-screen">
+  <div class="startup-content">
+
+    <h1>SUMMIT SOCIAL CLUB</h1>
+
+    <div class="startup-subtitle">
+      A Modern Mountain Retreat in the Smokies
+    </div>
+
+    <div class="startup-tagline">
+      Relax. Reconnect. Recharge.
+    </div>
+
   </div>
-</div>  
+</div>
  <div id="propertySelect" class="hidden page">
 
   <div class="hub-hero">
