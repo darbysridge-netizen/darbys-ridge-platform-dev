@@ -1,0 +1,20 @@
+{
+  "name": "Summit Social Club Guest App",
+  "short_name": "Summit",
+  "start_url": "https://summitsocialclub.drbhosts.com/",
+  "display": "standalone",
+  "background_color": "#F4EFE7",
+  "theme_color": "#F4EFE7",
+  "icons": [
+    {
+      "src": "summit-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "summit-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
