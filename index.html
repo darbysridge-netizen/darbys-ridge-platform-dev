@@ -5207,7 +5207,7 @@ body.presentation-section-open #presentationView > .back{
 
 <body class="loading">
 
-<div id="startupScreen" class="startup-screen">
+<div id="startupScreen" class="startup-screen" style="display:none;">
   <div class="startup-content">
 
     <h1>SUMMIT SOCIAL CLUB</h1>
@@ -5222,6 +5222,20 @@ body.presentation-section-open #presentationView > .back{
 <div class="startup-spinner" aria-label="Loading"></div>
   </div>
 </div>
+<script>
+  (function () {
+    const startupScreen = document.getElementById('startupScreen');
+    const currentHost = window.location.hostname.toLowerCase();
+
+    const isSummit =
+      currentHost === 'summitsocialclub.drbhosts.com' ||
+      new URLSearchParams(window.location.search).get('property') === 'summit-social-club';
+
+    if (startupScreen && isSummit) {
+      startupScreen.style.display = 'flex';
+    }
+  })();
+</script>  
  <div id="propertySelect" class="hidden page">
 
   <div class="hub-hero">
