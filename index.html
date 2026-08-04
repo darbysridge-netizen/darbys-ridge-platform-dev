@@ -9545,19 +9545,42 @@ async function loadAdminUsageMetrics(){
   document.querySelectorAll('.admin-only').forEach(section => {
   section.style.display = currentUser?.role === 'admin' ? '' : 'none';
 });  
-      const [
-        requestsRes,
-        suppliesRes,
-        maintenanceRes,
-        turnoversRes,
-        guestGalleryRes
-      ] = await Promise.all([
-        supabaseClient.from('booking_requests').select('*', { count: 'exact', head: true }),
-        supabaseClient.from('supplies').select('*').order('created_at', { ascending: false }),
-        supabaseClient.from('maintenance').select('*').order('created_at', { ascending: false }),
-        supabaseClient.from('turnovers').select('*', { count: 'exact', head: true }),
-        supabaseClient.from('guest_gallery').select('*', { count: 'exact', head: true })
-      ]);
+   const [
+  requestsRes,
+  suppliesRes,
+  maintenanceRes,
+  turnoversRes,
+  guestGalleryRes
+] = await Promise.all([
+
+  supabaseClient
+    .from('booking_requests')
+    .select('*', { count: 'exact', head: true })
+    .eq('property_slug', CURRENT_PROPERTY_SLUG),
+
+  supabaseClient
+    .from('supplies')
+    .select('*')
+    .eq('property_slug', CURRENT_PROPERTY_SLUG)
+    .order('created_at', { ascending: false }),
+
+  supabaseClient
+    .from('maintenance')
+    .select('*')
+    .eq('property_slug', CURRENT_PROPERTY_SLUG)
+    .order('created_at', { ascending: false }),
+
+  supabaseClient
+    .from('turnovers')
+    .select('*', { count: 'exact', head: true })
+    .eq('property_slug', CURRENT_PROPERTY_SLUG),
+
+  supabaseClient
+    .from('guest_gallery')
+    .select('*', { count: 'exact', head: true })
+    .eq('property_slug', CURRENT_PROPERTY_SLUG)
+
+]);   
 
       const requestCount = requestsRes.count || 0;
       const turnoverCount = turnoversRes.count || 0;
