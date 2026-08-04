@@ -8140,19 +8140,12 @@ function applyMapLinkBehavior(containerId){
   if(!container) return;
 
   const links = container.querySelectorAll('a[href]');
-  links.forEach(link => {
-    const href = String(link.getAttribute('href') || '').toLowerCase();
-    const isMapLink =
-      href.includes('google.com/maps') ||
-      href.includes('google.com/maps/search') ||
-      href.includes('api=1&query') ||
-      href.includes('maps.apple.com');
 
-    if(isMapLink){
-      link.setAttribute('target', '_self');
-      link.removeAttribute('rel');
-    }
+  links.forEach(link => {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
   });
+}
 }
 
 async function renderDynamicImages(){
