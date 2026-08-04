@@ -8283,6 +8283,25 @@ const homeGuideLabel = await getPropertyContent('home_guide_label', 'Guest Guide
 const wazeKicker = await getPropertyContent('waze_kicker', 'ADDRESS & DIRECTIONS');
 const wazeCardLabel = await getPropertyContent('waze_card_label', 'Address & Directions');
 const homeInfoLabel = await getPropertyContent('home_info_label', 'WiFi + Home Essentials');  
+const homeLocalKicker = await getPropertyContent(
+  'home_local_kicker',
+  'AREA GUIDE'
+);
+
+const localCardLabel = await getPropertyContent(
+  'local_card_label',
+  'Ideas for Perfect Days'
+);
+
+const localBannerTitle = await getPropertyContent(
+  'local_banner_title',
+  'Explore the Area'
+);
+
+const localBannerText = await getPropertyContent(
+  'local_banner_text',
+  'Our favorite spots for food, drinks, and things to do nearby.'
+);  
 const homeFeatureKicker = await getPropertyContent('home_feature_kicker', 'FEATURE');
 const homeFeatureLabel = await getPropertyContent('home_feature_label', 'Explore More'); 
 const trailBannerTitle = await getPropertyContent('trail_banner_title', 'Property Feature'); 
@@ -8365,6 +8384,29 @@ const wazeLabelEl = document.getElementById('wazeLabel');
 if(wazeLabelEl) wazeLabelEl.textContent = wazeCardLabel;  
 const homeInfoLabelEl = document.getElementById('homeInfoLabel');
 if(homeInfoLabelEl) homeInfoLabelEl.textContent = homeInfoLabel; 
+ const homeLocalKickerEl = document.getElementById('homeLocalKicker');
+
+if(homeLocalKickerEl){
+  homeLocalKickerEl.textContent = homeLocalKicker;
+}
+
+const localCardLabelEl = document.getElementById('localCardLabel');
+
+if(localCardLabelEl){
+  localCardLabelEl.textContent = localCardLabel;
+}
+
+const localBannerTitleEl = document.getElementById('localBannerTitle');
+
+if(localBannerTitleEl){
+  localBannerTitleEl.textContent = localBannerTitle;
+}
+
+const localBannerTextEl = document.getElementById('localBannerText');
+
+if(localBannerTextEl){
+  localBannerTextEl.textContent = localBannerText;
+} 
 const homeFeatureKickerEl = document.getElementById('homeFeatureKicker');
 if(homeFeatureKickerEl) homeFeatureKickerEl.textContent = homeFeatureKicker;
 
