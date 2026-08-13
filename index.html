@@ -8572,7 +8572,7 @@ if (fbLink){
 if (introEl) introEl.innerHTML = wazeIntro;
 
   const addressEl = document.getElementById('wazeAddress');
-  if (addressEl) addressEl.textContent = wazeAddress ? `📍 ${wazeAddress}` : '';
+if (addressEl) addressEl.innerHTML = wazeAddress ? `📍 ${wazeAddress}` : '';
 
   const wazeBtn = document.getElementById('wazeLink');
   if (wazeBtn) {
@@ -8582,7 +8582,7 @@ if (introEl) introEl.innerHTML = wazeIntro;
   }
 
   const noteEl = document.getElementById('wazeNote');
-  if (noteEl) noteEl.textContent = wazeNote;
+if (noteEl) noteEl.innerHTML = wazeNote;
   
 }
 
