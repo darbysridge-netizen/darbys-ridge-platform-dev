@@ -4,7 +4,8 @@ export default async function handler(req, res) {
 
 const CALENDAR_MAP = {
   'darbys-ridge': process.env.AIRBNB_ICAL_URL_DARBYS_RIDGE,
-  'ocean-pearl': process.env.AIRBNB_ICAL_URL_OCEAN_PEARL
+  'ocean-pearl': process.env.AIRBNB_ICAL_URL_OCEAN_PEARL,
+  'summit-social-club': process.env.AIRBNB_ICAL_URL_SUMMIT
 };
 
 const calendarUrl = CALENDAR_MAP[property];
