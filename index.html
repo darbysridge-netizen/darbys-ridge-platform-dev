@@ -5210,19 +5210,52 @@ body.presentation-section-open #presentationView > .back{
 <div id="startupScreen" class="startup-screen" style="display:none;">
   <div class="startup-content">
 
-    <h1>SUMMIT SOCIAL CLUB</h1>
+    <h1 id="startupTitle"></h1>
 
-    <div class="startup-subtitle">
-      A Modern Mountain Retreat in the Smokies
-    </div>
+    <div id="startupSubtitle" class="startup-subtitle"></div>
 
-    <div class="startup-tagline">
-      Relax. Reconnect. Recharge.
-    </div>
-<div class="startup-spinner" aria-label="Loading"></div>
+    <div id="startupTagline" class="startup-tagline"></div>
+
+    <div class="startup-spinner" aria-label="Loading"></div>
+
   </div>
 </div>
+
 <script>
+async function renderStartupScreen() {
+  const startupScreen = document.getElementById('startupScreen');
+  const startupTitle = document.getElementById('startupTitle');
+  const startupSubtitle = document.getElementById('startupSubtitle');
+  const startupTagline = document.getElementById('startupTagline');
+
+  if (!startupScreen || !CURRENT_PROPERTY_SLUG) return;
+
+  try {
+    const startupImage = await getPropertyContent('startup_image', '');
+    const title = await getPropertyContent('startup_title', '');
+    const subtitle = await getPropertyContent('startup_subtitle', '');
+    const tagline = await getPropertyContent('startup_tagline', '');
+
+    if (!startupImage && !title && !subtitle && !tagline) {
+      return;
+    }
+
+    if (startupTitle) startupTitle.textContent = title;
+    if (startupSubtitle) startupSubtitle.textContent = subtitle;
+    if (startupTagline) startupTagline.textContent = tagline;
+
+    if (startupImage) {
+      startupScreen.style.backgroundImage =
+        `linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12)), url("${startupImage}")`;
+    }
+
+    startupScreen.style.display = 'flex';
+
+  } catch (error) {
+    console.error('Startup screen error:', error);
+  }
+}
+</script>
   (function () {
     const startupScreen = document.getElementById('startupScreen');
     const currentHost = window.location.hostname.toLowerCase();
@@ -8588,6 +8621,7 @@ if (noteEl) noteEl.innerHTML = wazeNote;
 async function renderEditablePages(){
   try{
 await loadPropertyContentCache();
+  await renderStartupScreen();   
 await renderPropertyTheme();
 await renderDynamicImages();
 await renderPropertyChrome();
