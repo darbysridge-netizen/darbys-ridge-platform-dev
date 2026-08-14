@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
+      "src": "^/$",
       "has": [
         {
           "type": "header",
@@ -10,7 +10,14 @@
           "value": ".*(facebookexternalhit|Facebot|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|TelegramBot|Applebot).*"
         }
       ],
-      "destination": "/api/share-preview"
+      "dest": "/api/share-preview"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
