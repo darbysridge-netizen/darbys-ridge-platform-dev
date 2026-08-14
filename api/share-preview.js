@@ -7,7 +7,7 @@ export default function handler(req, res) {
     'darbysridgeapp.drbhosts.com': {
       title: "Darby's Ridge Guest App",
       description: "Your mountain stay guide for Darby's Ridge in Blue Ridge, Georgia.",
-      image: 'https://darbysridgeapp.drbhosts.com/icon-512.png',
+     image: 'https://darbysridgeapp.drbhosts.com/darbysridge-icon-512.png',
       url: 'https://darbysridgeapp.drbhosts.com'
     },
 
