@@ -5256,20 +5256,8 @@ async function renderStartupScreen() {
   }
 }
 </script>
-  (function () {
-    const startupScreen = document.getElementById('startupScreen');
-    const currentHost = window.location.hostname.toLowerCase();
 
-  const isSummit =
-  currentHost === 'summitsocialclubapp.drbhosts.com' ||
-  currentHost === 'summitsocialclub.drbhosts.com' ||
-  new URLSearchParams(window.location.search).get('property') === 'summit-social-club'; 
-
-    if (startupScreen && isSummit) {
-      startupScreen.style.display = 'flex';
-    }
-  })();
-</script>  
+  
  <div id="propertySelect" class="hidden page">
 
   <div class="hub-hero">
