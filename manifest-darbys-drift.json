@@ -1,0 +1,20 @@
+{
+  "name": "Darby's Drift Guest App",
+  "short_name": "Darby's Drift",
+  "start_url": "https://darbysdriftapp.drbhosts.com/",
+  "display": "standalone",
+  "background_color": "#EDE5D8",
+  "theme_color": "#16384A",
+  "icons": [
+    {
+      "src": "darbysdrift-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "darbysdrift-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
