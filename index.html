@@ -6243,6 +6243,21 @@ if(browserIconEl) browserIconEl.setAttribute('href', 'darbysridge-icon-192.png')
 
     return;
   }
+  if(CURRENT_PROPERTY_SLUG === 'darbys-drift'){
+
+    document.title = 'Darby’s Drift Guest App';
+
+    if(iconEl) iconEl.setAttribute('href', 'darbysdrift-icon-192.png');
+    if(browserIconEl) browserIconEl.setAttribute('href', 'darbysdrift-icon-192.png');
+    if(manifestEl) manifestEl.setAttribute('href', 'manifest-darbys-drift.json');
+    if(themeColorEl) themeColorEl.setAttribute('content', '#16384A');
+
+    if(ogTitle) ogTitle.setAttribute('content', 'Darby’s Drift Guest App');
+    if(ogDesc) ogDesc.setAttribute('content', 'Your coastal stay guide for Darby’s Drift in Cocoa Beach, Florida.');
+    if(ogImage) ogImage.setAttribute('content', 'darbysdrift-icon-512.png');
+
+    return;
+}
   if(CURRENT_PROPERTY_SLUG === 'summit-social-club'){
 
     document.title = 'Summit Social Club Guest App';
