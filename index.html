@@ -6255,7 +6255,26 @@ if(browserIconEl) browserIconEl.setAttribute('href', 'darbysridge-icon-192.png')
     if(ogTitle) ogTitle.setAttribute('content', 'Darby’s Drift Guest App');
     if(ogDesc) ogDesc.setAttribute('content', 'Your coastal stay guide for Darby’s Drift in Cocoa Beach, Florida.');
     if(ogImage) ogImage.setAttribute('content', 'darbysdrift-icon-512.png');
+const driftBottomNav = document.querySelector('.bottom-nav');
 
+if(driftBottomNav){
+
+  driftBottomNav.style.background = '#16384A';
+  driftBottomNav.style.borderTopColor = '#16384A';
+
+  const driftNavButtons = driftBottomNav.querySelectorAll('button');
+
+  driftNavButtons.forEach(btn => {
+    btn.style.color = '#F7F2E8';
+  });
+
+  const driftHomeBtn = driftBottomNav.querySelector('.bottom-home');
+
+  if(driftHomeBtn){
+    driftHomeBtn.style.background = '#EDE5D8';
+    driftHomeBtn.style.color = '#16384A';
+  }
+}
     return;
 }
   if(CURRENT_PROPERTY_SLUG === 'summit-social-club'){
