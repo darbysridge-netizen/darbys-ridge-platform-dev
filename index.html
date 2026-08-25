@@ -9111,7 +9111,10 @@ if (target) {
 const eventCard = document.getElementById('nextLaunchCard');
 
 if(eventCard){
-  if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
+  if(
+    CURRENT_PROPERTY_SLUG === 'ocean-pearl' ||
+    CURRENT_PROPERTY_SLUG === 'darbys-drift'
+  ){
     loadNextLaunch();
   } else if(CURRENT_PROPERTY_SLUG === 'darbys-ridge'){
     loadNextPropertyEvent();
