@@ -6275,6 +6275,31 @@ if(driftBottomNav){
     driftHomeBtn.style.color = '#16384A';
   }
 }
+const driftEnhanceLabel = document.getElementById('enhanceCardLabel');
+
+if(driftEnhanceLabel){
+  driftEnhanceLabel.textContent = 'Ridge & Drift';
+
+  const driftEnhanceKicker = driftEnhanceLabel.previousElementSibling;
+  if(driftEnhanceKicker){
+    driftEnhanceKicker.textContent = 'WHERE TO NEXT?';
+  }
+}
+
+const driftEnhancePage = document.getElementById('enhanceStay');
+
+if(driftEnhancePage){
+  const driftBannerTitle = driftEnhancePage.querySelector('.page-banner-text strong');
+  const driftBannerSubtitle = driftEnhancePage.querySelector('.page-banner-text span');
+
+  if(driftBannerTitle){
+    driftBannerTitle.textContent = 'Ridge & Drift Retreats';
+  }
+
+  if(driftBannerSubtitle){
+    driftBannerSubtitle.textContent = 'From mountain mornings to beach days — discover both of our favorite getaways.';
+  }
+}    
     return;
 }
   if(CURRENT_PROPERTY_SLUG === 'summit-social-club'){
