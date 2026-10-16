@@ -6227,6 +6227,17 @@ if(CURRENT_PROPERTY_SLUG === 'hidden-manor'){
   if(ogTitle) ogTitle.setAttribute('content', 'Hidden Manor Guest App');
   if(ogDesc) ogDesc.setAttribute('content', 'Your guest guide to Hidden Manor in West Melbourne, Florida.');
   if(ogImage) ogImage.setAttribute('content', hiddenIcon512);
+  const hiddenEnhanceCard = document.getElementById('enhanceCardLabel');
+
+if(hiddenEnhanceCard){
+  hiddenEnhanceCard.textContent = 'Enhance Your Stay';
+
+  const hiddenEnhanceKicker = hiddenEnhanceCard.previousElementSibling;
+
+  if(hiddenEnhanceKicker){
+    hiddenEnhanceKicker.textContent = 'MAKE YOUR STAY SPECIAL';
+  }
+}
 
   return;
 }
