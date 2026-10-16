@@ -6212,6 +6212,24 @@ function setupPropertyAppFiles(){
     return;
   }
 
+if(CURRENT_PROPERTY_SLUG === 'hidden-manor'){
+
+  document.title = 'Hidden Manor Guest App';
+
+  const hiddenIcon192 = 'https://mulzvuvbpzoylkciqgse.supabase.co/storage/v1/object/public/guest-bucket/hidden-manor-icon-192.png';
+  const hiddenIcon512 = 'https://mulzvuvbpzoylkciqgse.supabase.co/storage/v1/object/public/guest-bucket/hidden-manor-icon-512.png';
+
+  if(iconEl) iconEl.setAttribute('href', hiddenIcon192);
+  if(browserIconEl) browserIconEl.setAttribute('href', hiddenIcon192);
+  if(themeColorEl) themeColorEl.setAttribute('content', '#A8B5A0');
+
+  if(ogTitle) ogTitle.setAttribute('content', 'Hidden Manor Guest App');
+  if(ogDesc) ogDesc.setAttribute('content', 'Your guest guide to Hidden Manor in West Melbourne, Florida.');
+  if(ogImage) ogImage.setAttribute('content', hiddenIcon512);
+
+  return;
+}
+
   if(CURRENT_PROPERTY_SLUG === 'ocean-pearl'){
 
     document.title = 'The Ocean Pearl Guest App';
