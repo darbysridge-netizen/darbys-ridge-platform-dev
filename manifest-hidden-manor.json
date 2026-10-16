@@ -1,0 +1,22 @@
+
+{
+  "name": "Hidden Manor Guest App",
+  "short_name": "Hidden Manor",
+  "start_url": "https://hiddenmanorapp.drbhosts.com/",
+  "scope": "https://hiddenmanorapp.drbhosts.com/",
+  "display": "standalone",
+  "background_color": "#F7F5F0",
+  "theme_color": "#A8B5A0",
+  "icons": [
+    {
+      "src": "https://mulzvuvbpzoylkciqgse.supabase.co/storage/v1/object/public/guest-bucket/hidden-manor-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://mulzvuvbpzoylkciqgse.supabase.co/storage/v1/object/public/guest-bucket/hidden-manor-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
